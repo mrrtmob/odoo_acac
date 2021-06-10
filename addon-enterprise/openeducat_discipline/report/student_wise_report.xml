@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="student_wise_report">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="text-center" style="font-size:16px;">
+                            <h3>
+                                <strong>Student Discipline Details</strong>
+                            </h3>
+                        </div>
+                        <br/>
+                        <div class="text-center">
+                            <strong> Name : <span t-esc="get_data['student_id'][1]" /> </strong>
+                            <br/>
+                            <strong>From Date : <span t-esc="get_data['from_date']" t-options="{'widget':'date'}"/> </strong>
+                            to
+                            <strong>To Date : <span t-esc="get_data['to_date']" t-options="{'widget':'date'}"/> </strong>
+                        </div>
+                        <br/>
+                        <table width="100%" class="table table-bordered">
+                            <thead style="background-color:#eeeeee; font-size:14px; font-weight:600;">
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Type</th>
+                                <th class="text-center">Category</th>
+                                <th class="text-center">Action</th>
+                                <th class="text-center">State</th>
+                            </thead>
+                            <tbody style="font-size:12px;">
+                                <t t-foreach="get_object" t-as="obj">
+                                    <tr t-foreach="obj['record']" t-as="l">
+                                        <td class="text-center">
+                                            <t t-esc="l['date']" t-options="{'widget':'date'}"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['misbehaviour_type'].title()" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['misbehaviour_category_id']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['misbehaviour_action']" />
+                                        </td>
+                                        <td class="text-center">
+                                            <t t-esc="l['state']" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

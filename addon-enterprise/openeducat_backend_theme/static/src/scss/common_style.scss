@@ -1,0 +1,28 @@
+.btn-secondary,.btn-secondary.disabled, .btn-secondary:disabled,.btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle{
+    color: #4c4c4c;
+    background-color: white;
+    border-color: #cccccc;
+
+    &:hover,&:focus{
+        background:#f0f0f0;
+        color: #4c4c4c;
+        border-color: #cccccc;
+    }
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show > .btn-secondary.dropdown-toggle:focus{
+    box-shadow:none !important;
+}
+
+
+
+.o_cp_right > nav.btn-group.o_cp_switch_buttons > .active{
+        color: #4c4c4c !important;
+        background-color: #e6e6e6 !important;
+        border-color: #adadad !important;
+}
+
+
+
+
+

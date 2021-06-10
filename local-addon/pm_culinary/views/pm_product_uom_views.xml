@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+    <record id="pm_product_uom_view_list" model="ir.ui.view">
+      <field name="name">pm.product.uom.view.list</field>
+      <field name="model">pm.product.uom</field>
+      <field name="arch" type="xml">
+        <tree string="UoM">
+          <field name="name" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="pm_product_uom_view_form" model="ir.ui.view">
+      <field name="name">pm.product.uom.view.form</field>
+      <field name="model">pm.product.uom</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name" />
+            </group>
+          </sheet>
+
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="config_product_uom_action" model="ir.actions.act_window">
+      <field name="name">UoM</field>
+      <field name="res_model">pm.product.uom</field>
+      <field name="view_mode">tree,kanban,form</field>
+    </record>
+  </data>
+</odoo>

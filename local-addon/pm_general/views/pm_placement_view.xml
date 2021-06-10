@@ -1,0 +1,111 @@
+<odoo>
+    <data>
+        <record id="custom_placement_smart_button" model="ir.ui.view">
+            <field name="name">placement.smart.buttons</field>
+            <field name="model">op.student</field>
+            <field name="inherit_id" ref="openeducat_placement_enterprise.placement_smart_button"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='get_placement']" position="replace">
+                    <button class="btn oe_stat_button" type="object"
+                            name="get_placement"
+                            style="border-right: 1px solid;"
+                            icon="fa-briefcase">
+                        <field string="Internships" name="placement_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+            </field>
+        </record> 
+
+        <record id="custom_view_op_placement_offer_tree" model="ir.ui.view">
+            <field name="name">op.placement.offer.tree</field>
+            <field name="model">op.placement.offer</field>
+            <field name="inherit_id" ref="openeducat_placement_enterprise.view_op_placement_offer_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='join_date']" position="after">
+                    <field name="p_end_date"/>
+                </xpath>
+                <xpath expr="//field[@name='training_period']" position="after">
+                    <field name="p_completed"/>
+                    <field name="p_country_id"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="custom_view_op_placement_offer_form" model="ir.ui.view">
+            <field name="name">op.placement.offer.tree</field>
+            <field name="model">op.placement.offer</field>
+            <field name="inherit_id" ref="openeducat_placement_enterprise.view_op_placement_offer_form"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//field[@name='join_date']" position="after">
+                   
+                </xpath>
+                <xpath expr="//field[@name='training_period']" position="after">
+                    
+                   
+                    
+                </xpath> 
+                <xpath expr="//group[@name='training_period']" position="after"> -->
+                <xpath expr="//form" position="replace">
+                    <form string="Internship">
+                        <header groups="openeducat_core.group_op_back_office_admin,openeducat_core.group_op_back_office">
+                            <button name="placement_offer" states="draft" type="object" string="Offer"
+                                    class="oe_highlight"/>
+                            <button name="placement_join" states="offer" type="object" string="Join" class="oe_highlight"/>
+                            <button name="confirm_rejected" states="offer,join" string="Reject" type="object"/>
+                            <button name="confirm_cancel" states="draft,offer,join" string="Cancel" type="object"/>
+                            <button name="confirm_to_draft" states="reject,cancel" string="Set to Draft" type="object"/>
+                            <field name="state" widget="statusbar" statusbar_visible="draft,offer,join"/>
+                        </header>
+                        <sheet>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="student_id" placeholder="Student Name" style="width: 100%%"/>
+                                </h1>
+                            </div>
+                         
+                            <group col="4" colspan="4"> 
+                                <field name="course_id"/>
+                                <field name="batch_id" context="{'course_id': course_id,'get_parent_batch':1}"/>
+                                <field name="semester_id" context="{'batch_id': batch_id,'get_parent_semester':1}"/>
+                                <field name="subject_id" context="{'semester_id': semester_id,'get_parent_subject':1}"/>
+                                <field name="join_date"/>
+                                <field name="p_end_date"/>
+                                <field name="offer_package" string="Salary"  widget="monetary"/>
+                                <field name="training_period"/>
+                                <field name="p_accommodation" />
+                                <field name="p_transportation" />
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                            <group string="Company Information" name="categorization" col="4" colspan="4"> 
+                                <field name="name" placeholder="Company Name"/>
+                                <field name="p_contact1"/>
+                                <field name="p_contact2"/>  
+                                <field name="p_address"/>
+                                <field name="p_city"/>
+                                <field name="p_zip"/>
+                                <field name="p_state_id"/>
+                                <field name="p_country_id"/>
+                            </group>
+                            <group string="Performance Information" col="4" colspan="4"> 
+                                <field name="p_project1"/>   
+                                <field name="p_project1_deadline"/>
+                                <field name="p_project2"/>
+                                <field name="p_project2_deadline"/>
+                                <field name="p_portfolio"/>
+                                <field name="p_absences"/>   
+                                <field name="p_completed"/>
+                                <field name="p_grade"/>   
+                                <field name="p_status"/> 
+                            </group>
+                        </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+  

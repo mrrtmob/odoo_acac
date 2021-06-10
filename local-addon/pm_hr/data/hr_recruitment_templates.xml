@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <template id="recruitment_request_template">
+        Request approved<br/>
+        <ul>
+             <t t-if="request.recruitment_type == 'replacement' ">
+                <li> Replacement: <a href="#" t-att-data-oe-id="request.employee_id.id" data-oe-model="hr.employee"><t t-esc="request.employee_id.name"/></a></li>
+            </t>
+             <t t-if="request.recruitment_type == 'new_position' ">
+                <li> New Position: <a href="#" t-att-data-oe-id="request.job_position_id.id" data-oe-model="hr.job"><t t-esc="request.job_position_id.name"/></a></li>
+            </t>
+        </ul>
+        </template>
+    </data>
+</odoo>

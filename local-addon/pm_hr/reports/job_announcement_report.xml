@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="job_announcement_report">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <style  type="text/css">
+                            @font-face {
+                                font-family: 'Georgia';
+                                font-style: normal;
+                                src: url('/pm_general/static/src/fonts/georgia/Georgia.ttf') format('truetype');
+                            }
+                            .container-style {
+                                font-family: 'Georgia' !important;
+                                color: #404040;
+                            }
+                            .wrapper {
+                                font-size: 18px !important;
+                            }
+                            .img-logo {
+                                position: relative;
+                                width: 250px;
+                                text-align: center; 
+                                margin: auto;
+                            }
+                            .font-unset {
+                                font-family: unset !important;
+                            }
+                            .mt-5rem{
+                                margin-top: 5rem;
+                            }
+                            .deadline {
+                                font-size: 20px;
+                                font-weight: bold;
+                            }
+                            .contacted-email .title {
+                                width: 200px;
+                            }
+                            .raw-html p {
+                                font-size: 18px !important;
+                                margin: 0 auto;
+                            }
+                            .pl-8rem {
+                                padding-left: 8rem;
+                            }
+                        </style>
+                        <div class="container-fluid container-style px-5">
+                            <img src="/pm_general/static/src/img/icon.png" style="width:250px; text-align: center; margin:auto"/>
+                            <div>
+                                <h5 class="text-center font-weight-bold">JOB ANNOUNCEMENTS</h5>
+                                <h5 class="text-center font-weight-bold">Academy of Culinary Arts – Cambodia (ACAC)</h5>
+                            </div>
+                            <div class="wrapper">
+                                <!-- background section -->
+                                <p class="font-weight-bold text-center m-3"><u>Background</u></p>
+                                <p t-esc="job['background']" />
+
+                                <!-- position and qualification section -->
+                                <p>Position Available and Qualifications:</p>
+                                <!-- <p class="font-weight-bold mb-2"><u>1. IT Manager</u> (1 position)</p>-->
+                                <p class="font-weight-bold mb-2">
+                                    <u>1. <t t-esc="job['name']" /></u>
+                                    (<t t-esc="job['no_of_recruitment']" /> position<span t-if="job['no_of_recruitment'] > 1">s</span>)</p>
+
+                                <!-- job description -->
+                                <div class="raw-html">
+                                    <t t-raw="job['job_description']" />
+                                </div>
+
+                                <!-- qualification section -->
+                                <p class="font-weight-bold text-center mb-0 mt-3"><u>Qualifications</u></p>
+                                <div class="raw-html">
+                                    <t t-raw="job['job_requirement']" />
+                                </div>
+
+                                <!-- applications section -->
+                                <p class="font-weight-bold text-center mb-0 mt-3"><u>Applications</u></p>
+                                
+                                <p>
+                                    If you are creative and able to take initiatives; energetic, enthusiastic,
+                                    and eager to take on new challenges; and are comfortable in being part of a team responsible
+                                    for establishing a new institution then please forward a letter of interest and your CV
+                                    showing your capabilities and ability to meet the qualifications required by the position.
+                                    Short listed individuals will be interviewed by a panel in person, by phone or skype.
+                                    All positions are Phnom Penh based
+                                </p>
+
+                                <!-- contact and how to apply section -->
+                                <p class="font-weight-bold mt-0 mb-0">How to apply:</p>
+                                <div class="raw-html">
+                                    <t t-raw="job['how2apply']" />
+                                </div>
+
+                                <!-- <p>Interested individuals can apply by submitting an Expression of Interest and a detailed CV to:</p>
+                                    <div class="contacted-email d-flex justify-content-center pl-8rem font-weight-bold">
+                                        <div class="title">
+                                            <div>Attn:</div>
+                                            <div>Email:</div>
+                                            <div>CC:</div>
+                                            <div>Visit our website:</div>
+                                        </div>
+                                        <div class="value">
+                                            
+                                            <div>Mrs. Srun Chanlay<span  t-esc="job['name']" /></div> 
+                                            <div>operations.manager@acac.edu.kh</div>
+                                            <div>acac@shift360.ch</div>
+                                            <div>www.acac.edu.kh</div>
+                                        </div>
+                                    </div> -->
+                           
+                                <br/>
+                                <p class="deadline text-center">The deadline for application is 5 pm,
+                                    <t t-esc="job['due_date']" t-options='{"widget": "date", "format": "dd MMMM, yyyy"}' />
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

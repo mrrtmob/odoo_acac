@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="template_border">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <style  type="text/css">
+                        /* Magic happens here */
+                        .page_border{
+                            border-left: 5px solid #daa520;
+                            border-right: 5px solid #daa520;
+                            border-top: 5px solid #daa520;
+                            border-bottom: 5px solid #daa520;
+                            position: fixed;
+                            z-index: 9999;
+                        /* If you don't get full page border, play around with the height */
+                            height: 331mm;
+                            left: 0px;
+                            top:0;
+                            width:100%
+                        }
+                    </style>
+                    <!-- Magic happens here -->
+                    <!-- Part of code that makes full page border. If you are overriding the entire header, include this below line in that -->
+                    <div class="page_border"></div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

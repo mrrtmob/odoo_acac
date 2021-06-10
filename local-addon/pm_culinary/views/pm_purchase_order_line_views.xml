@@ -1,0 +1,29 @@
+<odoo>
+  <data>
+    <record id="purchase_order_line_view_graph" model="ir.ui.view">
+      <field name="name">purchase.order.line.view.graph</field>
+      <field name="model">purchase.order.line</field>
+      <field name="arch" type="xml">
+        <graph string="Purchase Order Lines" type="line">
+          <field name="create_date" />
+          <field name="price_subtotal" type="measure" />
+        </graph>
+      </field>
+    </record>
+
+    <record id="purchase_order_line_view_tree" model="ir.ui.view">
+      <field name="name">purchase.order.line.view.tree</field>
+      <field name="model">purchase.order.line</field>
+      <field name="arch" type="xml">
+        <tree string="Purchase Order Lines" default_order="create_date" create="false">
+          <field name="currency_id" invisible="1"/>
+          <field name="product_id" />
+          <field name="create_date" />
+          <field name="product_qty" />
+          <field name="price_unit" widget="monetary" />
+          <field name="price_subtotal" widget="monetary" />
+        </tree>
+      </field>
+    </record>
+  </data>
+</odoo>

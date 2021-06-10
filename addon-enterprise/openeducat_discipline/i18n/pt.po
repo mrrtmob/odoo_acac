@@ -1,0 +1,1179 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* openeducat_discipline
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-12 10:21+0000\n"
+"PO-Revision-Date: 2019-11-12 10:21+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: openeducat_discipline
+#: model:mail.template,body_html:openeducat_discipline.email_indiscipline_electronic_gadget_template
+msgid ""
+"\n"
+"<p>Dear Parent</p>\n"
+"<br/>\n"
+"<p>In reference to rules and regulations of the school as laid down by the school board of governors on the matter of electronics, I would like to bring to your attention that your Child <b>${object.student_id.name}</b> Class <b>${object.course_id.name}</b> was caught in possession of an electronic gadget which is against the set school rules and regulations.</p>\n"
+"<br/>\n"
+"<p>We feel this is a serious matter and you are therefore requested to accompany your Child to school on <b>${object.meeting_datetime}</b> to discuss this issue further with the administrators.</p>\n"
+"<br/>\n"
+"<p>Looking forward to your co-operation.</p>\n"
+"<br/>\n"
+"<p>Yours faithfully,</p>\n"
+"            \n"
+"            "
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:mail.template,body_html:openeducat_discipline.email_boy_girl_relationship_template
+msgid ""
+"\n"
+"<p>Dear Parent</p>\n"
+"<br/>\n"
+"<p>This is to bring to your attention that your Child <b>${object.student_id.name}</b> Class <b>${object.course_id.name}</b> has been involved in a boy - girl relationship which has been affecting his concentration in class.</p>\n"
+"<br/>\n"
+"<p>we feel that this a serious offence which is against the school policy bearing in mind that as a young student he/she should display good character.</p>\n"
+"<br/>\n"
+"<p>You are therefore asked to accompany your child to school on <b>${object.meeting_datetime}</b> to discuss the matter with the administration. Both parents have to be present.</p>\n"
+"<br/>\n"
+"<p>Hoping for your full co-operation.</p>\n"
+"<br/>\n"
+"<p>Yours faithfully,</p>\n"
+"            \n"
+"            "
+msgstr ""
+"\n"
+"<P> Caros Pais </ p>\n"
+"<br/>\n"
+"<P> Esta é trazer à sua atenção que o seu filho <b> $ {object.student_id.name} </ b> Class <b> $ {object.course_id.name} </ b> tem sido envolvido em um menino -. relação menina que vem afetando a sua concentração na classe </ p>\n"
+"<br/>\n"
+"<P> nós sentimos que esta é uma ofensa grave que é contra a política da escola tendo em mente que, como um jovem estudante, ele / ela deve mostrar bom caráter. </ P>\n"
+"<br/>\n"
+"<P> Está, portanto, pediu para acompanhar o seu filho para a escola em <b> $ {object.meeting_datetime} </ b> para discutir o assunto com a administração. Ambos os pais têm de estar presentes. </ P>\n"
+"<br/>\n"
+"<P> Na esperança para o seu co-operação completa. </ P>\n"
+"<br/>\n"
+"<P> Atenciosamente, </ p>\n"
+"            \n"
+"            "
+
+#. module: openeducat_discipline
+#: model:mail.template,body_html:openeducat_discipline.email_suspension_from_school_template
+msgid ""
+"\n"
+"<p>Dear Parent</p>\n"
+"<br/>\n"
+"<p>This is to bring to your attention that your Child <b>${object.student_id.name}</b> Class <b>${object.discipline_id.course_id.name}</b> has been given suspension effective from <b>${object.suspend_from_date}</b> until <b>${object.suspend_to_date}</b>.</p>\n"
+"<br/>\n"
+"<p>The school administration arrived at this decision after your child was grossly involved in <b>${object.misbehaviour_category_id.name}</b> within the school compound. This is a serious offense which is even banned by government.</p>\n"
+"<br/>\n"
+"<p>You are therefore asked to ensure that you guide and counsel your child during the suspension period. You are further asked to accompany you child back to school on <b>${object.suspend_to_date}</b> to allow your child resume studies.</p>\n"
+"<br/>\n"
+"<p>Yours faithfully,</p>\n"
+"            \n"
+"            "
+msgstr ""
+"\n"
+"<P> Caros Pais </ p>\n"
+"<br/>\n"
+"<P> Esta é trazer à sua atenção que o seu filho <b> $ {object.student_id.name} </ b> Class <b> $ {object.discipline_id.course_id.name} </ b> tem sido dada suspensão eficaz de <b> $ {object.suspend_from_date} </ b> até <b> $ {object.suspend_to_date} </ b>. </ p>\n"
+"<br/>\n"
+"<P> A administração da escola chegou a esta decisão depois que seu filho foi grosseiramente envolvido em <b> $ {object.misbehaviour_category_id.name} </ b> dentro do complexo escolar. Esta é uma ofensa grave que é mesmo proibido pelo governo. </ P>\n"
+"<br/>\n"
+"<P> Você são convidados a garantir que você orientar e instruir o seu filho durante o período de suspensão. Está ainda pediu para acompanhá-lo criança de volta à escola no <b> $ {object.suspend_to_date} </ b> para permitir que seus estudos de currículo criança. </ P>\n"
+"<br/>\n"
+"<P> Atenciosamente, </ p>\n"
+"            \n"
+"            "
+
+#. module: openeducat_discipline
+#: model:mail.template,body_html:openeducat_discipline.email_fighting_in_school_template
+msgid ""
+"\n"
+"<p>Dear Parent</p>\n"
+"<br/>\n"
+"<p>This is to bring to your attention that your Child <b>${object.student_id.name}</b> was involved in a fight on ________ with a fellow student in school which is against the school rules.</p>\n"
+"<br/>\n"
+"<p>In view of the serious nature of the issues, the school administration requires you to accompany your child to school on <b>${object.meeting_datetime}</b> to discuss this matter further with administration.</p>\n"
+"<br/>\n"
+"<p>Hoping for your full co-operation.</p>\n"
+"<br/>\n"
+"<p>Yours faithfully,</p>\n"
+"            \n"
+"            "
+msgstr ""
+"\n"
+"<P> Caros Pais </ p>\n"
+"<br/>\n"
+"<P> Esta é trazer à sua atenção que o seu filho <b> $ {object.student_id.name} </ b> se envolveu em uma briga em ________ com um colega na escola que é contra as regras da escola. </ p>\n"
+"<br/>\n"
+"<P> Tendo em conta a gravidade dos problemas, a administração da escola exige que você acompanhar o seu filho para a escola em <b> $ {object.meeting_datetime} </ b> para discutir este assunto com a administração. </ P>\n"
+"<br/>\n"
+"<P> Na esperança para o seu co-operação completa. </ P>\n"
+"<br/>\n"
+"<P> Atenciosamente, </ p>\n"
+"            \n"
+"            "
+
+#. module: openeducat_discipline
+#: model:mail.template,body_html:openeducat_discipline.email_cheating_in_the_exam_template
+msgid ""
+"\n"
+"<p>Dear Parent</p>\n"
+"<br/>\n"
+"<p>This is to bring to your notice that your Child <b>${object.student_id.name} Class <b>${object.course_id.name}</b> was caught handed copying in the Mid-Term II, [Date] [Class] [Subject] Examination.</p>\n"
+"<br/>\n"
+"<p>We feel that this is a serious offence which is against the school policy bearing in mind that as a young student he/she should display good character.</p>\n"
+"<br/>\n"
+"<p>You are therefore asked to accompany your son/daughter to school on <b>${object.meeting_datetime}</b> to discuss this issue with the administration.</p>\n"
+"<br/>\n"
+"<p>Hoping for full co-operation from your end.</p>\n"
+"<br/>\n"
+"<p>Yours faithfully,</p>\n"
+"            \n"
+"            "
+msgstr ""
+"\n"
+"<P> Caros Pais </ p>\n"
+"<br/>\n"
+"<P> Esta é trazer para o seu aviso de que seu filho <b> $ {object.student_id.name} Class <b> $ {object.course_id.name} </ b> foi pego cópia entregue na Mid-Term II [Data] [Classe] [assunto] Exame. </ p>\n"
+"<br/>\n"
+"<P> Nós sentimos que este é um delito grave, que é contra a política da escola tendo em mente que, como um jovem estudante, ele / ela deve mostrar bom caráter. </ P>\n"
+"<br/>\n"
+"<P> Está, portanto, pediu para acompanhar o seu filho / filha para a escola em <b> $ {object.meeting_datetime} </ b> para discutir este assunto com a administração. </ P>\n"
+"<br/>\n"
+"<P> Na esperança de uma cooperação plena de seu fim. </ P>\n"
+"<br/>\n"
+"<P> Atenciosamente, </ p>\n"
+"            \n"
+"            "
+
+#. module: openeducat_discipline
+#: model:mail.template,body_html:openeducat_discipline.email_neglecting_school_rules_template
+msgid ""
+"\n"
+"<p>Dear Parent</p>\n"
+"<br/>\n"
+"<p>This is to bring to your notice that your Child <b>${object.student_id.name}</b> Class <b>${object.course_id.name}</b> [REASON] on [DATETIME] inspite of having been reminded over this matter on several occasions.</p>\n"
+"<br/>\n"
+"<p>It is the school policy that every student has to be in [REASON]. This is to ensure proper discipline in maintained in the school.</p>\n"
+"<br/>\n"
+"<p>Therefore, you are kindly requested to come to school accompanied by your child on <b>${object.meeting_datetime}</b> in order to discuss this matter with the administration.</p>\n"
+"<br/>\n"
+"<p>Hoping for a favourable response and thanking you in anticipation.</p>\n"
+"<br/>\n"
+"<p>Yours faithfully,</p>\n"
+"            \n"
+"            "
+msgstr ""
+"\n"
+"<P> Caros Pais </ p>\n"
+"<br/>\n"
+"<P> Esta é trazer para o seu aviso de que seu filho <b> $ {object.student_id.name} </ b> Class <b> $ {object.course_id.name} </ b> [Razão] em [DATETIME ] apesar de ter sido lembrado sobre este assunto em várias ocasiões. </ p>\n"
+"<br/>\n"
+"<P> É a política da escola que cada aluno tem de estar em [REASON]. Isso é para garantir a disciplina adequada no mantidos na escola. </ P>\n"
+"<br/>\n"
+"<P> Portanto, você são convidados a vir para a escola acompanhada por seu filho em <b> $ {object.meeting_datetime} </ b>, a fim de discutir o assunto com a administração. </ P>\n"
+"<br/>\n"
+"<P> Esperando uma resposta favorável e agradecendo-lhe antecipadamente. </ P>\n"
+"<br/>\n"
+"<P> Atenciosamente, </ p>\n"
+"            \n"
+"            "
+
+#. module: openeducat_discipline
+#: model:mail.template,body_html:openeducat_discipline.email_student_apology_letter_template
+msgid ""
+"\n"
+"<p>Dear Sir,</p>\n"
+"<br/>\n"
+"<p>Write your Letter</p>\n"
+"<br/>\n"
+"<p>Yours faithfully,</p>\n"
+"<p>${object.student_id.name}</p>\n"
+"            \n"
+"            "
+msgstr ""
+"\n"
+"<P> Caro senhor, </ p>\n"
+"<br/>\n"
+"<P> Escreva a carta </ ​​p>\n"
+"<br/>\n"
+"<P> Atenciosamente, </ p>\n"
+"<P> $ {object.student_id.name} </ p>\n"
+"            \n"
+"            "
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__fine_amount
+msgid " Fine Amount"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:mail.template,subject:openeducat_discipline.email_student_apology_letter_template
+msgid "${object.student_id.name} Apology Letter"
+msgstr "$ {Object.student_id.name} Apologia Letter"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_descipline_progression_report
+msgid "<strong>Discipline:</strong>"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_report
+msgid "<strong>Misbehaviour Type Details</strong>"
+msgstr "<Strong> Mau Comportamento Tipo Detalhes </ strong>"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_report
+msgid "<strong>Student Wise Details</strong>"
+msgstr "<Strong> Student detalhes sábios </ strong>"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_report
+msgid "Action"
+msgstr "Ação"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_needaction
+msgid "Action Needed"
+msgstr "Acção Necessária"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__state__action_taken
+msgid "Action Taken"
+msgstr "Medida tomada"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_elearning_rules__rules_action
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__misbehaviour_action
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_portal_discipline
+msgid "Action To Be Taken"
+msgstr "Ação a ser tomada"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_progress_discipline_wizad_form
+msgid "Add"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:ir.actions.act_window,name:openeducat_discipline.act_win_progress_discipline_wizard_action
+msgid "Add Discipline"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_portal_discipline
+msgid "Apology Form"
+msgstr "apologia Form"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.portal_student_submit_letter
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_form
+msgid "Apology Letter"
+msgstr "Carta de desculpas"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_attachment_count
+msgid "Attachment Count"
+msgstr "Conta Anexada"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.portal_student_submit_letter
+msgid "Attachments:"
+msgstr "anexos:"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__state__awaiting_letter
+msgid "Awaiting Letter"
+msgstr "aguardando Letter"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__state__awaiting_meeting
+msgid "Awaiting Meeting"
+msgstr "aguardando Meeting"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.take_action_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_search
+msgid "Category"
+msgstr "Categoria"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__misbehaviour_type
+msgid "Category Type"
+msgstr "categoria Tipo"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__child_id
+msgid "Child Categories"
+msgstr "Categorias Descendentes"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_form
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_progress_discipline_wizad_form
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_form
+msgid "Close"
+msgstr "Fechar"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__master_comment
+msgid "Comment By Discipline Master"
+msgstr "Comentário de Disciplina Mestre"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__parent_comment
+msgid "Comment By Discipline Master (Meeting With Parents)"
+msgstr "Comentário por Disciplina Master (Encontro com os pais)"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_elearning_rules__company_id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__company_id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__company_id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_school_offences__company_id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__complete_name
+msgid "Complete Name"
+msgstr "Nome Completo"
+
+#. module: openeducat_discipline
+#: code:addons/openeducat_discipline/models/discipline_record.py:0
+#, python-format
+msgid "Compose Email"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:ir.ui.menu,name:openeducat_discipline.menu_op_discipline_config
+msgid "Configuration"
+msgstr "Configuração"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__course_id
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_descipline_progression_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_progression_discipline_portal_inherit
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_search
+msgid "Course"
+msgstr "Curso"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_descipline_progression_report
+msgid "Create By"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__discipline_master
+msgid "Created By"
+msgstr "Criado por"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_discipline_progress_wizard__create_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_elearning_rules__create_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_misbehaviour_type__create_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__create_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__create_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_school_offences__create_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_student_wise__create_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__create_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__create_uid
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_progression_discipline_portal_inherit
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_discipline_progress_wizard__create_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_elearning_rules__create_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_misbehaviour_type__create_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__create_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__create_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_school_offences__create_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_student_wise__create_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__create_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__date
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_descipline_progression_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_progression_discipline_portal_inherit
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_report
+msgid "Date"
+msgstr "Data"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_discipline_progress_wizard__discipline_ids
+#: model:ir.ui.menu,name:openeducat_discipline.menu_op_discipline_root
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_student_inherit_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_student_progress_discipline_form_inherite
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_student_progress_discipline_tree_inherite
+msgid "Discipline"
+msgstr "Disciplina"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_portal_discipline
+msgid ""
+"Discipline\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+msgstr ""
+"Disciplina\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_progression_discipline_portal_inherit
+msgid ""
+"Discipline\n"
+"                                <strong style=\"float:left;padding: 0 20px 0 20px;\">+</strong>"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_student__discipline_ids
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_student_inherit_discipline
+msgid "Discipline Details"
+msgstr "disciplina Detalhes"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__discipline_id
+msgid "Discipline Id"
+msgstr "disciplina Id"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_discipline_progress_wizard
+msgid "Discipline Progress Wizard"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__discipline_id
+msgid "Discipline Record"
+msgstr "disciplina Registro"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_op_discipline
+msgid "Discipline Record Details"
+msgstr "Disciplina Detalhes do Registro"
+
+#. module: openeducat_discipline
+#: model:ir.actions.act_window,name:openeducat_discipline.act_open_op_discipline_view
+#: model:ir.ui.menu,name:openeducat_discipline.menu_op_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_form
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_pivot
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_search
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_tree
+msgid "Discipline Records"
+msgstr "disciplina Registros"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.portal_student_submit_letter
+msgid "Discription:"
+msgstr "discription:"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_discipline_progress_wizard__display_name
+#: model:ir.model.fields,field_description:openeducat_discipline.field_elearning_rules__display_name
+#: model:ir.model.fields,field_description:openeducat_discipline.field_misbehaviour_type__display_name
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__display_name
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__display_name
+#: model:ir.model.fields,field_description:openeducat_discipline.field_report_openeducat_discipline_misbehaviour_type_report__display_name
+#: model:ir.model.fields,field_description:openeducat_discipline.field_report_openeducat_discipline_student_wise_report__display_name
+#: model:ir.model.fields,field_description:openeducat_discipline.field_school_offences__display_name
+#: model:ir.model.fields,field_description:openeducat_discipline.field_student_wise__display_name
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__display_name
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__display_name
+msgid "Display Name"
+msgstr "Nome a Exibir"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__state__done
+msgid "Done"
+msgstr "Concluído"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__state__draft
+msgid "Draft"
+msgstr "Rascunho"
+
+#. module: openeducat_discipline
+#: model:ir.actions.act_window,name:openeducat_discipline.act_open_elearning_rules_view
+#: model:ir.ui.menu,name:openeducat_discipline.menu_op_elearning_rules
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_elearning_rules_form
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_elearning_rules_search
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_elearning_rules_tree
+msgid "Elearning Rules"
+msgstr "Regras de e-learning"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_elearning_rules
+msgid "Elearning Rules Details"
+msgstr "Elearning Regras Detalhes"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__state__email_sent
+msgid "Email Sent"
+msgstr "E-mail enviado"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_mail_compose_message
+msgid "Email composition wizard"
+msgstr "Assistente de composição de e-mail"
+
+#. module: openeducat_discipline
+#: model:mail.template,subject:openeducat_discipline.email_fighting_in_school_template
+msgid "Fighting in school"
+msgstr "Lutando na escola"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__fine
+msgid "Fine"
+msgstr "Bem"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Seguidores (Canais)"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Parceiros)"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_misbehaviour_type__from_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_student_wise__from_date
+msgid "From Date"
+msgstr "Da data"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_report
+msgid "From Date :"
+msgstr "Da data :"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_student_progress_discipline_form_inherite
+msgid "Get Discipline"
+msgstr "Obter disciplina"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_search
+msgid "Group By..."
+msgstr "Agrupar Por..."
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__priority__2
+msgid "High"
+msgstr "Alto"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_discipline_progress_wizard__id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_elearning_rules__id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_misbehaviour_type__id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_report_openeducat_discipline_misbehaviour_type_report__id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_report_openeducat_discipline_student_wise_report__id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_school_offences__id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_student_wise__id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__id
+msgid "ID"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,help:openeducat_discipline.field_op_discipline__message_needaction
+#: model:ir.model.fields,help:openeducat_discipline.field_op_discipline__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "Se selecionado, as novas mensagens requerem a sua atenção."
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,help:openeducat_discipline.field_op_discipline__message_has_error
+#: model:ir.model.fields,help:openeducat_discipline.field_op_discipline__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Se selecionado, algumas mensagens tem um erro de distribuição."
+
+#. module: openeducat_discipline
+#: model:mail.template,subject:openeducat_discipline.email_indiscipline_electronic_gadget_template
+msgid "Indiscipline - Electronic gadget"
+msgstr "Indisciplina - Dispositivo eletrônico"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_is_follower
+msgid "Is Follower"
+msgstr "É um Seguidor"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_discipline_progress_wizard____last_update
+#: model:ir.model.fields,field_description:openeducat_discipline.field_elearning_rules____last_update
+#: model:ir.model.fields,field_description:openeducat_discipline.field_misbehaviour_type____last_update
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline____last_update
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category____last_update
+#: model:ir.model.fields,field_description:openeducat_discipline.field_report_openeducat_discipline_misbehaviour_type_report____last_update
+#: model:ir.model.fields,field_description:openeducat_discipline.field_report_openeducat_discipline_student_wise_report____last_update
+#: model:ir.model.fields,field_description:openeducat_discipline.field_school_offences____last_update
+#: model:ir.model.fields,field_description:openeducat_discipline.field_student_wise____last_update
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student____last_update
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action____last_update
+msgid "Last Modified on"
+msgstr "Última Modificação em"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_discipline_progress_wizard__write_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_elearning_rules__write_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_misbehaviour_type__write_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__write_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__write_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_school_offences__write_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_student_wise__write_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__write_uid
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__write_uid
+msgid "Last Updated by"
+msgstr "Última Atualização por"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_discipline_progress_wizard__write_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_elearning_rules__write_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_misbehaviour_type__write_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__write_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__write_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_school_offences__write_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_student_wise__write_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__write_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__write_date
+msgid "Last Updated on"
+msgstr "Última Atualização em"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__priority__0
+msgid "Low"
+msgstr "Baixo"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Anexos Principais"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__misbehaviour_type__misbehaviour_type__major
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__misbehaviour_type__major
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_misbehaviour_category__misbehaviour_type__major
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__school_offences__offences_type__major
+msgid "Major"
+msgstr "Principal"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_search
+msgid "Master"
+msgstr "mestre"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_portal_discipline
+msgid "Meeting Date"
+msgstr "data da reunião"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__meeting_datetime
+msgid "Meeting Date Time"
+msgstr "Reunião Data Hora"
+
+#. module: openeducat_discipline
+#: code:addons/openeducat_discipline/models/discipline_record.py:0
+#, python-format
+msgid "Meeting Date cannot be set before Today."
+msgstr "Data da reunião não pode ser definido antes de hoje."
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_form
+msgid "Meeting With Parents"
+msgstr "Reunião com os pais"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_has_error
+msgid "Message Delivery error"
+msgstr "Gerir erro de entrega"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_ids
+msgid "Messages"
+msgstr "Mensagens"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__misbehaviour_type__misbehaviour_type__minor
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__misbehaviour_type__minor
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_misbehaviour_category__misbehaviour_type__minor
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__school_offences__offences_type__minor
+msgid "Minor"
+msgstr "Menor"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_portal_discipline
+msgid "Misbehave Type"
+msgstr "misbehave Tipo"
+
+#. module: openeducat_discipline
+#: model:product.product,name:openeducat_discipline.df_product_1
+#: model:product.template,name:openeducat_discipline.df_product_1_product_template
+msgid "Misbehave fine"
+msgstr "misbehave fina"
+
+#. module: openeducat_discipline
+#: model:ir.actions.act_window,name:openeducat_discipline.act_open_misbehaviour_category_view
+#: model:ir.ui.menu,name:openeducat_discipline.menu_discipline_category
+msgid "Misbehaviour Categories"
+msgstr "mau comportamento Categorias"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__misbehaviour_category_id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__misbehaviour_category_id
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_misbehaviour_category_form
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_misbehaviour_category_search
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_misbehaviour_category_tree
+msgid "Misbehaviour Category"
+msgstr "mau comportamento Categoria"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_op_misbehaviour_category
+msgid "Misbehaviour Category Details"
+msgstr "Mau comportamento detalhes da categoria"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_form
+msgid "Misbehaviour Info"
+msgstr "mau comportamento Informações"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__misbehaviour_template_id
+msgid "Misbehaviour Template"
+msgstr "Template mau comportamento"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_misbehaviour_type
+#: model:ir.model.fields,field_description:openeducat_discipline.field_misbehaviour_type__misbehaviour_type
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__misbehaviour_type
+msgid "Misbehaviour Type"
+msgstr "Mau Comportamento Tipo"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_report_openeducat_discipline_misbehaviour_type_report
+msgid "Misbehaviour Type Report"
+msgstr "Mau Comportamento Tipo de relatório"
+
+#. module: openeducat_discipline
+#: model:ir.actions.act_window,name:openeducat_discipline.misbehaviour_type_act
+#: model:ir.actions.report,name:openeducat_discipline.action_report_misbehaviour_type
+#: model:ir.ui.menu,name:openeducat_discipline.menu_misbehaviour_type
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_form
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_form
+msgid "Misbehaviour Type Wise"
+msgstr "Mau Comportamento Tipo Sábio"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_portal_discipline
+msgid "Misbehaviour category"
+msgstr "categoria mau comportamento"
+
+#. module: openeducat_discipline
+#: model:mail.template,subject:openeducat_discipline.email_boy_girl_relationship_template
+msgid "Misconduct - boy-girl relationship"
+msgstr "Má conduta - relação de menino-menina"
+
+#. module: openeducat_discipline
+#: model:mail.template,subject:openeducat_discipline.email_cheating_in_the_exam_template
+msgid "Misconduct - cheating in the exam"
+msgstr "Má conduta - batota no exame"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_search
+msgid "Month"
+msgstr "Mês"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__name
+#: model:ir.model.fields,field_description:openeducat_discipline.field_school_offences__name
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_report
+msgid "Name"
+msgstr "Nome"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_report
+msgid "Name :"
+msgstr "nome:"
+
+#. module: openeducat_discipline
+#: model:mail.template,subject:openeducat_discipline.email_neglecting_school_rules_template
+msgid "Neglecting the school rules"
+msgstr "Negligenciando as regras da escola"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__priority__1
+msgid "Normal"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__note
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_form
+msgid "Note"
+msgstr "Nota"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de Ações"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,help:openeducat_discipline.field_op_discipline__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Número de mensagens que requerem uma ação"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,help:openeducat_discipline.field_op_discipline__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Numero de mensagens com um Erro de entrega."
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,help:openeducat_discipline.field_op_discipline__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Número de mensagens não lidas"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_report
+msgid "Offences"
+msgstr "Infracções"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_school_offences__offences_type
+msgid "Offences Type"
+msgstr "Tipo de ofensas"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__parent_id
+msgid "Parent Category"
+msgstr "Categoria Ascendente"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_misbehaviour_category__parent_path
+msgid "Parent Path"
+msgstr "Caminho ascendente "
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.op_discipline_record_calendar_view
+msgid "Parents Meeting"
+msgstr "Reunião de pais"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_form
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_form
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__priority
+msgid "Priority"
+msgstr "Prioridade"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_student_progression__discipline_lines
+msgid "Progression Discipline"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__progression_id
+msgid "Progression No"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__recipients_ids
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_descipline_progression_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_progression_discipline_portal_inherit
+msgid "Recipients"
+msgstr "Destinatários"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.portal_student_submit_letter
+msgid "Recipients:"
+msgstr "destinatários:"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__action_remark
+msgid "Remark"
+msgstr "Observação"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__meeting_remark
+msgid "Remark For Meeting"
+msgstr "Observação Para Meeting"
+
+#. module: openeducat_discipline
+#: model:ir.ui.menu,name:openeducat_discipline.menu_op_discipline_report
+msgid "Reports"
+msgstr "Relatórios"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_elearning_rules__name
+msgid "Rules"
+msgstr "Regras"
+
+#. module: openeducat_discipline
+#: model:ir.ui.menu,name:openeducat_discipline.menu_op_school_config_offence
+msgid "Rules Management"
+msgstr "regras de gestão"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.portal_student_submit_letter
+msgid ""
+"SUBMIT\n"
+"                                    <span class=\"fa fa-long-arrow-right\"/>"
+msgstr ""
+"ENVIAR\n"
+"                                    <Span class = \"fa fa-long-seta para a direita\" />"
+
+#. module: openeducat_discipline
+#: model:ir.actions.act_window,name:openeducat_discipline.act_open_school_offences_view
+#: model:ir.ui.menu,name:openeducat_discipline.menu_op_school_offences
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_school_offences_form
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_school_offences_search
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_school_offences_tree
+msgid "School Offences"
+msgstr "Infracções escolares"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_school_offences
+msgid "School Offences Details"
+msgstr "Escola Detalhes Infracções"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_form
+msgid "Send By Email"
+msgstr "Enviar por email"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__state
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_descipline_progression_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_progression_discipline_portal_inherit
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_report
+msgid "State"
+msgstr "Estado"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_op_student
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__student_id
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_search
+msgid "Student"
+msgstr "Aluna"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_discipline_progress_wizard__student_id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_student_wise__student_id
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__student_id
+msgid "Student Name"
+msgstr "Nome do aluno"
+
+#. module: openeducat_discipline
+#: model:ir.actions.act_window,name:openeducat_discipline.student_wise_act
+#: model:ir.actions.report,name:openeducat_discipline.action_report_student_wise
+#: model:ir.model,name:openeducat_discipline.model_student_wise
+#: model:ir.ui.menu,name:openeducat_discipline.menu_student_wise
+msgid "Student Wise"
+msgstr "estudante sábio"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_report_openeducat_discipline_student_wise_report
+msgid "Student Wise Report"
+msgstr "Relatório sábio estudante"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_op_student_progression
+msgid "Student progression"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.portal_student_submit_letter
+msgid "Subject:"
+msgstr "Sujeito:"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.take_action_form
+msgid "Submit"
+msgstr "Enviar"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_student_inherit_discipline
+msgid "Submit Letter"
+msgstr "submeter Letter"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__suspend
+msgid "Suspend"
+msgstr "Suspender"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__suspend_from_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__suspend_from_date
+msgid "Suspend From Date"
+msgstr "Suspender De Data"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_suspended_student__suspend_to_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_take_action__suspend_to_date
+msgid "Suspend To Date"
+msgstr "Suspender To Date"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields.selection,name:openeducat_discipline.selection__op_discipline__state__suspended
+msgid "Suspended"
+msgstr "suspenso"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_suspended_student
+msgid "Suspended Student Details"
+msgstr "Suspenso Detalhes Student"
+
+#. module: openeducat_discipline
+#: model:ir.actions.act_window,name:openeducat_discipline.act_open_suspended_student_view
+#: model:ir.ui.menu,name:openeducat_discipline.menu_suspended_student
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_suspended_student_form
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_suspended_student_tree
+msgid "Suspended Students"
+msgstr "Os alunos suspensos"
+
+#. module: openeducat_discipline
+#: model:mail.template,subject:openeducat_discipline.email_suspension_from_school_template
+msgid "Suspension from school"
+msgstr "Suspensão da escola"
+
+#. module: openeducat_discipline
+#: model:ir.actions.act_window,name:openeducat_discipline.take_action_act
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.take_action_form
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_form
+msgid "Take Action"
+msgstr "Tome uma atitude"
+
+#. module: openeducat_discipline
+#: model:ir.model,name:openeducat_discipline.model_take_action
+msgid "Take Action Based on Misbehaviour"
+msgstr "Agir com base mau comportamento"
+
+#. module: openeducat_discipline
+#: code:addons/openeducat_discipline/wizard/take_action_wizard.py:0
+#, python-format
+msgid "The value of the deposit amount must be positive."
+msgstr ""
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.portal_student_submit_letter
+msgid "There are currently no information for your account!!!"
+msgstr "Não existem informações para a sua conta !!!"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_misbehaviour_type__to_date
+#: model:ir.model.fields,field_description:openeducat_discipline.field_student_wise__to_date
+msgid "To Date"
+msgstr "Até a presente data"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_report
+msgid "To Date :"
+msgstr "Até a presente data :"
+
+#. module: openeducat_discipline
+#: code:addons/openeducat_discipline/wizard/misbehaviour_type_wizard.py:0
+#: code:addons/openeducat_discipline/wizard/student_wise_wizard.py:0
+#: code:addons/openeducat_discipline/wizard/take_action_wizard.py:0
+#, python-format
+msgid "To Date cannot be set before From Date."
+msgstr ""
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_search
+msgid "Today"
+msgstr "Hoje"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_student_progression__total_discipline
+msgid "Total Discipline"
+msgstr "Disciplina Total"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_search
+msgid "Type"
+msgstr "Tipo"
+
+#. module: openeducat_discipline
+#: model:product.product,uom_name:openeducat_discipline.df_product_1
+#: model:product.template,uom_name:openeducat_discipline.df_product_1_product_template
+msgid "Units"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_unread
+msgid "Unread Messages"
+msgstr "Mensagens Por Ler"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Contador de Mensagens Não Lidas"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_student_progress_discipline_form_inherite
+msgid "Values"
+msgstr "Valores"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,field_description:openeducat_discipline.field_op_discipline__website_message_ids
+msgid "Website Messages"
+msgstr "Mensagens do Website"
+
+#. module: openeducat_discipline
+#: model:ir.model.fields,help:openeducat_discipline.field_op_discipline__website_message_ids
+msgid "Website communication history"
+msgstr "Histórico de Comunicação do Website"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.view_op_discipline_search
+msgid "Week"
+msgstr "Semana"
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_progress_discipline_wizad_form
+msgid "student discipline progress wizard"
+msgstr ""
+
+#. module: openeducat_discipline
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.misbehaviour_type_report
+#: model_terms:ir.ui.view,arch_db:openeducat_discipline.student_wise_report
+msgid "to"
+msgstr "para"

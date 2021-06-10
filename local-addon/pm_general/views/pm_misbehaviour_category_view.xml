@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="view_pm_misbehaviour_category_custom_form" model="ir.ui.view">
+            <field name="name">op.misbehaviour.category.form</field>
+            <field name="model">op.misbehaviour.category</field>
+            <field name="inherit_id" ref="openeducat_discipline.view_misbehaviour_category_form"/>
+            <field name="arch" type="xml">
+               
+                <xpath expr="//field[@name='misbehaviour_type']" position="after">
+                    <field name="p_demerit_points"/>  
+                </xpath>
+                <xpath expr="//field[@name='misbehaviour_template_id']" position="replace">
+    
+                </xpath>
+                <xpath expr="//field[@name='parent_id']" position="replace">
+                
+                </xpath>
+            </field>
+        </record> 
+    </data>
+</odoo>
+ 

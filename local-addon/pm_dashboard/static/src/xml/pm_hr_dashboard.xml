@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+    <t t-name="PmHRDashboard">
+        <div class="container-fluid p-5" id="hr-dashboard">
+            <div class="row main-section">
+                <div class="col-lg-3 col-sm-12 employee_chart">
+                    <div class="oh-card text-color">
+                        <div class="oh-card-body pb-0">
+                            <h4 class="mb-0">
+                            </h4>
+                            <p class="stat-head" style="padding : 0px;">Employee by Contract Type</p>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <t t-if="widget.employee_chart.employee_by_contract.contract > 0 or widget.employee_chart.employee_by_contract.probation > 0">
+                                    <div id="employee_contract_legend" class="chart-legend-rounded" />
+                                    <canvas id="employee_by_contract_chart" height="150" />
+                                </t>
+                                <div class="no-data d-flex align-items-center justify-content-center" t-else="">
+                                    <p>no data</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-12 employee_chart">
+                    <div class="oh-card text-color">
+                        <div class="oh-card-body pb-0">
+                            <h4 class="mb-0">
+                            </h4>
+                            <p class="stat-head" style="padding : 0px;">Employee by Gender</p>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <t t-if="widget.employee_chart.employee_by_gender.male > 0 or widget.employee_chart.employee_by_gender.female > 0">
+                                    <div id="employee_gender_legend" class="chart-legend-rounded" />
+                                    <canvas id="employee_by_gender_chart" height="150" />
+                                </t>
+                                <div class="no-data d-flex align-items-center justify-content-center" t-else="">
+                                    <p>no data</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-12 employee_chart">
+                    <div class="oh-card text-color">
+                        <div class="oh-card-body pb-0">
+                            <h4 class="mb-0">
+                            </h4>
+                            <p class="stat-head" style="padding : 0px;">Employee by Nationality</p>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <t t-if="widget.employee_chart.employee_by_nationality.cambodian > 0 or widget.employee_chart.employee_by_nationality.expat > 0">
+                                    <div id="employee_nationality_legend" class="chart-legend-rounded" />
+                                <canvas id="employee_by_nationality_chart" height="150" />
+                                </t>
+                                <div class="no-data d-flex align-items-center justify-content-center" t-else="">
+                                    <p>no data</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-12 text-color">
+                    <div class="turnover-rate">
+                        <p class="stat-head">
+                            Last year employee turnover rate
+                        </p>
+                        <div class="text-center">
+                            <h1>
+                                <t t-esc="widget.employee_chart.turnover_rate.this_year" />%
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="turnover-rate">
+                        <p class="stat-head">
+                            This year employee turnover rate
+                        </p>
+                        <div class="text-center">
+                            <h1>
+                                <t t-esc="widget.employee_chart.turnover_rate.last_year" />%
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- department section -->
+            <div class="row main-section">
+                <div class="col-sm-3 col-lg-4" style="padding-left: 0px;">
+
+                    <div class="col-sm-12 col-lg-12" style="padding-right: 0;">
+                        <div class="row mt-4" style="margin:0px">
+                            <div class="col-sm-12 col-lg-12 leave_request">
+                                <div class="oh-card text-color">
+                                    <div class="oh-card-body pb-0">
+                                        <p class="stat-title">Leave Request</p>
+                                        <h4 class="mb-0">
+                                            <p class="stat-count">
+                                                <t t-esc="widget.employees['leaves_to_approve']"/>
+                                            </p>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-12" style="padding-right: 0;">
+                        <div class="row mt-4" style="margin:0px">
+                            <div class="col-sm-12 col-lg-12 leave_request_this_month">
+                                <div class="oh-card text-color">
+                                    <div class="oh-card-body pb-0">
+                                        <p class="stat-title">Leave Request This Month</p>
+                                        <h4 class="mb-0">
+                                            <p class="stat-count">
+                                                <t t-esc="widget.employees['leaves_this_month']"/>
+                                            </p>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-12" style="padding-right: 0;">
+                        <div class="row mt-4" style="margin:0px">
+                            <div class="col-sm-12 col-lg-12 leave_request_today">
+                                <div class="oh-card text-color">
+                                    <div class="oh-card-body pb-0">
+                                        <p class="stat-title">Leave Request Today</p>
+                                        <h4 class="mb-0">
+                                            <p class="stat-count">
+                                                <t t-esc="widget.employees['leaves_today']"/>
+                                            </p>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-7 col-lg-8">
+                    <div class="col-sm-12 col-lg-12 graph_view" style="padding:0">
+                        <div class="text-color hr-chart-1">
+                            <div class="oh-card-body p-5">
+                                <div class="oh-ribbon"><span>Departments</span></div>
+                                <div class="row w-100">
+                                    <div class="col-md-6 col-sm-12">
+                                        <canvas id="department_chart" height="140" />
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 d-flex align-items-center">
+                                        <div id="department_legend" class="chart-legend chart-legend-with-border mt-3" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row main-section mt-4">
+                <div class="col-sm-6 col-lg-6 monthly_join_resign_trend">
+                    <div class="oh-card text-color">
+                        <div class="oh-card-body pb-0">
+                            <h4 class="mb-0">
+                            </h4>
+                            <p class="stat-head" style="padding : 0px;">Monthly Join/Resign Analysis</p>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 col-sm-12">
+                                <canvas id="join_resign_trend" height="100" />
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <div id="join_resign_trend_legend" class="chart-legend mt-3" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-6  monthly_attrition_rate">
+                    <div class="oh-card text-color">
+                        <div class="oh-card-body pb-0">
+                            <h4 class="mb-0">
+                            </h4>
+                            <p class="stat-head" style="padding : 0px;">Attrition Rate</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 col-sm-12">
+                                <canvas id="attrition_rate" height="100" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- outstanding section -->
+            <div class="row main-section mt-4">
+                <div class="col-lg-6 col-sm-12  monthly_leave_graph_view bar-chart">
+                    <div class="oh-card text-color">
+                        <p class="stat-head" style="padding : 0px;">Total Outstanding Leave</p>
+                        <div class="oh-card-body pb-0">
+                            <div class="row w-100">
+                                <div class="col-md-8 col-sm-12">
+                                    <canvas id="outstanding_leave_chart" height="150" />
+                                </div>
+                                <div class="col-md-4 col-sm-12 d-flex align-items-center">
+                                    <div id="outstanding_leave_legend" class="chart-legend chart-legend-with-border mt-3" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-12  monthly_leave_graph_view bar-chart">
+                    <div class="oh-card text-color">
+                        <p class="stat-head" style="padding : 0px;">Job Opening</p>
+                        <div class="oh-card-body pb-0">
+                            <div class="row w-100">
+                                <div class="col-md-8 col-sm-12">
+                                    <canvas id="job_opening_chart" height="150" />
+                                </div>
+                                <div class="col-md-4 col-sm-12 d-flex align-items-center">
+                                    <div id="job_opening_legend" class="chart-legend chart-legend-with-border mt-3" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- monthly leave section -->
+            <div class="row main-section mt-4">
+                <div class="col  monthly_leave_graph_view">
+                    <div class="oh-card text-color">
+                        <p class="stat-head" style="padding : 0px;">Monthly Leave Analysis</p>
+                        <div class="oh-card-body pb-0">
+                            <div class="row w-100">
+                                <div class="col-md-8 col-sm-12">
+                                    <div class="row main-section">
+                                        <div class="col-lg-6 col-sm-12">
+                                            <canvas id="monthly_leave_bar" height="150"/>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12">
+                                            <canvas id="monthly_leave_pie" height="150"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 d-flex align-items-center">
+                                    <div id="monthly_leave_legend" class="chart-legend chart-legend-with-border mt-3" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!--                <div class="col-lg-6 col-sm-12  monthly_leave_graph_view">-->
+<!--                    <div class="oh-card text-color">-->
+<!--                        <p class="stat-head" style="padding : 0px;">Job Opening</p>-->
+<!--                        <div class="oh-card-body pb-0">-->
+<!--                            <div class="row w-100">-->
+<!--                                <div class="col-md-8 col-sm-12">-->
+<!--                                    <canvas id="job_opening_chart" height="150" />-->
+<!--                                </div>-->
+<!--                                <div class="col-md-4 col-sm-12 d-flex align-items-center">-->
+<!--                                    <div id="job_opening_legend" class="chart-legend chart-legend-with-border mt-3" />-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+
+
+            <!-- event section -->
+            <div class="row main-section mt-4">
+
+                <!-- up coming birthday -->
+                <div class="col-md-4 col-lg-4">
+                    <div class="hr_notification" >
+                        <div class="hr_notification_head">
+                            Upcoming Probation
+                        </div>
+                        <div class="col-12">
+                            <t t-if="widget.hr_events.probation.length">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">End of Trial</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="widget.hr_events.probation" t-as="pro">
+                                                <tr>
+                                                    <td>
+                                                        <t t-esc="pro['name']" />
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="pro['trial_date_end']" />
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span class="badge rounded-pill bg-light text-dark">
+                                                            <t t-esc="pro['days_left']" /> day(s)  left
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </t>
+                            <div class="no-data d-flex align-items-center justify-content-center" t-else="">
+                                <p>no data</p>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+
+                <!-- up coming events -->
+                <div class="col-md-4 col-lg-4">
+                    <div class="col-xs-12  hr_notification" style="padding: 0;">
+                        <div class="col-xs-12" style="padding:0;">
+                            <div class="hr_notification_head">
+                            Overdue Onboarding Checklist
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <t t-if="widget.hr_events.onboarding.length">
+                                <div class="table-responsive onboarding">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="w-35px">No</th>
+                                                <th scope="col">Todo</th>
+                                                <th scope="col">Owner</th>
+                                                <th scope="col">Expired Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="widget.hr_events.onboarding" t-as="on">
+                                                <tr>
+                                                    <td class="w-35px">
+                                                        <t t-esc="on['no']" />
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="on['name']" />
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="on['owner']" />
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="on['expired_date']" />
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </t>
+                            <div class="no-data d-flex align-items-center justify-content-center" t-else="">
+                                <p>no data</p>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+
+                <!-- announcement -->
+                <div class="col-md-4 col-lg-4">
+                    <div class="col-xs-12  hr_notification" style="padding: 0;">
+                        <div class="col-xs-12" style="padding:0;">
+                            <div class="hr_notification_head">
+                                Overdue Exit Checklist
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <t t-if="widget.hr_events.offboarding.length">
+                                <div class="table-responsive offboarding">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="w-35px">No</th>
+                                                <th scope="col">Todo</th>
+                                                <th scope="col">Owner</th>
+                                                <th scope="col">Expired Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="widget.hr_events.offboarding" t-as="off">
+                                                <tr>
+                                                    <td class="w-35px">
+                                                        <t t-esc="off['no']" />
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="off['name']" />
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="off['owner']" />
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="off['expired_date']" />
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </t>
+                            <div class="no-data d-flex align-items-center justify-content-center" t-else="">
+                                <p>no data</p>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+
+        </div>
+    </t>
+</template>

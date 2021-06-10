@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="Applicant"
+            id="action_report_applicant"
+            model="hr.applicant"
+            report_type="qweb-pdf"
+            name="pm_hr.offer_letter_report"
+            file="pm_hr.offer_letter_report"
+            print_report_name="Testing Report"
+            paperformat="paperformat_hr_employee"
+            menu="False"
+        />
+    </data>
+</odoo>

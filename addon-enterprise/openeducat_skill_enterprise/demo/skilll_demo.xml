@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="skill_demo1" model="op.skill">
+            <field name="name">C Programming</field>
+            <field name="code">b1</field>
+            <field name="skill_category_type_id" ref="openeducat_skill_enterprise.skill_category_demo1"/>
+        </record>
+        <record id="skill_demo2" model="op.skill">
+            <field name="name">Network Engineer</field>
+            <field name="code">b2</field>
+            <field name="skill_category_type_id" ref="openeducat_skill_enterprise.skill_category_demo2"/>
+        </record>
+    </data>
+</odoo>

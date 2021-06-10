@@ -1,0 +1,68 @@
+<odoo>
+  <data>
+    <record id="pm_ingredient_category_view_search" model="ir.ui.view">
+      <field name="name">pm.ingredient.category.view.search</field>
+      <field name="model">pm.ingredient.category</field>
+      <field name="arch" type="xml">
+        <search string="Ingredient Categories">
+          <field name="name" string="Ingredient Categories"/>
+          <field name="parent_id"/>
+        </search>
+      </field>
+    </record>
+
+    <record id="pm_ingredient_category_view_list" model="ir.ui.view">
+      <field name="name">pm.ingredient.category.view.list</field>
+      <field name="model">pm.ingredient.category</field>
+      <field name="arch" type="xml">
+        <tree string="Ingredient Categories">
+          <field name="code" />
+          <field name="display_name" string="Ingredient Category" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="pm_ingredient_category_view_form" model="ir.ui.view">
+      <field name="name">pm.ingredient.category.view.form</field>
+      <field name="model">pm.ingredient.category</field>
+      <field name="arch" type="xml">
+        <form class="oe_form_configuration">
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button class="oe_stat_button"
+                icon="fa-th-list"
+               >
+                <div class="o_field_widget o_stat_info">
+                  <span class="o_stat_value"><field name="product_count"/></span>
+                  <span class="o_stat_text"> Ingredients</span>
+                </div>
+              </button>
+            </div>
+
+            <div class="oe_title">
+              <label for="name" string="Category name" class="oe_edit_only"/>
+              <h1><field name="name" placeholder="e.g. Meat"/></h1>
+            </div>
+
+            <group name="first" col="2">
+              <field name="code" class="oe_inline" />
+              <field name="parent_id" class="oe_inline" />
+            </group>
+          </sheet>
+
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="config_ingredient_category_action" model="ir.actions.act_window">
+      <field name="name">Ingredient Categories</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">pm.ingredient.category</field>
+      <field name="view_mode">tree,kanban,form</field>
+    </record>
+  </data>
+</odoo>

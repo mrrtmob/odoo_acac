@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_attendance_progress_wizard,name_attendance_progress_wizard,model_attendance_progress_wizard,openeducat_core.group_op_back_office_admin,1,1,1,1
+access_attendance_progress_wizard_faculty,name_attendance_progress_wizard_faculty,model_attendance_progress_wizard,openeducat_core.group_op_faculty,1,1,1,0

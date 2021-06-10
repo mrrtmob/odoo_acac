@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_student_id_card"
+              inherit_id="openeducat_core.report_student_idcard"
+              priority="40">
+        <xpath expr="//div[hasclass('page')]" position="replace">
+            <div class="page" style="padding:150px 0 0 0;">
+                <style>
+                    .img-profile {
+                        width: 70px;
+                        height: 100px;
+                        margin: 10px;
+                        border: 1px solid #ccc;
+                    }
+                    .img-brand{
+                        width: 103px;
+                    }
+                    @font-face {
+                        font-family: 'Khmer OS Muol light';
+                        font-style: normal;
+                        src: url('/pm_students/static/src/fonts/khmer_os_moullight/KhmerOS_muollight.ttf') format('truetype');
+                    }
+                    @font-face {
+                        font-family: 'Georgia';
+                        font-style: normal;
+                        src: url('/pm_general/static/src/fonts/georgia/Georgia.ttf') format('truetype');
+                    }
+                    .kh-muol {
+                        font-family: 'Khmer OS Muol light' !important;
+                    }
+                    .georgia {
+                        font-family: 'Georgia' !important;
+                    }
+                    .header{
+                        margin: 0px 10px 10px;
+                        font-weight: 600;
+                        font-size:14px;
+                        color: #333;
+                    }
+                    .information-container {
+                        width: 100%;
+                    }
+                    .information-container div {
+                        margin-bottom: 6px !important;
+                        white-space: nowrap;
+                    }
+                    .mt-calc {
+                        margin-top: 1.6rem;
+                        margin-bottom: 1.7rem;
+                    }
+                </style>
+                <div class="d-flex">
+                    <div class="border" style="width: 400px;">
+                        <div style="border-bottom: 2px solid #4f0147;" class="text-center">
+<!--                            <img src="/pm_students/static/src/img/no_bg_icon.png" class="img-brand p-2"/>-->
+                        
+                            <div class="mt-calc" style="text-align:center;">
+                                <p class="kh-muol" style="margin: 0px 0px 0px 10px">វិទ្យាស្ថានម្ហូបអាហារកម្ពុជា </p>     
+                                <p class="georgia" style="margin: 0px 0px 0px 10px">Academy of Culinary Arts Cambodia</p>
+                                
+                                <!-- <p style="color: #3087c3;font-weight: 600;font-size: 14px;margin: 0px 10px 10px;"
+                                t-raw="'%s' % res_company.partner_id.name if res_company.partner_id.name else ''"/> -->
+                            </div>
+                        </div>
+                        <div class="georgia d-flex" style="border-bottom: 8px solid #4f0147;">
+                            <img class="image"
+                                t-if="o.image_1920"
+                                t-att-src="'data:image/png;base64,%s' % to_text(o.image_1920)"
+                                style="max-height:2.5cm; max-width:4cm; margin-left: 10px; margin-right: 10px; margin-bottom: 10px; margin-top: 10px; border: 1px solid #ccc;"/>
+                            <div t-else="" class="img-profile"></div>
+                            <div style="font-size: 14px; font-weight: 500; margin-top: 7px;" class="information-container">
+                                <div>
+                                    <span>Name: </span>
+                                    <span><t t-esc="o.first_name"/> <t t-esc="o.middle_name"/> <t t-esc="o.last_name"/></span>
+                                </div>
+                                <div>
+                                    <span>Student ID: </span>
+                                    <span t-esc="o.student_app_id" />
+                                </div>
+                                <div>
+                                    <span>Birth Date: </span>
+                                    <!-- <span t-esc="o.birth_date.strftime('%d/%m/%Y')" /> -->
+                                    <span t-field="o.birth_date" t-options='{"widget": "date", "format": "d MMM, yyyy"}' />
+                                </div>
+                                <div>
+                                    <span>Enrolled: </span>
+                                    <!-- <span t-esc="o.create_date.strftime('%mm,%Y')" /> -->
+                                    <span t-field="o.create_date" t-options='{"widget": "date", "format": "MMMM, yyyy"}' />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border" style="width: 400px; border-bottom: 8px solid #4f0147;">
+                        <div style="margin: auto; text-align:center; border-bottom: 2px solid #4f0147;">
+<!--                            <img src="/pm_students/static/src/img/no_bg_icon.png" class="img-brand p-2"/>-->
+                            <img src="/pm_students/static/src/img/id_card_logo.png" class="img-brand p-2"/>
+                        </div>
+                        <div class="georgia" style="text-align:center;">
+                            <!-- <p style="font-weight: 600;font-size: 12px;"
+                                t-raw="'%s' % res_company.partner_id.street if res_company.partner_id.street else ''"/>  -->
+                            <p style="font-weight: 600;font-size: 12px; margin: 25px 10px 0px 10px"> #23, st.139, Sangkat Veal Vong, Khan 7 Makara, Phnom Penh, Cambodia </p> 
+                            <p style="font-weight: 600;font-size: 12px; margin: 0px 10px 0px 10px"> Tel: (855)23 922 226. Email: info@acac.edu.kh </p> 
+                            <p style="font-weight: 600;font-size: 12px; margin: 0px 10px 0px 10px"> Website: www.acac.edu.kh</p> 
+                        </div>
+                         
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

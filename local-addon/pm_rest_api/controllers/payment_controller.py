@@ -1,0 +1,119 @@
+from odoo.http import request
+from datetime import datetime
+
+from odoo import http, _
+from odoo.addons.portal.controllers.portal import CustomerPortal
+from odoo.addons.pm_rest_api.controllers.aba_payway import ABAPayWay
+import json
+
+
+
+class PaymentPortal(CustomerPortal):
+
+    def _prepare_portal_layout_values(self):
+        values = super(PaymentPortal, self)._prepare_portal_layout_values()
+        user = request.env.user
+        student_id = request.env["op.student"].sudo().search(
+            [('user_id', '=', user.id)])
+        payment_count = request.env['op.student.fees.details'].sudo().search_count(
+            [('student_id', '=', student_id.id)])
+        values['payment_count'] = payment_count
+        return values
+
+
+
+    @http.route(['/student/payment/',
+                 '/student/payment/<int:tran_id>'],
+                type='http', auth="user", website=True)
+    def portal_student_payment_list(self):
+        user = request.env.user
+        student = request.env["op.student"].sudo().search(
+            [('user_id', '=', user.id)])
+
+        val = self._prepare_portal_layout_values()
+
+        payments = request.env['op.student.fees.details'].sudo().search(
+            [('student_id', '=', student.id)])
+
+        val['payment_ids'] = payments
+        print(val)
+
+        return request.render("pm_rest_api.pm_student_portal_apyment_detail", val)
+
+    @http.route(['/student/payment/create/<int:payment_id>'],
+                type='http', auth="user", website=True)
+    def portal_create_payment(self, payment_id):
+        PayWay = ABAPayWay()
+        merchant_id = PayWay.get_merchant_id()
+        payment_obj = request.env['op.student.fees.details'].sudo().browse(payment_id)
+        items = PayWay.get_transaction_items(payment_obj)
+        hash_data = PayWay.get_hash(str(merchant_id), str(payment_obj.id), str(payment_obj.amount), items)
+        api_url = PayWay.get_api_url()
+        push_back_url = PayWay.get_push_back_url()
+        student = payment_obj.student_id
+
+        val = {
+            'hash': hash_data,
+            'amount': payment_obj.amount,
+            'amount_display': str(payment_obj.amount)+'$',
+            'firstname': student.first_name,
+            'lastname': student.last_name,
+            'email': student.email,
+            'phone': student.mobile,
+            'tran_id': payment_obj.id,
+            'url': api_url,
+            'push_back_url': push_back_url,
+            'items': items,
+        }
+
+        return request.render("pm_rest_api.pm_payment_form", val)
+
+    @http.route(['/student/aba/success'],
+                type='http', website=True)
+    def student_payment_success(self):
+        print(request)
+        print("*********************")
+        print("I am the success URL !!!!!!!!!!!")
+        val = {}
+        return request.render("pm_rest_api.pm_payment_success_form", val)
+
+    @http.route(['/student/aba/pushback'],
+                type='http', website=True, methods=['POST'], auth='public', csrf=False)
+    def student_payment_push_back(self, **post):
+        data = json.loads(request.httprequest.data)
+
+        if data['status'] != 0:
+            return "Unsuccessful Payment"
+
+        transaction_obj = request.env['pm.aba.transaction'].sudo()
+        transaction_obj.create({
+            'transaction_number': data['tran_id'],
+            'status': data['status']
+        })
+        student_fee = request.env['op.student.fees.details'].sudo().search([('id', '=', data['tran_id'])])
+        invoice = student_fee.invoice_id
+        payment_method = 3
+        journal_id = 45
+        invoice.action_post()
+
+        payment_data = {
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': invoice.partner_id.id,
+            'amount': invoice.amount_total,
+            'payment_date': datetime.today(),
+            'payment_method_id': payment_method,
+            'journal_id': journal_id,
+            'communication': invoice.name
+        }
+        account_payment = request.env['account.payment'].sudo().create(payment_data)
+        print(account_payment)
+
+
+
+
+
+
+
+
+

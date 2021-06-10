@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+    <record id="pm_nutrition_view_list" model="ir.ui.view">
+      <field name="name">pm.nutrition.view.list</field>
+      <field name="model">pm.nutrition</field>
+      <field name="arch" type="xml">
+        <tree string="Nutritions">
+          <field name="name" />
+          <field name="measurement_unit" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="pm_nutrition_view_kanban" model="ir.ui.view">
+      <field name="name">pm.nutrition.view.kanban</field>
+      <field name="model">pm.nutrition</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click">
+                <div class="oe_kanban_details">
+                  <strong class="o_kanban_record_title">
+                    <field name="name" />
+                  </strong>
+
+                  <ul>
+                    <li>Measurement Unit: <field name="measurement_unit" /></li>
+                  </ul>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record id="pm_nutrition_view_form" model="ir.ui.view">
+      <field name="name">pm.nutrition.view.form</field>
+      <field name="model">pm.nutrition</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group col="4">
+              <field name="name" />
+              <field name="measurement_unit" />
+            </group>
+          </sheet>
+
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="config_nutrition_action" model="ir.actions.act_window">
+      <field name="name">Nutritions</field>
+      <field name="res_model">pm.nutrition</field>
+      <field name="view_mode">tree,kanban,form</field>
+    </record>
+  </data>
+</odoo>

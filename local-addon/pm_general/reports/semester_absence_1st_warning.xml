@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_semester_1st_warning">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" style="font-family: 'Georgia'; font-size: 17px;">
+                    <style  type="text/css">
+                    </style>
+                    <div class="container-fluid">
+                        <t t-call="pm_general.template_header"/>
+                        <strong><u>Absence Notification Letter</u></strong><br/>
+                        <strong>If you have any problems understanding this letter or your present position, do not hesitate to contact the Registrar of the Academy.</strong><br/><br/>
+                        <p>Dear NAME,</p>
+                        <p>Please refer to the absence rules listed below. Your absence record shows that you have exceeded 38 hrs. of absences and your present absences accumulate to NO class periods on the date this letter was issued.
+                        </p>
+                        <strong>Should you miss more than 48 class periods during the semester you will be suspended and this semester will be invalidated.</strong><br/><br/>
+                        <p>Let this letter be reminder to you and we urge you to make the necessary adjustments not to run into the situation of being dismissed from the Academy.
+                            If you have any problems in terms of health or other matters, which could continue to affect you in the future, please feel free to contact the Operation Manager or myself.
+                        </p>
+                        <p>Good luck in your studies and should you have any further questions, please do not hesitate to contact me.</p>
+                        <t t-call="pm_general.signature"/>
+                        <t t-call="pm_general.template_footer"/>
+                        <t t-call="pm_general.template_border"></t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

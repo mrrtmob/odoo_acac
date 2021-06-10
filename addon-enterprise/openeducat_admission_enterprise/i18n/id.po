@@ -1,0 +1,184 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* openeducat_admission_enterprise
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-30 06:54+0000\n"
+"PO-Revision-Date: 2019-09-30 06:54+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_op_admission
+msgid "Admission"
+msgstr "Penerimaan"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_op_admission_register
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Admission Register"
+msgstr "Pendaftaran Pendaftaran"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.actions.act_window,name:openeducat_admission_enterprise.action_onboarding_admission_register_layout
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "Admission Register Configuration"
+msgstr "Pendaftaran Pendaftaran Konfigurasi"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.actions.act_window,name:openeducat_admission_enterprise.act_dashboard_op_admission_view
+msgid "Admissions"
+msgstr "penerimaan"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Applications"
+msgstr "Aplikasi"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Apply"
+msgstr "Terapkan"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Cancel"
+msgstr "Batalkan"
+
+#. module: openeducat_admission_enterprise
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Closed"
+msgstr "Tutup"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_res_company
+msgid "Companies"
+msgstr "Perusahaan"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_op_admission__company_id
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_op_admission_register__company_id
+msgid "Company"
+msgstr "Perusahaan"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Confirm"
+msgstr "Konfirmasi"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "Customize"
+msgstr "Sesuaikan"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Done"
+msgstr "Selesai"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.openeducat_course_admission_dashboard_kanban_view
+msgid "Enroll Students"
+msgstr "Daftarkan Siswa"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Fees Amount"
+msgstr "biaya Jumlah"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Fees Collection Details\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+msgstr "Biaya Detail Koleksi\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.actions.server,name:openeducat_admission_enterprise.invoice_cron_ir_actions_server
+#: model:ir.cron,cron_name:openeducat_admission_enterprise.invoice_cron
+#: model:ir.cron,name:openeducat_admission_enterprise.invoice_cron
+msgid "Fees Invoice Cron"
+msgstr "Biaya Faktur Cron"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Invoice"
+msgstr "Faktur"
+
+#. module: openeducat_admission_enterprise
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Just done"
+msgstr "hanya dilakukan"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "Looks great!"
+msgstr "Tampak hebat!"
+
+#. module: openeducat_admission_enterprise
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Not done"
+msgstr "Belum selesai"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "See how to create a Admission Register."
+msgstr "Lihat cara membuat Penerimaan Pendaftaran."
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Set to Draft"
+msgstr "Set ke Draft"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Start Admission"
+msgstr "Mulai Pendaftaran"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Start Application"
+msgstr "Mulai Aplikasi"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_res_company__openeducat_admission_onboard_panel
+msgid "State of the onboarding admission layout step"
+msgstr "Negara sosialisasi masuk tata letak langkah"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_res_company__onboarding_admission_register_layout_state
+msgid "State of the onboarding admission register layout step"
+msgstr "Negara sosialisasi masuk tata letak mendaftar langkah"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Status"
+msgstr ""
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_op_student_fees_details
+msgid "Student Fees Details"
+msgstr "Rincian Biaya Mahasiswa"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Submit Date"
+msgstr "menyerahkan Tanggal"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "View invoice"
+msgstr "Lihat faktur"
+

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+    <t t-name="MarketingDashboard">
+        <div class="container-fluid p-0 pt-5" id="marketing-dashboard">
+            <div class="row m-0">
+                <div class="col-lg-3 col-sm-12">
+                    <div class="box-container top-campaigns">
+                        <div class="header">
+                            <p class="title">Top Campaigns</p>
+                        </div>
+                        <div class="body text-center py-3" >
+
+                            <!-- bar chart -->
+                            <div class="bar-chart d-inline-block pt-4" style="width:100%">
+                                <div class="float-left" style="width:70%">
+                                    <canvas id="lead_conversion_chart"  height="300"></canvas>
+                                </div>
+                                <div class="float-left" style="width:30%">
+                                    <div id="lead_conversion_chart_legend" class="chart-legend mt-3"></div>
+                                </div>
+                            </div>
+
+                            <div>
+
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Campaign</th>
+                                                <th scope="col">Cost</th>
+                                                <th scope="col">Leads</th>
+                                                <th scope="col">Cost/Lead</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="widget.leadConversionTopCampaigns" t-as="leadConversionTopCampaign">
+                                                <th scope="row"><t t-esc="leadConversionTopCampaign_index + 1" /></th>
+                                                <td><t t-esc="leadConversionTopCampaign['name']" /></td>
+                                                <td>$<t t-esc="leadConversionTopCampaign['cost']" /></td>
+                                                <td><t t-esc="leadConversionTopCampaign['leads_count']" /></td>
+                                                <td>$<t t-esc="leadConversionTopCampaign['cost_per_lead']" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                    <div class="box-container top-campaigns">
+                        <div class="header">
+                            <p class="title">Budget</p>
+                        </div>
+                        <div class="body text-center py-3" >
+
+                            <div class="row m-0">
+                                <div class="col-5">
+                                     <canvas id="intake_student_chart" height="130"></canvas>
+                                </div>
+                                <div class="col-7">
+                                     <canvas id="budget_actual_chart" height="90"></canvas>
+                                     <div class="text-center custom-budget-legend">
+                                         <ul>
+                                             <li><span class="circle" style="background-color: #4f0147;"></span>YTD Budget</li>
+                                             <li><span class="circle" style="background-color: #ac9969;"></span>YTD Actual</li>
+                                         </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="mt-4">
+
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="">
+                                            <tr>
+                                                <th scope="col">Campaign</th>
+                                                <th scope="col">Month</th>
+                                                <th scope="col">Plan Budget</th>
+                                                <th scope="col">Actual Cost</th>
+                                                <th scope="col">Variance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="widget.ytdCampaigns" t-as="ytdCampaign">
+                                                <td><t t-esc="ytdCampaign['name']" /></td>
+                                                <td><t t-esc="ytdCampaign['month_name']" /></td>
+                                                <td>$<t t-esc="ytdCampaign['budget']" /></td>
+                                                <td>$<t t-esc="ytdCampaign['cost']" /></td>
+                                                <td>$<t t-esc="ytdCampaign['variance']" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>

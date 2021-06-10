@@ -1,0 +1,54 @@
+<odoo>
+  <data>
+    <menuitem id="purchase.menu_procurement_partner_contact_form"
+              name="Non-Food Products"
+              action="pm_culinary.non_food_product_action"
+              parent="purchase.menu_purchase_products"
+              sequence="20"/>
+
+    <menuitem id="purchase.product_product_menu"
+              name="Food Products"
+              action="pm_culinary.product_product_action"
+              parent="purchase.menu_purchase_products"
+              sequence="21"
+              groups="product.group_product_variant"/>
+
+    <menuitem id="purchase.menu_product_in_config_purchase"
+              name="Products"
+              parent="purchase.menu_purchase_config"
+              sequence="30"
+              groups="purchase.group_purchase_manager"/>
+
+    <menuitem id="purchase_menu_config_product_uom"
+              action="pm_culinary.config_product_uom_action"
+              parent="purchase.menu_product_in_config_purchase"
+              sequence="2" />
+
+    <!-- Remove Menus -->
+    <menuitem id="purchase.menu_product_pricelist_action2_purchase"
+              action="product.product_supplierinfo_type_action"
+              parent="purchase.menu_purchase_config"
+              sequence="1"
+              active="false" />
+
+    <menuitem id="purchase.menu_purchase_uom_form_action"
+              action="uom.product_uom_form_action"
+              parent="purchase.menu_product_in_config_purchase"
+              sequence="5"
+              active="false"/>
+
+    <menuitem id="purchase.menu_purchase_uom_categ_form_action"
+              action="uom.product_uom_categ_form_action"
+              parent="purchase.menu_product_in_config_purchase"
+              sequence="10"
+              active="false" />
+
+    <menuitem id="purchase.menu_purchase_general_settings"
+              name="Settings"
+              parent="purchase.menu_purchase_config"
+              sequence="0"
+              action="purchase.action_purchase_configuration"
+              groups="base.group_system"
+              active="false" />
+  </data>
+</odoo>

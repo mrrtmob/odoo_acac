@@ -1,0 +1,36 @@
+#marketing-dashboard{
+    font-family: 'Georgia' !important;
+}
+
+.table-responsive {
+    border: 1px solid #f1f1f1;
+    border-radius: 6px;
+    padding: 5px;
+}
+
+.table {
+    font-size: 14px;
+}
+
+.custom-budget-legend ul{
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+    display: inline-flex;
+    font-size: 12px;
+}
+
+.custom-budget-legend ul li {
+    margin-right: 10px;
+}
+
+.custom-budget-legend ul li span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+}
+
+.custom-budget-legend ul li .circle {
+    border-radius: 50% !important;
+}

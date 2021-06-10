@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <template id="pm_report_payslipdetails">
+            <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" style="font-family: 'Georgia'; font-size: 17px;">
+                    <style  type="text/css">
+                        .info label {
+                            min-width: 180px;
+                        }
+                        .info span {
+                            padding-left: 5px;
+                        }
+                        .table-bordered thead td, .table-bordered thead th {
+                            border-bottom-width: 1px !important;
+                        }
+                        .deductible {
+                            background: #ACB9CA;
+                            margin-left: -8px;
+                            margin-right: -8px;
+                            padding: 0 8px;
+                        }
+                    </style>
+                    <div class="container-fluid">
+                        <t t-call="pm_general.payslip_header"/>
+                        <h4 class="text-center">Payslip for the month of <t t-esc="month"/></h4>
+                        <div class="emp-info">
+                            <div class="row">
+                                <div class="col-7">
+
+                                    <div class="info d-block">
+                                        <label>Employee No</label>:
+                                         <span> <t t-esc="employee['number']" /></span>
+                                    </div>
+                                    <div class="info">
+                                        <label>Employee Name</label>:
+                                        <span> <t t-esc="employee['name']" /></span>
+                                    </div>
+                                    <div class="info">
+                                        <label>Position</label>:
+                                        <span> <t t-esc="employee['position']" /></span>
+                                    </div>
+                                    <div class="info">
+                                        <label>Department</label>:
+                                        <span> <t t-esc="employee['department']" /></span>
+                                    </div>
+                                    <div class="info">
+                                        <label>Date of Joining</label>:
+                                       <span> <t t-esc="employee['join_date']" /></span>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="info">
+                                        <label>Payment Period</label>:
+                                       <span> <t t-esc="payment_date" /></span>
+                                    </div>
+                                    <div class="info">
+                                        <label>Income Tax Number</label>:
+                                          <span> <t t-esc="employee['tax_income_no']" /></span>
+                                    </div>
+                                    <div class="info">
+                                        <label>NSSF No.</label>:
+                                          <span> <t t-esc="employee['nssf_no']" /></span>
+                                    </div>
+                                    <div class="info">
+                                        <label>Bank Acc. No.</label>:
+                                          <span> <t t-esc="employee['bank_no']" /></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="salary_leave mt-5">
+                            <table class="table table-bordered">
+                                <thead class="table-header">
+                                    <tr>
+                                      <th scope="col" class="w-50">Salary Details</th>
+                                      <th scope="col" class="w-50">Leave Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <td>
+                                        <div class="salary-detail">
+                                              <div>
+                                                <span>Gross Salary</span>
+                                                <span class="float-right"><t t-esc="doc_lines['gross']"/>$</span>
+                                            </div>
+                                             <t t-foreach="doc_lines['addition']" t-as="addition">
+                                                   <div t-if="addition['total'] != 0" >
+                                                        <span><t t-esc="addition['name']"/></span>
+                                                        <span class="float-right"><t t-esc="addition['total']"/>$</span>
+                                                   </div>
+                                            </t>
+
+                                             <div t-if="doc_lines['other_addition'] != 0">
+                                                 <span>Other Addition</span>
+                                                <span class="float-right"><t t-esc="doc_lines['other_addition']"/>$</span>
+                                            </div>
+
+                                            <br/>
+                                            <div class="deductible">
+                                                <span>Deductibles</span>
+                                            </div>
+
+                                             <t t-foreach="doc_lines['deduct']" t-as="deduct">
+                                                   <div t-if="deduct['total'] != 0" >
+                                                        <span><t t-esc="deduct['name']"/></span>
+                                                        <span class="float-right"><t t-esc="deduct['total']"/>$</span>
+                                                   </div>
+                                            </t>
+
+                                            <div t-if="doc_lines['other_deduction'] != 0">
+                                                <span>Other Deduction</span>
+                                                <span class="float-right"><t t-esc="doc_lines['other_deduction']"/>$</span>
+                                           </div>
+                                            <br/>
+
+
+                                             <div>
+                                                <span>Net Salary</span>
+                                                <span class="float-right"><t t-esc="doc_lines['net']"/>$</span>
+                                            </div>
+
+                                              <br/>
+
+                                              <div class="deductible">
+                                                    <span>Company Contribution</span>
+                                               </div>
+                                            <t t-foreach="doc_lines['company_contribution']" t-as="contribution">
+                                                   <div>
+                                                        <span><t t-esc="contribution['name']"/></span>
+                                                        <span class="float-right"><t t-esc="contribution['total']"/>$</span>
+                                                   </div>
+                                            </t>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="leave-balance">
+                                            <div>
+                                                <span>AL and PH balance prev. month </span>
+                                                  <span class="float-right"> <t t-esc="employee['al_previous']" /></span>
+                                            </div>
+                                            <br/>
+                                            <div>
+                                                <span>AL and PH earned</span>
+                                                <span class="float-right"> <t t-esc="employee['al_earned']" /></span>
+                                            </div>
+                                            <br/>
+                                            <div>
+                                                <span>AL and PH Taken</span>
+                                                <span class="float-right"> <t t-esc="employee['al_taken']" /></span>
+                                            </div>
+                                            <br/>
+                                            <div>
+                                                <span>AL and PH balance</span>
+                                                <span class="float-right"> <t t-esc="employee['al_remaining']" /></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+        </template>
+
+    </data>
+</odoo>

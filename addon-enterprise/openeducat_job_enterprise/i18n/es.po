@@ -1,0 +1,716 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* openeducat_job_enterprise
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-26 08:52+0000\n"
+"PO-Revision-Date: 2019-09-26 08:52+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.jobpost_detail
+msgid "<b>Address :</b>"
+msgstr "<b> Dirección: </b>"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.jobpost_detail
+msgid "<b>Description :</b>"
+msgstr "<b> Descripción: </b>"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.jobpost_detail
+msgid "<b>Employment Type :</b>"
+msgstr "<b> Contrato: </b>"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.jobpost_detail
+msgid "<b>Job Post :</b>"
+msgstr "<b> Trabajo de la publicación: </b>"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.jobpost_detail
+msgid "<b>Salary :</b>"
+msgstr "<b> Salario: </b>"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.job_post_list
+msgid "<span>Open Positions</span>"
+msgstr "<Span> Posiciones Abiertas </span>"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_needaction
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_needaction
+msgid "Action Needed"
+msgstr "Accion necesaria"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__street
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "Address"
+msgstr "Habla a"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "Address Detail"
+msgstr "Detalle de direcciones"
+
+#. module: openeducat_job_enterprise
+#: selection:op.job.post,created_by:0
+msgid "Alumni"
+msgstr ""
+
+#. module: openeducat_job_enterprise
+#: model:ir.ui.menu,name:openeducat_job_enterprise.menu_job_applicant_announcement
+msgid "Applicant"
+msgstr "Solicitante"
+
+#. module: openeducat_job_enterprise
+#: model:op.job.post,job_post:openeducat_job_enterprise.job_post_demo1
+msgid "Application Engineer"
+msgstr "Ingeniero de Aplicaciones"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__name
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.student_portal_job_post_detail
+msgid "Application Number"
+msgstr "Numero de aplicacion"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_kanban
+msgid "Application(s)"
+msgstr "Aplicación (s)"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.apply
+msgid "Apply Job"
+msgstr "Aplicar al trabajo"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_attachment_count
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_attachment_count
+msgid "Attachment Count"
+msgstr "cuenta de enlaces"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__attachment_ids
+msgid "Attachments"
+msgstr "Archivos adjuntos"
+
+#. module: openeducat_job_enterprise
+#: model:website.menu,name:openeducat_job_enterprise.website_menu_job_post_view
+msgid "Campus Jobs"
+msgstr "empleos en el campus"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "Cancel Recruitment"
+msgstr "Cancelar Reclutamiento"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__city
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "City"
+msgstr "Ciudad"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_type__code
+msgid "Code"
+msgstr "Código"
+
+#. module: openeducat_job_enterprise
+#: model:ir.ui.menu,name:openeducat_job_enterprise.menu_configuration
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.thankyou_ir_ui_view
+#: model_terms:website.page,arch_db:openeducat_job_enterprise.thankyou
+msgid "Congratulations!"
+msgstr "¡Felicidades!"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.thankyou_ir_ui_view
+#: model_terms:website.page,arch_db:openeducat_job_enterprise.thankyou
+msgid "Continue To Our\n"
+"                                                Website"
+msgstr "Continúa con la página\n"
+"                                                Sitio web"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__country_id
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "Country"
+msgstr "País"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__created_by
+msgid "Created By"
+msgstr "Creado por"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__create_uid
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__create_uid
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_type__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__create_date
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__create_date
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_type__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__display_name
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__display_name
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_type__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_jobpost_applicant_form
+msgid "Documents"
+msgstr "Documentos"
+
+#. module: openeducat_job_enterprise
+#: selection:op.job.post,states:0
+msgid "Draft"
+msgstr "Sequía"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__employment_type
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_type__name
+msgid "Employment Type"
+msgstr "Tipo de empleo"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__end_date
+msgid "End Date"
+msgstr "Fecha final"
+
+#. module: openeducat_job_enterprise
+#: code:addons/openeducat_job_enterprise/models/job_post.py:74
+#, python-format
+msgid "End Date cannot be set before Start Date."
+msgstr ""
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__expected_employees
+msgid "Estimated New Employees"
+msgstr "Estimación de nuevos empleados"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_follower_ids
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_follower_ids
+msgid "Followers"
+msgstr "seguidores"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_channel_ids
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Seguidores (Canales)"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_partner_ids
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Partners)"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__id
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__id
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_type__id
+msgid "ID"
+msgstr ""
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_applicant__message_unread
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_post__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Si se marca nuevos mensajes requieren su atención."
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_applicant__message_needaction
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_post__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si se selecciona, los mensajes nuevos requieren su atención."
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_applicant__message_has_error
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_post__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcada, algunos mensajes tienen un error de entrega."
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.thankyou_ir_ui_view
+#: model_terms:website.page,arch_db:openeducat_job_enterprise.thankyou
+msgid "In the meantime,"
+msgstr "Mientras tanto,"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_is_follower
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_is_follower
+msgid "Is Follower"
+msgstr "es Seguidor"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__is_published
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__is_published
+msgid "Is published"
+msgstr "Esta publicado"
+
+#. module: openeducat_job_enterprise
+#: model:ir.ui.menu,name:openeducat_job_enterprise.menu_job_main
+msgid "Job"
+msgstr "Trabajo"
+
+#. module: openeducat_job_enterprise
+#: model:ir.actions.act_window,name:openeducat_job_enterprise.act_open_job_applicant_view
+#: model:ir.model,name:openeducat_job_enterprise.model_op_job_applicant
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_jobpost_applicant_form
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_jobpost_applicant_tree
+msgid "Job Applicant"
+msgstr "Solicitante de empleo"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.apply
+msgid "Job Application Form"
+msgstr "Solicitud de empleo"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.jobpost_detail
+msgid "Job Detail"
+msgstr "Detalles del trabajo"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__job_post
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "Job Position"
+msgstr "Puesto de trabajo"
+
+#. module: openeducat_job_enterprise
+#: model:ir.actions.act_window,name:openeducat_job_enterprise.act_open_op_job_post_view
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__post_id
+#: model:ir.ui.menu,name:openeducat_job_enterprise.menu_job_post
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.job_post_list
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.student_portal_job_post_detail
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_search
+msgid "Job Post"
+msgstr "Mensaje de empleo"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model,name:openeducat_job_enterprise.model_op_job_post
+msgid "Job Post Creation"
+msgstr "La tarea de Creación del anuncio"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_student_inherit_jobpost
+msgid "Job Post Detail"
+msgstr "Detalle del anuncio de empleo"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.student_portal_job_post_detail
+msgid "Job Post Detail\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+msgstr "Detalle del anuncio de empleo\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_student__job_post_ids
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_student_inherit_jobpost
+msgid "Job Post Details"
+msgstr "Trabajo Detalles del anuncio"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_pivot
+msgid "Job Post Records"
+msgstr "Registros de trabajo Mensaje"
+
+#. module: openeducat_job_enterprise
+#: model:ir.actions.act_window,name:openeducat_job_enterprise.act_open_op_job_type_view
+#: model:ir.ui.menu,name:openeducat_job_enterprise.menu_job_type_post
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_type_form
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_type_search
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_type_tree
+msgid "Job Type"
+msgstr "Tipo de trabajo"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model,name:openeducat_job_enterprise.model_op_job_type
+msgid "Job Type Creation"
+msgstr "Tipo de trabajo Creación"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_tree
+msgid "Job post"
+msgstr "puesto de trabajo"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant____last_update
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post____last_update
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_type____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__write_uid
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__write_uid
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_type__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización realizada por"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__write_date
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__write_date
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_type__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.thankyou_ir_ui_view
+#: model_terms:website.page,arch_db:openeducat_job_enterprise.thankyou
+msgid "Look around on our website:"
+msgstr "Mire a su alrededor en nuestra página web:"
+
+#. module: openeducat_job_enterprise
+#: model:op.job.post,description:openeducat_job_enterprise.job_post_demo1
+msgid "Lorem Ipsum is simply dummy text of the printing and typesetting industry.\n"
+"                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,\n"
+"                when an unknown printer took a galley of type and scrambled it to make a type specimen book.\n"
+"            "
+msgstr "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.\n"
+"                Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,\n"
+"                cuando un desconocido tomó una impresora de cocina tipo y codificados para hacer un libro de textos especimen.\n"
+"            "
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_main_attachment_id
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Adjunto principal"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_has_error
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_has_error
+msgid "Message Delivery error"
+msgstr "Entrega de mensajes de error"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_ids
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_ids
+msgid "Messages"
+msgstr "mensajes"
+
+#. module: openeducat_job_enterprise
+#: selection:op.job.post,payable_at:0
+msgid "Monthly"
+msgstr "Mensual"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__user_id
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: openeducat_job_enterprise
+#: model:op.job.post,job_post:openeducat_job_enterprise.job_post_demo2
+msgid "Network Designer"
+msgstr "diseñador de red"
+
+#. module: openeducat_job_enterprise
+#: code:addons/openeducat_job_enterprise/models/job_post.py:22
+#: code:addons/openeducat_job_enterprise/models/jobpost_applicant.py:23
+#, python-format
+msgid "New"
+msgstr ""
+
+#. module: openeducat_job_enterprise
+#: selection:op.job.post,states:0
+msgid "Not Recruiting"
+msgstr "no Reclutamiento"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_needaction_counter
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__attachment_number
+msgid "Number of Attachments"
+msgstr "Número de archivos adjuntos"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_has_error_counter
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_has_error_counter
+msgid "Number of error"
+msgstr "Número de error"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_applicant__message_needaction_counter
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_post__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Número de mensajes que requiere una acción"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_applicant__message_has_error_counter
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_post__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de entrega"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_applicant__message_unread_counter
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_post__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Número de mensajes no leídos"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "Offer"
+msgstr "Oferta"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "Other Information"
+msgstr "Otra información"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.job_post_list
+msgid "Our Job Offers"
+msgstr "Nuestras ofertas de trabajo"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__payable_at
+msgid "Payable At"
+msgstr "Pagadero a"
+
+#. module: openeducat_job_enterprise
+#: selection:op.job.post,created_by:0
+msgid "Placement Team"
+msgstr "Equipo de colocación"
+
+#. module: openeducat_job_enterprise
+#: selection:op.job.post,states:0
+msgid "Recruitment in Progress"
+msgstr "El reclutamiento en curso"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_applicant__website_id
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_post__website_id
+msgid "Restrict publishing to this website."
+msgstr "Restringir la publicación en este sitio web."
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.apply
+msgid "Resume"
+msgstr "Currículum"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "Review"
+msgstr "revisión"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__is_seo_optimized
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__is_seo_optimized
+msgid "SEO optimized"
+msgstr "SEO optimizado"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__salary_from
+msgid "Salary From"
+msgstr "De salario"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__salary_upto
+msgid "Salary Upto"
+msgstr "Hasta que el salario"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__start_date
+msgid "Start Date"
+msgstr "Fecha de inicio"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "Start Recruitment"
+msgstr "Comience Reclutamiento"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__state_id
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "State"
+msgstr "Estado"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__states
+msgid "States"
+msgstr "Unidos"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "Stop Recruitment"
+msgstr "parada de Reclutamiento"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_tree
+msgid "Street..."
+msgstr "Calle..."
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__street2
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "Street2"
+msgstr "Calle # 2"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model,name:openeducat_job_enterprise.model_op_student
+msgid "Student"
+msgstr "Estudiante"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.apply
+msgid "Submit"
+msgstr "Enviar"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_applicant__website_url
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_post__website_url
+msgid "The full URL to access the document through the website."
+msgstr "La dirección URL completa para acceder al documento a través de la página web."
+
+#. module: openeducat_job_enterprise
+#: model:op.job.post,description:openeducat_job_enterprise.job_post_demo2
+msgid "There are many variations of passages of Lorem Ipsum available,\n"
+"                but the majority have suffered alteration in some form, by injected humour,\n"
+"                or randomised words which don't look even slightly believable.\n"
+"            "
+msgstr "Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles,\n"
+"                pero la mayoría han sufrido alteraciones en alguna manera, se le agregó humor,\n"
+"                o palabras que no parecen ni un poco creíbles aleatorio.\n"
+"            "
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_unread
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_unread
+msgid "Unread Messages"
+msgstr "Los mensajes no leídos"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__message_unread_counter
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Los mensajes no leídos Contador"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__website_published
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__website_published
+msgid "Visible on current website"
+msgstr "Visibles en la página web actual"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__website_id
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__website_id
+msgid "Website"
+msgstr "Sitio web"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__website_message_ids
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes Sitio Web"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__website_url
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__website_url
+msgid "Website URL"
+msgstr "URL del sitio web"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_applicant__website_message_ids
+#: model:ir.model.fields,help:openeducat_job_enterprise.field_op_job_post__website_message_ids
+msgid "Website communication history"
+msgstr "historia de la comunicación Sitio Web"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__website_meta_description
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__website_meta_description
+msgid "Website meta description"
+msgstr "Sitio web descripción de la meta"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__website_meta_keywords
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__website_meta_keywords
+msgid "Website meta keywords"
+msgstr "palabras clave página web meta"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__website_meta_title
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__website_meta_title
+msgid "Website meta title"
+msgstr "Titulo del sitio meta"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_applicant__website_meta_og_img
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__website_meta_og_img
+msgid "Website opengraph image"
+msgstr "imagen OpenGraph página web"
+
+#. module: openeducat_job_enterprise
+#: selection:op.job.post,payable_at:0
+msgid "Weekly"
+msgstr "Semanal"
+
+#. module: openeducat_job_enterprise
+#: selection:op.job.post,payable_at:0
+msgid "Yearly"
+msgstr "Anual"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.jobpost_detail
+msgid "Yes I Am Interested!\n"
+msgstr "¡Sí, estoy interesado!\n"
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.thankyou_ir_ui_view
+#: model_terms:website.page,arch_db:openeducat_job_enterprise.thankyou
+msgid "Your application has been posted successfully."
+msgstr "Su aplicación se ha publicado correctamente."
+
+#. module: openeducat_job_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_job_enterprise.view_op_job_post_form
+msgid "ZIP"
+msgstr "CÓDIGO POSTAL"
+
+#. module: openeducat_job_enterprise
+#: model:ir.model.fields,field_description:openeducat_job_enterprise.field_op_job_post__zip
+msgid "Zip"
+msgstr "Código Postal"
+
+#. module: openeducat_job_enterprise
+#: selection:op.job.post,states:0
+msgid "cancel"
+msgstr "cancelar"
+
+#. module: openeducat_job_enterprise
+#: selection:op.job.post,states:0
+msgid "review"
+msgstr "revisión"
+

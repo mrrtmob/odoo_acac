@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="student_attendance_badge"
+              inherit_id="openeducat_core.report_student_idcard"
+              priority="40">
+        <xpath expr="//span[hasclass('student')]" position="after">
+                <div style="margin-top: 5px;" t-if="o.barcode">
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.barcode, 250, 40)"/>
+                </div>
+        </xpath>
+    </template>
+</odoo>

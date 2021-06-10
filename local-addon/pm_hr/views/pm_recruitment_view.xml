@@ -1,0 +1,283 @@
+<odoo>
+    <data>
+
+          <record id="view_pm_hr_interview_question_search" model="ir.ui.view">
+            <field name="name">pm.interview.question.search</field>
+            <field name="model">pm.interview.question</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Interview Question">
+                    <field name="name" string="Name" />
+                    <field name="department_id" string="Department" />
+                    <field name="job_position_id" string="Position" />
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Department" name="group_by_department"
+                                domain="[]" context="{'group_by':'department_id'}"/>
+                        <filter string="Position" name="group_by_position"
+                                domain="[]" context="{'group_by':'job_position_id'}"/>
+                        <filter string="Question Type" name="group_by_type"
+                                domain="[]" context="{'group_by':'type'}"/>
+                    </group>
+                       <searchpanel>
+                           <field name="department_id" string="Department" icon="fa-users"/>
+                           <field name="job_position_id" string="Position" icon="fa-users"/>
+                       </searchpanel>
+                </search>
+            </field>
+        </record>
+
+         <record id="pm_hr_recruiting_action" model="ir.actions.act_window">
+            <field name="name">Requests</field>
+            <field name="res_model">pm.recruiting.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+         <record id="pm_hr_interview_question" model="ir.actions.act_window">
+            <field name="name">Interview Questions</field>
+            <field name="res_model">pm.interview.question</field>
+            <field name="search_view_id" ref="view_pm_hr_interview_question_search"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+         <record id="view_pm_hr_interview_question_tree" model="ir.ui.view">
+            <field name="name">pm.interview.question.tree</field>
+            <field name="model">pm.interview.question</field>
+            <field name="arch" type="xml">
+                <tree string="Interview Questions" >
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="job_position_id"/>
+                    <field name="type"/>
+                    <field name="no_scoring"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+         <record id="view_pm_hr_interview_question_form" model="ir.ui.view">
+            <field name="name">pm.interview.question.form</field>
+            <field name="model">pm.interview.question</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+
+                    <div class="oe_edit_only">
+                        <label for="name" class="oe_inline" />
+                    </div>
+                    <h1>
+                         <field name="name" nolabel="1" placeholder="e.g. Please introduce yourself" />
+                    </h1>
+
+                   <div class="oe_edit_only">
+                        <field name="read_only" invisible="1"/>
+                        <field name="is_hr_user" invisible="1"/>
+                        <label for="type" class="oe_inline" />
+                    </div>
+                    <h2>
+                       <field name="type" attrs="{'readonly': [('read_only', '=', True)]}" />
+                    </h2>
+
+                    <group>
+                           <field name="no_scoring" string="No Scoring"/>
+                           <!-- <field name="question_weight" string="Weight (%)" attrs="{'invisible':[('no_scoring', '=', True)]}"/> -->
+                    </group>
+
+                    <group col="4" colspan="4" attrs="{'invisible':[('type', '!=', 'technical')]}">
+                        <field name="department_id"/>
+                        <field name="job_position_id"/>
+                    </group>
+
+                    <br/>
+
+                    <label for="expected_answer"/>
+                    <div class="o_row">
+                        <field name="expected_answer" nolabel="1" widget="html"  colspan="4"/>
+                    </div>
+
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+         <record id="view_recruitment_request_tree" model="ir.ui.view">
+            <field name="name">pm.recruiting.request.tree</field>
+            <field name="model">pm.recruiting.request</field>
+            <field name="arch" type="xml">
+                <tree string="Recruitment Request">
+                    <field name="name"/>
+                     <field name="department_id"/>
+                    <field name="job_position_id"/>
+                    <field name="requested_by"/>
+                    <field name="expected_recruit"/>
+                </tree>
+            </field>
+        </record>
+
+
+     <record id="view_recruitment_request_form" model="ir.ui.view">
+        <field name="name">pm.recruiting.request.form</field>
+        <field name="model">pm.recruiting.request</field>
+        <field name="arch" type="xml">
+            <form string="Request">
+                <header>
+
+                    <field name="is_assignee" invisible="1"/>
+
+                     <button
+                        name="button_submit"
+                        string="Submit"
+                        states="draft"
+                        type="object"
+                        class="oe_highlight"
+                    />
+
+                    <button
+                        name="button_verify"
+                        string="Verify Request"
+                        type="object"
+                        attrs="{'invisible': ['|',('is_assignee','=',False),('state','!=','submitted')]}"
+                        class="oe_highlight"
+                        groups="hr_recruitment.group_hr_recruitment_manager"
+                    />
+
+                    <button
+                        name="button_approve"
+                        attrs="{'invisible': ['|',('is_assignee','=',False),('state','!=','first_approved')]}"
+                        string="Approve"
+                        type="object"
+                        class="oe_highlight"
+                        groups="base.group_user"
+                    />
+
+                    <field
+                        name="state"
+                        statusbar_visible="draft,submitted,first_approved,approved"
+                        widget="statusbar"
+                    />
+                    <field name="company_id"  invisible="1"/>
+                    <field name="currency_id"  invisible="1"/>
+                    <field name="read_only"  invisible="1"/>
+                </header>
+                <sheet>
+                    <field name="show_recruitment_form" invisible="1"/>
+                    <field name="show_promotion_form" invisible="1"/>
+                    <field name="show_transfer_form" invisible="1"/>
+                    <field name="show_termination_form" invisible="1"/>
+                    <field name="show_replacement_form" invisible="1"/>
+
+
+                    <div class="oe_edit_only">
+                        <label for="name" class="oe_inline" />
+                    </div>
+                    <h1>
+                        <field
+                            name="name" readonly="1"
+                        />
+                    </h1>
+
+                   <div class="oe_edit_only">
+                        <label for="recruitment_type" class="oe_inline" />
+                    </div>
+
+                    <h2>
+                       <field name="recruitment_type" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                    </h2>
+
+                     <separator string="Reason" attrs="{'invisible': [('show_termination_form', '=', True)]}" />
+                     <group name="Remarks" attrs="{'invisible': [('show_termination_form', '=', True)]}">
+                            <newline />
+                            <field
+                                name="remarks"
+                                string="Reason"
+                                nolabel="1"
+                                attrs="{'readonly': [('read_only', '=', True)]}"
+                        />
+                    </group>
+
+                    <div class="oe_edit_only" attrs="{'invisible':[('show_replacement_form', '=', False)]}">
+                        <label for="employee_id" class="oe_inline" />
+                    </div>
+
+                    <h2>
+                      <field name="employee_id" attrs="{'invisible':[('show_replacement_form', '=', False)],'readonly': [('read_only', '=', True)]}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                    </h2>
+
+                  <group name="new_position_form" attrs="{'invisible': [('show_recruitment_form', '=', False), ('show_replacement_form', '=', False)]}" >
+                    <group col="4" colspan="4">
+                        <field name="department_id" attrs="{'readonly': [('read_only', '=', True)]}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                        <field name="job_position_id" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                        <field name="start_date" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                        <field name="expected_recruit" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                        <field name="requested_by" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                        <field name="assigned_to" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                    </group>
+                </group>
+
+                   <group name="promotion_form" attrs="{'invisible': [('show_promotion_form', '=', False),
+                                                                      ('show_transfer_form', '=', False)]}">
+                        <group col="4" colspan="4">
+                            <field name="employee_id"/>
+                            <field name="promotion_date" string="Effective From" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                            <field name="department_id" readonly="1" force_save="1" string="Current Department" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                            <field name="transfer_to" string="New Department" attrs="{'readonly': [('read_only', '=', True)]}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                            <field name="job_position_id" string="Current Position" readonly="1" force_save="1"  options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                            <field name="promoted_to"  string="New Position" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                            <field name="current_wage"  string="Current Salary" readonly="1" force_save="1"/>
+                            <field name="promoted_wage" string="New Salary" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                            <field name="requested_by" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                            <field name="assigned_to" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                            <field name="approved_by" readonly="1" force_save="1"/>
+                            <field name="approved_date" readonly="1" force_save="1"/>
+                            <field name="appraisal_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                        </group>
+                   </group>
+
+                   <group name="termination_form" attrs="{'invisible': [('show_termination_form', '=', False)]}">
+                         <group col="4" colspan="4">
+                            <field name="employee_id"/>
+                            <field name="promotion_date" string="Effective From" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                            <field name="department_id" readonly="1" force_save="1" string="Current Department" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                            <field name="job_position_id" string="Current Position" readonly="1" force_save="1"  options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                            <field name="requested_by" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                            <field name="assigned_to" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                            <field name="approved_by" readonly="1" force_save="1"/>
+                            <field name="approved_date" readonly="1" force_save="1"/>
+                            <field name="appraisal_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                        </group>
+                        <separator string="Reason" />
+                            <field
+                                name="remarks"
+                                required="1"
+                                nolabel="1"
+                                attrs="{'readonly': [('read_only', '=', True)]}"
+                             />
+                </group>
+                  <separator string="Budget" attrs="{'invisible': [('show_termination_form', '=', True)]}"/>
+                    <group col="4" colspan="4" attrs="{'invisible': [('show_termination_form', '=', True)]}">
+                      <field name="budget" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                      <field name="is_additional_budget" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                      <field name="is_sufficient_budget" attrs="{'readonly': [('read_only', '=', True)]}"/>
+                    </group>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    </data>
+</odoo>

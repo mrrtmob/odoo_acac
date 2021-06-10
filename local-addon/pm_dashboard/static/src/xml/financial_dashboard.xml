@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+    <t t-name="FinancialDashboard">
+        <div class="container-fluid p-0 pt-5" id="financial-dashboard">
+            <div class="row m-0">
+               
+                <div class="col-lg-12 col-sm-12">
+                 
+
+                    <div class="box-container student-enrollment">
+                      
+                        <div class="body mt-5">
+                            <div class="row m-0">
+                                <div class="col-lg-6 col-sm-12 d-flex align-items-center justify-content-center" >
+                                    <div style="width:100%;">
+                                        <canvas id="ytd_vs_budget" height="150"></canvas>
+                                        <div id="ytd_vs_budget_legend" ></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="mb-3">
+                                        <div class="sub-title">
+                                        Budget Main Accounts
+                                    </div>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Account</th>
+                                                        <th scope="col">Budget</th>                                       
+                                                        <th scope="col">Actual</th>                                                       
+                                                        <th scope="col">Variance</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="widget.finance_data.budgets" t-as="item">
+                                                        <tr>
+                                                            <td><t t-esc="item.name" /></td>
+                                                            <td>$<t t-esc="item.planned_amount"/></td>
+                                                            <td>$<t t-esc="item.actual_amount"/></td>
+                                                            <td>$<t t-esc="item.variance"/></td>
+                                                        </tr>
+                                                    </t>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="sub-title">
+                                        Top 5 Vendor Accounts
+                                    </div>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Account</th>
+                                                        <th scope="col">Current Month</th>
+                                                        <th scope="col">Monthly avg</th>
+                                                        <th scope="col">YTD Total</th>
+                                                        <th scope="col">%</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <t t-foreach="widget.finance_data.vendors" t-as="item">
+                                                    <tr>
+                                                        <td><t t-esc="item.vendor" /></td>
+                                                        <td>$<t t-esc="item.this_month"  t-field-options='{"widget": "monetary"}'/></td>
+                                                        <td>$<t t-esc="item.avg_12"/></td>
+                                                        <td>$<t t-esc="item.amount"/></td>
+                                                        <td><t t-esc="item.total_p"/> </td>
+                                                    </tr>
+                                                </t>   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>

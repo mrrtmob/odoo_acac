@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="assets_tests" name="Exam Assets Tests" inherit_id="web.assets_tests">
+            <xpath expr="." position="inside">
+                <script type="text.javascript"
+                        src="/openeducat_exam_enterprise/static/tests/tours/test_student_exam.js"/>
+                <script type="text.javascript"
+                        src="/openeducat_exam_enterprise/static/tests/tours/test_student_exam_data.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

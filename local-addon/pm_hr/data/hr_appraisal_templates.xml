@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <template id="pm_appraisal_template">
+        Appraisal Completed<br/>
+        <ul>
+            <li> <t t-esc="partner_name"/>: <a href="#" t-att-data-oe-id="obj.id" data-oe-model="survey.user_input">Appraisal</a></li>
+        </ul>
+        </template>
+    </data>
+</odoo>

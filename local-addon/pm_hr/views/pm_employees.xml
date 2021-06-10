@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Employee Form View -->
+        <record id="custom_employee_form_view" model="ir.ui.view">
+            <field name="name">custom.employee.form.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+                 <xpath expr="//field[@name='address_home_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                 <xpath expr="//field[@name='active']" position="after">
+                    <field name="is_hr_user" invisible="1"/>
+                </xpath>
+
+                 <xpath expr="//header/button[1]" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                </xpath>
+
+                 <xpath expr="//header" position="inside">
+                    <button name="%(applicant_create_employee_act)d" string="Create User" type="action" attrs="{'invisible': [('user_id', '!=', False)]}"
+                        class="oe_highlight" context="{'from_employee': True}"/>
+                </xpath>
+
+
+
+                 <xpath expr="//field[@name='bank_account_id']" position="replace">
+                    <field name="bank_account_no"/>
+                    <field name="tax_income_no"/>
+                    <field name="nssf_no"/>
+                </xpath>
+
+                 <xpath expr="//group[1]" position="replace">
+                      <group>
+                            <group>
+
+                                <field name="mobile_phone" attrs="{'readonly': [('is_hr_user', '=', False)]}" widget="phone"/>
+                                <field name="work_phone" attrs="{'readonly': [('is_hr_user', '=', False)]}" widget="phone"/>
+                                <field name="work_email" attrs="{'readonly': [('is_hr_user', '=', False)]}" widget="email"/>
+                                <field name="work_location" attrs="{'readonly': [('is_hr_user', '=', False)]}"/>
+                                <field name="company_id" attrs="{'readonly': [('is_hr_user', '=', False)]}" groups="base.group_multi_company"/>
+                            </group>
+                            <group>
+                                <field name="department_id" attrs="{'readonly': [('is_hr_user', '=', False)]}"/>
+                                <field name="job_id" attrs="{'readonly': [('is_hr_user', '=', False)]}"/>
+                                <field name="parent_id" attrs="{'readonly': [('is_hr_user', '=', False)]}"/>
+                            </group>
+                        </group>
+                </xpath>
+
+                 <xpath expr="//page[@name='personal_information']" position="attributes">
+                      <attribute name="groups">hr.group_hr_manager</attribute>
+                </xpath>
+                 <xpath expr="//page[@name='hr_settings']" position="attributes">
+                      <attribute name="groups">hr.group_hr_manager</attribute>
+                </xpath>
+
+
+
+
+
+                 <xpath expr="//field[@name='joining_date']" position="before">
+                    <field name="leaving_date" />
+                </xpath>
+
+                <xpath expr="//field[@name='mobile_phone']" position="before">
+                    <field name="khmer_name" attrs="{'readonly': [('is_hr_user', '=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="before">
+                    <field name="godfather_id"/>
+                </xpath>
+
+                <xpath expr="//field[@name='visa_no']" position="after">
+                    <field name="type_of_visa"/>
+                </xpath>
+
+                <xpath expr="//field[@name='emergency_contact']" position="after">
+                    <field name="relationship_id"/>
+                </xpath>
+
+                <!-- dependence details -->
+                <xpath expr="//field[@name='member_contact']" position="attributes">
+                    <attribute name="string">Organization Name</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='birth_date']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='relation_id']" position="after">
+                    <field name="birth_date"/>
+                </xpath>
+
+                <xpath expr="//field[@name='member_name']" position="after">
+                    <field name="occupation"/>
+                </xpath>
+
+                <xpath expr="//field[@name='fam_ids']/tree/field[@name='birth_date']" position="replace">
+                    <field name="phone"/>
+                </xpath>
+
+                <xpath expr="//field[@name='emergency_phone']" position="after">
+
+                    <field name="emergency_mobile"/>
+                    <field name="emergency_email"/>
+
+                    <!-- emergency address -->
+                    <label for="ema_street" string="Emergency Address"/>
+                    <div class="o_address_format">
+                        <field name="ema_street" placeholder="Street ..." class="o_address_street"/>
+                        <field name="ema_city" placeholder="City" class="o_address_city"/>
+                        <field name="ema_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                        <field name="ema_zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="ema_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                    </div>
+                    
+                </xpath>
+
+<!--                <xpath expr="//field[@name='department_id']" position="before">-->
+<!--                    <field name="status" attrs="{'readonly': [('is_hr_user', '=', False)]}" />-->
+<!--                    <field name="status_detail" attrs="{'readonly': [('is_hr_user', '=', False)]}"/>-->
+<!--                </xpath>-->
+
+                <xpath expr="//field[@name='address_home_id']" position="after">
+
+                    <!-- current residential address -->
+                    <label for="cra_street" string="Current Residential Address"/>
+                    <div class="o_address_format">
+                        <field name="cra_street" placeholder="Street ..." class="o_address_street"/>
+                        <field name="cra_city" placeholder="City" class="o_address_city"/>
+                        <field name="cra_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                        <field name="cra_zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="cra_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                    </div>
+
+                    <!-- country home address-->    
+                    <label for="hca_street" string="Home Country Address"/>
+                    <div class="o_address_format">
+                        <field name="hca_street" placeholder="Street ..." class="o_address_street"/>
+                        <field name="hca_city" placeholder="City" class="o_address_city"/>
+                        <field name="hca_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                        <field name="hca_zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="hca_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                    </div>
+                </xpath>
+
+                 <!-- hide address field -->
+<!--                tem:hide compute field-->
+                 <xpath expr="//field[@name='address_id']" position="replace">
+                    <field name="address_id" attrs="{'readonly': [('is_hr_user', '=', False)]}" context="{'show_address': 1}" options="{&quot;always_reload&quot;: True, &quot;highlight_first_line&quot;: True}"/>
+                </xpath>
+
+
+
+                <!-- hide count (smart button)-->
+                <xpath expr="//div[@name='button_box']/button[6]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='khmer_name']" position="before">
+                    <field name="employee_number"/>
+                </xpath>
+
+                <xpath expr="//field[@name='category_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='job_title']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='managers']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                 <xpath expr="//page[@name='personal_information']/group" position="after">
+                    <group name="medical_history_ids" colspan="4" string="Medical History">
+                        <field name="medical_history_ids">
+                            <tree editable="bottom">
+                                <field name="name" />
+                                <field name="date" />
+                                <field name="hospital" />
+                                <field name="condition" />
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- hide loans and advance (menu item) -->
+        <!-- <record id="make_invisible" model="res.groups">
+            <field name="name">Invisible</field>
+        </record>
+        <record model="ir.ui.menu" id="ohrms_loan.menu_hr_loans_and_advances">
+            <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+        </record> -->
+      
+        <!-- Inherit hr_contract.hr_hr_employee_view_form2 -->
+        <record id="act_hr_employee_appraisal" model="ir.actions.act_window">
+            <field name="name">Appraisal</field>
+            <field name="res_model">hr.appraisal</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_emp_id': [active_id],
+                'default_emp_id': active_id,
+                'search_default_group_by_state': 1
+            }</field>
+        </record>     
+        <record id="act_hr_employee_promotion" model="ir.actions.act_window">
+            <field name="name">Promotion</field>
+            <field name="res_model">pm.promotion</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_employee_id': [active_id],
+                'default_employee_id': active_id,
+                'search_default_group_by_state': 1
+            }</field>
+        </record>
+
+        <record id="act_hr_employee_transfers" model="ir.actions.act_window">
+            <field name="name">Transfers</field>
+            <field name="res_model">pm.transfers</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_employee_id': [active_id],
+                'default_employee_id': active_id,
+                'search_default_group_by_state': 1
+            }</field>
+        </record>
+
+        <record id="act_hr_employee_training" model="ir.actions.act_window">
+            <field name="name">Training</field>
+            <field name="res_model">pm.training</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_employee_id': [active_id],
+                'default_employee_id': active_id,
+                'search_default_group_by_state': 1
+            }</field>
+        </record>
+
+        <record id="inherit_hr_hr_employee_view_form_user" model="ir.ui.view">
+            <field name="name">custom.hr.user.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="hr.res_users_view_form_simple_modif"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='personal_information']" position="attributes">
+                     <attribute name="groups">hr.group_hr_manager</attribute>
+                </xpath>
+                <xpath expr="//page[@name='hr_settings']" position="attributes">
+                     <attribute name="groups">hr.group_hr_manager</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+
+        <record id="inherit_hr_hr_employee_view_form2" model="ir.ui.view">
+            <field name="name">custom.smart.button.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="%(pm_hr.act_hr_employee_appraisal)d"
+                            class="oe_stat_button"
+                            icon="fa-file"
+                            type="action"
+                            groups="hr_recruitment.group_hr_recruitment_manager">
+                            <field name="employee_appraisal_count" widget="statinfo" string="Appraisals"/>
+                    </button>
+                    
+                    <button name="%(pm_hr.act_hr_employee_promotion)d"
+                            class="oe_stat_button"
+                            icon="fa-file"
+                            type="action"
+                            groups="hr_recruitment.group_hr_recruitment_manager">
+                            <field name="employee_count" widget="statinfo" string="Promotions"/>
+                    </button>
+
+                    <button name="%(pm_hr.act_hr_employee_transfers)d"
+                            class="oe_stat_button"
+                            icon="fa-exchange"
+                            type="action"
+                            groups="hr_recruitment.group_hr_recruitment_manager">
+                            <field name="employee_transfers_count" widget="statinfo" string="Transfers"/>
+                    </button>
+
+                    <button name="%(pm_hr.act_hr_employee_training)d"
+                            class="oe_stat_button"
+                            icon="fa-briefcase"
+                            type="action"
+                            groups="hr_recruitment.group_hr_recruitment_manager">
+                            <field name="employee_training_count" widget="statinfo" string="Training"/>
+                    </button>
+                </xpath>
+
+            </field>
+        </record>
+        
+    </data>
+</odoo>

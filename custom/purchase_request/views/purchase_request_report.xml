@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018-2019 ForgeFlow, S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <!-- custom report file -->
+        <record id="paperformat_purchase"
+                model="report.paperformat">
+            <field name="name">European A4</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">20</field>
+            <field name="margin_right">20</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">43</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+    <report
+        id="action_report_purchase_requests"
+        model="purchase.request"
+        string="Purchase Request"
+        report_type="qweb-pdf"
+        name="purchase_request.report_purchase_request"
+        file="purchase_request.report_purchase_request"
+        paperformat="paperformat_purchase"
+    />
+</odoo>

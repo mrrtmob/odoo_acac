@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Front-end/Back-end integration -->
+    <template id="course_navbar" inherit_id="website.user_navbar">
+<!--        <xpath expr="//div[hasclass('row')]" position="inside">-->
+<!--            <t t-set="mod" t-value="env.ref('base.module_openeducat_lms_website')"/>-->
+<!--            <div groups="base.group_system" name="module_openeducat_lms_website"-->
+<!--                 t-att-data-module-id="env.ref('base.module_openeducat_lms_website').id"-->
+<!--                 t-att-data-module-shortdesc="env.ref('base.module_openeducat_lms_website').shortdesc"-->
+<!--                 class="col-md-4 mb8 o_new_content_element">-->
+<!--                <a href="#" data-action="new_lms_course">-->
+<!--                    <i class="fa fa-graduation-cap"></i>-->
+<!--                    <p>New LMS Course</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </xpath>-->
+    </template>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="pm_inherit_hr_plan_form" model="ir.ui.view">
+            <field name="name">hr.plan.activity.type.custom.form</field>
+            <field name="model">hr.plan.activity.type</field>
+            <field name="inherit_id" ref="hr.hr_plan_activity_type_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='note']" position="after">
+                    <field name="model_id" invisible="1"/>
+                    <field name="on_time"/>
+                    <field name="trg_date_id" attrs="{'invisible': [ ('on_time','=',False)]}"/>
+                    <field name="trg_date_range"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="pm_hr_plan_view_form_custom" model="ir.ui.view">
+            <field name="name">hr.plan.view.form.custom</field>
+            <field name="model">hr.plan</field>
+            <field name="inherit_id" ref="hr.hr_plan_view_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//field[@name='plan_activity_type_ids']/tree/field[@name='summary']" position="after">
+                    <field name="trg_description"/>
+                    <field name="trg_date_range"/>
+            </xpath>
+
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

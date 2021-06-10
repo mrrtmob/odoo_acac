@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="poratl_menu_exam" model="openeducat.portal.menu">
+        <field name="name">Payments</field>
+        <field name="link">/student/payment/</field>
+        <field name="active">True</field>
+        <field name="sequence" type="int">30</field>
+        <field name="background_color">#008080</field>
+        <field name="icon_image" type="base64"
+               file="pm_rest_api/static/img/wallet.png"/>
+    </record>
+</odoo>

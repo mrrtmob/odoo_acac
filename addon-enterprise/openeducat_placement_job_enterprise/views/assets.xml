@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="assets_tests" name="Website Placement Job Assets Tests" inherit_id="web.assets_tests">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/openeducat_placement_job_enterprise/static/tests/tours/activity_details_test.js"/>
+            <script type="text/javascript"
+                    src="/openeducat_placement_job_enterprise/static/tests/tours/activity_announcement_apply_test.js"/>
+            <script type="text/javascript"
+                    src="/openeducat_placement_job_enterprise/static/tests/tours/website_activity_announcement_test.js"/>
+        </xpath>
+    </template>
+</odoo>

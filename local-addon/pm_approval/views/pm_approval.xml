@@ -1,0 +1,135 @@
+<odoo>
+  <data>
+
+       <record id="view_pm_approval_search" model="ir.ui.view">
+            <field name="name">pm.approval.search</field>
+            <field name="model">pm.approval</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Approval Requests">
+                    <field name="approval_type_id"/>
+                    <field name="state"/>
+                    <field name="create_date" string="Date"/>
+                    <field name="create_uid" string="Submitted By"/>
+
+                      <filter string="Sent" name="sent"
+                            domain="[('create_uid', '=', uid)]"/>
+
+                       <filter string="Received" name="received"
+                            domain="[('approve', '=', uid)]"/>
+
+<!--                    <filter string="Archived" name="inactive"-->
+<!--                            domain="[('active', '=', False)]"/>-->
+
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Type" name="group_by_approval_type_id"
+                                domain="[]" context="{'group_by':'approval_type_id'}"/>
+                        <filter string="Requested By" name="group_by_requester"
+                                domain="[]" context="{'group_by':'create_uid'}"/>
+                        <filter string="State" name="group_by_approval_state"
+                                domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                     <searchpanel>
+                        <field name="approval_type_id" icon="fa fa-pencil-square-o"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_pm_approval_tree" model="ir.ui.view">
+            <field name="name">pm.approval.tree</field>
+            <field name="model">pm.approval</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                  <tree create="false" string="Approval Requests">
+                    <field name="name"/>
+                    <field name="approval_type_id"/>
+                    <field name="state" widget="label_selection" options="{'classes': {'pending': 'primary', 'rejected': 'danger', 'approved': 'success'}}"/>
+                    <field name="create_date" string="Date"/>
+                    <field name="create_uid" string="Submitted By"/>
+                    <button name="view_record" type="object" string="View Record"  class="oe_highlight"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_pm_approval_view_custom">
+            <field name="name">Approvals</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.approval</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="view_pm_approval_search"/>
+        </record>
+
+
+
+        <record id="act_open_pm_approval_type_view_tree" model="ir.ui.view">
+            <field name="name">pm.approval.type.tree</field>
+            <field name="model">pm.approval.type</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                  <tree string="Approval Process">
+                    <field name="name"/>
+                    <field name="base_model"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="act_open_pm_approval_type_view_form" model="ir.ui.view">
+            <field name="name">pm.approval.type.form</field>
+            <field name="model">pm.approval.type</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Approval Process">
+                        <sheet>
+                            <field name="show_type" invisible="1"/>
+                            <group col="4" name="main">
+                                 <field name="name"/>
+                                 <field name="base_model"/>
+                                 <field name="type" attrs="{'invisible': [('show_type','!=', True)]}"/>
+                                 <field name="show_pr_state" invisible="1"/>
+                                 <field name="show_po_state" invisible="1"/>
+                                 <field name="description"/>
+                            </group>
+                             <group string="Approval Rules">
+                                <field name="approval_rule_ids" colspan="4"  widget="section_and_note_one2many"  nolabel="1">
+                                    <tree string="Rules" editable="top">
+                                      <control>
+                                         <create name="add_rule_control" string="Add Rules"/>
+                                         <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                         <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                      </control>
+                                        <field name="display_type" invisible="1"/>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="state"  attrs="{'required': [('display_type', '=', False)],
+                                        'column_invisible': ['|',('parent.show_pr_state','=', True),('parent.show_po_state','=', True)]}"
+                                               force_save="1" />
+                                        <field name="pr_state"  attrs="{'required': [('display_type', '=', False)],'column_invisible': [('parent.show_pr_state','=', False)]}"
+                                               force_save="1" />
+                                        <field name="po_state"  attrs="{'required': [('display_type', '=', False)],'column_invisible': [('parent.show_po_state','=', False)]}"
+                                               force_save="1" />
+                                        <field name="name" widget="section_and_note_text" />
+                                        <field name="approve_id"
+                                               attrs="{'required': [('display_type', '=', False)]}"
+                                               force_save="1" />
+                                        <field string="Type" name="procurement_type"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </sheet>
+                    </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_pm_approval_type_view">
+            <field name="name">Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.approval.type</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+        </record>
+
+
+  </data>
+</odoo>

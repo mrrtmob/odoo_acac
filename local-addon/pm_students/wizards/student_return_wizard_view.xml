@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="student_return_form">
+            <field name="name">student.return.wizard.form</field>
+            <field name="model">student.return.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Student Return Form">
+                    <group col="4" colspan="4">
+                        <field name="course_id"/>
+                        <field name="batch_id" context="{'course_id': course_id,'get_parent_batch':1}"/>
+                        <field name="starting_semester_id"  context="{'batch_id': batch_id,'get_parent_semester':1}"/>
+                        <field name="class_id"/>
+                    </group>
+
+                    <group>
+                         <field name="remarks"/>
+                    </group>
+
+
+                    <footer>
+                        <span groups="base.group_user">
+                            <button string="Confirm" type="object" name="confirm_return_student" class="oe_highlight"/>
+                            <button special="cancel" string="Close" type="object"/>
+                        </span>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="student_return_wizard">
+            <field name="name">Student Return Form</field>
+            <field name="res_model">student.return.wizard</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="student_return_form"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

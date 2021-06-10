@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+    <record id="pm_ingredient_origin_view_list" model="ir.ui.view">
+      <field name="name">pm.ingredient.origin.view.list</field>
+      <field name="model">pm.ingredient.origin</field>
+      <field name="arch" type="xml">
+        <tree string="Ingredient Origins">
+          <field name="name" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="pm_ingredient_origin_view_form" model="ir.ui.view">
+      <field name="name">pm.ingredient.origin.view.form</field>
+      <field name="model">pm.ingredient.origin</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name" />
+            </group>
+          </sheet>
+
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="config_ingredient_origin_action" model="ir.actions.act_window">
+      <field name="name">Ingredient Origins</field>
+      <field name="res_model">pm.ingredient.origin</field>
+      <field name="view_mode">tree,kanban,form</field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="template_header">
+        <div class="page">
+            <style type="text/css">
+                @font-face {
+                    font-family: 'Georgia';
+                    font-style: normal;
+                    src: url('/pm_general/static/src/fonts/georgia/Georgia.ttf') format('truetype');
+                }
+                .report-header{
+                    font-family: 'Georgia' !important;
+                    font-size: 17px !important;
+                }
+                .report-header p:first-child,
+                .report-header p:nth-child(2),
+                .report-header p:nth-child(3),
+                .report-header p:nth-child(4),
+                .report-header p:nth-child(7),
+                .report-header p:nth-child(8){
+                    margin: 0;
+                }
+                img{
+                    width: 240px;
+                    height: 220px
+                }
+            </style>
+            <div class="report-header d-inline">
+                <div class="w-100 text-center">
+                    <img src="/pm_general/static/src/img/icon.png" />
+                </div>
+                <p>Academy of Culinary Arts</p>
+                <p>#23, St. 139, Sangkat Veal Vong</p>
+                <p>Khan 7 Makara, Phnom Penh</p>
+                <p>Cambodia</p>
+                <p class="text-uppercase">DATE</p>
+                <p>MR / MS / MRS STUDENT NAME</p>
+                <p>STUDENT NO.</p>
+                <p>CLASS</p>
+            </div>
+        </div>
+    </template>
+</odoo>

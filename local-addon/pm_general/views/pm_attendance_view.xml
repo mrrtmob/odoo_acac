@@ -1,0 +1,127 @@
+<odoo>
+    <data>
+
+         <record id="view_op_attendance_sheet_form_custom" model="ir.ui.view">
+            <field name="name">op.attendance.sheet.form</field>
+            <field name="model">op.attendance.sheet</field>
+            <field name="inherit_id" ref="openeducat_attendance.view_op_attendance_sheet_form"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//field[@name='attendance_date']" position="after">
+                     <field name="classroom_id" />
+                 </xpath>
+                 <xpath expr="//field[@name='attendance_line']" position="replace">
+                       <field name="attendance_line" colspan="4" nolabel="1">
+                            <tree string="Attendance Line" editable="top">
+<!--                                tem: error class_id-->
+<!--                                <field name="student_id"-->
+<!--                                       domain="[('course_detail_ids.class_id','=',parent.classroom_id)]"/>-->
+                                <field name="present"/>
+                                <field name="excused"/>
+                                <field name="is_late"/>
+                                <field name="late_duration"/>
+                                <field name="remark"/>
+                            </tree>
+                        </field>
+                    </xpath>
+             </field>
+        </record>
+         <record id="view_op_attendance_session_form_custom" model="ir.ui.view">
+            <field name="name">op.session.form.custom</field>
+            <field name="model">op.session</field>
+            <field name="inherit_id" ref="openeducat_timetable.view_op_session_form"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//field[@name='batch_id']" position="after">
+                     <field name="semester_id"  context="{'batch_id': batch_id,'get_parent_semester':1}"/>
+                </xpath>
+                 <xpath expr="//field[@name='subject_id']" position="replace">
+                      <field name="subject_id"  context="{'semester_id': semester_id,'get_parent_subject':1}"/>
+                </xpath>
+             </field>
+        </record>
+
+         <record id="view_op_attendance_register_form_custom" model="ir.ui.view">
+            <field name="name">op.attendance.sheet.register.form</field>
+            <field name="model">op.attendance.register</field>
+            <field name="inherit_id" ref="openeducat_attendance.view_op_attendance_register_form"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//field[@name='batch_id']" position="after">
+                     <field name="semester_id"  context="{'batch_id': batch_id,'get_parent_semester':1}"/>
+                </xpath>
+             </field>
+        </record>
+
+         <record id="view_pm_semester_attendance_form" model="ir.ui.view">
+                <field name="name">pm.semester.attendance.form</field>
+                <field name="model">pm.semester.attendance</field>
+                <field name="priority" eval="9"/>
+                <field name="arch" type="xml">
+                    <form string="Semester Absence">
+                        <sheet>
+                            <group col="4" name="main">
+                                <field name="semester_id"/>
+                                <field name="total_hours"/>
+                                <field name="no_permission_absence"/>
+                                <field name="state"/>
+                            </group>
+                             <group string="Subject Absence">
+                                <field name="subject_total_absent_ids" colspan="4" readonly="1" nolabel="1">
+                                    <tree string="Absence" decoration-warningr="state=='first_warning'" decoration-danger="state=='dismissed'">
+                                        <field name="student_id"/>
+                                        <field name="subject_id"/>
+                                        <field name="total_absent_hour"/>
+                                        <field name="total_absent_percent"/>
+                                        <field name="no_permission_absencse"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+         <record id="view_pm_semester_at" model="ir.ui.view">
+                <field name="name">pm.subject.total.absence.form</field>
+                <field name="model">pm.subject.total.absence</field>
+                <field name="priority" eval="9"/>
+                <field name="arch" type="xml">
+                    <form string="Subject Absence">
+                        <sheet>
+                            <group col="4" name="main">
+                                <field name="student_id"/>
+                                <field name="subject_id"/>
+                                <field name="total_absent_hour"/>
+                                <field name="total_absent_percent"/>
+                            </group>
+                             <group string="Sessions">
+                                <field name="subject_attendance_ids" colspan="4" readonly="1" nolabel="1">
+                                    <tree string="Absence">
+                                        <field name="student_id"/>
+                                        <field name="subject_id"/>
+                                        <field name="missing_hours"/>
+                                        <field name="attendance_sheet_id"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+         <record id="op_student_attendance_tree" model="ir.ui.view">
+            <field name="name">pm.student.attendance.tree</field>
+            <field name="model">pm.semester.attendance</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Student Attendance" decoration-danger="state=='dismissed'" decoration-primary="state=='first_warning'" decoration-warning="state=='second'">
+                    <field name="student_id"/>
+                    <field name="semester_id"/>
+                    <field name="total_hours"/>
+                    <field name="no_permission_absence"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

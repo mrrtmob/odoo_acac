@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+    <t t-name="RegistrarDashboard">
+        <div class="container-fluid p-0 pt-5" id="registrar-dashboard">
+            <div class="row m-0">
+                <div class="col-lg-3 col-sm-12">
+
+                    <!-- student enrollment -->
+                    <div class="box-container student-enrollment">
+                        <div class="header">
+                            <p class="title">Total Student Enrollment</p>
+                        </div>
+                        <div class="body text-center py-3">
+
+                             <!-- retention rate -->
+                            <div class="box-data retention-box mb-2">
+                                <p>Retention Rate</p>
+                                <p><t t-esc="widget.active_terms['retention_date']" /> %</p>
+                            </div>
+                            
+                            <div class="d-flex pt-4">
+                                <div class="circle circle d-flex align-items-center justify-content-center male-circle">
+                                    <div class="data">
+                                        <span><t t-esc="widget.active_terms['male']"/></span>
+                                        <div class="_border"></div>
+                                        <small>Male</small>
+                                    </div>
+                                </div>
+                                <div class="circle circle d-flex align-items-center justify-content-center female-circle">
+                                    <div class="data">
+                                        <span><t t-esc="widget.active_terms['female']"/></span>
+                                        <div class="_border"></div>
+                                        <small>Female</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <!--Performance-->
+                            <div class="row m-0 box-container">
+                            
+                                <div class="col-4 pl-0 pr-0" style="border-right: 1px solid rgba(0, 0, 0, 0.1)">
+                                    <div class="" >
+                                        <small>Graduated</small>
+                                        <div style="font-size: 25px;color:#daa520"><t t-esc="widget.active_terms['graduated']"></t></div>
+                                    </div>
+                                </div>    
+                                <div class="col-4 pl-0" style="border-right: 1px solid rgba(0, 0, 0, 0.1)">
+                                    <div class="">
+                                        <small>Dropout</small>
+                                        <p style="font-size: 25px;color:#daa520"><t t-esc="widget.active_terms['dropout']"></t></p>
+                                    </div>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <div class="">
+                                        <small>Postponed</small>
+                                        <p style="font-size: 25px;color:#daa520"><t t-esc="widget.active_terms['postponed']"></t></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- bar chart -->
+                            <hr/>
+                            <div class="bar-chart d-inline-block pt-4" style="width:100%">
+                            <div class=""/>
+                                <div class="float-left" style="width:70%">
+                                    <canvas id="student_horizontal_bar_chart"  height="300"></canvas>
+                                </div>
+                                <div class="float-left" style="width:30%">
+                                    <div id="js-legend" class="chart-legend mt-3"></div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-sm-12">
+                    <!-- student performance -->
+                    <div class="box-container current-semester">
+                        <div class="header">
+                            <p>All Active Terms</p>
+                        </div>
+                        <div class="row m-0">
+                            <t t-foreach="widget.active_terms['terms']" t-as="at">
+                                <div class="col-12 pl-0 mb-3">
+                                    <div class="box-data dropout-box" style="position: relative; text-align: center;">
+                                        <p style="margin-bottom: 0;font-size: 25px;font-weight: bold;"><t t-esc="at.name"/></p>
+                                        <span style=""><t t-esc="at.semester"/></span>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-2 pl-0 pr-0" style="border-right: 1px solid rgba(0, 0, 0, 0.1)">
+                                                <p style="">Active</p>
+                                                <div style="font-size: 25px;color:#daa520"><t t-esc="at.active"/></div>
+                                            </div>
+                                            <div class="col-2 pl-0 pr-0" style="border-right: 1px solid rgba(0, 0, 0, 0.1)">
+                                                <p style="">Dropout</p>
+                                                <div style="font-size: 25px;color:#daa520"><t t-esc="at.dropout"/></div>
+                                            </div>
+                                            <div class="col-2 pr-0" style="border-right: 1px solid rgba(0, 0, 0, 0.1)">
+                                                <p style="">Postponed</p>
+                                                <div style="font-size: 25px;color:#4f0147"><t t-esc="at.postponed"/></div>
+                                            </div>
+                                            <div class="col-2 pr-0" style="border-right: 1px solid rgba(0, 0, 0, 0.1)">
+                                                <p style="">Male</p>
+                                                <div style="font-size: 25px;color:#4f0147"><t t-esc="at.male"/></div>
+                                            </div>
+                                            <div class="col-2 pr-0" style="border-right: 1px solid rgba(0, 0, 0, 0.1)">
+                                                <p style="">Female</p>
+                                                <div style="font-size: 25px;color:#4f0147"><t t-esc="at.female"/></div>
+                                            </div>
+                                            <div class="col-2 pr-0" style="">
+                                                <p style="">Scholarship</p>
+                                                <div style="font-size: 25px;color:#4f0147"><t t-esc="at.scholarship"/></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+
+                        </div>
+                    </div>
+                  
+                    <!-- student performance -->
+                    <div class="box-container student-performance">
+                        <div class="header">
+                            <p>Student Performance in Current Term (<t t-esc="widget.active_terms['current_term']"/>)</p>
+                        </div>
+                        <div class="body">
+                            <div class="row m-0">
+                             <div class="col-5">
+                                 <canvas id="grade_chard" height="130"></canvas>
+                                 <div id="grade_legend" ></div>
+                             </div>
+                            <div class="col-7">
+                                 <canvas id="absence_chart" height="90"></canvas>
+                                <div id="absence_legend" ></div>
+                             </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- current semester enrollment -->
+                    <div class="box-container current-semester">
+                        <div class="header">
+                            <p>Current Semester of <t t-esc="widget.active_terms['current_term']"/></p>
+                        </div>
+                        <div class="body">
+                            <div class="row m-0">
+                             <div class="col-md-7 col-sm-12 pb-3">
+                                 <div class="text-center custom-legend">
+                                     <ul>
+                                         <li><span style="background-color: #f3a447;"></span>Male</li>
+                                         <li><span style="background-color: #d092a7;"></span>Female</li>
+                                         <li><span style="background-color: #a5b592;"></span>Scholarship</li>
+                                         <li><span style="background-color: #ac9969;"></span>Total Student</li>
+                                     </ul>
+                                 </div>
+                                 <canvas id="current_semester_enrollment" height="185"></canvas>
+                                <br/>
+                                <t t-if="widget.active_terms['alerts'].length">
+                                    <div class="alerts danger">
+                                        <u>Alerts</u>
+
+                                        <ul>
+                                            <t t-foreach="widget.active_terms['alerts']" t-as="item">
+                                                <li><t t-esc="item"/></li> 
+                                            </t>
+                                            <!-- <small>Please check semesters configuration in OpenEducat App. </small> -->
+                                        </ul>
+                                    </div>
+                                </t>
+                             </div>
+                             <div class="col-md-5 col-sm-12 d-flex align-items-center">
+                                 <div class="alerts">
+                                    <p>Absence</p>
+                                 
+                                    <div class="row m-0 box-container" style="text-align:center">
+                                        <div class="col-6" style="">
+                                            <div class="alert-box" >
+                                                <small>First Warning</small>
+                                                <p style="font-size: 25px;color:#daa520"><t t-esc="widget.active_terms['attendance']['first_warning']" /></p>
+                                            </div>
+                                        </div>    
+                                        <div class="col-6">
+                                            <div class="alert-box">
+                                                <small>Second Warning</small>
+                                                <p style="font-size: 25px;color:#daa520"><t t-esc="widget.active_terms['attendance']['second_warning']" /></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr/>    
+                                    <p>Disciplinary</p>
+                                    <div class="row m-0 box-container" style="text-align:center">
+                                        <div class="col-6" >
+                                             <div class="alert-box" >
+                                                <small>First Warning</small>
+                                                <p style="font-size: 25px;color:#daa520"><t t-esc="widget.active_terms['discipline']['first_warning']" /></p>
+                                            </div>
+                                        </div>    
+                                        <div class="col-6">
+                                            <div class="alert-box" >
+                                                <small>Second Warning</small>
+                                                <p style="font-size: 25px;color:#daa520"><t t-esc="widget.active_terms['discipline']['second_warning']" /></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                             
+                                    <p>Payments</p>
+                                    <div class="row m-0 box-container" style="text-align:center">
+                                        <div class="col-12 " >
+                                             <div class="alert-box" >
+                                                <small>Overdue</small>
+                                                <p style="font-size: 25px;color:#daa520"><t t-esc="widget.active_terms['overdue_payment']" /></p>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                    
+                                    <p>No. of Graduates</p>
+                                    <div class="row m-0 box-container" style="text-align:center">
+                                        <div class="col-12 " >
+                                             <div class="alert-box" >
+                                                <small>Graduates</small>
+                                                <p style="font-size: 25px;color:#daa520"><t t-esc="widget.active_terms['graduates']" /></p>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                   
+                                 </div>
+                             </div>
+                        </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </t>
+</template>

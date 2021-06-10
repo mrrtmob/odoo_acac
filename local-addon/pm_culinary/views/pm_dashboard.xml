@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!-- culinary schedule event calendar -->
+        <record id="culinary_event_calendar" model="ir.ui.view">
+            <field name="name">pm.schedule.view.calendar</field>
+            <field name="model">pm.schedule</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <calendar string="Activity" date_start="event_date" color="name"  mode="month">
+                    <field name="name"/>
+                    <field name="event_date" />
+                    <field name="cost" />
+                    <!-- actual cost -->
+                    <!--<field name="price" string="Cost"/>-->
+                </calendar>
+            </field>
+        </record>
+
+    <!-- dashboard action -->
+    <record id="act_culinary_dashboard" model="ir.actions.act_window">
+      <field name="name">Culinary Dashboard</field>
+      <field name="res_model">pm.schedule</field>
+      <field name="view_mode">calendar</field>
+        <field name="domain">[('state','=','approved')]</field>
+    </record>
+
+
+</odoo>

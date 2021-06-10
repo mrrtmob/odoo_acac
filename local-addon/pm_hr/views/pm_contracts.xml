@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="pm_inherit_contracts_form_view" model="ir.ui.view">
+            <field name="name">pm.inherit.contracts.form.view</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+
+                <!-- hide HRA fields -->
+                <xpath expr="//field[@name='hra']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//group[@name='allowances']/label[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//group[@name='allowances']/div[hasclass('o_row')][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- change DA to Housing Allowance -->
+                <label for="da" position="replace">
+                    <label string="Housing Allowance" for="da"  />
+                </label>
+
+                <!-- add Education allowance -->
+                <xpath expr="//group[@name='allowances']/div[hasclass('o_row')][3]" position="after">
+                    <label for="education_allowance"/>
+                    <div class="o_row">
+                        <field name="education_allowance" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                </xpath>
+
+                <!-- add tab annual leave -->
+                <xpath expr="//page[2]" position="after">
+                    <page name="annual_leave" string="Annual leave">
+                        <group>
+                            <group>
+                                <label for="annual_leave"/>
+                                <div class="o_row">
+                                    <field name="annual_leave" nolabel="1" />
+                                    <span>day(s) / year</span>
+                                </div>
+                                <label for="public_holiday"/>
+                                <div class="o_row">
+                                    <field name="public_holiday" nolabel="1" />
+                                    <span>day(s) / year</span>
+                                </div>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//group[@name='salary_and_advantages']" position="attributes">
+                    <attribute name="string">Salary</attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='allowances']" position="attributes">
+                    <attribute name="string">Other Benefits</attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='salary_and_advantages']" position="inside">
+                    <field name="tax_rate" />
+                    <field name="tax_deduction"/>
+                </xpath>
+
+            </field>
+        </record>
+    
+    </data>
+</odoo>

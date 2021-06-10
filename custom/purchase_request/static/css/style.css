@@ -1,0 +1,7 @@
+#financial-dashboard{
+    font-family: 'Georgia' !important;
+}
+
+.purchase_tree [data-name="remarks"] {
+    width: 500px;
+}

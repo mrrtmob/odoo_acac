@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><data>
+
+
+      <record id="utm_campaign_view_form_inherit" model="ir.ui.view">
+          <field name="name">utm_campaign_view_form_inherit</field>
+          <field name="model">utm.campaign</field>
+          <field name="inherit_id" ref="utm.utm_campaign_view_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='name']" position="after">
+                  <field name="currency_id" invisible="1" />
+                  <field name="budget" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                  <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+              </xpath>
+
+              <xpath expr="//field[@name='tag_ids']" position="replace">
+                  <field name="start_date" />
+                  <field name="end_date" />
+                  <field name="description" />
+              </xpath>
+          </field>
+    </record>
+
+
+     <record id="view_pm_semester_tree" model="ir.ui.view">
+        <field name="name">pm.high.school.tree</field>
+        <field name="model">pm.high_school</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="High Schools" editable="top">
+                <field name="name"/>
+                <field name="create_uid"/>
+            </tree>
+        </field>
+    </record>
+
+      <record id="crm_highschool_action" model="ir.actions.act_window">
+        <field name="name">High Schools</field>
+        <field name="res_model">pm.high_school</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new High School
+            </p>
+        </field>
+    </record>
+
+      <menuitem id="menu_crm_campaign"
+              parent="crm.crm_menu_config"
+              action="crm_highschool_action"/>
+
+      <menuitem id="menu_crm_high_school"
+              parent="crm.crm_menu_config"
+              action="utm.utm_campaign_action"/>
+
+      <menuitem id="crm.crm_team_config"
+            name="Sales Teams"
+            parent="crm.crm_menu_config"
+            action="sales_team.sales_team_config_action"
+            sequence="5"
+            active="False" />
+
+      <menuitem
+            id="crm.menu_crm_lead_categ"
+            name="Tags"
+            action="crm.crm_lead_tag_action"
+            parent="crm.menu_crm_config_lead"
+            sequence="1"
+            active="False" />
+
+      <menuitem id="crm.crm_opportunity_report_menu"
+            name="Pipeline"
+            parent="crm.crm_menu_report"
+            action="crm.crm_opportunity_report_action"
+            sequence="2"
+            active="False" />
+
+      <menuitem
+            id="crm.crm_activity_report_menu"
+            name="Activities"
+            groups="sales_team.group_sale_manager"
+            parent="crm.crm_menu_report"
+            action="crm.crm_activity_report_action"
+            sequence="3"
+            active="False" />
+
+
+</data></odoo>
+

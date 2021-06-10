@@ -1,0 +1,262 @@
+@font-face {
+    font-family: 'Georgia';
+    font-style: normal;
+    src: url('/pm_dashboard/static/src/fonts/georgia/Georgia.ttf') format('truetype');
+}
+
+.o_action_manager{
+    overflow-x: hidden !important; /* Hide horizontal scrollbar */
+    overflow-y: scroll !important; /* Add vertical scrollbar */
+}
+
+#registrar-dashboard{
+    font-family: 'Georgia' !important;
+}
+
+canvas:hover{
+   transform: unset !important;
+}
+
+.box-container {
+    /* border: 1px solid #ededed; */
+    margin-bottom: 15px;
+    border-radius: 15px;
+}
+
+.box-container .header {
+    height: 46px;
+    font-size: 17px;
+    position: relative;
+}
+
+.box-container .body{
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    font-size: 17px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+}
+
+.body-border {
+    position: absolute;
+    width: calc(100% - 20px);
+    height: 1px;
+    background-color: #bfbfbf;
+}
+
+.box-container .box-data {
+    /* height: 85px; */
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.box-container .box-data p:nth-child(2){
+    font-size: 25px;
+    text-align: right;
+    margin: 0;
+    font-weight: bold;
+}
+
+.box-container .graduated-box {
+    border: 1px solid #4f0147;
+}
+
+.box-container .graduated-box p:nth-child(2){
+    color: #4f0147;
+}
+
+.box-container .dropout-box {
+    border: 1px solid #daa520;
+}
+
+.box-container .dropout-box p:nth-child(2){
+    color: #daa520;
+}
+.box-container .postponed-box {
+    border: 1px solid #ac9969;
+}
+
+.box-container .postponed-box p:nth-child(2){
+    color: #ac9969;
+}
+
+/* student enrollment */
+.student-enrollment .circle {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    margin: auto;
+    position: relative;
+}
+
+.student-enrollment .circle .data span:first-child{
+    font-size: 25px !important;
+}
+
+.student-enrollment .male-circle{
+    background-color: #d7e6ff;
+}
+
+.student-enrollment .female-circle{
+    background-color: #ffe1e1;
+}
+
+.student-enrollment .circle .data{
+    display: grid;
+    position: relative;
+}
+
+.student-enrollment .circle .data ._border{
+    width: 60px;
+    height: 1px;
+    background-color: #4f0147;
+}
+
+.chart-legend ul{
+    list-style-type: none;
+    padding: unset;
+    font-size: 12px;
+    text-align: left !important;
+}
+
+.chart-legend ul li span{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+}
+/* end student enrollment */
+
+/* retention rate */
+.retention-box  {
+    background-color: #4f0147 !important;
+    color: #fff;
+}
+.retention-box p:first-child{
+    font-size: 12px;
+    text-align: left;
+}
+/* end retention rate */
+
+/* student performance (grade chart)*/
+#grade_legend ul {
+    text-align: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+}
+
+#grade_legend ul li{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#grade_legend ul li span{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+}
+/* end student performance */
+
+/* student performance (absence chart) */
+#absence_legend ul {
+    text-align: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+}
+
+#absence_legend ul li{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#absence_legend ul li span{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+/* student performance */
+
+/* current semester enrollment */
+.current-semester .total-current-semester {
+    padding: 10px;
+    background-color: #fde39b;
+    color: #000;
+    border-radius: 5px;
+}
+
+@media(max-width:1312px){
+    .current-semester .total-current-semester {
+        margin-top: 25px;
+    }
+}
+
+@media(max-width:767px){
+    .current-semester .total-current-semester {
+        margin-top: 0;
+        width: 100%;
+    }
+}
+
+.current-semester .total-current-semester p:first-child{
+    text-decoration: underline;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.current-semester .alerts {
+    padding: 10px;
+    background-color: #f5f5f5;
+    color: #000;
+    font-weight: bold;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.current-semester .alerts p{
+    padding: 10px;
+}
+
+.current-semester .custom-legend ul{
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+    display: inline-flex;
+    font-size: 12px;
+}
+
+.current-semester .custom-legend ul li {
+    margin-right: 10px;
+}
+
+.current-semester .custom-legend ul li span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+}
+.alert-box{
+    background-color: #fff;
+    text-align: center;
+    border-radius: 9px;
+    border: 1px solid #e2e2e2;
+    padding: 10px;
+
+}
+.alert-box p{
+    margin: 0;
+    padding: 0 !important;
+}
+.danger { 
+    background-color: #f2a448 !important;
+}
+/* end current semester enrollment */
+

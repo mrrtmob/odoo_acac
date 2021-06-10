@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_commercial_invoice">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <style  type="text/css">
+                        @font-face {
+                            font-family: 'Khmer OS';
+                            font-style: normal;
+                            src: url('/pm_accounting/static/src/fonts/khmer_os/KhmerOS.ttf') format('truetype');
+                        }
+                        @font-face {
+                            font-family: 'Khmer OS Muol light';
+                            font-style: normal;
+                            src: url('/pm_accounting/static/src/fonts/khmer_os_moullight/KhmerOS_muollight.ttf') format('truetype');
+                        }
+                        @font-face {
+                            font-family: 'Georgia';
+                            font-style: normal;
+                            src: url('/pm_general/static/src/fonts/georgia/Georgia.ttf') format('truetype');
+                        }
+                        .kh-OS{
+                            font-family: 'Khmer OS';
+                        }
+                        .kh-moul {
+                           font-family: 'Khmer OS Muol light';
+                        }
+                        .georgia {
+                               font-family: 'Georgia';
+                        }
+                        .brand-img {
+                            width: 140px;
+                            top: 15px !important;
+                        }
+                        .form-group{
+                            margin-bottom: 0.5rem !important;
+                        }
+                        .table-content {
+                            min-height: 200px;
+                        }
+                        .table-content-1 {
+                            min-height: 100px;
+                        }
+                        .table-content-2 {
+                            min-height: 50px;
+                        }
+                        .w-150px{
+                            width: 150px;
+                        }
+                        .w-80px{
+                            width: 80px;
+                        }
+                        .w-50px{
+                            width: 50px;
+                        }
+                        .invoice-footer{
+                            position: absolute;
+                            width: 100%;
+                        }
+                        .fs-14{
+                            font-size: 15px;
+                        }
+                        .mt-10 {
+                            margin-top: 100px;
+                        }
+                       .div-bottom {
+                          position:fixed.
+                          left: 0;
+                          bottom: 10;
+                          width: 100%;
+                        }
+
+                    </style>
+                    <div class="container-fluid pt-1 fs-14">
+                        <div class="georgia w-100 text-center position-relative">
+                            <img src="/pm_accounting/static/src/img/icon.png" class="brand-img position-absolute"/>
+                            <div style="padding-left: 100px">
+                                <div class="kh-moul" style="font-size: 24px;">សាលាបណ្តុះបណ្តាលវិជ្ជាជីវៈចម្អិនម្ហូបអាហារ</div>
+                                <div class="pt-2" style="font-size: 20px;">ACADEMY OF CULINARY ARTS-CAMBODIA</div>
+                                <div><span class="kh-moul">លេខអត្តសញ្ញាណកម្ម អតប</span> (VAT Tin): K004-901803390</div>
+                                <div class="kh-OS">ផ្ទះលេខ ២៣, ផ្លូវ១៣៩ សង្គាត់វាលវង់, ខណ្ឌ៧មករា, រាជធានីភ្នំពេញ ព្រះរាជាណាចក្រកម្តុជា</div>
+                                <div>#23, Street 139, Sangkat Vealvong, Khan 7 Makara, Phnom Penh, Kingdom of Cambodia</div>
+                                <div><span class="kh-OS">លេខទូរស័ព្ទ</span>/Phone : (855) (23) 922 226 / 922 227</div>
+                            </div>
+                        </div>
+                        <div class="text-center my-3">
+                            <label class="kh-moul" style="font-size: 20px; margin-bottom: 10px;">វិក្កយបត្រ</label><br/>
+                            <label class="georgia text-overflow" style="font-size: 20px;">COMMERCIAL INVOICE</label>
+                        </div>
+                        <div class="row">
+                            <t t-foreach="docs" t-as="doc">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <div>
+                                        <label class="kh-OS">ឈ្មោះអតិថិជន:</label>
+                                        <span t-esc="doc.invoice_partner_display_name"/>
+                                    </div>
+                                    <div>
+                                        <label class="georgia text-overflow">Customer Name:</label>
+                                        <span t-esc="doc.invoice_partner_display_name"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <label class="kh-OS">ឈ្មោះក្រុមហ៊ុន:</label>
+                                        <span></span>
+                                    </div>
+                                    <div>
+                                        <label class="georgia text-overflow">Company Name:</label>
+                                         <span t-esc="get_company_name"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <label class="kh-OS">អសយដ្ឋានៈ</label>
+                                        <span></span>
+                                    </div>
+                                    <div>
+                                        <label class="georgia">Adress:</label>
+                                        <span t-esc="doc.partner_id.street"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <label><span class="kh-OS">ទូរស័ព្ទ</span>/<span class="georgia">Tel</span>:</label>
+                                        <span t-esc="doc.company_id.phone"/>
+                                    </div>
+                                    <div>
+                                        <label><span class="kh-OS">លេខអត្តសញ្ញាណកម្ម អតប</span>/<span class="georgia">VAT Tin</span>:</label>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <div>
+                                        <label class="kh-OS">លេខវិក្កយបត្រ:</label>
+                                        <span></span>
+                                    </div>
+                                    <div>
+                                        <label class="georgia">Invoice Number:</label>
+                                         <span t-esc="doc.name"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <label class="kh-OS">កាលបរិច្ចេទ:</label>
+                                         <span t-esc="doc.invoice_date"/>
+                                    </div>
+                                    <div>
+                                        <label class="georgia">Invoice Date:</label>
+                                          <span t-esc="doc.invoice_date"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <label class="kh-OS">ថ្ងៃផុតកំណត់:</label>
+                                        <span></span>
+                                    </div>
+                                    <div>
+                                        <label class="georgia">Due Date:</label>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <label class="kh-OS">អត្រាប្តូរប្រាក់:</label>
+                                        <span>USD 1= KHR <span t-esc="doc.rate"/></span>
+                                    </div>
+                                    <div>
+                                        <label class="georgia">Exchange Rate:</label>
+                                        <span> (Ref.Exchange rate on <span t-esc="doc.invoice_date"/>) </span>
+                                    </div>
+                                </div>
+                            </div>
+                            </t>
+                        </div>
+
+                        <table class="table mt-2">
+                          <thead class="table-header">
+                            <tr>
+                              <th scope="col" class="text-center border-left border-bottom-0 w-50px">
+                                  <span class="kh-OS">ល.រ</span><br/>
+                                  <span class="georgia">Nº</span>
+                              </th>
+                              <th scope="col" class="text-center border-left border-bottom-0">
+                                  <span class="kh-OS">បរិយាយមុខទំនិញ</span><br/>
+                                  <span class="georgia">Description</span>
+                              </th>
+                              <th scope="col" class="text-center border-left border-bottom-0 w-80px">
+                                  <span class="kh-OS">បរិមាណ</span><br/>
+                                  <span class="georgia">Qty</span>
+                              </th>
+                              <th scope="col" class="text-center border-left border-bottom-0 w-150px">
+                                  <span class="kh-OS">ថ្លៃឯកតា</span><br/>
+                                  <span class="georgia">Unit Price</span>
+                              </th>
+                              <th scope="col" class="text-center border-left border-right border-bottom-0 w-150px" colspan="2">
+                                  <span class="kh-OS">ថ្លៃទំនិញ</span><br/>
+                                  <span class="georgia">Amount</span>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <t t-foreach="get_invoice_data" t-as="obj">
+                               <tr t-foreach="obj['item_lines']" t-as="item">
+                                    <td class="text-center border">
+                                            <div class="table-content-2">
+                                                <span t-esc="item['number']"/>
+                                            </div>
+                                    </td>
+                                    <td class="text-center border">
+                                         <div class="table-content-2">
+                                                <span t-esc="item['name']"/>
+                                            </div>
+                                    </td>
+                                    <td class="text-center border">
+                                         <div class="table-content-2">
+                                                <span t-esc="item['qty']"/>
+                                            </div>
+                                    </td>
+                                    <td class="text-center border">
+                                         <div class="table-content-2">
+                                                <span t-esc="item['unit_price']"/>
+                                            </div>
+                                    </td>
+                                    <td class="text-center border">
+                                         <div class="table-content-2">
+                                                <span t-esc="item['total']"/>
+                                            </div>
+                                    </td>
+                                    <td class="text-center border">
+                                         <div class="table-content-2">
+                                                <span t-esc="item['total_kh']"/>
+                                            </div>
+                                    </td>
+                                  </tr>
+                             </t>
+                              <tr>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border text-right py-0" colspan="2">
+                                    <span class="kh-OS">សរុប</span><br/>
+                                    <span class="georgia">Sub Total</span>
+                                </td>
+
+                                   <t t-foreach="get_invoice_data" t-as="obj">
+                                       <td class="text-left border">$ <span t-esc="obj['sub_total']"/></td>
+                                       <td class="text-left border">KHR <span t-esc="obj['sub_total_kh']"/></td>
+                                   </t>
+                              </tr>
+                              <tr>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border text-right py-0" colspan="2">
+                                    <span class="kh-OS"> អាករលើតម្លៃបន្ថែម ១០%</span><br/>
+                                    <span class="georgia">VAT (10%)</span>
+                                </td>
+                                   <t t-foreach="get_invoice_data" t-as="obj">
+                                    <td class="text-left border">$ <span t-esc="obj['tax']"/></td>
+                                    <td class="text-left border">KHR <span t-esc="obj['tax_kh']"/></td>
+                                  </t>
+                              </tr>
+                              <tr>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border text-right py-0" colspan="2">
+                                    <span class="kh-OS">សរុបរួម</span><br/>
+                                    <span class="georgia">Grand Total</span>
+                                </td>
+                                  <t t-foreach="get_invoice_data" t-as="obj">
+                                    <td class="text-left border">$ <span t-esc="obj['grand_total']"/></td>
+                                    <td class="text-left border">KHR <span t-esc="obj['grand_total_kh']"/></td>
+                                  </t>
+                              </tr>
+                          </tbody>
+                        </table>
+
+                                      <!-- signature -->
+
+                        <t t-foreach="get_invoice_data" t-as="obj">
+                            <t t-if="len(obj['item_lines']) == 10 or len(obj['item_lines']) == 11 ">
+                                <div style="padding-top: 5rem;"></div>
+                            </t>
+                            <div style="margin-top: 5rem; margin-bottom: 5rem;">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div style="width: 200px; height: 1px; background: black; margin-bottom: 5px;"></div>
+                                        <span class="kh-OS">ហត្ថលេខា និងឈ្មោះអ្នកទិញ</span><br/>
+                                        <span class="georgia">Customer's Signature &amp; Name</span>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <div style="width: 200px; height: 1px; background: black;margin-left: 115px; margin-bottom: 5px;"></div>
+                                        <span class="kh-OS">ហត្ថលេខា និងឈ្មោះអ្នកលក់</span><br/>
+                                        <span class="georgia">Seller's Signature &amp; Name</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+
+
+                      <div class="text-center div-bottom"  style="page-break-after: always;" >
+
+                            <span  class="kh-OS">ព៌តមានលំអិតពីគណនីធនាគាររបស់ សាលាបណ្តុះបណ្តាលវិជ្ជាជីវៈចម្អិនម្ហូបអាហារ និងលក្ខខណ្ឌផ្សេងៗ សូមមើលទំព័រខាងក្រោយ</span><br/>
+                            <span  class="georgia">For More Information and Bank Account, Please see the next page</span>
+
+                        </div>
+
+                        <!-- information and back account -->
+                        <p style="page-break-after:always;"/>
+                        <div class="information georgia">
+                            <p>ACADEMY OF CULINARY ARTS CAMBODIA Bank Information Detail</p>
+                            <div class="row">
+                                <div class="col-6 text-right">
+                                    <span>Please make chepues payable to:</span><br/>
+                                    <span>Bank Detail:</span><br/>
+                                    <span>Bank Address:</span><br/><br/><br/>
+                                    <span>Account Name:</span><br/>
+                                    <span>Account Number:</span><br/>
+                                    <span>SWIFT Number:</span>
+                                </div>
+                                <div class="col-6">
+                                    <span>ACADEMY OF CULINARY ARTS CAMBODIA</span><br/>
+                                    <span>Foreign Trade Bank of Cambodia</span><br/>
+                                    <span>No.33 C-D, Tchecoslovaquie Blvd,(169)</span><br/>
+                                    <span>Sangkat Veal Vong, Khan 7 Makara,</span><br/>
+                                    <span>Phnom Penh, Cambodia</span><br/>
+                                    <span>ACADEMY OF CULINARY ARTS CAMBODIA</span><br/>
+                                    <span>30000-8436-596</span><br/>
+                                    <span>FTCCKHPP</span>
+                                </div>
+                            </div>
+                            <p class="mb-3"><b>Billing Instructions:</b></p>
+                            <span>- The wire transfer charge is not the responsibility of  the Academy of Culinary Arts-Cambodia</span><br/>
+                            <span>- Please add US$ 10.00 the inward remittance fee to the amount above.</span><br/>
+                            <span><b><i>(By Bank instruction, the Inward Remittance Fee is 0.10% per time, minimum charge USD 10 and maximum charge USD 2,500)</i></b></span>
+                        </div>
+
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

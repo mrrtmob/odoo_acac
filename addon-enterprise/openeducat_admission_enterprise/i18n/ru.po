@@ -1,0 +1,184 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* openeducat_admission_enterprise
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-30 05:21+0000\n"
+"PO-Revision-Date: 2019-09-30 05:21+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_op_admission
+msgid "Admission"
+msgstr "вход"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_op_admission_register
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Admission Register"
+msgstr "Вход Регистрация"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.actions.act_window,name:openeducat_admission_enterprise.action_onboarding_admission_register_layout
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "Admission Register Configuration"
+msgstr "Вход Регистр конфигурации"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.actions.act_window,name:openeducat_admission_enterprise.act_dashboard_op_admission_view
+msgid "Admissions"
+msgstr "Поступающим"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Applications"
+msgstr "Приложения"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Apply"
+msgstr "Применить"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Cancel"
+msgstr "Отменить"
+
+#. module: openeducat_admission_enterprise
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Closed"
+msgstr "Закрыто"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_res_company
+msgid "Companies"
+msgstr "Компании"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_op_admission__company_id
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_op_admission_register__company_id
+msgid "Company"
+msgstr "Компания"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Confirm"
+msgstr "подтвердить"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "Customize"
+msgstr "Настройка"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Done"
+msgstr "Сделано"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.openeducat_course_admission_dashboard_kanban_view
+msgid "Enroll Students"
+msgstr "Записаться Студенты"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Fees Amount"
+msgstr "сборы Сумма"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Fees Collection Details\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+msgstr "Платежи Подробнее Коллекция\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.actions.server,name:openeducat_admission_enterprise.invoice_cron_ir_actions_server
+#: model:ir.cron,cron_name:openeducat_admission_enterprise.invoice_cron
+#: model:ir.cron,name:openeducat_admission_enterprise.invoice_cron
+msgid "Fees Invoice Cron"
+msgstr "Тарифы Счет Cron"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Invoice"
+msgstr "Счёт"
+
+#. module: openeducat_admission_enterprise
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Just done"
+msgstr "Только что сделано"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "Looks great!"
+msgstr "Выглядит отлично!"
+
+#. module: openeducat_admission_enterprise
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Not done"
+msgstr "Не сделано"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "See how to create a Admission Register."
+msgstr "Посмотрите, как создать Прием Регистр."
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Set to Draft"
+msgstr "Набор для разработки проекта"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Start Admission"
+msgstr "Начало Прием"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Start Application"
+msgstr "Запустить приложение"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_res_company__openeducat_admission_onboard_panel
+msgid "State of the onboarding admission layout step"
+msgstr "Состояние на стадии макета адаптационного приема"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_res_company__onboarding_admission_register_layout_state
+msgid "State of the onboarding admission register layout step"
+msgstr "Состояние адаптационного допуска этапе компоновки регистра"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Status"
+msgstr "Статус"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_op_student_fees_details
+msgid "Student Fees Details"
+msgstr "Студенческие Платежи Подробнее"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Submit Date"
+msgstr "Дата"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "View invoice"
+msgstr "Посмотреть счет"
+

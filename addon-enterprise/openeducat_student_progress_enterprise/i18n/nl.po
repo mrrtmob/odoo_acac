@@ -1,0 +1,334 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* openeducat_student_progress_enterprise
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-12 11:31+0000\n"
+"PO-Revision-Date: 2019-11-12 11:31+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.openeducat_student_progression_portal_data
+msgid "<b>Created By:</b>"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.openeducat_student_progression_portal_data
+msgid "<b>Date:</b>"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.openeducat_student_progression_portal_data
+msgid "<b>Progression Details:</b>"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.openeducat_student_progression_portal_data
+msgid "<b>Progression No:</b>"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.openeducat_student_progression_portal_data
+msgid "<b>Status:</b>"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.student_progression_report
+msgid ""
+"<strong>\n"
+"                                                Student Progression Report\n"
+"                                            </strong>"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.student_progression_report
+msgid "<strong>Created By:</strong>"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.student_progression_report
+msgid "<strong>Date:</strong>"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.student_progression_report
+msgid "<strong>Progression No:</strong>"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.student_progression_report
+msgid "<strong>Status:</strong>"
+msgstr "<Strong> Status: </ strong>"
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.student_progression_report
+msgid "<strong>Student:</strong>"
+msgstr "<Strong> Student: </ strong>"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_needaction
+msgid "Action Needed"
+msgstr "Actie gevraagd"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_attachment_count
+msgid "Attachment Count"
+msgstr "Aantal bijlagen"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields.selection,name:openeducat_student_progress_enterprise.selection__op_student_progression__state__cancel
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_student_progress_form
+msgid "Cancel"
+msgstr "Annuleren"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__created_by
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_op_student_progression_search
+msgid "Created By"
+msgstr "Gemaakt door"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__create_uid
+msgid "Created by"
+msgstr "Aangemaakt door"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__create_date
+msgid "Created on"
+msgstr "Aangemaakt op"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__date
+msgid "Date"
+msgstr "Datum"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__display_name
+msgid "Display Name"
+msgstr "Schermnaam"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields.selection,name:openeducat_student_progress_enterprise.selection__op_student_progression__state__done
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_student_progress_form
+msgid "Done"
+msgstr "Gereed"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields.selection,name:openeducat_student_progress_enterprise.selection__op_student_progression__state__draft
+msgid "Draft"
+msgstr "Concept"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_follower_ids
+msgid "Followers"
+msgstr "Volgers"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Volgers (Kanalen)"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Volgers (Relaties)"
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_op_student_progression_search
+msgid "Group By..."
+msgstr "Groepeer op..."
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__id
+msgid "ID"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,help:openeducat_student_progress_enterprise.field_op_student_progression__message_needaction
+#: model:ir.model.fields,help:openeducat_student_progress_enterprise.field_op_student_progression__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "Indien aangevinkt vragen nieuwe berichten uw aandacht."
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,help:openeducat_student_progress_enterprise.field_op_student_progression__message_has_error
+#: model:ir.model.fields,help:openeducat_student_progress_enterprise.field_op_student_progression__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "indien aangevinkt hebben sommige leveringen een fout."
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields.selection,name:openeducat_student_progress_enterprise.selection__op_student_progression__state__open
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_student_progress_form
+msgid "In Progress"
+msgstr "In behandeling"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_is_follower
+msgid "Is Follower"
+msgstr "Is een volger"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression____last_update
+msgid "Last Modified on"
+msgstr "Laatst gewijzigd op"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__write_uid
+msgid "Last Updated by"
+msgstr "Laatst bijgewerkt door"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__write_date
+msgid "Last Updated on"
+msgstr "Laatst bijgewerkt op"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Hoofdbijlage"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_has_error
+msgid "Message Delivery error"
+msgstr "Bericht afleverfout"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_ids
+msgid "Messages"
+msgstr "Berichten"
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_op_student_progression_search
+msgid "Month"
+msgstr "Maand"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Aantal acties"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_has_error_counter
+msgid "Number of errors"
+msgstr "Aantal fouten"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,help:openeducat_student_progress_enterprise.field_op_student_progression__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Aantal berichten die actie vereisen"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,help:openeducat_student_progress_enterprise.field_op_student_progression__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Aantal berichten met leveringsfout"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,help:openeducat_student_progress_enterprise.field_op_student_progression__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Aantal ongelezen berichten"
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_student_progress_tree
+msgid "Progress Line"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_op_student_progression_search
+msgid "Progression Records"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.actions.report,name:openeducat_student_progress_enterprise.report_student_progression
+msgid "Progression Report"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_student_progress_form
+msgid "Reset To Draft"
+msgstr "Terugzetten naar concept"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "SMS Fout bij versturen"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__name
+msgid "Sequence"
+msgstr "Reeks"
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_op_student_progression_search
+msgid "State"
+msgstr "Status"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__state
+msgid "Status"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__student_id
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_op_student_progression_search
+msgid "Student"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.actions.act_window,name:openeducat_student_progress_enterprise.action_student_progrss_analysis
+#: model:ir.ui.menu,name:openeducat_student_progress_enterprise.student_progrss_analysis_menu
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.openeducat_student_progression_portal_data
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.portal_my_home_student_progresssion
+msgid "Student Progression"
+msgstr "Studievoortgang"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.constraint,message:openeducat_student_progress_enterprise.constraint_op_student_progression_student_id
+msgid "Student already  exist!!!"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model,name:openeducat_student_progress_enterprise.model_op_student_progression
+msgid "Student progression"
+msgstr ""
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.openeducat_student_progression_portal_data
+msgid "There are currently no information for your account!!!"
+msgstr "Er zijn momenteel geen informatie van je account !!!"
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_op_student_progression_search
+msgid "Today"
+msgstr "Vandaag"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_unread
+msgid "Unread Messages"
+msgstr "Ongelezen berichten"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Aantal ongelezen berichten"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,field_description:openeducat_student_progress_enterprise.field_op_student_progression__website_message_ids
+msgid "Website Messages"
+msgstr "Website berichten"
+
+#. module: openeducat_student_progress_enterprise
+#: model:ir.model.fields,help:openeducat_student_progress_enterprise.field_op_student_progression__website_message_ids
+msgid "Website communication history"
+msgstr "Website communicatie geschiedenis"
+
+#. module: openeducat_student_progress_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_student_progress_enterprise.view_op_student_progression_search
+msgid "Week"
+msgstr ""

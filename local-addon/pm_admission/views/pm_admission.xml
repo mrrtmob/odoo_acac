@@ -1,0 +1,445 @@
+<odoo>
+  <data>
+
+    <template id="admission_assets_backend_css" inherit_id="web.assets_backend">
+        <xpath expr="//link" position="before">
+            <link rel="stylesheet" type="text/css" href="/pm_leads/static/css/style.css"/>
+        </xpath>
+    </template>
+
+     <record model="ir.cron" id="payment_cron">
+        <field name="name">Payment Reminder Cron</field>
+        <field name="model_id"
+               ref="openeducat_fees.model_op_student_fees_details"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_payment_reminder()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+
+
+
+        <record id="view_pm_admission_search_inherit" model="ir.ui.view">
+            <field name="name">pm.admission.search.inherit</field>
+            <field name="model">op.admission</field>
+            <field name="inherit_id" ref="openeducat_admission.view_op_admission_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='enrolled_student']" position="after">
+                  <filter name="scholarship_student" string="Scholarship Students"
+                          domain="[('is_scholarship','=',True)]"/>
+                </xpath>
+            </field>
+        </record>
+
+      <record model="ir.actions.act_window" id="pm_act_open_op_admission_view">
+            <field name="name">Admission</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.admission</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="openeducat_admission.view_op_admission_search"/>
+        </record>
+
+        <menuitem id="crm_menu_leads"
+            name="Admission"
+            parent="crm.crm_menu_root"
+            groups="crm.group_use_lead"
+            action="pm_act_open_op_admission_view"
+            sequence="5"/>
+
+       <record id="view_pm_admission_register_form" model="ir.ui.view">
+        <field name="name">op.admission.custom.form</field>
+        <field name="model">op.admission</field>
+         <field name="inherit_id" ref="openeducat_admission.view_op_admission_form"/>
+         <field name="arch" type="xml">
+              <xpath expr="//field[@name='prev_result']" position="after">
+                    <field name="readonly" invisible="1" />
+                    <field name="high_school_id" attrs="{'readonly': [('state','in', ['done'[)]}" />
+                    <field name="highest_education" />
+                    <field name="english_score" />
+                    <field name="is_scholarship" />
+                    <field name="scholarship_status"
+                           attrs="{'required':[('is_scholarship','=',True)],'invisible': [('is_scholarship','=', False)]}"/>
+
+             </xpath>
+
+             <xpath expr="//field[@name='batch_id']" position="replace">
+                  <field name="batch_id" string="Term"  readonly="1" force_save="1"/>
+                  <field name="class_id" string="Class" attrs="{'readonly': [('state','in', ['done'[)]}" />
+             </xpath>
+
+             <xpath expr="//field[@name='course_id']" position="replace">
+                  <field name="course_id" string="Course" readonly="1" force_save="1"/>
+             </xpath>
+
+             <xpath expr="//field[@name='fees_term_id']" position="before">
+                   <field name="product_id" required="1"/>
+             </xpath>
+<!--tem:-->
+<!--             <xpath expr="//button[@name='confirm_in_progress']" position="replace">-->
+<!--                  <button  name="confirm_in_progress" states="submit,pending"-->
+<!--                           groups = "pm_accounting.group_acac_accountant" string="Confirm Payment" type="object" class="oe_highlight"/>-->
+<!--             </xpath>-->
+
+             <xpath expr="//button[@name='confirm_cancel']" position="replace">
+                  <button  name="%(admission_cancel_wizzard)d" states="submit,pending,reject,confirm,confirm_pending" string="Cancel" type="action"/>
+             </xpath>
+
+             <xpath expr="//button[@name='admission_confirm']" position="replace">
+                   <button string="Admission Confirm" class="oe_highlight" states="confirm" type="object"
+                           groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"
+                           name="admission_confirm"/>
+             </xpath>
+
+           <xpath expr="//button[@name='confirm_pending']" position="attributes">
+                <attribute name="invisible">1</attribute>
+             </xpath>
+
+             <xpath expr="//button[@name='enroll_student']" position="replace">
+                   <button name="enroll_student" states="admission" string="Enroll" type="object"
+                           groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"
+                           class="oe_highlight"/>
+             </xpath>
+
+
+              <xpath expr="//page[@name='personal_detail']" position="replace">
+                  <page string="Personal Information">
+                     <group>
+                         <group>
+                            <field name="khmer_name" attrs="{'readonly': [('state','=', 'done')]}"/>
+                             <field name="birth_date" string="Date of Birth" attrs="{'readonly': [('state','=', 'done')]}" />
+                             <field name="gender" attrs="{'readonly': [('state','=', 'done')]}" />
+                             <label for="street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="street" attrs="{'readonly': [('state','=', 'done')]}" placeholder="Street..." class="o_address_street"/>
+                                <field name="street2" attrs="{'readonly': [('state','=', 'done')]}" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="city" attrs="{'readonly': [('state','=', 'done')]}" placeholder="City" class="o_address_city"/>
+                                <field name="state_id" attrs="{'readonly': [('state','=', 'done')]}" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                                <field name="zip" attrs="{'readonly': [('state','=', 'done')]}" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="country_id"  attrs="{'readonly': [('state','=', 'done')]}" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                            </div>
+                             <label for="street" string="Permanent Address"/>
+                            <div class="o_address_format">
+                                <field name="p_street" attrs="{'readonly': [('state','=', 'done')]}" placeholder="Street..." class="o_address_street"/>
+                                <field name="p_street2" attrs="{'readonly': [('state','=', 'done')]}" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="p_city" attrs="{'readonly': [('state','=', 'done')]}" placeholder="City" class="o_address_city"/>
+                                <field name="p_state_id" attrs="{'readonly': [('state','=', 'done')]}" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                                <field name="p_zip"  attrs="{'readonly': [('state','=', 'done')]}" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="p_country_id" attrs="{'readonly': [('state','=', 'done')]}" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                            </div>
+                            <field name="id_card" attrs="{'readonly': [('state','=', 'done')]}" />
+                            <field name="passport_number" attrs="{'readonly': [('state','=', 'done')]}"/>
+                             <field name="visa_number" attrs="{'readonly': [('state','=', 'done')]}"/>
+                             <field name="visa_expiry" attrs="{'readonly': [('state','=', 'done')]}"/>
+                            <field name="marital_status" attrs="{'readonly': [('state','=', 'done')]}"/>
+                            <field name="nationality" attrs="{'readonly': [('state','=', 'done')]}" required="1"/>
+                            <field string="Native Language" attrs="{'readonly': [('state','=', 'done')]}" required="1" name="primary_language"/>
+                            <field name="other_language" attrs="{'readonly': [('state','=', 'done')]}" widget="many2many_tags"/>
+                            <field name="constrains" attrs="{'readonly': [('state','=', 'done')]}" />
+                            <field name="hobby" attrs="{'readonly': [('state','=', 'done')]}" />
+                        </group>
+                         <group>
+                             <field name="email"  attrs="{'readonly': [('state','=', 'done')]}"  required="1"/>
+                             <field name="mobile"  attrs="{'readonly': [('state','=', 'done')]}" required="1"/>
+                             <field name="phone"  attrs="{'required':[('mobile','=',False)], 'readonly': [('state','=', 'done')]}" widget="phone" string="Mobile 1"/>
+                             <field name="facebook" attrs="{'readonly': [('state','=', 'done')]}"/>
+                             <field name="contact_name" attrs="{'readonly': [('state','=', 'done')]}" required="0"/>
+
+
+                        </group>
+
+
+                        <group string="Marketing">
+                            <field name="user_id" attrs="{'readonly': [('state','=', 'done')]}" optional="show" string="ACAC Contact"/>
+                            <field name="lead_source" attrs="{'readonly': [('state','=', 'done')]}"/>
+                            <field name="additional_source" attrs="{'readonly': [('state','=', 'done')]}"/>
+                            <field name="lead_participation" attrs="{'readonly': [('state','=', 'done')]}">
+                                <tree>
+                                    <field name="participation_id" />
+                                    <field name="point" />
+                                </tree>
+                            </field>
+
+                        </group>
+
+                         <group string="Family Info">
+                            <field name="family_size" attrs="{'readonly': [('state','=', 'done')]}"/>
+                            <field name="parents" attrs="{'readonly': [('state','=', 'done')]}"/>
+                            <field name="siblings" attrs="{'readonly': [('state','=', 'done')]}"/>
+                             <field name="family_income" attrs="{'readonly': [('state','=', 'done')]}"/>
+                             <field name="other_depends" attrs="{'readonly': [('state','=', 'done')]}"/>
+                        </group>
+
+                     </group>
+
+                  </page>
+              </xpath>
+
+             <xpath expr="//page[@name='educational_detail']" position="replace">
+                <page string="Education and Professional experience">
+                    <group>
+                            <field name="schooling_year"  attrs="{'readonly': [('state','=', 'done')]}"/>
+                            <field name="high_school_id" attrs="{'readonly': [('state','=', 'done')]}"  />
+                            <field name="highest_education" attrs="{'readonly': [('state','=', 'done')]}" />
+                            <field name="lead_educational_achievement" attrs="{'readonly': [('state','=', 'done')]}" >
+                                <tree class="exp_tree"  editable="top">
+                                    <field name="name" />
+                                    <field name="high_school_id"  />
+                                     <field name="is_equivalent"  />
+                                </tree>
+                            </field>
+                            <field name="lead_working_experience" attrs="{'readonly': [('state','=', 'done')]}">
+                                <tree editable="top">
+                                    <field name="title_id"  />
+                                    <field name="company"  />
+                                    <field name="year"  />
+                                </tree>
+                            </field>
+                    </group>
+                </page>
+             </xpath>
+
+             <xpath expr="//page[@name='admission_detail']" position="replace">
+              <page name="admission_detail" string="Admission Detail">
+                  <group col="4" colspan="4">
+                    <field name="register_id" domain="[('state', 'in', ['application','admission'])]"
+                           widget="selection" attrs="{'readonly': [('state','=', 'done')]}" />
+                    <field name="application_date" attrs="{'readonly': [('state','=', 'done')]}" />
+                    <field name="course_id" string="Course" readonly="1" force_save="1"/>
+                     <field name="batch_id" string="Term" readonly="1" force_save="1"/>
+                    <field name="fees_term_id" required="1"
+                       attrs="{'readonly': [('state','not in', ['draft', 'submit', 'confirm'])]}"/>
+                    <field name="class_id" attrs="{'readonly': [('state','=', 'done')]}"/>
+<!--                    <field name="product_id" required="1"/>-->
+<!--                    <field name="fees" attrs="{'required': [('state','not in', ['draft', 'submit'])]}"/>-->
+                    <field name="admission_date" attrs="{'readonly': [('state','=', 'done')]}" />
+                    <field name="due_date"  attrs="{'readonly': [('state','=', 'done')]}" />
+                    <field name="is_student" attrs="{'readonly': [('state','=', 'done')]}" />
+                    <field name="partner_id" attrs="{'readonly': [('state','=', 'done')]}" />
+                    <field name="student_id" placeholder="Student" options="{'no_create_edit': True}"
+                           attrs="{'required':[('is_student','=',True)],'invisible': [('is_student','=', False)], 'readonly':[('state','=','done')]}"/>
+                </group>
+                 <group>
+                    <group string="Application Documents">
+                        <field name="application_form" required="1" attrs="{'readonly': [('state','=', 'done')]}" />
+                        <field name="application_fee"  required="1" attrs="{'readonly': [('state','=', 'done')]}" />
+                        <field name="medical_checkup" attrs="{'required':[('special_medical','=',False)], 'readonly':[('state','=','done')]}"  />
+                        <field name="special_medical" placeholder="Medical Check Up"
+                               attrs="{'required':[('medical_checkup','=',False)], 'readonly':[('state','=','done')]}"/>
+                        <field name="motivational_letter" attrs="{'readonly': [('state','=', 'done')]}" />
+                        <field name="pictures"  attrs="{'readonly': [('state','=', 'done')]}" />
+                    </group>
+                    <group>
+                        <field name="uniform_size" attrs="{'readonly': [('state','=', 'done')]}" />
+                        <field name="shoe_size" attrs="{'readonly': [('state','=', 'done')]}"/>
+                        <field name="english_score" attrs="{'readonly': [('state','=', 'done')]}" />
+                    </group>
+                    <group string="Scholarship">
+                        <field name="scholar_application" attrs="{'readonly': [('state','=', 'done')]}" />
+                        <field name="financial_status" attrs="{'readonly': [('state','=', 'done')]}" />
+                        <field name="is_scholarship" attrs="{'readonly': [('state','=', 'done')]}" />
+                        <field name="scholarship_status" attrs="{'required':[('is_scholarship','=',True)],'readonly': [('state','=', 'done')],
+                        'invisible': [('is_scholarship','=', False)]}"/>
+                    </group>
+                </group>
+             </page>
+             </xpath>
+
+         </field>
+    </record>
+
+
+           <record id="view_pm_admission_form" model="ir.ui.view">
+            <field name="name">op.admission.form</field>
+            <field name="model">op.admission</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Registration">
+                    <header groups="base.group_user">
+                        <button string="Submit" states="draft" class="oe_highlight" type="object" name="submit_form"/>
+                        <button name="confirm_in_progress" states="submit,pending" string="Confirm" type="object"
+                                class="oe_highlight"/>
+                        <button string="Admission Confirm" class="oe_highlight" states="confirm" type="object"
+                                name="admission_confirm"/>
+                        <button name="enroll_student" states="admission" string="Enroll" type="object"
+                                class="oe_highlight"/>
+                        <button name="confirm_rejected" states="confirm,confirm_pending"
+                                groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"
+                                string="Reject" type="object"/>
+                        <button name="confirm_cancel" type="object"/>
+                        <button name="confirm_to_draft" states="pending,reject,cancel" string="Set to Draft"
+                                type="object"/>
+                        <button name="open_student" states="done" string="Open Student Profile" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
+                    </header>
+                    <sheet>
+                        <field name="active" invisible="1"/>
+                        <field name="readonly" invisible="1"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+
+                        <field name="image" widget="image" class="oe_left oe_avatar"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="title" placeholder="Title" style="width: 30%%"/>
+                            </h1>
+                            <h1>
+                                <field name="name" placeholder="Name" required="1" style="padding-right:10px"
+                                       invisible="1"/>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <field name="first_name" placeholder="First Name" required="1"
+                                                   style="padding-right:10px"
+                                                   />
+                                        </td>
+
+                                        <td>
+                                            <field name="last_name" placeholder="Family Name" required="1"
+                                                   attrs="{'readonly': [('readonly','!=', False)]}"
+                                                   style="padding-right:10px"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </h1>
+                        </div>
+                        <notebook colspan="4">
+                            <page name="admission_detail" string="Admission Detail">
+                                <group col="4" colspan="4">
+                                    <field name="register_id" domain="[('state', 'in', ['application','admission'])]"
+                                           widget="selection" />
+<!--                                    <field name="application_number"/>-->
+                                    <field name="application_date"  attrs="{'readonly': [('readonly','!=', False)]}" />
+                                    <field name="course_id" string="Course" readonly="1" force_save="1"/>
+                                     <field name="batch_id" string="Term" readonly="1" force_save="1"/>
+                                    <field name="fees_term_id" required="1"
+                                       attrs="{'readonly': [('state','not in', ['draft', 'submit', 'confirm'])]}"/>
+                                    <field name="class_id" attrs="{'readonly': [('readonly','!=', False)]}"/>
+<!--                                    <field name="product_id" required="1"/>-->
+<!--                                    <field name="fees" attrs="{'required': [('state','not in', ['draft', 'submit'])]}"/>-->
+                                    <field name="admission_date" attrs="{'readonly': [('readonly','!=', False)]}" />
+                                    <field name="due_date"  attrs="{'readonly': [('readonly','!=', False)]}" />
+                                    <field name="lead_id" invisible="1"/>
+                                    <field name="is_student" attrs="{'readonly': [('readonly','!=', False)]}"/>
+                                    <field name="partner_id"  attrs="{'readonly': [('readonly','!=', False)]}" />
+                                    <field name="student_id" placeholder="Student" options="{'no_create_edit': True}"
+                                           attrs="{'required':[('is_student','=',True)],'invisible': [('is_student','=', False)]}"/>
+                                    <field name="is_scholarship" attrs="{'readonly': [('readonly','!=', False)]}"/>
+                                    <field name="scholarship_status" attrs="{'required':[('is_scholarship','=',True)],
+                                    'invisible': [('is_scholarship','=', False)]}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                  </form>
+            </field>
+        </record>
+
+           <record id="custom_view_pm_admission_register_form" model="ir.ui.view">
+            <field name="name">op.batch.custom.form</field>
+            <field name="model">op.batch</field>
+             <field name="inherit_id" ref="openeducat_core.view_op_batch_form"/>
+             <field name="arch" type="xml">
+                <xpath expr="//form/sheet" position="before">
+                    <header>
+                         <button
+                            name="action_draft"
+                            string="Reset"
+                            type="object"
+                            groups="openeducat_core.group_op_back_office_admin"
+                        />
+                        <button name="start_batch" states="pending" type="object" string="Start Term" class="oe_highlight"/>
+                        <button name="finish_batch" states="active" type="object" string="Complete Term" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                </xpath>
+              
+                <xpath expr="//form/sheet" position="replace">
+                   <sheet>
+                        <field name="active" invisible="1"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <group col="4" name="main">
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="course_id"/>
+                            <field name="year_term"/>
+                        </group>
+
+                        <group string="Semesters">
+                            <field name="semester_ids" colspan="4" nolabel="1">
+                                <tree string="Semesters">
+                                    <field name="name"/>
+                                    <field name="semester_code"/>
+                                    <field name="state"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </xpath>
+             </field>
+        </record>
+
+
+
+
+         <record id="view_pm_admission_register_form_inherit" model="ir.ui.view">
+            <field name="name">op.admission.register.form.inherit</field>
+            <field name="model">op.admission.register</field>
+            <field name="inherit_id" ref="openeducat_admission.view_op_admission_register_form"/>
+            <field name="arch" type="xml">
+
+              <xpath expr="//button[@name='confirm_register']" position="attributes">
+                <attribute name="invisible">1</attribute>
+             </xpath>
+            <xpath expr="//field[@name='state']" position="replace">
+                 <field name="state" widget="statusbar" statusbar_visible="draft,application,admission"/>
+             </xpath>
+
+              <xpath expr="//button[@name='confirm_register']" position="replace">
+                <attribute name="invisible">1</attribute>
+             </xpath>
+
+              <xpath expr="//button[@name='start_application']" position="replace">
+                  <button name="start_application" states="draft" type="object" string="Start Application"
+                                class="oe_highlight"/>
+             </xpath>
+
+
+                <xpath expr="//form/sheet" position="replace">
+                     <sheet>
+                        <field name="active" invisible="1"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+
+                           <group>
+                                <h1>
+                                    <field name="name" placeholder="Admission Registrar"/>
+                                </h1>
+                         </group>
+
+                        <group col="4">
+                            <field name="course_id"/>
+                            <field name="batch_id" context="{'course_id': course_id,'get_parent_batch':1}"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="min_count"/>
+                            <field name="max_count"/>
+                        </group>
+                        <group string="Applications">
+                            <field name="admission_ids" nolabel="1" readonly="1"/>
+                        </group>
+                    </sheet>
+                </xpath>
+
+
+            </field>
+        </record>
+  </data>
+</odoo>

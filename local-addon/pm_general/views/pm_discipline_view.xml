@@ -1,0 +1,156 @@
+<odoo>
+    <data>
+
+        <record id="view_pm_discipline_custom_form" model="ir.ui.view">
+            <field name="name">op.discipline.form</field>
+            <field name="model">op.discipline</field>
+            <field name="inherit_id" ref="openeducat_discipline.view_op_discipline_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header[@groups='base.group_user']" position="replace">
+                    <header groups="base.group_user">
+                        <button name="act_submit" states="draft" string="Submit" type="object"
+                                class="oe_highlight"/>
+                        <button name="act_approve" states="submitted" groups="pm_leads.group_acac_dean" string="Approve"
+                                type="object" class="oe_highlight"/>
+                        <button name="act_reject" states="submitted" groups="pm_leads.group_acac_dean" string="Reject" type="object"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,submitted,approved,rejected"/>
+                    </header>
+                </xpath>
+
+               <field name="misbehaviour_category_id"  position="replace">
+                    <field name="misbehaviour_category_id" context="{'tree_view_ref': 'pm_discipline_search_form_custom'}"
+                           attrs="{'readonly': [('state','=', 'approved')]}"/>
+                </field>
+
+               <field name="student_id"  position="replace">
+                   <field name="student_id"  attrs="{'readonly': [('state','=', 'approved')]}"/>
+                </field>
+
+               <field name="date"  position="replace">
+                   <field name="date"  attrs="{'readonly': [('state','=', 'approved')]}"/>
+                </field>
+
+               <field name="note"  position="replace">
+                   <field name="note"  attrs="{'readonly': [('state','=', 'approved')]}"/>
+                </field>
+
+               <field name="misbehaviour_type"  position="replace">
+                   <field name="misbehaviour_type"  attrs="{'readonly': [('state','=', 'approved')]}"/>
+                </field>
+
+                <xpath expr="//field[@name='misbehaviour_type']" position="before">
+                    <field name="batch_id"  attrs="{'readonly': [('state','=', 'approved')]}"  context="{'course_id': course_id,'get_parent_batch':1}"/>
+                    <field name="semester_id"  attrs="{'readonly': [('state','=', 'approved')]}" context="{'batch_id': batch_id,'get_parent_semester':1}"/>
+                </xpath>
+
+
+                <xpath expr="//field[@name='meeting_datetime']" position="replace">
+                    
+                </xpath>
+                <xpath expr="//field[@name='merit_points']" position="replace">
+                
+                </xpath>
+                <xpath expr="//field[@name='demerit_points']" position="replace">
+                
+                </xpath>
+                <xpath expr="//field[@name='misbehaviour_action']" position="replace">
+                
+                </xpath>
+                <xpath expr="//field[@name='progression_id']" position="replace">
+                        <field name="point"/>
+                </xpath>
+                 <xpath expr="//field[@name='priority']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='company_id']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='recipients_ids']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_pm_discipline_custom_tree" model="ir.ui.view">
+            <field name="name">op.discipline.tree.custom</field>
+            <field name="model">op.discipline</field>
+            <field name="inherit_id" ref="openeducat_discipline.view_op_discipline_tree"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='recipients_ids']" position="replace">
+                        <field name="misbehaviour_category_id"/>
+                </xpath>
+                <xpath expr="//field[@name='course_id']" position="after">
+                    <field name="semester_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+         <record id="view_pm_semester_discipline_form" model="ir.ui.view">
+                <field name="name">pm.student.discipline.form</field>
+                <field name="model">pm.student.discipline</field>
+                <field name="priority" eval="9"/>
+                <field name="arch" type="xml">
+                    <form string="Semester Discipline">
+                        <sheet>
+                            <group col="4" name="main">
+                                <field name="semester_id"/>
+                                <field name="discipline_point"/>
+                                <field name="state"/>
+                            </group>
+                             <group string="Discipline Records">
+                                <field name="semester_discipline" colspan="4" readonly="1" nolabel="1">
+                                    <tree string="Discipline">
+                                        <field name="misbehaviour_category_id"/>
+                                        <field name="misbehaviour_type"/>
+                                        <field name="date"/>
+                                        <field name="discipline_master"/>
+                                        <field name="state"/>
+                                        <field name="point"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+        <record id="inherit_op_discipline_tree" model="ir.ui.view">
+            <field name="name">op.misbehaviour.category.form.custom</field>
+            <field name="model">op.misbehaviour.category</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Misbehaviour Category">
+                        <field name="name"/>
+                        <field name="misbehaviour_type"/>
+                        <field name="parent_id"/>
+                      <field name="p_demerit_points"/>
+                </tree>
+            </field>
+        </record>
+
+         <record id="op_student_disicipline_tree" model="ir.ui.view">
+            <field name="name">pm.student.discipline.tree</field>
+            <field name="model">pm.student.discipline</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Student Discipline" decoration-danger="state=='dismissed'" decoration-primary="state=='first_warning'" decoration-warning="state=='second'">
+                    <field name="student_id"/>
+                    <field name="semester_id"/>
+                    <field name="discipline_point"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+         <record model="ir.actions.act_window.view" id="act_open_student_discicpline">
+                <field name="sequence" eval="5"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="op_student_disicipline_tree"/>
+            </record>
+
+
+    </data>
+</odoo>

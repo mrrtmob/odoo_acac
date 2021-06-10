@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="student_portal_student_skill"
+              inherit_id="openeducat_core_enterprise.openeducat_enterprise_student_portal"
+              priority="60">
+        <xpath expr="//ul[hasclass('nav-pills')]" position="inside">
+            <li>
+                <a href="#skills" aria-expanded="false" data-toggle="tab">
+                    <h5 class="mb0">
+                        Skills
+                    </h5>
+                </a>
+            </li>
+        </xpath>
+        <xpath expr="//div[hasclass('tab-content')]" position="inside">
+            <div class="tab-pane fade" id="skills">
+                <div class="d-flex mb-4">
+                    <div class="col-6 px-0">
+                        <h4>Skills</h4>
+                    </div>
+                    <div class="col-6 text-right px-0" t-if="user_id.sudo().is_student">
+                        <a t-attf-href="/student/skill">
+                            <button>
+                                Add Your Skill
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <table class="mt16 table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Skill</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="student.skill_line" t-as="skill">
+                            <tr>
+                                <td>
+                                    <span t-esc="skill.skill_type_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-esc="skill.rating"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>

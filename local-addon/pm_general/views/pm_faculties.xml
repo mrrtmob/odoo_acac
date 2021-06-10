@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="custom_faculties_module" model="ir.ui.view">
+            <field name="name">op.custom.faculties</field>
+            <field name="model">op.faculty</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_faculty_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='blood_group']" position="replace">
+<!--                    <attribute name="invisible">1</attribute>-->
+                    <field name="job_position" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

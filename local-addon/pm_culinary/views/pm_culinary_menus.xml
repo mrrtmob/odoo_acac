@@ -1,0 +1,111 @@
+<odoo>
+  <data>
+    <menuitem id="menu_root"
+              name="Culinary"
+              groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+              web_icon="pm_culinary,static/img/icon.jpg"/>
+
+    <menuitem id="menu_culinary_dashboard"
+                  name="Dashboard"
+                  parent="pm_culinary.menu_root"
+                  sequence="0"
+                  action="act_culinary_dashboard"/>
+
+      <menuitem id="menu_schedule"
+                parent="menu_root"
+                groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                sequence="1"
+                action="schedule_action" />
+
+      <menuitem id="menu_menu"
+                parent="menu_root"
+                groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                sequence="2"
+                action="menu_action" />
+
+      <menuitem id="menu_recipe"
+                parent="menu_root"
+                groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                sequence="3"
+                action="pm_view_recipe_action"/>
+
+      <menuitem id="menu_product_product"
+                parent="menu_root"
+                groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                sequence="4"
+                action="product_product_action"/>
+
+      <menuitem id="menu_res_partner"
+                parent="menu_root"
+                groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                sequence="5"
+                action="res_partner_action"/>
+
+      <menuitem id="menu_report"
+                name="Report"
+                groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                sequence="6"
+                parent="menu_root" />
+
+        <menuitem id="menu_report_recipe_schedule"
+                  name="Recipe Schedule"
+                  parent="menu_report"
+                  groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                  sequence="1"
+                  action="wizard_recipe_schedule_action"/>
+
+      <menuitem id="menu_config"
+                name="Configuration"
+                groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                sequence="7"
+                parent="menu_root" />
+
+        <menuitem id="menu_ingredient_config_group"
+                  name="Ingredient"
+                  parent="menu_config"
+                  groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                  sequence="1" />
+
+          <menuitem id="menu_config_brand"
+                    action="config_brand_action"
+                    parent="menu_ingredient_config_group"
+                    groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                    sequence="1" />
+
+          <menuitem id="menu_config_ingredient_category"
+                    action="config_ingredient_category_action"
+                    parent="menu_ingredient_config_group"
+                    groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                    sequence="2" />
+
+          <menuitem id="menu_config_ingredient_origin"
+                    action="config_ingredient_origin_action"
+                    parent="menu_ingredient_config_group"
+                    groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                    sequence="3" />
+
+          <menuitem id="menu_config_nutrition"
+                    action="config_nutrition_action"
+                    parent="menu_ingredient_config_group"
+                    groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                    sequence="4" />
+
+          <menuitem id="menu_config_product_uom"
+                    action="config_product_uom_action"
+                    parent="menu_ingredient_config_group"
+                    groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                    sequence="5"/>
+
+        <menuitem id="menu_supplier_config_group"
+                  name="Supplier"
+                  parent="menu_config"
+                  groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                  sequence="2" />
+
+          <menuitem id="menu_config_supplier_industry"
+                action="config_supplier_industry_action"
+                parent="menu_supplier_config_group"
+                groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                sequence="1" />
+  </data>
+</odoo>

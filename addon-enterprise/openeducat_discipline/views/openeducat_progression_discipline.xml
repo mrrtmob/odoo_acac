@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_op_student_progress_discipline_form_inherite" model="ir.ui.view">
+            <field name="name">Student Progression Discipline Form</field>
+            <field name="model">op.student.progression</field>
+            <field name="inherit_id" ref="openeducat_student_progress_enterprise.view_student_progress_form"/>
+            <field name="priority" eval="50"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="Discipline" string="Discipline">
+                        <button name="%(act_win_progress_discipline_wizard_action)d" type="action"
+                                string="Get Discipline"
+                                class="oe_highlight"
+                                attrs="{'invisible':[('state','!=','open'),('state','!=','draft')]}"/>
+                        <group>
+                            <group>
+                                <field name="total_discipline"/>
+                            </group>
+                        </group>
+                        <field name="discipline_lines"
+                               attrs="{'readonly':[('state','!=','open'),('state','!=','draft')]}">
+                                <tree string="Values" editable="bottom" default_order='date asc'>
+                                <field name="date"/>
+                                <field name="course_id"/>
+                                <field name="discipline_master"/>
+                                 <field name="recipients_ids" widget="many2many_tags"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_op_student_progress_discipline_tree_inherite" model="ir.ui.view">
+            <field name="name">Student Progression discipline Tree</field>
+            <field name="model">op.student.progression</field>
+            <field name="inherit_id" ref="openeducat_student_progress_enterprise.view_student_progress_tree"/>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='student_id']" position="after">
+                    <field name="discipline_lines" string="Discipline"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

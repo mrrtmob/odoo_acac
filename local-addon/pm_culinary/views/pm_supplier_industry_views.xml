@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+    <record id="pm_supplier_industry_view_list" model="ir.ui.view">
+      <field name="name">pm.supplier.industry.view.list</field>
+      <field name="model">pm.supplier.industry</field>
+      <field name="arch" type="xml">
+        <tree string="Supplier Industries">
+          <field name="name" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="pm_supplier_industry_view_form" model="ir.ui.view">
+      <field name="name">pm.supplier.industry.view.form</field>
+      <field name="model">pm.supplier.industry</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name" />
+            </group>
+          </sheet>
+
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="config_supplier_industry_action" model="ir.actions.act_window">
+      <field name="name">Supplier Industries</field>
+      <field name="res_model">pm.supplier.industry</field>
+      <field name="view_mode">tree,kanban,form</field>
+    </record>
+  </data>
+</odoo>

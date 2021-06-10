@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_semester_2nd_warning">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" style="font-family: 'Georgia'; font-size: 17px;">
+                    <style  type="text/css">
+                    </style>
+                    <div class="container-fluid">
+                        <t t-call="pm_general.template_header"/>
+                        <strong><u>Absence Notification Letter</u></strong><br/><br/>
+                        <strong>If you have any problems understanding this letter or your present position, do not hesitate to contact the Registrar of the Academy.</strong><br/><br/>
+                        <p>Dear NAME,</p>
+                        <p>Despite having received a warning letter previously you continued to miss class hours and have now exceeded 43 hours of absences. You are herewith issued with the second and final warning letter.
+                        </p>
+                        <strong>Should you miss more than 48 class periods during the semester you will be suspended and this semester will be invalidated.</strong><br/><br/>
+                        <p>We hope that you understand the seriousness of your present position and make the necessary adjustment in attending your scheduled classes not to run the risk of being expelled from the semester.</p>
+                        <t t-call="pm_general.signature"/>
+                        <t t-call="pm_general.template_footer" class="pt-1"/>
+                        <t t-call="pm_general.template_border"></t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_tests" name="Website Job Assets Tests" inherit_id="web.assets_tests">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/openeducat_job_enterprise/static/tests/tours/job_post_test.js"></script>
+            <script type="text/javascript" src="/openeducat_job_enterprise/static/tests/tours/campus_jobs_test.js"></script>
+            <script type="text/javascript" src="/openeducat_job_enterprise/static/tests/tours/job_post_description.js"></script>
+            <script type="text/javascript" src="/openeducat_job_enterprise/static/tests/tours/job_post_apply_test.js"></script>
+        </xpath>
+    </template>
+</odoo>

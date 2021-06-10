@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="signature">
+        <div class="page">
+            <style type="text/css">
+                .signature{
+                    font-family: 'Georgia' !important;
+                    font-size: 17px !important;
+                }
+            </style>
+            <div class="signature d-inline">
+                <div class="row mt-5">
+                    <div class="col-6">
+                        <p>Sincerely Yours</p>
+                        <div class="mt-5">
+                            <span>Markus Kalberer Dean</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <p>Received and noted:</p>
+                        <div class="mt-5">
+                            <p class="d-inline">Signature Date</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

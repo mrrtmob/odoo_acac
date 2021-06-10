@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_absence_invalidation">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" style="font-family: 'Georgia'; font-size: 17px;">
+                    <style  type="text/css">
+                    </style>
+                    <div class="container-fluid">
+                        <t t-call="pm_general.template_header"/>
+                        <strong><u>Course Absence Notification Letter</u></strong><br/>
+                        <strong>If you have any problems understanding this letter or your present position, do not hesitate to contact the Registrar of the Academy.</strong>
+                        <p>Dear NAME,</p>
+                        <p>You continued to be absent from Course name course,
+                            despite the previous warning letter and you have now exceeded the maximum of 12 hrs absences per course as stated in the student handbook.</p>
+                        <p>Unfortunately, we will have to inform you that the Course name course is invalidated this semester.</p>
+                        <p>You are eligible to progress to the 2 <sup>nd</sup>/4<sup>th</sup> semester only once you have earned the credits of the above course</p>
+                        <p>Please make your intention of repeating the course known to the Registrar before the final exam week of this semester.</p>
+                        <t t-call="pm_general.signature"/>
+                        <t t-call="pm_general.template_footer"/>
+                        <t t-call="pm_general.template_border"></t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

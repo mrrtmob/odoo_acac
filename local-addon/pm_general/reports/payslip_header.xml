@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="payslip_header">
+        <div class="page">
+            <style type="text/css">
+                @font-face {
+                    font-family: 'Georgia';
+                    font-style: normal;
+                    src: url('/pm_general/static/src/fonts/georgia/Georgia.ttf') format('truetype');
+                }
+                .payslip-header {
+                    font-family: 'Georgia' !important;
+                    font-size: 17px !important;
+                }
+                .payslip-header p {
+                    margin: 0;
+                }
+                img{
+                    width: 240px;
+                    height: 180px
+                }
+            </style>
+            <div class="payslip-header">
+                <div class="row">
+                    <div class="col-6 text-left pt-5">
+                        <h2>Academy of Culinary Arts</h2>
+                        <p>#23, St. 139, Sangkat Veal Vong</p>
+                        <p>Khan 7 Makara, Phnom Penh</p>
+                        <p>Cambodia</p>
+                    </div>
+                    <div class="col-6 text-right">
+                        <img src="/pm_general/static/src/img/icon.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

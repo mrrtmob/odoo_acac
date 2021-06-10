@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- dashboard -->
+    <!-- base,static/description/board.png (old icon) -->
+    <menuitem name="Dashboard" id="base.menu_board_root" web_icon="pm_general,static/description/general_light_yellow/Dashboard.png" sequence="10"/>
+
+    <!-- project -->
+    <!-- project,static/description/icon.png (old icon) -->
+<!--    <menuitem name="Project" id="project.menu_main_pm" web_icon="pm_general,static/description/general_light_yellow/Project.png" sequence="20"/>-->
+
+    <!-- Resignation -->
+    <!-- hr_resignation,static/description/resignation_web.png (old icon) -->
+    <menuitem name="Resignation" id="hr_resignation.employee_resignation" web_icon="pm_general,static/description/general_light_yellow/Resignation.png" sequence="25"/>
+
+    <!-- reminders -->
+    <!-- hr_reminder,static/description/reminder_icon.png (old icon) -->
+    <menuitem name="Reminders" id="hr_reminder.hr_reminder_menu" web_icon="pm_general,static/description/general_light_yellow/Reminder.png" sequence="30"/>
+
+    <!-- calendar -->
+    <!-- calendar,static/description/icon.png (old icon) -->
+    <menuitem name="Calendar" id="calendar.mail_menu_calendar" web_icon="pm_general,static/description/general_light_yellow/Calendar.png" sequence="40"/>
+
+    <!-- contact -->
+    <!-- contacts,static/description/icon.png (old icon) -->
+    <menuitem name="Contacts" id="contacts.menu_contacts" web_icon="pm_general,static/description/general_light_yellow/Contact.png" sequence="50"/>
+ 
+    <menuitem
+        name="Time Off"
+        id="hr_holidays.menu_hr_holidays_root"
+        sequence="55"
+        web_icon="hr_holidays,static/description/icon.png"
+        groups="base.group_user"/>
+    <!-- purchase requests -->
+    <!-- purchase_request,static/description/icon.png (old icon) -->
+<!--     <menuitem name="Purchase Requests" id="purchase_request.parent_menu_purchase_request" web_icon="pm_general,static/description/general_light_yellow/Purchase_Requests.png" sequence="59"/>-->
+
+
+
+
+
+    <!-- email marketing -->
+    <!-- mass_mailing,static/description/icon.png (old icon) -->
+<!--    <menuitem name="Email Marketing" id="mass_mailing.mass_mailing_menu_root" web_icon="pm_general,static/description/marketing_blueberry/Email_Marketing.png" sequence="70"/>-->
+
+    <!-- events -->
+    <!-- event,static/description/icon.png (old icon) -->
+    <menuitem name="Events" id="event.event_main_menu" web_icon="pm_general,static/description/marketing_blueberry/Events.png" sequence="80"/>
+
+    <!-- surveys -->
+    <!-- survey,static/description/icon.png (old icon) -->
+    <!-- <menuitem name="Surveys" id="survey.menu_surveys" web_icon="pm_general,static/description/marketing_blueberry/Survey.png" sequence="90"/>-->
+
+    <!-- crm -->
+    <!-- crm,static/description/icon.png (old icon) -->
+    <menuitem name="CRM" id="crm.crm_menu_root" web_icon="pm_general,static/description/marketing_blueberry/CRM.png" sequence="100"/>
+
+
+
+
+    <!-- openEducat -->
+    <!-- openeducat_core,static/description/icon.png (old icon) -->
+    <menuitem name="OpenEducat" id="openeducat_core.menu_op_school_root" web_icon="pm_general,static/description/registrar_purple/OpenEducat.png" sequence="110"/>
+
+    <!-- courses -->
+    <!-- openeducat_core_enterprise,static/description/icon_1.png (old icon) -->
+    <menuitem name="Courses" id="openeducat_core_enterprise.menu_op_course_sub_1" web_icon="pm_general,static/description/registrar_purple/Courses.png" sequence="120"/>
+
+    <!-- Faculties -->
+    <!-- openeducat_core,static/description/icon_faculty.png (old icon) -->
+    <menuitem name="Faculties" id="openeducat_core.menu_op_faculty_root" web_icon="pm_general,static/description/registrar_purple/Faculty.png" sequence="130"/>
+
+    <!-- students -->
+    <!-- openeducat_core,static/description/icon_student.png (old icon) -->
+    <menuitem name="Students" id="openeducat_core.menu_op_student_root" web_icon="pm_general,static/description/registrar_purple/Students.png" sequence="140"/>
+
+    <!-- admissions -->
+    <!-- openeducat_admission,static/description/icon.png (old icon) -->
+    <menuitem name="Admissions" id="openeducat_admission.menu_op_admission_root" web_icon="pm_general,static/description/registrar_purple/Admission.png" sequence="150"/>
+
+    <!-- assignments -->
+    <!-- openeducat_assignment,static/description/icon.png (old icon) -->
+    <menuitem name="Assignments" id="openeducat_assignment.menu_op_assignment_root" web_icon="pm_general,static/description/registrar_purple/Assignments.png" sequence="160"/>
+
+    <!-- discipline -->
+    <!-- openeducat_discipline,static/description/icon.png (old icon) -->
+    <menuitem name="Discipline" id="openeducat_discipline.menu_op_discipline_root" web_icon="pm_general,static/description/registrar_purple/Discipline.png" sequence="170"/>
+
+    <!-- student attendances -->
+    <!-- openeducat_attendance,static/description/icon.png (old icon) -->
+    <menuitem name="Student Attendances" id="openeducat_attendance.menu_op_attendance_root" web_icon="pm_general,static/description/registrar_purple/Attendances.png" sequence="180"/>
+
+    <!-- placement -->
+    <!-- openeducat_placement_enterprise,static/description/icon.png (old icon) -->
+    <menuitem name="Placement" id="openeducat_placement_enterprise.menu_placement_main" web_icon="pm_general,static/description/registrar_purple/Placement.png" sequence="190"/>
+
+    <!-- exams -->
+    <!-- openeducat_exam,static/description/icon.png (old icon) -->
+    <menuitem name="Exams" id="openeducat_exam.menu_op_exam_root" web_icon="pm_general,static/description/registrar_purple/Exams.png" sequence="200"/>
+
+    <!-- library -->
+    <!-- openeducat_library,static/description/icon.png (old icon) -->
+    <menuitem name="Library" id="openeducat_library.menu_op_library_root" web_icon="pm_general,static/description/registrar_purple/Library.png" sequence="210"/>
+
+    <!-- timeTables -->
+    <!-- openeducat_timetable,static/description/icon.png (old icon) -->
+    <menuitem name="TimeTables" id="openeducat_timetable.menu_op_timetable_root" web_icon="pm_general,static/description/registrar_purple/TimeTables.png" sequence="220"/>
+
+    <!-- parents -->
+    <!-- openeducat_parent,static/description/icon.png (old icon) -->
+    <menuitem name="Parents" id="openeducat_parent.menu_op_parent_root" web_icon="pm_general,static/description/registrar_purple/Parents.png" sequence="230"/>
+
+
+
+    <!-- transfers -->
+    <!-- hr_employee_transfer,static/description/transfer_icon.png (old icon) -->
+    <menuitem name="Transfers" id="hr_employee_transfer.menu_employee_transfer" web_icon="pm_general,static/description/hr_green/Transfer.png" sequence="240"/>
+
+    <!-- recruitment -->
+    <!-- hr_recruitment,static/description/icon.png (old icon) -->
+    <menuitem name="Recruitment" id="hr_recruitment.menu_hr_recruitment_root" web_icon="pm_general,static/description/hr_green/Recruitment.png" sequence="250"/>
+
+    <!-- human resources -->
+    <!-- hr,static/description/icon.png (old icon) -->
+    <menuitem name="Human Resources" id="hr.menu_hr_root" web_icon="pm_general,static/description/hr_green/Human_Resources.png" sequence="260"/>
+
+    <!-- Attendances -->
+    <!-- hr_attendance,static/description/icon.png (old icon) -->
+    <menuitem name="Attendances" id="hr_attendance.menu_hr_attendance_root" web_icon="pm_general,static/description/hr_green/Staff_Attendance.png" sequence="270"/>
+
+    <!-- announcement -->
+    <!-- hr_reward_warning,static/description/announcement_icon.png (old icon) -->
+    <menuitem name="Announcements" id="hr_reward_warning.hr_announcement" web_icon="pm_general,static/description/hr_green/Announcement.png" sequence="280"/>
+
+    <!-- survey -->
+    <!-- survey,static/description/icon.png (old icon) -->
+     <menuitem name="Surveys" id="survey.menu_surveys" web_icon="pm_general,static/description/hr_green/Survey.png" sequence="281"/>
+
+    <!-- appraisal -->
+    <!-- hr_reward_warning,static/description/announcement_icon.png (old icon) -->
+    <menuitem name="Appraisal" id="oh_appraisal.menu_hr_appraisal_root" web_icon="pm_general,static/description/hr_green/Appraisal.png" sequence="282"/>
+
+
+
+
+    <!-- culinary -->
+    <!-- pm_culinary,static/img/icon.jpg (old icon) -->
+    <menuitem name="Culinary" id="pm_culinary.menu_root" web_icon="pm_general,static/description/culinary_brown/Culinary.png" sequence="290"/>
+
+    <!-- purchase -->
+    <!-- purchase,static/description/icon.png (old icon) -->
+    <menuitem name="Purchase" id="purchase.menu_purchase_root" web_icon="pm_general,static/description/culinary_brown/Purchase.png" sequence="300"/>
+
+    <!-- inventory -->
+    <!-- stock,static/description/icon.png (old icon) -->
+    <menuitem name="Inventory" id="stock.menu_stock_root" web_icon="pm_general,static/description/culinary_brown/Inventory.png" sequence="310"/>
+
+
+
+
+    <!-- accounting -->
+    <!-- account,static/description/icon.png (old icon) -->
+    <menuitem name="Accounting" id="account.menu_finance" web_icon="pm_general,static/description/accounting_orange/Accounting.png" sequence="320"/>
+
+    <!-- payroll -->
+    <!-- hr_payroll_community,static/description/icon.png (old icon) -->
+    <menuitem name="Payroll" id="hr_payroll_community.menu_hr_payroll_community_root" web_icon="pm_general,static/description/accounting_orange/Payroll.png" sequence="325"/>
+
+
+
+    <!-- point of sale -->
+    <!-- point_of_sale,static/description/icon.png (old icon) -->
+<!--     <menuitem name="Point of Sale" id="point_of_sale.menu_point_root"  sequence="340"/>-->
+
+    <!-- approval -->
+    <!-- pm_general,static/description/general_yellow/Approval.png (old icon) -->
+    <menuitem name="Approvals" id="pm_approval.menu_pm_approval_root" web_icon="pm_approval,static/description/icon.png" sequence="0"/>
+
+    <!-- apps -->
+     <menuitem name="Apps" id="base.menu_management"  sequence="350"/>
+
+
+    <!--    &lt;!&ndash; student attendances &ndash;&gt;-->
+    <!--    &lt;!&ndash; openeducat_attendance,static/description/icon.png (old icon) &ndash;&gt;-->
+    <!--    <menuitem name="Student Attendances" id="openeducat_attendance.menu_op_attendance_root" web_icon="pm_general,static/description/registrar_purple/Attendances.png" sequence="0"/>-->
+    <!--    &lt;!&ndash; student attendances &ndash;&gt;-->
+    <!--    &lt;!&ndash; openeducat_attendance,static/description/icon.png (old icon) &ndash;&gt;-->
+    <!--    <menuitem name="Student Attendances" id="openeducat_attendance.menu_op_attendance_root" web_icon="pm_general,static/description/registrar_purple/Attendances.png" sequence="1"/>-->
+
+</odoo>

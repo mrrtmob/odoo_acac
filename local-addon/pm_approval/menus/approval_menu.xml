@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_pm_approval_root"
+                  name="Approval"
+                  sequence="1"
+                  groups="pm_approval.group_pm_approval_team"
+                  web_icon="pm_approval,static/description/icon.png"/>
+
+        <menuitem id="menu_pm_approval"
+                  parent="menu_pm_approval_root"
+                  sequence="10"
+                  groups="pm_approval.group_pm_approval_team"
+                  action="act_open_pm_approval_view_custom"/>
+
+        <menuitem id="menu_pm_approval_config"
+                  parent="menu_pm_approval_root"
+                  sequence="10"
+                  groups="pm_approval.group_pm_approval_all,"
+                  name="Configuration"/>
+
+      <menuitem id="menu_pm_approval_type_sub"
+                name="Approval Types"
+                parent="menu_pm_approval_config"
+                sequence="20"
+                action="act_open_pm_approval_type_view"/>
+
+    </data>
+</odoo>
