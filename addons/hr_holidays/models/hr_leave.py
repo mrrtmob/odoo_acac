@@ -749,10 +749,12 @@ class HolidaysRequest(models.Model):
     def create(self, vals_list):
         """ Override to avoid automatic logging of creation """
         if not self._context.get('leave_fast_create'):
-            leave_types = self.env['hr.leave.type'].browse([values.get('holiday_status_id') for values in vals_list if values.get('holiday_status_id')])
-            mapped_validation_type = {leave_type.id: leave_type.leave_validation_type for leave_type in leave_types}
+            leave_types = self.env['hr.leave.type'].browse(
+                [values.get('holiday_status_id') for values in vals_list if values.get('holiday_status_id')])
+            mapped_validation_type = {leave_type.id: leave_type.validation_type for leave_type in leave_types}
 
             for values in vals_list:
+
                 employee_id = values.get('employee_id', False)
                 leave_type_id = values.get('holiday_status_id')
                 # Handle automatic department_id
@@ -763,18 +765,24 @@ class HolidaysRequest(models.Model):
                 if mapped_validation_type[leave_type_id] == 'no_validation':
                     values.update({'state': 'confirm'})
 
-                if 'state' not in values:
-                    # To mimic the behavior of compute_state that was always triggered, as the field was readonly
-                    values['state'] = 'confirm' if mapped_validation_type[leave_type_id] != 'no_validation' else 'draft'
-
                 # Handle double validation
                 if mapped_validation_type[leave_type_id] == 'both':
-                    self._check_double_validation_rules(employee_id, values.get('state', False))
+                    if self.user_has_groups('hr_holidays.group_hr_holidays_manager'):
+                        values.update({'state': 'validate1'})
 
+                    self._check_double_validation_rules(employee_id, values.get('state', False))
         holidays = super(HolidaysRequest, self.with_context(mail_create_nosubscribe=True)).create(vals_list)
 
         for holiday in holidays:
+            if self._context.get('import_file'):
+                holiday._onchange_leave_dates()
             if not self._context.get('leave_fast_create'):
+                # FIXME remove these, as they should not be needed
+                if employee_id:
+                    holiday.with_user(SUPERUSER_ID)._sync_employee_details()
+                if 'number_of_days' not in values and ('date_from' in values or 'date_to' in values):
+                    holiday.with_user(SUPERUSER_ID)._onchange_leave_dates()
+
                 # Everything that is done here must be done using sudo because we might
                 # have different create and write rights
                 # eg : holidays_user can create a leave request with validation_type = 'manager' for someone else
@@ -783,11 +791,13 @@ class HolidaysRequest(models.Model):
                 holiday_sudo.add_follower(employee_id)
                 if holiday.validation_type == 'manager':
                     holiday_sudo.message_subscribe(partner_ids=holiday.employee_id.leave_manager_id.partner_id.ids)
-                if holiday.validation_type == 'no_validation':
+                if holiday.holiday_status_id.validation_type == 'no_validation':
                     # Automatic validation should be done in sudo, because user might not have the rights to do it by himself
                     holiday_sudo.action_validate()
-                    holiday_sudo.message_subscribe(partner_ids=[holiday._get_responsible_for_approval().partner_id.id])
-                    holiday_sudo.message_post(body=_("The time off has been automatically approved"), subtype_xmlid="mail.mt_comment") # Message from OdooBot (sudo)
+                    holiday_sudo.message_subscribe(
+                        partner_ids=[holiday_sudo._get_responsible_for_approval().partner_id.id])
+                    holiday_sudo.message_post(body=_("The time off has been automatically approved"),
+                                              subtype="mt_comment")  # Message from OdooBot (sudo)
                 elif not self._context.get('import_file'):
                     holiday_sudo.activity_update()
         return holidays

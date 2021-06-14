@@ -79,7 +79,7 @@
                                             <div name="second_column" class="col-md-12 o_kanban_primary_left">
                                                 <a name="%(act_dashboard_op_batch_view)d" type="action" style="overflow: visible;">
                                                     <field name="batch_count"/>
-                                                    Batches
+                                                    Terms
                                                 </a>
                                             </div>
                                             <div name="seven_column" class="col-md-12 o_kanban_primary_left">

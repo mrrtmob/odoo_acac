@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <template id="portal_my_home_menu_attendance" name="Portal layout : invoice menu entries"
+      <template id="portal_my_home_menu_attendance" name="Portal layout : invoice menu entries"
               inherit_id="openeducat_core_enterprise.portal_breadcrumbs_inhetrite" priority="10">
         <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
             <t t-if="user_id.sudo().is_student">
@@ -9,6 +9,12 @@
                     t-attf-class="breadcrumb-item #{'active ' if not invoice else ''}">
                     <a t-if="attendance_ids" t-attf-href="/student/attendance/?{{ keep_query() }}">Attendance</a>
                     <t t-else="">Attendance</t>
+                </li>
+                <li class="breadcrumb-item" t-if="page_name == 'attendance_detail'">
+                    <a t-if="subject_attendances" t-attf-href="/student/attendance/?{{ keep_query() }}">Attendance</a>
+                </li>
+                <li class="breadcrumb-item active" t-if="page_name == 'attendance_detail'">
+                    Attendance Detail
                 </li>
             </t>
             <t t-if="user_id.sudo().is_parent">
@@ -18,6 +24,12 @@
                         Attendance
                     </a>
                     <t t-else="">Attendance</t>
+                </li>
+                <li class="breadcrumb-item" t-if="page_name == 'attendance_detail'">
+                    <a t-if="subject_attendances" t-attf-href="/student/attendance/?{{ keep_query() }}">Attendance</a>
+                </li>
+                <li class="breadcrumb-item active" t-if="page_name == 'attendance_detail'">
+                    Attendance Detail
                 </li>
             </t>
         </xpath>

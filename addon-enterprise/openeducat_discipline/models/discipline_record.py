@@ -59,7 +59,7 @@ class OpDiscipline(models.Model):
          ('action_taken', 'Action Taken'),
          ('awaiting_meeting', 'Awaiting Meeting'),
          ('suspended', 'Suspended'), ('done', 'Done')],
-        'State', default='draft', tracking=True)
+        'State', default='draft', track_visibility='onchange')
     company_id = fields.Many2one(
         'res.company', 'Company', required=True,
         default=lambda self: self.env.user.company_id)

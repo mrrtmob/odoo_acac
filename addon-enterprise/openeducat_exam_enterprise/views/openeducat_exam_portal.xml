@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <template id="portal_my_home_menu_exam" name="Portal layout : invoice menu entries"
+     <template id="portal_my_home_menu_exam" name="Portal layout : invoice menu entries"
               inherit_id="openeducat_core_enterprise.portal_breadcrumbs_inhetrite" priority="10">
         <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
             <t t-if="user_id.sudo().is_student">
@@ -11,13 +11,21 @@
                     </a>
                     <t t-else="">Exam</t>
                 </li>
-                <li t-if="page_name == 'exam_merksheet_info' or exam_merksheet_info "
-                    t-attf-class="breadcrumb-item #{'active ' if not exam_merksheet_info else ''}">
-                    <a t-if="exam_id" t-attf-href="/student/exam/?{{ keep_query() }}">
-                        Exam
-                    </a>
-                    <t t-else="">Exam</t>
-                </li>
+
+                <!-- custom breadcrumb -->
+                <t t-if="page_name == 'exam_merksheet_info' or exam_merksheet_info">
+                    <li t-attf-class="breadcrumb-item">
+                        <span t-if="exam_id">
+                            <a t-attf-href="/student/exam/?{{ keep_query() }}">
+                                Exam
+                            </a>
+                        </span>
+                        <t t-else="">Exam</t>
+                    </li>
+                    <li class="breadcrumb-item active">Exam Detail</li>
+                </t>
+                <!-- end custom breadcrumb -->
+
             </t>
             <t t-if="user_id.sudo().is_parent">
                 <li t-if="page_name == 'Exam_List' or Exam_List"
@@ -34,11 +42,6 @@
                     <t t-else="">Exam</t>
                 </li>
             </t>
-            <li t-if="exam_id" class="breadcrumb-item active">
-                <t t-foreach="exam_id.result_line[0]" t-as="exam">
-                    <span t-field="exam.exam_id.session_id.name"/>
-                </t>
-            </li>
         </xpath>
     </template>
 

@@ -301,3 +301,25 @@ class AttendancePortal(CustomerPortal):
             return request.render(
                 "openeducat_attendance_enterprise.openeducat_attendance_portal",
                 values)
+
+
+    @http.route(['/student/attendance/data/<int:attendance_id>',
+                 '/student/attendance/data/<int:student_id>/<int:attendance_id>', ],
+                type='http', auth="user", website=True)
+    def portal_student_attendance_detail(self, student_id=None, attendance_id=None, ):
+
+        attendances = request.env["pm.semester.attendance"].sudo().search(
+            [('id', '=', attendance_id)])
+        subject_attendances = attendances.subject_attendance_ids
+
+        print('attendance_id: ', attendance_id)
+        for d in subject_attendances:
+            for c in d:
+                print('subject_attendance: ', c)
+        return request.render(
+            "pm_general.pm_student_portal_attendance_detail",
+            {'attendances': attendances,
+             'subject_attendances': subject_attendances,
+             'student': student_id,
+             'page_name': 'attendance_detail'})
+

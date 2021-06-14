@@ -98,15 +98,26 @@ class ExamPortal(CustomerPortal):
         values['exam_count'] = exam_count
         return values
 
-    def _parent_prepare_portal_layout_values(self, student_id=None):
+    def _prepare_portal_layout_values(self):
 
-        val = super(ExamPortal, self).\
-            _parent_prepare_portal_layout_values(student_id)
-
-        exam_count = request.env['op.marksheet.line'].sudo().search_count(
-            [('student_id', '=', student_id)])
-        val['exam_count'] = exam_count
-        return val
+        # values = super(ExamPortal, self)._prepare_portal_layout_values()
+        # user = request.env.user
+        # student_id = request.env["op.student"].sudo().search(
+        #     [('user_id', '=', user.id)])
+        # exam_count = request.env['op.marksheet.line'].sudo().search_count(
+        #     [('student_id', '=', student_id.id)])
+        # values['exam_count'] = exam_count
+        # return values
+        values = super(ExamPortal, self)._prepare_portal_layout_values()
+        user = request.env.user
+        student_id = request.env["op.student"].sudo().search(
+            [('user_id', '=', user.id)])
+        exam_count = request.env['op.exam.attendees'].sudo().search_count(
+            [('student_id', '=', student_id.id), ('exam_id.exam_type', '!=', 'final_exam')])
+        values['exam_count'] = exam_count
+        print('exam_count')
+        print(exam_count)
+        return values
 
     def get_search_domain_exam(self, search, attrib_values):
         domain = []
@@ -157,77 +168,60 @@ class ExamPortal(CustomerPortal):
         else:
             ppg = PPG
 
-        searchbar_sortings = {
-            'percentage': {'label': _('percentage(%)'),
-                           'order': 'percentage desc'},
-            'grade': {'label': _('Grade'), 'order': 'grade'},
-            'generated_date': {'label': _('Generated Date'),
-                               'order': 'generated_date desc'},
-            'status': {'label': _('Status'), 'order': 'status'},
-            'total_marks': {'label': _('Total Marks'),
-                            'order': 'total_marks desc'}
-        }
+        # searchbar_sortings = {
 
-        searchbar_filters = {
-            'all': {'label': _('All'), 'domain': []},
-            'pass': {'label': _('Pass'), 'domain': [('status', '=', 'pass')]},
-            'fail': {'label': _('Fail'), 'domain': [('status', '=', 'fail')]},
-        }
+        # }
 
-        if not filterby:
-            filterby = 'all'
-        domain = searchbar_filters[filterby]['domain']
+        # searchbar_filters = {
 
-        if not sortby:
-            sortby = 'generated_date'
-        order = searchbar_sortings[sortby]['order']
+        # }
+
+        # if not filterby:
+        #     filterby = ''
+        # domain = searchbar_filters[filterby]['domain']
+
+        # if not sortby:
+        #     sortby = 'created_date'
+        # order = searchbar_sortings[sortby]['order']
 
         attrib_list = request.httprequest.args.getlist('attrib')
         attrib_values = [map(int, v.split("-")) for v in attrib_list if v]
         attrib_set = set([v[1] for v in attrib_values])
 
-        searchbar_inputs = {
-            'total_marks': {'input': 'total_marks',
-                            'label': _('Search <span class="nolabel">'
-                                       '(in Total Marks)</span>')},
-            'percentage': {'input': 'Course',
-                           'label': _('Search in Percentage')},
-            'status': {'input': 'Status',
-                       'label': _('Search in Status')},
-            'all': {'input': 'all', 'label': _('Search in All')},
-        }
+        # searchbar_inputs = {
 
-        searchbar_groupby = {
-            'none': {'input': 'none', 'label': _('None')},
-            'status': {'input': 'status', 'label': _('Status')},
-        }
+        # }
 
-        domain += self.get_search_domain_exam(search, attrib_values)
+        # searchbar_groupby = {
 
-        if search:
-            post["search"] = search
-        if attrib_list:
-            post['attrib'] = attrib_list
+        # }
 
-        if search and search_in:
-            search_domain = []
-            if search_in in ('all', 'total_marks'):
-                search_domain = expression.OR(
-                    [search_domain, [('total_marks', 'ilike', search)]])
-            if search_in in ('all', 'percentage'):
-                search_domain = expression.OR(
-                    [search_domain, [('percentage', 'ilike', search)]])
-            if search_in in ('all', 'status'):
-                search_domain = expression.OR(
-                    [search_domain, [('status', 'ilike', search)]])
-            domain += search_domain
+        # domain += self.get_search_domain_exam(search, attrib_values)
+
+        # if search:
+        #     post["search"] = search
+        # if attrib_list:
+        #     post['attrib'] = attrib_list
+
+        # if search and search_in:
+        #     search_domain = []
+        #     if search_in in ('all', 'total_marks'):
+        #         search_domain = expression.OR(
+        #             [search_domain, [('total_marks', 'ilike', search)]])
+        #     if search_in in ('all', 'percentage'):
+        #         search_domain = expression.OR(
+        #             [search_domain, [('percentage', 'ilike', search)]])
+        #     if search_in in ('all', 'status'):
+        #         search_domain = expression.OR(
+        #             [search_domain, [('status', 'ilike', search)]])
+        #     domain += search_domain
 
         if student_id:
             keep = QueryURL('/student/exam/%s' % student_id,
                             search=search, amenity=attrib_list,
                             order=post.get('order'))
-            domain += [('student_id', '=', student_id)]
-            total = request.env['op.marksheet.line'].sudo().search_count(domain)
+            domain = [('student_id', '=', student_id), ('exam_id.exam_type', '!=', 'final_exam')]
+            total = request.env['op.exam.attendees'].sudo().search_count(domain)
             pager = portal_pager(
                 url="/student/exam/%s" % student_id,
                 url_args={'date_begin': date_begin, 'date_end': date_end,
@@ -242,8 +236,8 @@ class ExamPortal(CustomerPortal):
                             amenity=attrib_list, order=post.get('order'))
             student = request.env["op.student"].sudo().search(
                 [('user_id', '=', user.id)])
-            domain += [('student_id', '=', student.id)]
-            total = request.env['op.marksheet.line'].sudo().search_count(domain)
+            domain = [('student_id', '=', student.id), ('exam_id.exam_type', '!=', 'final_exam')]
+            total = request.env['op.exam.attendees'].sudo().search_count(domain)
 
             pager = portal_pager(
                 url="/student/exam/",
@@ -262,15 +256,16 @@ class ExamPortal(CustomerPortal):
             student_access = self.get_student(student_id=student_id)
             if student_access is False:
                 return request.render('website.404')
-            exam_id = request.env['op.marksheet.line'].sudo().search(
-                domain, order=order, limit=ppg, offset=pager['offset'])
+            domain = [('student_id', '=', student_id), ('exam_id.exam_type', '!=', 'final_exam')]
+            exam_id = request.env['op.exam.attendees'].sudo().search(
+                domain, limit=ppg, offset=pager['offset'])
         else:
-            exam_id = request.env['op.marksheet.line'].sudo().search(
-                domain, order=order, limit=ppg, offset=pager['offset'])
+            exam_id = request.env['op.exam.attendees'].sudo().search(
+                domain, limit=ppg, offset=pager['offset'])
 
         if groupby == 'None':
             grouped_tasks = [
-                request.env['op.marksheet.line'].sudo().concat(*g)
+                request.env['op.exam.attendees'].sudo().concat(*g)
                 for k, g in groupbyelem(exam_id, itemgetter('None'))]
         else:
             grouped_tasks = [exam_id]
@@ -284,18 +279,19 @@ class ExamPortal(CustomerPortal):
                 'ppg': ppg,
                 'stud_id': student_id,
                 'keep': keep,
-                'searchbar_filters': OrderedDict(sorted(searchbar_filters.items())),
+                # 'searchbar_filters': OrderedDict(sorted(searchbar_filters.items())),
                 'filterby': filterby,
                 'default_url': '/student/exam/%s' % student_id,
-                'searchbar_sortings': searchbar_sortings,
+                # 'searchbar_sortings': searchbar_sortings,
                 'sortby': sortby,
                 'attrib_values': attrib_values,
                 'attrib_set': attrib_set,
-                'searchbar_inputs': searchbar_inputs,
+                # 'searchbar_inputs': searchbar_inputs,
                 'search_in': search_in,
                 'grouped_tasks': grouped_tasks,
-                'searchbar_groupby': searchbar_groupby,
+                # 'searchbar_groupby': searchbar_groupby,
                 'groupby': groupby,
+
             })
             return request.render(
                 "openeducat_exam_enterprise.openeducat_exam_portal",
@@ -308,17 +304,17 @@ class ExamPortal(CustomerPortal):
                 'pager': pager,
                 'ppg': ppg,
                 'keep': keep,
-                'searchbar_filters': OrderedDict(sorted(searchbar_filters.items())),
+                # 'searchbar_filters': OrderedDict(sorted(searchbar_filters.items())),
                 'filterby': filterby,
                 'default_url': '/student/exam/',
-                'searchbar_sortings': searchbar_sortings,
+                # 'searchbar_sortings': searchbar_sortings,
                 'sortby': sortby,
                 'attrib_values': attrib_values,
                 'attrib_set': attrib_set,
-                'searchbar_inputs': searchbar_inputs,
+                # 'searchbar_inputs': searchbar_inputs,
                 'search_in': search_in,
                 'grouped_tasks': grouped_tasks,
-                'searchbar_groupby': searchbar_groupby,
+                # 'searchbar_groupby': searchbar_groupby,
                 'groupby': groupby,
             })
 
@@ -358,11 +354,8 @@ class ExamPortal(CustomerPortal):
                 type='http', auth="user", website=True)
     def portal_student_exam_form(self, student_id=None, exam_id=None, ):
 
-        exam_instance = request.env['op.marksheet.line'].sudo().search(
+        exam_instance = request.env['op.exam.attendees'].sudo().search(
             [('id', '=', exam_id)])
-        access_role = self.check_exam_access(exam_instance.id)
-        if access_role is False:
-            return Response("[Bad Request]", status=404)
 
         return request.render(
             "openeducat_exam_enterprise.openeducat_exam_portal_data",
