@@ -39,7 +39,6 @@ class PmApprovalType(models.Model):
             record.show_type = False
             record.show_po_state = False
             record.show_pr_state = False
-            record.show_resign_state = False
 
             if record.base_model.model == 'purchase.request':
                     record.show_pr_state = True

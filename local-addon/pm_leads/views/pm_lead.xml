@@ -139,21 +139,15 @@
 <!--                    <attribute name="required">1</attribute>-->
 <!--                </xpath>-->
 
-               <xpath expr="//field[@name='mobile']" position="attributes">
-                    <attribute name="required">1</attribute>
-                </xpath>
-             <xpath expr="//field[@name='mobile']" position="after">
-                 <field name="phone" widget="phone" string="Mobile 1" />
-                 <field name="facebook" />
+             <xpath expr="//group[@name='lead_info']" position="inside">
+                 <field name="mobile" required="1"/>
+                 <field name="facebook"/>
                  <label for="contact_name"/>
                 <div class="o_row">
                     <field name="contact_name"/>
                 </div>
             </xpath>
 
-<!--            <xpath expr="//group/group[3]/field[@name='phone']" position="attributes">-->
-<!--                <attribute name="invisible">1</attribute>-->
-<!--            </xpath>-->
 
         <!-- APPLICATION DOCUMENTS -->
         <xpath expr="//page[1]" position="replace">
