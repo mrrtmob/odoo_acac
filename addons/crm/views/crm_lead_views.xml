@@ -67,7 +67,7 @@
                                         <span class="oe_grey p-2"> at </span>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col" invisible="1">
                                     <div class="oe_edit_only d-flex align-items-center">
                                         <label for="probability"/>
                                         <button class="btn btn-link" name="action_set_automated_probability" type="object"
@@ -78,7 +78,7 @@
                                             <field class="mb0" name="automated_probability" force_save="1"/> %%
                                         </small>
                                     </div>
-                                    <div id="probability" invisible="1" class="o_row d-flex">
+                                    <div id="probability" class="o_row d-flex">
                                         <field name="is_automated_probability" invisible="1"/>
                                         <field name="probability" widget="float" class="oe_inline"/>
                                         <span class="oe_grey"> %%</span>
