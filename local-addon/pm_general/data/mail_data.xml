@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--- DISCIPLINARY !-->
+        <record id="disciplinary_1st_warning" model="mail.template">
+            <field name="name">Disciplinary 1st Warning Email</field>
+            <field name="subject">Disciplinary 1st Warning</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="openeducat_discipline.model_op_discipline"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            Disciplinary 1st Warning
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear ${object.student_id.name},
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                                We would like to draw your attention to the present situation of your behavior/appearance mark, which stands currently at ${object.student_discipline_id.discipline_point}  points.
+                                                                <br/>
+                                                                <br/>
+                                                                Attitude and adhering to established and agreed standards are a central and important part of any future leader.
+                                                                <br/>
+                                                                <br/>
+                                                                I would like to encourage you to take the necessary steps in adjusting your attitude and/or follow the Academy’s policies and standards of excellence  in order not to jeopardize your study at the Academy.
+                                                                <br/>
+                                                                <br/>
+                                                                A Student will be suspended from the semester should the behavior/appearance mark fall below the 5.5 points. The Semester will be invalidated and the tuition fee forfeited!
+                                                                <br/>
+                                                                <br/>
+                                                                Good luck in your continues studies and should you have any further questions, please do not hesitate to contact the Student Affair officer or Registrar.
+                                                                <br/>
+                                                                <br/>
+                                                                Sincerely Yours,
+                                                                <br/>
+                                                                Markus Kalberer
+                                                                Dean
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${object.company_id.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${object.company_id.phone}
+                                                        % if object.company_id.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${object.company_id.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.email}
+                                                        </a>
+                                                        % endif
+                                                        % if object.company_id.website
+                                                        |
+                                                        <a href="'%s' % ${object.company_id.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+        <record id="disciplinary_2nd_warning" model="mail.template">
+            <field name="name">Disciplinary2nd Warning Email</field>
+            <field name="subject">Disciplinary 2nd Warning</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="openeducat_discipline.model_op_discipline"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            Disciplinary 2nd Warning
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear ${object.student_id.name},
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                                Despite the reminder send to you on ${object.write_date.strftime('%d/%m/%Y')}, you have continued to lose valuable points from your behavior mark. Currently your mark stands at  ${object.student_discipline_id.discipline_point} points.
+                                                                <br/>
+                                                                <br/>
+                                                                I would like to ensure that you understand that should the behaviour/ appearance mark fall below 5.5 points you will leave us with no other option than to dismiss you from the current semester and your semester will be invalidated. 
+                                                                <br/>
+                                                                <br/>
+                                                                I urge you to make yourself familiar and adhere with our standard of excellence to ensure that your conduct on at the Academy does allow you to go through this Semester without the thread that you may have to leave the Academy. 
+                                                                <br/>
+                                                                <br/>
+                                                                A Student will be suspended from the semester should the behavior/appearance mark fall below the 5.5 points. The Semester will be invalidated and the tuition fee forfeited!
+                                                                <br/>
+                                                                <br/>
+                                                               
+                                                                Sincerely Yours,
+                                                                <br/>
+                                                                Markus Kalberer
+                                                                Dean
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${object.company_id.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${object.company_id.phone}
+                                                        % if object.company_id.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${object.company_id.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.email}
+                                                        </a>
+                                                        % endif
+                                                        % if object.company_id.website
+                                                        |
+                                                        <a href="'%s' % ${object.company_id.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+        <record id="disciplinary_dismiss" model="mail.template">
+            <field name="name">Disciplinary Dismiss Email</field>
+            <field name="subject">Disciplinary suspension from the current Semester</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="openeducat_discipline.model_op_discipline"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            Disciplinary Dismiss Email
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear ${object.student_id.name},
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                                Attitude, behavior and attendance are attributes which the hospitality industry is looking for.
+                                                                <br/>
+                                                                <br/>
+                                                                Despite of having received two previous warning letters you continued to lose disciplinary points and your disciplinary mark has now fallen below 5.5. According to the Academy’s “Standards of Excellence” you are here with suspended from the present semester.
+                                                                <br/>
+                                                                <br/>
+                                                                You have the right to appeal this decision and must do so, in writing, within 48 hours (2 working days) of the date of this letter.
+                                                                <br/>
+                                                                <br/>
+                                                                The letter should be addressed to the Dean, clearly stating why you feel that you should be allowed to remain at the Academy and detailing any mitigating circumstances that contributed towards excessive disciplinary points.
+                                                                <br/>
+                                                                <br/>
+                                                                Should we not receive an appeal letter within the time mentioned above, we will not be able to consider your particular circumstances. Consequently, in line with the Standard of Excellence you will be asked to leave the school and the semester will be marked as failed.    
+                                                                <br/>
+                                                                <br/>
+                                                                The academics office is open from 9.00 am until 5.00 pm Monday to Friday.
+                                                                <br/>
+                                                                <br/>
+                                                                Please be informed that you are not eligible for any refund of the tuition fee!
+                                                                <br/>
+                                                                <br/>     
+                                                                Sincerely Yours,
+                                                                <br/>
+                                                                Markus Kalberer
+                                                                Dean
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${object.company_id.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${object.company_id.phone}
+                                                        % if object.company_id.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${object.company_id.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.email}
+                                                        </a>
+                                                        % endif
+                                                        % if object.company_id.website
+                                                        |
+                                                        <a href="'%s' % ${object.company_id.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+        <!--- ATTENDANCE !-->
+        <record id="semester_absent_1st_warning" model="mail.template">
+            <field name="name">Semester Absent 1st warning Email</field>
+            <field name="subject">Absence Notification Letter</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="pm_general.model_pm_semester_attendance"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            Absence Notification Letter
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear ${object.student_id.name},
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                                Please refer to the absence rules listed below. Your absence record shows that you have exceeded 38 hrs. of absences and your present absences accumulate to NO class periods on the date this letter was issued.
+                                                                <br/>
+                                                                <br/>
+                                                                Should you miss more than 48 class periods during the semester you will be suspended and this semester will be invalidated.
+                                                                <br/>
+                                                                <br/>
+                                                                Let this letter be reminder to you and we urge you to make the necessary adjustments not to run into the situation of being dismissed from the Academy. If you have any problems in terms of health or other matters, which could continue to affect you in the future, please feel free to contact the Operation Manager or myself.
+                                                                <br/>
+                                                                <br/>
+                                                                Good luck in your studies and should you have any further questions, please do not hesitate to contact me.
+                                                                <br/>
+                                                                <br/>
+                                                                Sincerely Yours,
+                                                                <br/>
+                                                                Markus Kalberer
+                                                                Dean
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${object.company_id.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${object.company_id.phone}
+                                                        % if object.company_id.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${object.company_id.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.email}
+                                                        </a>
+                                                        % endif
+                                                        % if object.company_id.website
+                                                        |
+                                                        <a href="'%s' % ${object.company_id.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+        <record id="semester_absent_2nd_warning" model="mail.template">
+            <field name="name">Semester Absent 2nd warning Email</field>
+            <field name="subject">Absence Notification Letter</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="pm_general.model_pm_semester_attendance"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            Absence Notification Letter
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear ${object.student_id.name},
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                                Despite having received a warning letter previously you continued to miss class hours and have now exceeded 43 hours of absences. You are herewith issued with the second and final warning letter.
+                                                                <br/>
+                                                                <br/>
+                                                                Should you miss more than 48 class periods during the semester you will be suspended and this semester will be invalidated.
+                                                                <br/>
+                                                                <br/>
+                                                                We hope that you understand the seriousness of your present position and make the necessary adjustment in attending your scheduled classes not to run the risk of being expelled from the semester.
+                                                                <br/>
+                                                                <br/>
+                                                                Sincerely Yours,
+                                                                <br/>
+                                                                Markus Kalberer
+                                                                Dean
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${object.company_id.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${object.company_id.phone}
+                                                        % if object.company_id.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${object.company_id.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.email}
+                                                        </a>
+                                                        % endif
+                                                        % if object.company_id.website
+                                                        |
+                                                        <a href="'%s' % ${object.company_id.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+        <record id="semester_absent_dismiss" model="mail.template">
+            <field name="name">Semester Absent Dismiss Email</field>
+            <field name="subject">Absence Notification Letter</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="pm_general.model_pm_semester_attendance"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            Absence Notification Letter
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear ${object.student_id.name},
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                                Despite having received several warning letters previously you continued to miss class hours at and you have now exceeded the maximum of 48 hrs per semester allowed.
+                                                                <br/>
+                                                                <br/>
+                                                                Your absences stand at ${object.total_hours} hrs of absences at the date of the issues of this letter
+                                                                <br/>
+                                                                <br/>
+                                                                You have the right to appeal this decision and must do so, in writing, within 48 hours (2 working days) of the date of this letter.
+                                                                <br/>
+                                                                <br/>
+                                                                The letter should be addressed to the Dean, clearly stating why you feel that you should be allowed to remain at the Academy and detailing any mitigating circumstances that contributed towards excessive absences. Any absences caused by medical reasons need to be supported by doctor certification(s).
+                                                                </br>
+                                                                </br>
+                                                                Should the Academy not receive an appeal letter within the time mentioned above, we will not be able to consider your particular circumstances. Consequently, in line with the Standard of Excellence you will be asked to leave the school and the semester will be marked as failed.    
+                                                                </br>
+                                                                </br>
+                                                                The academics office is open from 9.00 am until 5.00 pm Monday to Friday.
+                                                                </br>
+                                                                </br>
+                                                                Please be informed that you are not eligible for any refund of the tuition fee!
+                                                                </br>
+                                                                </br>
+                                                                Sincerely Yours,
+                                                                <br/>
+                                                                Markus Kalberer
+                                                                Dean
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${object.company_id.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${object.company_id.phone}
+                                                        % if object.company_id.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${object.company_id.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.email}
+                                                        </a>
+                                                        % endif
+                                                        % if object.company_id.website
+                                                        |
+                                                        <a href="'%s' % ${object.company_id.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+    </data>
+</odoo>
