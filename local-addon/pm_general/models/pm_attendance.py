@@ -71,27 +71,32 @@ class PmSemesterAttendance(models.Model):
             first_warning = 38
             second_warning = 43
             dismissed = 48
+            ir_model_data = self.env['ir.model.data']
 
             if total >= first_warning and total < first_warning:
                 record.state = 'okay'
 
             if total >= first_warning:
-                template_id = 50
-                print('sending first warning....')
                 record.state = 'first_warning'
-                self.env['mail.template'].browse(template_id).send_mail(record.id, force_send=True)
-
+                try:
+                    template_id = ir_model_data.get_object_reference('pm_general', 'semester_absent_1st_warning')[1]
+                except ValueError:
+                    template_id = False
+                self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
             elif total >= second_warning and total < dismissed:
-                template_id = 51
-                print('sending second warning....')
                 record.state = 'second_warning'
-                self.env['mail.template'].browse(template_id).send_mail(record.id, force_send=True)
+                try:
+                    template_id = ir_model_data.get_object_reference('pm_general', 'semester_absent_2nd_warning')[1]
+                except ValueError:
+                    template_id = False
+                self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
             elif total >= dismissed:
-                template_id = 52
-                print('sending dismissed letter....')
-                record.state = 'dismissed'
                 record.student_id.education_status = 'dismissed'
-                self.env['mail.template'].browse(template_id).send_mail(record.id, force_send=True)
+                try:
+                    template_id = ir_model_data.get_object_reference('pm_general', 'semester_absent_dismiss')[1]
+                except ValueError:
+                    template_id = False
+                self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
 
 
 class PmSubjectTotalAbsence(models.Model):

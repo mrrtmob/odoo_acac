@@ -19,14 +19,15 @@
 
         <menuitem id="openeducat_fees.menu_fees_terms"
               name="Fee Terms"
-              groups="openeducat_core.group_op_back_office_admin"
+              groups="openeducat_core.group_op_back_office"
               parent="menu_pm_fee_management"/>
+
          <menuitem id="menu_pm_fee_product_sub"
               name="Course Fees"
               parent="menu_pm_fee_management"
               sequence="30"
               action="act_open_pm_fee_view"
-              groups="openeducat_core.group_op_back_office_admin"/>
+              groups="openeducat_core.group_op_back_office"/>
 
 
 

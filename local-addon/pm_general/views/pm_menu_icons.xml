@@ -15,7 +15,7 @@
 
     <!-- reminders -->
     <!-- hr_reminder,static/description/reminder_icon.png (old icon) -->
-    <menuitem name="Reminders" id="hr_reminder.hr_reminder_menu" web_icon="pm_general,static/description/general_light_yellow/Reminder.png" sequence="30"/>
+<!--    <menuitem name="Reminders" id="hr_reminder.hr_reminder_menu" web_icon="pm_general,static/description/general_light_yellow/Reminder.png" sequence="30"/>-->
 
     <!-- calendar -->
     <!-- calendar,static/description/icon.png (old icon) -->

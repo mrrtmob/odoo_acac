@@ -40,7 +40,7 @@ class PmLeave(models.Model):
 
 
         for holiday in self:
-            val_type = holiday.holiday_status_id.validation_type
+            val_type = holiday.holiday_status_id.leave_validation_type
             responsible = holiday.holiday_status_id.responsible_id
             print(state)
             print(responsible.name)

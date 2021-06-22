@@ -82,7 +82,7 @@
         <field name="category_id" ref="module_category_acac"/>
         <field name="users" eval="[(4, ref('base.group_user'))]"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user')),
-        (4, ref('openeducat_core.group_op_back_office'))]"/>
+        (4, ref('openeducat_core.group_op_back_office_admin'))]"/>
     </record>
 
     <record id="openeducat_admission.menu_op_admission_root" model="ir.ui.menu">

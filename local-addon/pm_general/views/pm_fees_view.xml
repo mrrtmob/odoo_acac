@@ -1,36 +1,36 @@
 <odoo>
     <data>
 
-<!--     <record id="view_fees_terms_form_inherit" model="ir.ui.view">-->
-<!--        <field name="name">op.fees.terms.form.custom</field>-->
-<!--            <field name="model">op.fees.terms</field>-->
-<!--            <field name="inherit_id" ref="openeducat_fees.view_fees_terms_form"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--            <xpath expr="//field[@name='line_ids']" position="replace">-->
-<!--                <field name="line_ids">-->
-<!--                    <tree>-->
-<!--                        <field name="due_days" required="1"/>-->
-<!--                        <field name="total" readonly="1"/>-->
-<!--                        <field name="fees_element_line">-->
-<!--                            <field name="product_id"/>-->
-<!--                            <field name="total"/>-->
-<!--                        </field>-->
-<!--                    </tree>-->
-<!--                    <form string="Fees Term Line">-->
-<!--                        <group colspan="4">-->
-<!--                            <field name="due_days" required="1"/>-->
-<!--                            <field name="fees_element_line">-->
-<!--                                <tree string="Information" editable="top">-->
-<!--                                    <field name="product_id"/>-->
-<!--                                    <field name="price"/>-->
-<!--                                </tree>-->
-<!--                            </field>-->
-<!--                        </group>-->
-<!--                    </form>-->
-<!--                </field>-->
-<!--            </xpath>-->
-<!--        </field>-->
-<!--    </record>-->
+     <record id="view_fees_terms_form_inherit" model="ir.ui.view">
+        <field name="name">op.fees.terms.form.custom</field>
+            <field name="model">op.fees.terms</field>
+            <field name="inherit_id" ref="openeducat_fees.view_fees_terms_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']" position="replace">
+                <field name="line_ids">
+                    <tree>
+                        <field name="due_days" required="1"/>
+                        <field name="total" readonly="1"/>
+                        <field name="fees_element_line">
+                            <field name="product_id"/>
+                            <field name="total"/>
+                        </field>
+                    </tree>
+                    <form string="Fees Term Line">
+                        <group colspan="4">
+                            <field name="due_days" required="1"/>
+                            <field name="fees_element_line">
+                                <tree string="Information" editable="top">
+                                    <field name="product_id"/>
+                                    <field name="price"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </form>
+                </field>
+            </xpath>
+        </field>
+    </record>
 
     <record id="view_pm_product_fee_tree" model="ir.ui.view">
         <field name="name">pm.product.fee.tree</field>
