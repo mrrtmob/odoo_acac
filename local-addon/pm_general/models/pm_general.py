@@ -317,6 +317,10 @@ class OpBatch(models.Model):
 
 class OpFeesTermsLine(models.Model):
     _inherit = "op.fees.terms.line"
+    product_id = fields.Many2one('product.product',
+                                 'Product(s)',
+                                 domain=[('type', '=', 'service')],
+                                 required=True)
     total = fields.Float("Total", compute="_compute_fee_line_total")
 
     @api.depends('fees_element_line')
