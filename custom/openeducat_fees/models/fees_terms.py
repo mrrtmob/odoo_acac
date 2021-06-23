@@ -58,15 +58,15 @@ class OpFeesTerms(models.Model):
     @api.model
     def create(self, vals):
         res = super(OpFeesTerms, self).create(vals)
-        if not res.line_ids:
+        if not res.name:
             raise exceptions.AccessError(_("Fees Terms must be Required!"))
         total = 0.0
         for line in res.line_ids:
             if line.value:
                 total += line.value
-        if total != 100.0:
-            raise exceptions.AccessError(
-                _("Fees terms must be divided as such sum up in 100%"))
+        # if total != 100.0:
+        #     raise exceptions.AccessError(
+        #         _("Fees terms must be divided as such sum up in 100%"))
         return res
 
 
