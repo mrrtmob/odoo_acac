@@ -74,7 +74,7 @@ class TakeAction(models.TransientModel):
         df_product_1 = self.env.ref('openeducat_discipline.df_product_1')
         invoice = accounts.create({
             'partner_id': discipline.student_id.partner_id.id,
-            'move_type': 'out_invoice',
+            'type': 'out_invoice',
             'invoice_date': fields.date.today(),
 
         })
@@ -87,5 +87,7 @@ class TakeAction(models.TransientModel):
                        'product_id': df_product_1.id, }
         invoice.write({'invoice_line_ids': [(0, 0, line_values)]})
         invoice._compute_invoice_taxes_by_group()
+        self.state = 'invoice'
+        self.invoice_id = invoice.id
         discipline.state = 'done'
         return True

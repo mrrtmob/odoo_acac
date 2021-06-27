@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="portal_my_home_menu_apology" name="Portal layout : Student apology form"
+
+    <template id="portal_my_home_menu_apology_form_form" name="Portal layout : Student apology form"
               inherit_id="openeducat_core_enterprise.portal_breadcrumbs_inhetrite" priority="10">
         <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
-             <li t-if="page_name == 'appology_form' or appology_form  "
-                 t-attf-class="breadcrumb-item  #{'active ' if not appology_form else ''}">
+
+             <li t-if="page_name == 'appology_form' or appology_form "
+                 t-attf-class="breadcrumb-item #{'active ' if not appology_form else ''}">
                 <a t-if="discipline_ids" t-attf-href="/student/profile/?{{ keep_query() }}">
                     Student Profile
                 </a>
@@ -13,6 +15,17 @@
             <li t-if="discipline_ids" class="breadcrumb-item active">
                 Student Apology Form
             </li>
+            <li t-if="page_name == 'discipline_detail' or discipline_detail "
+                 t-attf-class="breadcrumb-item #{'active ' if not appology_form else ''}">
+                <a t-if="student_discipline" t-attf-href="/student/profile/?{{ keep_query() }}">
+                    Student Profile
+                </a>
+                <t t-else="">Student Profile</t>
+            </li>
+            <li class="breadcrumb-item active" t-if="student_discipline">
+                Discipline Detail
+            </li>
+
         </xpath>
     </template>
 

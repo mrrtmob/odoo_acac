@@ -6,7 +6,7 @@
             <field name="model">op.batch</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <tree string="Batch">
+                <tree string="Term">
                     <field name="name"/>
                     <field name="code"/>
                     <field name="start_date"/>
@@ -21,7 +21,7 @@
             <field name="model">op.batch</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <form string="Batch">
+                <form string="Term">
                     <sheet>
                         <field name="active" invisible="1"/>
                         <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
@@ -47,7 +47,7 @@
             <field name="model">op.batch</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <search string="Batch">
+                <search string="Terms">
                     <field name="code"/>
                     <field name="name"/>
                     <field name="start_date"/>
@@ -74,7 +74,7 @@
             <field name="model">op.batch</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <pivot string="Batch">
+                <pivot string="Terms">
                     <field name="name" type="row"/>
                     <field name="course_id"/>
                     <field name="start_date"/>
@@ -85,7 +85,7 @@
 
 
         <record model="ir.actions.act_window" id="act_open_op_batch_view">
-            <field name="name">Batches</field>
+            <field name="name">Terms</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">op.batch</field>
             <field name="binding_view_types">form</field>

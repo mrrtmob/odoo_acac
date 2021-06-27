@@ -55,7 +55,7 @@
                             <field name="total_marks"/>
                             <field name="min_marks"/>
                         </group>
-                        <group string="Attendees">
+                         <group string="Class Exams">
                             <field name="attendees_line" colspan="4" nolabel="1"/>
                         </group>
                         <separator colspan="4" string="Description"/>

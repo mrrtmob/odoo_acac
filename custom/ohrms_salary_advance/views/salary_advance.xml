@@ -8,12 +8,14 @@
             <field name="arch" type="xml">
                 <form string="Salary Advance">
                     <header>
+                        <field name="is_hr_user" invisible="1"/>
+                        <field name="is_assignee" invisible="1"/>
                         <button name="submit_to_manager" string="Submit" type="object" states="draft" class="oe_highlight"/>
-                        <button name="approve_request" string="Approve" type="object" states="submit" class="oe_highlight" groups="hr.group_hr_manager,hr.group_hr_user"/>
-                        <button name="approve_request_acc_dept" string="Approve" type="object" states="waiting_approval" class="oe_highlight" groups="account.group_account_manager,account.group_account_user"/>
-                        <button name="cancel" string="Cancel" type="object" states="draft,submit"/>
-                        <button name="reject" string="Reject" type="object" states="waiting_approval"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,waiting_approval,approve,cancel,reject"/>
+                        <button name="approve_request" string="Approve" type="object" class="oe_highlight"  attrs="{'invisible': ['|',('is_assignee','=',False),('state','!=','submit')]}"/>
+                        <button name="approve_request_acc_dept" string="Approve" type="object"  attrs="{'invisible': ['|',('is_assignee','=',False),('state','!=','first_approved')]}" class="oe_highlight" />
+                        <button name="cancel" string="Cancel" type="object" attrs="{'invisible': ['|',('is_assignee','=',False),('state','in',['draft','submit'])]}" />
+                        <button name="reject" string="Reject" type="object" attrs="{'invisible': ['|',('is_assignee','=',False),('state','!=','first_approved')]}" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,first_approved,approve,cancel,reject"/>
                     </header>
                 	<sheet>
                         <div class="oe_title oe_left">
@@ -23,8 +25,8 @@
                         </div>
                 		<group>
 	                		<group>
-	                        	<field name="employee_id" attrs="{'readonly':[('state','in',['approve','cancel','reject'])]}"/>
-                                <field name="department" attrs="{'readonly':[('state','in',['approve','cancel','reject'])]}"/>
+	                        	<field name="employee_id" attrs="{'readonly':['|', ('state','in',['approve','cancel','reject']), ('is_hr_user', '=', False)]}"/>
+                                <field name="department" readonly="1" force_save="1"/>
                                 <field name="date" attrs="{'readonly':[('state','in',['approve','cancel','reject'])]}"/>
 	                        	<field name="reason" attrs="{'readonly':[('state','in',['approve','cancel','reject'])]}"/>
                                 <field name="exceed_condition" attrs="{'readonly':[('state','in',['approve','cancel','reject'])]}" groups="hr.group_hr_manager,hr.group_hr_user"/>
@@ -37,9 +39,14 @@
                                 <field name="debit" attrs="{'invisible':[('state', '=', 'draft'), ('state', '=', 'submit')], 'readonly':[('state','in',['approve','cancel','reject'])]}" groups="account.group_account_manager"/>
                                 <field name="journal" attrs="{'invisible': [('state', '=', 'draft'), ('state', '=', 'submit')], 'readonly':[('state','in',['approve','cancel','reject'])]}" groups="account.group_account_manager"/>
                                 <field name="employee_contract_id"  attrs="{'invisible': ['|', ('state', '=', 'draft'), ('state', '=', 'approve')], 'readonly':[('state','in',['approve','cancel','reject'])]}" groups="hr.group_hr_manager,hr.group_hr_user"/>
-	                    	</group>
+	                    	    <field name="assigned_to" readonly="1" />
+                            </group>
                     	</group>
 		            </sheet>
+                     <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -67,8 +74,8 @@
                     <field name="state"/>
                     <filter string="My Requests" domain="[('employee_id.user_id.id','=',uid)]" name="my_requests_filter"/>
                      <filter domain="[('state', '=', 'draft')]" string="To Submit" name="to_report" help="New Requests"/>
-                    <filter domain="[('state','in',('submit','waiting_approval'))]" string="To Approve" name="submitted" help="Submitted Requests"/>
-                    <filter domain="[('state', '=', 'approve')]" string="Approved" name="approved" help="Approved Requests"/>
+                    <filter domain="[('state','in',('submit','first_approved'))]" string="To Approve" name="submitted" help="Submitted Requests"/>
+                    <filter domain="[('state', '=', 'approve')]" string="Approved" name="approve" help="Approved Requests"/>
                     <separator/>
                         <filter string="Employee" name="employee_id" domain="[]" context="{'group_by':'employee_id'}"/>
                         <filter name="State" string="State" domain="[]" context="{'group_by':'state'}"/>
@@ -84,7 +91,6 @@
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="view_salary_advance_filter"/>
             <field name="context">{'search_default_my_requests_filter':1}</field>
-            <field name="domain">[('employee_id.user_id', '=', uid)]</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Create Requests.
@@ -99,7 +105,6 @@
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="view_salary_advance_filter"/>
             <field name="context">{'search_default_approved':1}</field>
-            <field name="domain">[('employee_id.user_id', '=', uid)]</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Create Requests.
@@ -125,7 +130,7 @@
         <record id="ir_seq_hr_advance" model="ir.sequence">
 			<field name="name">Salary Advance Request</field>
 			<field name="code">salary.advance.seq</field>
-			<field name="prefix">SAR</field>
+			<field name="prefix">SAR </field>
 			<field name="padding">4</field>
 			<field name="number_increment">1</field>
 			<field name="number_next_actual">1</field>

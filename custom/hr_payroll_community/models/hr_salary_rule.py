@@ -31,19 +31,16 @@ class HrPayrollStructure(models.Model):
 
     @api.constrains('parent_id')
     def _check_parent_id(self):
-
         if not self._check_recursion():
             raise ValidationError(_('You cannot create a recursive salary structure.'))
 
     @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
-
         self.ensure_one()
         default = dict(default or {}, code=_("%s (copy)") % (self.code))
         return super(HrPayrollStructure, self).copy(default)
 
     def get_all_rules(self):
-
         """
         @return: returns a list of tuple (id, sequence) of rules that are maybe to apply
         """
@@ -53,7 +50,6 @@ class HrPayrollStructure(models.Model):
         return all_rules
 
     def _get_parent_structure(self):
-
         parent = self.mapped('parent_id')
         if parent:
             parent = parent._get_parent_structure()
@@ -88,7 +84,6 @@ class HrSalaryRuleCategory(models.Model):
 
     @api.constrains('parent_id')
     def _check_parent_id(self):
-
         if not self._check_recursion():
             raise ValidationError(_('Error! You cannot create recursive hierarchy of Salary Rule Category.'))
 
@@ -115,6 +110,7 @@ class HrSalaryRule(models.Model):
     appears_on_payslip = fields.Boolean(string='Appears on Payslip', default=True,
         help="Used to display the salary rule on payslip.")
     parent_rule_id = fields.Many2one('hr.salary.rule', string='Parent Salary Rule', index=True)
+    in_input_list = fields.Boolean('Available in Input List')
     company_id = fields.Many2one('res.company', string='Company',
         default=lambda self: self.env['res.company']._company_default_get())
     condition_select = fields.Selection([
@@ -190,7 +186,6 @@ class HrSalaryRule(models.Model):
 
     #TODO should add some checks on the type of result (should be float)
     def _compute_rule(self, localdict):
-
         """
         :param localdict: dictionary containing the environement in which to compute the rule
         :return: returns a tuple build as the base/amount computed, the quantity and the rate
@@ -217,7 +212,6 @@ class HrSalaryRule(models.Model):
                 raise UserError(_('Wrong python code defined for salary rule %s (%s).') % (self.name, self.code))
 
     def _satisfy_condition(self, localdict):
-
         """
         @param contract_id: id of hr.contract to be tested
         @return: returns True if the given rule match the condition for the given contract. Return False otherwise.

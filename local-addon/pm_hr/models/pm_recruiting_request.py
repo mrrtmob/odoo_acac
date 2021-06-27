@@ -77,8 +77,7 @@ class PmRecruitingRequest(models.Model):
 
 
 
-    @api.model
-    @api.depends('recruitment_type')
+    @api.onchange('recruitment_type')
     def _compute_show_form(self):
         self.show_recruitment_form = False
         self.show_promotion_form = False

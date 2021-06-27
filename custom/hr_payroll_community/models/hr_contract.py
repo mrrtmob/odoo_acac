@@ -31,7 +31,6 @@ class HrContract(models.Model):
     other_allowance = fields.Monetary(string="Other Allowance", help="Other allowances")
 
     def get_all_structures(self):
-
         """
         @return: the structures linked to the given contracts, ordered by hierachy (parent=False first,
                  then first level children and so on) and without duplicata
@@ -43,18 +42,14 @@ class HrContract(models.Model):
         return list(set(structures._get_parent_structure().ids))
 
     def get_attribute(self, code, attribute):
-
         return self.env['hr.contract.advantage.template'].search([('code', '=', code)], limit=1)[attribute]
 
     def set_attribute_value(self, code, active):
         for contract in self:
-
             if active:
-
                 value = self.env['hr.contract.advantage.template'].search([('code', '=', code)], limit=1).default_value
                 contract[code] = value
             else:
-
                 contract[code] = 0.0
 
 

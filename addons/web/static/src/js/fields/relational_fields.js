@@ -602,9 +602,10 @@ var FieldMany2One = AbstractField.extend({
         });
 
         // Add "Search more..." option if results count is higher than the limit
-        if (this.limit < values.length) {
-            values = this._manageSearchMore(values, value, domain, context);
-        }
+//        if (this.limit < values.length) {
+//            values = this._manageSearchMore(values, value, domain, context);
+//        }
+        values = this._manageSearchMore(values, value, domain, context);
         if (!this.can_create) {
             return values;
         }

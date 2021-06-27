@@ -3,7 +3,7 @@
 #    A part of OpenHRMS Project <https://www.openhrms.com>
 #
 #    Cybrosys Technologies Pvt. Ltd.
-#    Copyright (C) 2020-TODAY Cybrosys Technologies (<https://www.cybrosys.com>).
+#    Copyright (C) 2018-TODAY Cybrosys Technologies (<https://www.cybrosys.com>).
 #    Author: Jesni Banu (<https://www.cybrosys.com>)
 #
 #    This program is free software: you can modify
@@ -22,19 +22,20 @@
 ###################################################################################
 {
     'name': 'Open HRMS Official Announcements',
-    'version': '14.0.1.0.0',
+    'version': '13.0.2.0.2',
     'summary': """Managing Official Announcements""",
     'description': 'This module helps you to manage hr official announcements',
-    'live_test_url': 'https://www.youtube.com/watch?v=4gy3Jqn46SQ&feature=youtu.be',
     'category': 'Generic Modules/Human Resources',
-    'author': 'Cybrosys Techno solutions,Open HRMS',
+    'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'website': "https://www.openhrms.com",
-    'depends': ['base', 'hr','mail'],
+    'depends': ['base', 'hr', 'mail'],
     'data': [
         'security/ir.model.access.csv',
         'security/reward_security.xml',
         'views/hr_announcement_view.xml',
+        'views/hr_student_announcement_view.xml',
+        'data/hr_student_announcement_sequence.xml'
     ],
     'demo': ['data/demo_data.xml'],
     'images': ['static/description/banner.png'],

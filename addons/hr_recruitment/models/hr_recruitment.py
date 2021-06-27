@@ -8,10 +8,11 @@ from odoo.tools.translate import _
 from odoo.exceptions import UserError
 
 AVAILABLE_PRIORITIES = [
-    ('0', 'Normal'),
-    ('1', 'Good'),
-    ('2', 'Very Good'),
-    ('3', 'Excellent')
+    ('0', 'bad'),
+    ('1', 'Normal'),
+    ('2', 'Good'),
+    ('3', 'Very Good'),
+    ('4', 'Excellent')
 ]
 
 

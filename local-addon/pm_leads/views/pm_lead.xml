@@ -25,13 +25,18 @@
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
 
-        <button name="%(crm.action_crm_lead2opportunity_partner)d" position="replace">
+        <button name="%(crm.action_crm_lead2opportunity_partner)d" position="attributes">
+            <attribute name="invisible">1</attribute>
         </button>
 
            <button name="%(crm.crm_lead_lost_action)d" position="replace">
                  <button name="%(crm.crm_lead_lost_action)d" string="Mark Lost"
                                 type="action" context="{'default_lead_id': active_id}" attrs="{'invisible': [('active', '=', False)]}"/>
             </button>
+
+            <xpath expr="//header/button[@name='action_set_lost']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
 
         <xpath expr="//field[@name='stage_id']" position="after">
              <button groups="pm_leads.group_acac_marketing" class="oe_highlight" name="convert_to_admission" attrs="{'invisible': [('type', '=', 'admission')]}" string="Convert to Admission" type="object"/>
@@ -139,21 +144,15 @@
 <!--                    <attribute name="required">1</attribute>-->
 <!--                </xpath>-->
 
-               <xpath expr="//field[@name='mobile']" position="attributes">
-                    <attribute name="required">1</attribute>
-                </xpath>
-             <xpath expr="//field[@name='mobile']" position="after">
-                 <field name="phone" widget="phone" string="Mobile 1" />
-                 <field name="facebook" />
+             <xpath expr="//group[@name='lead_info']" position="inside">
+                 <field name="mobile" required="1"/>
+                 <field name="facebook"/>
                  <label for="contact_name"/>
                 <div class="o_row">
                     <field name="contact_name"/>
                 </div>
             </xpath>
 
-<!--            <xpath expr="//group/group[3]/field[@name='phone']" position="attributes">-->
-<!--                <attribute name="invisible">1</attribute>-->
-<!--            </xpath>-->
 
         <!-- APPLICATION DOCUMENTS -->
         <xpath expr="//page[1]" position="replace">

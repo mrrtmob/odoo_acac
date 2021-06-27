@@ -3,7 +3,7 @@
 #    A part of Open HRMS Project <https://www.openhrms.com>
 #
 #    Cybrosys Technologies Pvt. Ltd.
-#    Copyright (C) 2020-TODAY Cybrosys Technologies (<https://www.cybrosys.com>).
+#    Copyright (C) 2018-TODAY Cybrosys Technologies (<https://www.cybrosys.com>).
 #    Author: Niyas Raphy(<https://www.cybrosys.com>)
 #
 #    This program is free software: you can modify
@@ -22,13 +22,12 @@
 ###################################################################################
 {
     'name': 'Open HRMS Resignation',
-    'version': '14.0.1.0.0',
+    'version': '13.0.2.0.0',
     'summary': 'Handle the resignation process of the employee',
-    'live_test_url': 'https://www.youtube.com/watch?v=VuFWGXAdriU&feature=youtu.be',
-    'author': 'Cybrosys Techno solutions,Open HRMS',
+    'author': 'Cybrosys Techno solutions',
     'company': 'Cybrosys Techno Solutions',
     'website': 'https://www.openhrms.com',
-    'depends': ['hr', 'hr_employee_updation', 'mail'],
+    'depends': ['hr', 'hr_employee_updation', 'mail', 'pm_approval'],
     'category': 'Generic Modules/Human Resources',
     'maintainer': 'Cybrosys Techno Solutions',
     'demo': ['data/demo_data.xml'],

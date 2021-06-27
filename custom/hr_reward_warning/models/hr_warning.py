@@ -31,28 +31,40 @@ class HrAnnouncementTable(models.Model):
     _description = 'HR Announcement'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    batch_id = fields.Many2one('op.batch', 'Term')
+    class_id = fields.Many2one('op.classroom', 'Class')
     name = fields.Char(string='Code No:', help="Sequence Number of the Announcement")
     announcement_reason = fields.Text(string='Title', states={'draft': [('readonly', False)]}, required=True,
                                       readonly=True, help="Announcement Subject")
     state = fields.Selection([('draft', 'Draft'), ('to_approve', 'Waiting For Approval'),
-                              ('approved', 'Approved'), ('rejected', 'Refused'), ('expired', 'Expired')],
-                             string='Status',  default='draft',
+                              ('approved', 'Approved'), ('rejected', 'Refused'), ('expired', 'Expired'), ('confirmed', 'Confirmed')],
+                             string='State',  default='draft',
                              track_visibility='always')
+    status = fields.Selection([('Emergency', 'Emergency'), ('Normal', 'Normal')])
     requested_date = fields.Date(string='Requested Date', default=datetime.now().strftime('%Y-%m-%d'),
                                  help="Create Date of Record")
     attachment_id = fields.Many2many('ir.attachment', 'doc_warning_rel', 'doc_id', 'attach_id4',
                                      string="Attachment", help='You can attach the copy of your Letter')
     company_id = fields.Many2one('res.company', string='Company',
-                                 default=lambda self: self.env.user.company_id, readonly=True, help="Login user Company")
-    is_announcement = fields.Boolean(string='Is general Announcement?', help="To set Announcement as general announcement")
-    announcement_type = fields.Selection([('employee', 'By Employee'), ('department', 'By Department'), ('job_position', 'By Job Position')])
+                                 default=lambda self: self.env.user.company_id, readonly=True,
+                                 help="Login user Company")
+    is_announcement = fields.Boolean(string='Is general Announcement?', default=False,
+                                     help="To set Announcement as general announcement")
+
+    is_stu_announcement = fields.Boolean(string='Is student Announcement?', default=False,
+                                         help="To set Announcement as student announcement", required=True)
+    is_all_stu_announcement = fields.Boolean(string='Is all student Announcement?', default=False,
+                                             help="To set Announcement as all student announcement", required=True)
+    announcement_type = fields.Selection([('employee', 'By Employee'), ('department', 'By Department'),
+                                          ('job_position', 'By Job Position')])
     employee_ids = fields.Many2many('hr.employee', 'hr_employee_announcements', 'announcement', 'employee',
                                     string='Employees', help="Employee's which want to see this announcement")
     department_ids = fields.Many2many('hr.department', 'hr_department_announcements', 'announcement', 'department',
                                       string='Departments', help="Department's which want to see this announcement")
     position_ids = fields.Many2many('hr.job', 'hr_job_position_announcements', 'announcement', 'job_position',
-                                    string='Job Positions',help="Job Position's which want to see this announcement")
-    announcement = fields.Html(string='Letter', states={'draft': [('readonly', False)]}, readonly=True, help="Announcement Content")
+                                    string='Job Positions', help="Job Position's which want to see this announcement")
+    announcement = fields.Html(string='Letter', states={'draft': [('readonly', False)]}, readonly=True,
+                               help="Announcement Content")
     date_start = fields.Date(string='Start Date', default=fields.Date.today(), required=True, help="Start date of "
                                                                                                    "announcement want"
                                                                                                    " to see")
@@ -66,6 +78,9 @@ class HrAnnouncementTable(models.Model):
     def approve(self):
         self.state = 'approved'
 
+    def confirm(self):
+        self.state = 'confirmed'
+
     def sent(self):
         self.state = 'to_approve'
 
@@ -76,11 +91,62 @@ class HrAnnouncementTable(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('is_announcement'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('hr.announcement.general')
+
+        print(vals.get('is_stu_announcement', 'is_announcement'), )
+        if vals.get('is_stu_announcement'):
+
+            batch_id = vals.get('batch_id')
+            class_id = vals.get('class_id')
+            domain = []
+            if batch_id:
+                domain.append(('course_detail_ids.batch_id', '=', batch_id))
+            if class_id:
+                domain.append(('course_detail_ids.class_id', '=', class_id))
+
+            print(domain)
+
+            all_student_search = self.env['op.student'].search(domain)
+
+            print(all_student_search)
+
+            if all_student_search:
+                for student in all_student_search:
+                    notification_obj = self.env['pm.menu.notification']
+                    record = notification_obj.search([
+                        ('menu_name', '=', 'announcement'),
+                        ('student_id', '=', student.id),
+                    ])
+                    if not record:
+                        print('New')
+                        data = {
+                            'student_id': student.id,
+                            'menu_name': 'announcement',
+                            'record_count': 1,
+                            'is_seen': False,
+                        }
+                        notification_obj.create(data)
+                    else:
+                        print('Update')
+                        count = record.record_count + 1
+                        record.write({'record_count': count, 'is_seen': False})
+
+
+
+            if vals.get('is_all_stu_announcement'):
+                vals['name'] = self.env['ir.sequence'].next_by_code('hr.all.stu.announcement')
+            else:
+                vals['name'] = self.env['ir.sequence'].next_by_code('hr.stu.announcement')
         else:
-            vals['name'] = self.env['ir.sequence'].next_by_code('hr.announcement')
+            if vals.get('is_announcement'):
+                vals['name'] = self.env['ir.sequence'].next_by_code('hr.announcement.general')
+            else:
+                vals['name'] = self.env['ir.sequence'].next_by_code('hr.announcement')
         return super(HrAnnouncementTable, self).create(vals)
+
+    @api.onchange('is_all_stu_announcement')
+    def is_all_stu_announcement_onchange(self):
+        self.batch_id = ''
+        self.class_id = ''
 
     def get_expiry_state(self):
         """

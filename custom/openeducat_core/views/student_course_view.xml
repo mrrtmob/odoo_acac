@@ -57,7 +57,7 @@
                     <group expand="0" string="Group By...">
                         <filter string="Course" name="group_by_adm_course_id"
                                 domain="[]" context="{'group_by':'course_id'}"/>
-                        <filter string="Batch" name="group_by_adm_batch_id"
+                        <filter string="Terms" name="group_by_adm_batch_id"
                                 domain="[]" context="{'group_by':'batch_id'}"/>
                         <filter string="Academic Year" name="group_by_adm_academic_years_id"
                                 domain="[]" context="{'group_by':'academic_years_id'}"/>

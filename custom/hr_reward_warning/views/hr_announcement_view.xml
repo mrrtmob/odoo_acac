@@ -65,7 +65,7 @@
                                        attrs="{'invisible': ['|',('is_announcement', '!=', False), ('announcement_type', '!=', 'department')]}"/>
                                 <field name="position_ids" widget="many2many_tags"
                                        attrs="{'invisible': ['|',('is_announcement', '!=', False), ('announcement_type', '!=', 'job_position')]}"/>
-
+                                <field name="status"/>
                                 <field name="requested_date" readonly="1"/>
                                 <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
                             </group>
@@ -92,6 +92,7 @@
                 <tree>
                     <field name="name"/>
                     <field name="announcement_reason"/>
+                    <field name="status"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -120,6 +121,8 @@
             <field name="res_model">hr.announcement</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="view_hr_announcement_search"/>
+            <field name="domain">[('is_stu_announcement', '!=', 'True')]</field>
+            <field name="context" eval="{'default_is_stu_announcement': False}"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Click to Create a New Record.
@@ -146,7 +149,7 @@
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
                 <div class="oe_button_box" position="inside">
-                    <button class="oe_stat_button" name="announcement_view" type="object" icon="fa-bullhorn" attrs="{'invisible':[('announcement_count','=', 0)]}">
+                    <button class="oe_stat_button" name="announcement_view" type="object" icon="fa-bullhorn">
                         <field string="Announcements" name="announcement_count" widget="statinfo"/>
                     </button>
                 </div>

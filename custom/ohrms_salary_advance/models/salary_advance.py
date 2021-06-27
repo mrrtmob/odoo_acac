@@ -2,8 +2,18 @@
 import time
 from datetime import datetime
 from odoo import fields, models, api, _
+from odoo.exceptions import except_orm
 from odoo import exceptions
-from odoo.exceptions import UserError
+from odoo.http import request
+
+_STATE = [('draft', 'Draft'),
+            ('submit', 'Submitted'),
+            ("first_approved", "First Approval"),
+            ("second_approved", "Verified"),
+            ('approve', 'Approved'),
+            ('cancel', 'Cancelled'),
+            ('reject', 'Rejected')
+          ]
 
 
 class SalaryAdvancePayment(models.Model):
@@ -11,7 +21,7 @@ class SalaryAdvancePayment(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Name', readonly=True, default=lambda self: 'Adv/')
-    employee_id = fields.Many2one('hr.employee', string='Employee', required=True, help="Employee")
+    employee_id = fields.Many2one('hr.employee', string="Employee", default=lambda self: self.env.user.employee_id.id)
     date = fields.Date(string='Date', required=True, default=lambda self: fields.Date.today(), help="Submit date")
     reason = fields.Text(string='Reason', help="Reason")
     currency_id = fields.Many2one('res.currency', string='Currency', required=True,
@@ -20,27 +30,66 @@ class SalaryAdvancePayment(models.Model):
                                  default=lambda self: self.env.user.company_id)
     advance = fields.Float(string='Advance', required=True)
     payment_method = fields.Many2one('account.journal', string='Payment Method')
+    record_url = fields.Char('Link', compute='_compute_record_url', store=True)
     exceed_condition = fields.Boolean(string='Exceed than Maximum',
                                       help="The Advance is greater than the maximum percentage in salary structure")
-    department = fields.Many2one('hr.department', string='Department')
-    state = fields.Selection([('draft', 'Draft'),
-                              ('submit', 'Submitted'),
-                              ('waiting_approval', 'Waiting Approval'),
-                              ('approve', 'Approved'),
-                              ('cancel', 'Cancelled'),
-                              ('reject', 'Rejected')], string='Status', default='draft', track_visibility='onchange')
+    department = fields.Many2one('hr.department', string="Department", related='employee_id.department_id',
+                                    help='Department of the employee')
+    state = fields.Selection(_STATE, string='Status', default='draft', track_visibility='onchange')
     debit = fields.Many2one('account.account', string='Debit Account')
     credit = fields.Many2one('account.account', string='Credit Account')
     journal = fields.Many2one('account.journal', string='Journal')
     employee_contract_id = fields.Many2one('hr.contract', string='Contract')
+    is_hr_user = fields.Boolean('Approver', compute="compute_is_hr_user", readonly=True, default=False)
+
+    @api.depends('name')
+    def _compute_record_url(self):
+        for record in self:
+            base_url = request.env['ir.config_parameter'].get_param('web.base.url')
+            base_url += '/web#id=%d&view_type=form&model=salary.advance' % (record.id)
+            record.record_url = base_url
+
+    def compute_is_hr_user(self):
+        self.is_hr_user = False
+        res_user = self.env['res.users'].search([('id', '=', self._uid)])
+        if res_user.has_group('pm_hr.group_human_resource_manager'):
+            print('hr', True)
+            self.is_hr_user = True
+        else:
+            print('hr', False)
+
+    @api.model
+    def _get_default_requested_by(self):
+        return self.env["res.users"].browse(self.env.uid)
+
+    requested_by = fields.Many2one(
+        comodel_name="res.users",
+        string="Requested by",
+        required=False,
+        copy=False,
+        track_visibility="onchange",
+        default=_get_default_requested_by,
+        index=True,
+    )
+    assigned_to = fields.Many2one(
+        comodel_name="res.users",
+        string="Assigned to",
+        readonly=True,
+        track_visibility="onchange",
+        index=True,
+    )
+    is_assignee = fields.Boolean('Approver', compute="compute_is_approver", readonly=True, default=False)
+    approval_record_id = fields.Many2one('pm.approval')
 
     @api.onchange('employee_id')
     def onchange_employee_id(self):
         department_id = self.employee_id.department_id.id
-        domain = [('employee_id', '=', self.employee_id.id)]
-        return {'value': {'department': department_id}, 'domain': {
-            'employee_contract_id': domain,
-        }}
+        contract = self.env['hr.contract'].sudo().search([
+            ('employee_id', '=', self.employee_id.id),
+            ('state', '=', 'open')
+        ])
+        self.department = department_id
+        self.employee_contract_id = contract.id
 
     @api.onchange('company_id')
     def onchange_company_id(self):
@@ -54,8 +103,26 @@ class SalaryAdvancePayment(models.Model):
         }
         return result
 
+    def get_approver(self, state):
+        approval = self.approval_record_id
+        if approval:
+            approval.state = state
+            self.message_subscribe(partner_ids=[approval.approve.partner_id.id])
+            return approval.approve
+        else:
+            return True
+
     def submit_to_manager(self):
-        self.state = 'submit'
+        approval_type = self.env['pm.approval.type'].search([('base_model', '=', 'salary.advance')])
+        approval = self.env['pm.approval'].create({
+            'approval_type_id': approval_type.id,
+            'record_id': self.id,
+        })
+        self.write({
+            'state': 'submit',
+            'approval_record_id': approval.id,
+            'assigned_to': approval.approve
+        })
 
     def cancel(self):
         self.state = 'cancel'
@@ -69,35 +136,52 @@ class SalaryAdvancePayment(models.Model):
         res_id = super(SalaryAdvancePayment, self).create(vals)
         return res_id
 
+    @api.depends('assigned_to')
+    def compute_is_approver(self):
+        if self.env.user == self.assigned_to:
+            self.is_assignee = True
+        else:
+            self.is_assignee = False
+
+
+    def get_approver(self, state):
+        approval = self.approval_record_id
+        if approval:
+            approval.state = state
+            self.message_subscribe(partner_ids=[approval.approve.partner_id.id])
+            return approval.approve
+        else:
+            return True
+
     def approve_request(self):
         """This Approve the employee salary advance request.
                    """
         emp_obj = self.env['hr.employee']
         address = emp_obj.browse([self.employee_id.id]).address_home_id
         if not address.id:
-            raise UserError( 'Define home address for the employee. i.e address under private information of the employee.')
+            raise except_orm('Error!', 'Define home address for the employee. i.e address under private information of the employee.')
         salary_advance_search = self.search([('employee_id', '=', self.employee_id.id), ('id', '!=', self.id),
                                              ('state', '=', 'approve')])
         current_month = datetime.strptime(str(self.date), '%Y-%m-%d').date().month
         for each_advance in salary_advance_search:
             existing_month = datetime.strptime(str(each_advance.date), '%Y-%m-%d').date().month
             if current_month == existing_month:
-                raise UserError('Advance can be requested once in a month')
+                raise except_orm('Error!', 'Advance can be requested once in a month')
         if not self.employee_contract_id:
-            raise UserError('Define a contract for the employee')
+            raise except_orm('Error!', 'Define a contract for the employee')
         struct_id = self.employee_contract_id.struct_id
         adv = self.advance
         amt = self.employee_contract_id.wage
         if adv > amt and not self.exceed_condition:
-            raise UserError('Advance amount is greater than allotted')
+            raise except_orm('Error!', 'Advance amount is greater than allotted')
 
         if not self.advance:
-            raise UserError('You must Enter the Salary Advance amount')
+            raise except_orm('Warning', 'You must Enter the Salary Advance amount')
         payslip_obj = self.env['hr.payslip'].search([('employee_id', '=', self.employee_id.id),
                                                      ('state', '=', 'done'), ('date_from', '<=', self.date),
                                                      ('date_to', '>=', self.date)])
         if payslip_obj:
-            raise UserError("This month salary already calculated")
+            raise except_orm('Warning', "This month salary already calculated")
 
         for slip in self.env['hr.payslip'].search([('employee_id', '=', self.employee_id.id)]):
             slip_moth = datetime.strptime(str(slip.date_from), '%Y-%m-%d').date().month
@@ -107,7 +191,9 @@ class SalaryAdvancePayment(models.Model):
                 if current_day - slip_day < struct_id.advance_date:
                     raise exceptions.Warning(
                         _('Request can be done after "%s" Days From prevoius month salary') % struct_id.advance_date)
-        self.state = 'waiting_approval'
+
+        approver = self.get_approver('first_approved')
+        return self.write({'state': 'first_approved', 'assigned_to': approver})
 
     def approve_request_acc_dept(self):
         """This Approve the employee salary advance request from accounting department.
@@ -118,11 +204,11 @@ class SalaryAdvancePayment(models.Model):
         for each_advance in salary_advance_search:
             existing_month = datetime.strptime(str(each_advance.date), '%Y-%m-%d').date().month
             if current_month == existing_month:
-                raise UserError('Advance can be requested once in a month')
+                raise except_orm('Error!', 'Advance can be requested once in a month')
         if not self.debit or not self.credit or not self.journal:
-            raise UserError("You must enter Debit & Credit account and journal to approve ")
+            raise except_orm('Warning', "You must enter Debit & Credit account and journal to approve ")
         if not self.advance:
-            raise UserError('You must Enter the Salary Advance amount')
+            raise except_orm('Warning', 'You must Enter the Salary Advance amount')
 
         move_obj = self.env['account.move']
         timenow = time.strftime('%Y-%m-%d')
@@ -172,4 +258,5 @@ class SalaryAdvancePayment(models.Model):
             draft = move_obj.create(move)
             draft.post()
             self.state = 'approve'
+            self.approval_record_id.state = 'approved'
             return True

@@ -71,6 +71,7 @@
         'reports/payslipdetail.xml',
         'reports/payslip_header.xml',
 
-        'wizards/student_transcript_wizard_view.xml'
+        'wizards/student_transcript_wizard_view.xml',
+        'data/mail_data.xml'
     ]
 }

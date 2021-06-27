@@ -93,3 +93,23 @@ class DisciplinePortal(CustomerPortal):
                                               force_send=True,
                                               raise_exception=True)
         return request.redirect("/student/profile")
+
+    @http.route(['/student/discipline/data/<int:semester_id>',
+                 '/student/discipline/data/<int:student_id>/<int:semester_id>', ],
+                type='http', auth="user", website=True)
+    def portal_student_discipline_form(self, student_id=None, semester_id=None, ):
+
+        user = request.env.user
+        student_id = request.env["op.student"].sudo().search(
+            [('user_id', '=', user.id)])
+        student_discipline = request.env['pm.student.discipline'].sudo().search(
+            [('student_id', '=', student_id.id), ('semester_id', '=', semester_id)])
+
+        disciplines = request.env['op.discipline'].sudo().search([('student_discipline_id', '=', student_discipline.id)])
+
+        return request.render(
+            "pm_general.pm_student_portal_discipline_detail",
+            {'student_discipline': student_discipline,
+             'disciplines': disciplines,
+             'student': student_id,
+             'page_name': 'discipline_detail'})

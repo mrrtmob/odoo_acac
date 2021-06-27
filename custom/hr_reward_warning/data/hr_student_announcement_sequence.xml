@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="student_announcement_seq" model="ir.sequence">
+        <field name="name">Student Announcement</field>
+        <field name="code">hr.stu.announcement</field>
+        <field name="prefix">SA</field>
+        <field eval="4" name="padding" />
+    </record>
+    <record id="general_student_announcement_seq" model="ir.sequence">
+        <field name="name">Student Announcement</field>
+        <field name="code">hr.all.stu.announcement</field>
+        <field name="prefix">GS</field>
+        <field eval="4" name="padding" />
+    </record>
+</odoo>

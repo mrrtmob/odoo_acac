@@ -67,7 +67,7 @@
                                         <span class="oe_grey p-2"> at </span>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col" invisible="1">
                                     <div class="oe_edit_only d-flex align-items-center">
                                         <label for="probability"/>
                                         <button class="btn btn-link" name="action_set_automated_probability" type="object"

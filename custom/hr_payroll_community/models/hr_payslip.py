@@ -19,6 +19,7 @@ ROUNDING_FACTOR = 16
 
 class HrPayslip(models.Model):
     _name = 'hr.payslip'
+    _inherit = ['mail.thread.cc', 'portal.mixin']
     _description = 'Pay Slip'
 
     struct_id = fields.Many2one('hr.payroll.structure', string='Structure',
@@ -76,6 +77,71 @@ class HrPayslip(models.Model):
     payslip_run_id = fields.Many2one('hr.payslip.run', string='Payslip Batches', readonly=True,
                                      copy=False, states={'draft': [('readonly', False)]})
     payslip_count = fields.Integer(compute='_compute_payslip_count', string="Payslip Computation Details")
+    exchange_rate = fields.Float("Exchange Rate", compute="_compute_exchange_rate", store=True)
+
+
+
+    @api.depends('create_date')
+    def _compute_exchange_rate(self):
+        print('hit me')
+        for record in self:
+            khmer_currency_rel = self.env['res.currency'].search([('name', '=', 'KHR')])
+            exchange_rate_invoice_date = self.env['res.currency.rate'].search(
+                [('name', '=', record.create_date), ('currency_id', '=', khmer_currency_rel.id)])
+            if exchange_rate_invoice_date:
+                record.exchange_rate = exchange_rate_invoice_date.rate
+            else:
+                record.exchange_rate = self.env['res.currency.rate'].search([('currency_id', '=', khmer_currency_rel.id)],
+                                                                   limit=1,
+                                                                   order='create_date desc').rate
+
+
+
+    @api.onchange('employee_id')
+    def change_employee(self):
+        print("GOKKKKKKKKKKKKKKK")
+
+        if (not self.employee_id) or (not self.date_from) or (not self.date_to):
+            print("False")
+            return
+        print('True Hz Jah')
+
+        employee = self.employee_id
+        date_from = self.date_from
+        date_to = self.date_to
+        contract_ids = []
+
+        ttyme = datetime.combine(fields.Date.from_string(date_from), time.min)
+        locale = self.env.context.get('lang') or 'en_US'
+        self.name = _('Salary Slip of %s for %s') % (
+            employee.name, tools.ustr(babel.dates.format_date(date=ttyme, format='MMMM-y', locale=locale)))
+        self.company_id = employee.company_id
+
+        if not self.env.context.get('contract') or not self.contract_id:
+            contract_ids = self.get_contract(employee, date_from, date_to)
+            if not contract_ids:
+                return
+            self.contract_id = self.env['hr.contract'].browse(contract_ids[0])
+
+        if not self.contract_id.struct_id:
+            return
+        self.struct_id = self.contract_id.struct_id
+        if self.contract_id:
+            contract_ids = self.contract_id.ids
+        # computation of the salary input
+        contracts = self.env['hr.contract'].browse(contract_ids)
+        worked_days_line_ids = self.get_worked_day_lines(contracts, date_from, date_to)
+        worked_days_lines = self.worked_days_line_ids.browse([])
+        for r in worked_days_line_ids:
+            worked_days_lines += worked_days_lines.new(r)
+        self.worked_days_line_ids = worked_days_lines
+
+        input_line_ids = self.get_inputs(contracts, date_from, date_to)
+        input_lines = self.input_line_ids.browse([])
+        for r in input_line_ids:
+            input_lines += input_lines.new(r)
+        self.input_line_ids = input_lines
+        return
 
     def _compute_details_by_salary_rule_category(self):
         for payslip in self:
@@ -87,28 +153,62 @@ class HrPayslip(models.Model):
 
     @api.constrains('date_from', 'date_to')
     def _check_dates(self):
-
         if any(self.filtered(lambda payslip: payslip.date_from > payslip.date_to)):
             raise ValidationError(_("Payslip 'Date From' must be earlier 'Date To'."))
 
     def action_payslip_draft(self):
-
         return self.write({'state': 'draft'})
 
     def action_payslip_done(self):
-
         self.compute_sheet()
         return self.write({'state': 'done'})
 
     def action_payslip_cancel(self):
-
         if self.filtered(lambda slip: slip.state == 'done'):
             raise UserError(_("Cannot cancel a payslip that is done."))
         return self.write({'state': 'cancel'})
 
+    def action_job_payslip(self):
+        print("hit me !!")
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('hr_payroll_community', 'email_employee_payslip')[1]
+        except ValueError:
+            template_id = False
+        try:
+            compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
+        except ValueError:
+            compose_form_id = False
+        ctx = dict(self.env.context or {})
+        ctx.update({
+            'default_model': 'hr.payslip',
+            'active_model': 'hr.payslip',
+            'active_id': self.ids[0],
+            'default_res_id': self.ids[0],
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'custom_layout': 'mail.mail_notification_light',
+            'force_email': True,
+            'mark_rfq_as_sent': True,
+        })
+
+        ctx['model_description'] = _('PaySlip')
+
+        return {
+            'name': _('Compose Email'),
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
+
     def refund_sheet(self):
         for payslip in self:
-
             copied_payslip = payslip.copy({'credit_note': True, 'name': _('Refund: ') + payslip.name})
             copied_payslip.compute_sheet()
             copied_payslip.action_payslip_done()
@@ -128,11 +228,9 @@ class HrPayslip(models.Model):
         }
 
     def check_done(self):
-
         return True
 
     def unlink(self):
-
         if any(self.filtered(lambda payslip: payslip.state not in ('draft', 'cancel'))):
             raise UserError(_('You cannot delete a payslip which is not draft or cancelled!'))
         return super(HrPayslip, self).unlink()
@@ -140,7 +238,6 @@ class HrPayslip(models.Model):
     # TODO move this function into hr_contract module, on hr.employee object
     @api.model
     def get_contract(self, employee, date_from, date_to):
-
         """
         @param employee: recordset of employee
         @param date_from: date field
@@ -158,7 +255,6 @@ class HrPayslip(models.Model):
         return self.env['hr.contract'].search(clause_final).ids
 
     def compute_sheet(self):
-
         for payslip in self:
             number = payslip.number or self.env['ir.sequence'].next_by_code('salary.slip')
             # delete old payslip lines
@@ -173,7 +269,6 @@ class HrPayslip(models.Model):
 
     @api.model
     def get_worked_day_lines(self, contracts, date_from, date_to):
-
         """
         @param contract: Browse record of contracts
         @return: returns a list of dict containing the input that should be applied for the given contract between date_from and date_to
@@ -216,8 +311,8 @@ class HrPayslip(models.Model):
                 'name': _("Normal Working Days paid at 100%"),
                 'sequence': 1,
                 'code': 'WORK100',
-                'number_of_days': work_data['days'],
-                'number_of_hours': work_data['hours'],
+                'number_of_days': 26,
+                'number_of_hours': 26 * 8,
                 'contract_id': contract.id,
             }
 
@@ -227,7 +322,6 @@ class HrPayslip(models.Model):
 
     @api.model
     def get_inputs(self, contracts, date_from, date_to):
-
         res = []
 
         structure_ids = contracts.get_all_structures()
@@ -238,6 +332,7 @@ class HrPayslip(models.Model):
         for contract in contracts:
             for input in inputs:
                 input_data = {
+                    'salary_rule_id': input.id,
                     'name': input.name,
                     'code': input.code,
                     'contract_id': contract.id,
@@ -247,7 +342,6 @@ class HrPayslip(models.Model):
 
     @api.model
     def _get_payslip_lines(self, contract_ids, payslip_id):
-
         def _sum_salary_rule_category(localdict, category, amount):
             if category.parent_id:
                 localdict = _sum_salary_rule_category(localdict, category.parent_id, amount)
@@ -400,7 +494,7 @@ class HrPayslip(models.Model):
     # YTI TODO To rename. This method is not really an onchange, as it is not in any view
     # employee_id and contract_id could be browse records
     def onchange_employee_id(self, date_from, date_to, employee_id=False, contract_id=False):
-
+        print("Trigger !!!!!!!!!!")
         # defaults
         res = {
             'value': {
@@ -459,60 +553,16 @@ class HrPayslip(models.Model):
         })
         return res
 
-    @api.onchange('employee_id', 'date_from', 'date_to')
-    def onchange_employee(self):
 
 
-        if (not self.employee_id) or (not self.date_from) or (not self.date_to):
-            return
-
-        employee = self.employee_id
-        date_from = self.date_from
-        date_to = self.date_to
-        contract_ids = []
-
-        ttyme = datetime.combine(fields.Date.from_string(date_from), time.min)
-        locale = self.env.context.get('lang') or 'en_US'
-        self.name = _('Salary Slip of %s for %s') % (
-        employee.name, tools.ustr(babel.dates.format_date(date=ttyme, format='MMMM-y', locale=locale)))
-        self.company_id = employee.company_id
-
-        if not self.env.context.get('contract') or not self.contract_id:
-            contract_ids = self.get_contract(employee, date_from, date_to)
-            if not contract_ids:
-                return
-            self.contract_id = self.env['hr.contract'].browse(contract_ids[0])
-
-        if not self.contract_id.struct_id:
-            return
-        self.struct_id = self.contract_id.struct_id
-        if self.contract_id:
-            contract_ids = self.contract_id.ids
-        # computation of the salary input
-        contracts = self.env['hr.contract'].browse(contract_ids)
-        worked_days_line_ids = self.get_worked_day_lines(contracts, date_from, date_to)
-        worked_days_lines = self.worked_days_line_ids.browse([])
-        for r in worked_days_line_ids:
-            worked_days_lines += worked_days_lines.new(r)
-        self.worked_days_line_ids = worked_days_lines
-
-        input_line_ids = self.get_inputs(contracts, date_from, date_to)
-        input_lines = self.input_line_ids.browse([])
-        for r in input_line_ids:
-            input_lines += input_lines.new(r)
-        self.input_line_ids = input_lines
-        return
-
-    @api.onchange('contract_id')
-    def onchange_contract(self):
-
-        if not self.contract_id:
-            self.struct_id = False
-        self.with_context(contract=True).onchange_employee()
-        return
+    # @api.onchange('contract_id')
+    # def onchange_contract(self):
+    #     if not self.contract_id:
+    #         self.struct_id = False
+    #     self.with_context(contract=True).onchange_employee()
+    #     return
 
     def get_salary_line_total(self, code):
-
         self.ensure_one()
         line = self.line_ids.filtered(lambda line: line.code == code)
         if line:
@@ -528,7 +578,7 @@ class HrPayslipLine(models.Model):
     _order = 'contract_id, sequence'
 
     slip_id = fields.Many2one('hr.payslip', string='Pay Slip', required=True, ondelete='cascade', help="Payslip")
-    salary_rule_id = fields.Many2one('hr.salary.rule', string='Rule', required=True, help="salary rule")
+    salary_rule_id = fields.Many2one('hr.salary.rule', string='Rule', required=False, help="salary rule")
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True, help="Employee")
     contract_id = fields.Many2one('hr.contract', string='Contract', required=True, index=True, help="Contract")
     rate = fields.Float(string='Rate (%)', digits=dp.get_precision('Payroll Rate'), default=100.0)
@@ -538,13 +588,11 @@ class HrPayslipLine(models.Model):
 
     @api.depends('quantity', 'amount', 'rate')
     def _compute_total(self):
-
         for line in self:
             line.total = float(line.quantity) * line.amount * line.rate / 100
 
     @api.model_create_multi
     def create(self, vals_list):
-
         for values in vals_list:
             if 'employee_id' not in values or 'contract_id' not in values:
                 payslip = self.env['hr.payslip'].browse(values.get('slip_id'))
@@ -574,11 +622,12 @@ class HrPayslipInput(models.Model):
     _name = 'hr.payslip.input'
     _description = 'Payslip Input'
     _order = 'payslip_id, sequence'
+    salary_rule_id = fields.Many2one('hr.salary.rule', domain=[('in_input_list', '=', True)], required=False)
 
-    name = fields.Char(string='Description', required=True)
+    name = fields.Char(string='Description', required=False)
     payslip_id = fields.Many2one('hr.payslip', string='Pay Slip', required=True, ondelete='cascade', help="Payslip", index=True)
     sequence = fields.Integer(required=True, index=True, default=10, help="Sequence")
-    code = fields.Char(required=True, help="The code that can be used in the salary rules")
+    code = fields.Char(required=True, help="The code that can be used in the salary rules", store=True, readonly=False)
     amount = fields.Float(help="It is used in computation. For e.g. A rule for sales having "
                                "1% commission of basic salary for per product can defined in expression "
                                "like result = inputs.SALEURO.amount * contract.wage*0.01.")
@@ -662,7 +711,8 @@ class ResourceMixin(models.AbstractModel):
             float_utils.round(ROUNDING_FACTOR * day_hours[day] / day_total[day]) / ROUNDING_FACTOR
             for day in day_hours
         )
+        print("Day!", days)
         return {
-            'days': days,
+            'days': 26,
             'hours': sum(day_hours.values()),
         }

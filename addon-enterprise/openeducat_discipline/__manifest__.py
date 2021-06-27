@@ -10,7 +10,7 @@
 
 {
     'name': 'OpenEduCat Discipline',
-    'version': '14.0.1.0',
+    'version': '13.0',
     'category': 'Education',
     "sequence": 1,
     'summary': 'Discipline Rules',

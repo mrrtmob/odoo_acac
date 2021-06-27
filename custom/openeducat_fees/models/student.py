@@ -72,13 +72,74 @@ class OpStudentFeesDetails(models.Model):
         'res.currency', string='Currency', compute='_compute_currency_id',
         default=lambda self: self.env.user.company_id.currency_id.id)
 
+    # def get_invoice(self):
+    #     """ Create invoice for fee payment process of student """
+    #     inv_obj = self.env['account.move']
+    #     partner_id = self.student_id.partner_id
+    #     # student = self.student_id
+    #     account_id = False
+    #     product = self.product_id
+    #     if product.property_account_income_id:
+    #         account_id = product.property_account_income_id.id
+    #     if not account_id:
+    #         account_id = product.categ_id.property_account_income_categ_id.id
+    #     if not account_id:
+    #         raise UserError(
+    #             _('There is no income account defined for this product: "%s".'
+    #               'You may have to install a chart of account from Accounting'
+    #               ' app, settings menu.') % product.name)
+    #     if self.amount <= 0.00:
+    #         raise UserError(
+    #             _('The value of the deposit amount must be positive.'))
+    #     else:
+    #         amount = self.amount
+    #         name = product.name
+    #     invoice = inv_obj.create({
+    #         # 'partner_id': student.name,
+    #         'move_type': 'out_invoice',
+    #         'partner_id': partner_id.id,
+    #
+    #     })
+    #     element_id = self.env['op.fees.element'].search([
+    #         ('fees_terms_line_id', '=', self.fees_line_id.id)])
+    #     for records in element_id:
+    #         if records:
+    #             line_values = {'name': records.product_id.name,
+    #                            'account_id': account_id,
+    #                            'price_unit': records.value * self.amount / 100,
+    #                            'quantity': 1.0,
+    #                            'discount': self.discount or False,
+    #                            'product_uom_id': records.product_id.uom_id.id,
+    #                            'product_id': records.product_id.id, }
+    #             invoice.write({'invoice_line_ids': [(0, 0, line_values)]})
+    #
+    #     if not element_id:
+    #         line_values = {'name': name,
+    #                        # 'origin': student.gr_no,
+    #                        'account_id': account_id,
+    #                        'price_unit': amount,
+    #                        'quantity': 1.0,
+    #                        'discount': self.discount or False,
+    #                        'product_uom_id': product.uom_id.id,
+    #                        'product_id': product.id}
+    #         invoice.write({'invoice_line_ids': [(0, 0, line_values)]})
+    #
+    #     invoice._compute_invoice_taxes_by_group()
+    #     self.state = 'invoice'
+    #     self.invoice_id = invoice.id
+    #     return True
+
     def get_invoice(self):
         """ Create invoice for fee payment process of student """
+        print("Hit Get Invoice")
+
+        _logger = logging.getLogger(__name__)
         inv_obj = self.env['account.move']
         partner_id = self.student_id.partner_id
-        # student = self.student_id
+        student = self.student_id
         account_id = False
         product = self.product_id
+
         if product.property_account_income_id:
             account_id = product.property_account_income_id.id
         if not account_id:
@@ -88,41 +149,64 @@ class OpStudentFeesDetails(models.Model):
                 _('There is no income account defined for this product: "%s".'
                   'You may have to install a chart of account from Accounting'
                   ' app, settings menu.') % product.name)
+
         if self.amount <= 0.00:
             raise UserError(
                 _('The value of the deposit amount must be positive.'))
         else:
             amount = self.amount
             name = product.name
+        _logger.info("---------------This is invoice info---------------")
         invoice = inv_obj.create({
-            # 'partner_id': student.name,
-            'move_type': 'out_invoice',
+            'partner_id': student.name,
+            'type': 'out_invoice',
             'partner_id': partner_id.id,
 
         })
         element_id = self.env['op.fees.element'].search([
             ('fees_terms_line_id', '=', self.fees_line_id.id)])
+
+        print('element', element_id)
+        print('account', account_id)
+        print('product', product)
+        invoice_lines = []
         for records in element_id:
+            _logger.info("---------------this element has product lines---------------")
+            _logger.info("IT IS  INFO")
+
             if records:
                 line_values = {'name': records.product_id.name,
-                               'account_id': account_id,
-                               'price_unit': records.value * self.amount / 100,
+                               'account_id': records.product_id.property_account_income_id.id,
+                               'price_unit': records.price,
                                'quantity': 1.0,
-                               'discount': self.discount or False,
+                               'discount': 0.0,
+                               'move_id': invoice.id,
                                'product_uom_id': records.product_id.uom_id.id,
                                'product_id': records.product_id.id, }
-                invoice.write({'invoice_line_ids': [(0, 0, line_values)]})
+                invoice_lines.append(line_values)
+                _logger.info('Create a %s with vals %s', self._name, line_values)
 
         if not element_id:
+            _logger.info("---------------No Line !!---------------")
             line_values = {'name': name,
                            # 'origin': student.gr_no,
                            'account_id': account_id,
                            'price_unit': amount,
                            'quantity': 1.0,
-                           'discount': self.discount or False,
+                           'discount': 0.0,
                            'product_uom_id': product.uom_id.id,
                            'product_id': product.id}
+
+            _logger.info('Create a %s with vals %s', self._name, line_values)
+
             invoice.write({'invoice_line_ids': [(0, 0, line_values)]})
+
+        _logger.info('Create invoice lines %s', self._name, invoice_lines)
+        MoveLine = self.env['account.move.line'].with_context(check_move_validity=False)
+        MoveLine.create(invoice_lines)
+
+        notification_obj = self.env['pm.menu.notification']
+        notification_obj.update_notification('payment_schedule', student.id)
 
         invoice._compute_invoice_taxes_by_group()
         self.state = 'invoice'

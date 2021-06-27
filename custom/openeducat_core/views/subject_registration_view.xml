@@ -85,7 +85,7 @@
                                 string="Course" domain="[]"
                                 context="{'group_by':'course_id'}"/>
                         <filter name="group_by_batch"
-                                string="Batch" domain="[]"
+                                string="Terms" domain="[]"
                                 context="{'group_by':'batch_id'}"/>
                         <filter name="group_by_status"
                                 string="Status" domain="[]"

@@ -12,7 +12,6 @@ class ContributionRegisterReport(models.AbstractModel):
     _description = 'Payroll Contribution Register Report'
 
     def _get_payslip_lines(self, register_ids, date_from, date_to):
-
         result = {}
         self.env.cr.execute("""
             SELECT pl.id from hr_payslip_line as pl
@@ -30,7 +29,6 @@ class ContributionRegisterReport(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-
         if not data.get('form'):
             raise UserError(_("Form content is missing, this report cannot be printed."))
 

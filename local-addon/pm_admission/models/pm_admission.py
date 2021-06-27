@@ -191,20 +191,29 @@ class OpAdmission(models.Model):
             record.admission_url = base_url
 
     def submit_form(self):
-        print('admission submit sending....')
-        template_id = 63
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('pm_admission', 'student_admission_submission')[1]
+        except ValueError:
+            template_id = False
         self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
         self.state = 'submit'
 
     def confirm_in_progress(self):
-        print('payment confirm sending....')
-        template_id = 64
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('pm_admission', 'student_payment_confirm')[1]
+        except ValueError:
+            template_id = False
         self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
         self.state = 'confirm'
 
     def admission_confirm(self):
-        print('admission confirm sending....')
-        template_id = 65
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('pm_admission', 'student_admission_confirm')[1]
+        except ValueError:
+            template_id = False
         self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
         self.state = 'admission'
 

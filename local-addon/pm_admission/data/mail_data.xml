@@ -334,5 +334,238 @@
 
 
 
+
+
+        <record id="student_admission_submission" model="mail.template">
+            <field name="name">Student Admission Submission</field>
+            <field name="subject">Admission Submission For ${object.application_number}</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="openeducat_admission.model_op_admission"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                  <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                  <tbody>
+                      <!-- HEADER -->
+                      <tr><td align="center" style="min-width:590px;">
+                              <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                  <tbody><tr><td valign="middle">
+                                      <span style="font-size:16px;font-weight: bold;">
+                                          ${object.application_number}</span><span style="font-size:20px;font-weight: bold;">
+                                      </span>
+                                  </td><td valign="middle" align="right">
+                                      <img src="http://acac.edu.kh/wp-content/uploads/2016/06/logo.jpg" style="padding:0px;margin: 0px; height: 90px; width: 90px;" alt="${object.company_id.name}"/>
+                                  </td></tr>
+                                  <tr><td colspan="2" style="text-align:center;">
+                                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                  </td></tr>
+                              </tbody></table>
+                          </td>
+                      </tr>
+                      <!-- CONTENT -->
+                      <tr>
+                          <td align="center" style="min-width:590px;">
+                              <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                  <tbody><tr><td valign="top" style="font-size:13px;">
+                                      <div><p><font style="font-size:14px;">Dear Sir/Madam,</font></p><p><br/></p><p><font style="font-size:14px;">The admission has been submitted for ${object.name}</font></p><p><font style="font-size:14px;">To view details, please click on the link below:</font></p><p><br/></p><a href="${object.admission_url}" style="background-color:#875a7b;padding:10px;text-decoration:none;color:#fff;border-radius:5px"><font style="font-size:14px;">View Admission</font></a><p></p><p><br/></p><p><font style="font-size:14px;">Regards,</font></p><p><br/></p><p><font style="font-size:14px;"></font></p><p><font face="Odoo Unicode Support Noto, Lucida Grande, Helvetica, Verdana, Arial, sans-serif"></font></p><div><span style="font-size:10pt;font-family: Verdana; color: rgb(0, 0, 0); background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;"><br/></span></div>
+                                      </div>
+                                  </td></tr>
+                                  <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                  </td></tr>
+                              </tbody></table>
+                          </td>
+                      </tr>
+                      <!-- FOOTER -->
+                      <tr>
+                          <td align="center" style="min-width:590px;">
+                              <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                  <tbody><tr><td valign="middle" align="left">
+                                      <font style="font-size:12px;">${object.company_id.name}
+                                 </font></td></tr>
+                                  <tr><td valign="middle" align="left" style="opacity:0.7;"><font style="font-size:12px;">
+                                      ${object.company_id.phone}
+                                      % if object.company_id.email
+                                          |</font><a href="'mailto:%s' % ${object.company_id.email}" style="text-decoration:none;color: #454748;"><font style="font-size:12px;">${object.company_id.email}</font></a><font style="font-size:12px;">
+                                      % endif
+                                      % if object.company_id.website
+                                          |</font><a href="'%s' % ${object.company_id.website}" style="text-decoration:none;color: #454748;"><font style="font-size:12px;">
+                                          ${object.company_id.website}
+                                     </font></a><font style="font-size:12px;">
+                                      % endif
+                                 </font></td></tr>
+                              </tbody></table>
+                          </td>
+                      </tr>
+                  </tbody>
+                  </table>
+                  </td></tr>
+                  <!-- POWERED BY -->
+                  <tr><td align="center" style="min-width:590px;">
+                      <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                        <tbody><tr><td style="text-align:center;font-size: 13px;">
+                          <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=auth" style="color:#875A7B;"></a>
+                        </td></tr>
+                      </tbody></table>
+                  </td></tr>
+                  </tbody></table>
+            </field>
+        </record>
+
+        <record id="student_admission_confirm" model="mail.template">
+            <field name="name">Student Admission Confirmation</field>
+            <field name="subject">Admission Confirmation For ${object.application_number}</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="openeducat_admission.model_op_admission"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                  <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                  <tbody>
+                      <!-- HEADER -->
+                      <tr><td align="center" style="min-width:590px;">
+                              <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                  <tbody><tr><td valign="middle">
+                                      <span style="font-size:16px;font-weight: bold;">
+                                          ${object.application_number}</span><span style="font-size:20px;font-weight: bold;">
+                                      </span>
+                                  </td><td valign="middle" align="right">
+                                      <img src="http://acac.edu.kh/wp-content/uploads/2016/06/logo.jpg" style="padding:0px;margin: 0px; height: 90px; width: 90px;" alt="${object.company_id.name}"/>
+                                  </td></tr>
+                                  <tr><td colspan="2" style="text-align:center;">
+                                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                  </td></tr>
+                              </tbody></table>
+                          </td>
+                      </tr>
+                      <!-- CONTENT -->
+                      <tr>
+                          <td align="center" style="min-width:590px;">
+                              <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                  <tbody><tr><td valign="top" style="font-size:13px;">
+                                      <div><p><font style="font-size:14px;">Dear Sir/Madam,</font></p><p><br/></p><p><font style="font-size:14px;">The admission has been confirmed for ${object.name}</font></p><p><font style="font-size:14px;">To view details, please click on the link below:</font></p><p><br/></p><a href="${object.admission_url}" style="background-color:#875a7b;padding:10px;text-decoration:none;color:#fff;border-radius:5px"><font style="font-size:14px;">View Admission</font></a><p></p><p><br/></p><p><font style="font-size:14px;">Regards,</font></p><p><br/></p><p><font style="font-size:14px;"></font></p><p><font face="Odoo Unicode Support Noto, Lucida Grande, Helvetica, Verdana, Arial, sans-serif"></font></p><div><span style="font-size:10pt;font-family: Verdana; color: rgb(0, 0, 0); background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;"><br/></span></div>
+                                      </div>
+                                  </td></tr>
+                                  <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                  </td></tr>
+                              </tbody></table>
+                          </td>
+                      </tr>
+                      <!-- FOOTER -->
+                      <tr>
+                          <td align="center" style="min-width:590px;">
+                              <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                  <tbody><tr><td valign="middle" align="left">
+                                      <font style="font-size:12px;">${object.company_id.name}
+                                 </font></td></tr>
+                                  <tr><td valign="middle" align="left" style="opacity:0.7;"><font style="font-size:12px;">
+                                      ${object.company_id.phone}
+                                      % if object.company_id.email
+                                          |</font><a href="'mailto:%s' % ${object.company_id.email}" style="text-decoration:none;color: #454748;"><font style="font-size:12px;">${object.company_id.email}</font></a><font style="font-size:12px;">
+                                      % endif
+                                      % if object.company_id.website
+                                          |</font><a href="'%s' % ${object.company_id.website}" style="text-decoration:none;color: #454748;"><font style="font-size:12px;">
+                                          ${object.company_id.website}
+                                     </font></a><font style="font-size:12px;">
+                                      % endif
+                                 </font></td></tr>
+                              </tbody></table>
+                          </td>
+                      </tr>
+                  </tbody>
+                  </table>
+                  </td></tr>
+                  <!-- POWERED BY -->
+                  <tr><td align="center" style="min-width:590px;">
+                      <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                        <tbody><tr><td style="text-align:center;font-size: 13px;">
+                          <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=auth" style="color:#875A7B;"></a>
+                        </td></tr>
+                      </tbody></table>
+                  </td></tr>
+                  </tbody></table>
+            </field>
+        </record>
+
+        <record id="student_payment_confirm" model="mail.template">
+            <field name="name">Student Payment Submission</field>
+            <field name="subject">Payment Confirmation For ${object.application_number}</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="openeducat_admission.model_op_admission"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                  <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                  <tbody>
+                      <!-- HEADER -->
+                      <tr><td align="center" style="min-width:590px;">
+                              <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                  <tbody><tr><td valign="middle">
+                                      <span style="font-size:16px;font-weight: bold;">
+                                          ${object.application_number}</span><span style="font-size:20px;font-weight: bold;">
+                                      </span>
+                                  </td><td valign="middle" align="right">
+                                      <img src="http://acac.edu.kh/wp-content/uploads/2016/06/logo.jpg" style="padding:0px;margin: 0px; height: 90px; width: 90px;" alt="${object.company_id.name}"/>
+                                  </td></tr>
+                                  <tr><td colspan="2" style="text-align:center;">
+                                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                  </td></tr>
+                              </tbody></table>
+                          </td>
+                      </tr>
+                      <!-- CONTENT -->
+                      <tr>
+                          <td align="center" style="min-width:590px;">
+                              <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                  <tbody><tr><td valign="top" style="font-size:13px;">
+                                      <div><p><font style="font-size:14px;">Dear Sir/Madam,</font></p><p><br/></p><p><font style="font-size:14px;">The payment has been confirmed for ${object.name}</font></p><p><font style="font-size:14px;">To view details, please click on the link below:</font></p><p><br/></p><a href="${object.admission_url}" style="background-color:#875a7b;padding:10px;text-decoration:none;color:#fff;border-radius:5px"><font style="font-size:14px;">View Admission</font></a><p></p><p><br/></p><p><font style="font-size:14px;">Regards,</font></p><p><br/></p><p><font style="font-size:14px;"></font></p><p><font face="Odoo Unicode Support Noto, Lucida Grande, Helvetica, Verdana, Arial, sans-serif"></font></p><div><span style="font-size:10pt;font-family: Verdana; color: rgb(0, 0, 0); background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;"><br/></span></div>
+                                      </div>
+                                  </td></tr>
+                                  <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                  </td></tr>
+                              </tbody></table>
+                          </td>
+                      </tr>
+                      <!-- FOOTER -->
+                      <tr>
+                          <td align="center" style="min-width:590px;">
+                              <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                  <tbody><tr><td valign="middle" align="left">
+                                      <font style="font-size:12px;">${object.company_id.name}
+                                 </font></td></tr>
+                                  <tr><td valign="middle" align="left" style="opacity:0.7;"><font style="font-size:12px;">
+                                      ${object.company_id.phone}
+                                      % if object.company_id.email
+                                          |</font><a href="'mailto:%s' % ${object.company_id.email}" style="text-decoration:none;color: #454748;"><font style="font-size:12px;">${object.company_id.email}</font></a><font style="font-size:12px;">
+                                      % endif
+                                      % if object.company_id.website
+                                          |</font><a href="'%s' % ${object.company_id.website}" style="text-decoration:none;color: #454748;"><font style="font-size:12px;">
+                                          ${object.company_id.website}
+                                     </font></a><font style="font-size:12px;">
+                                      % endif
+                                 </font></td></tr>
+                              </tbody></table>
+                          </td>
+                      </tr>
+                  </tbody>
+                  </table>
+                  </td></tr>
+                  <!-- POWERED BY -->
+                  <tr><td align="center" style="min-width:590px;">
+                      <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                        <tbody><tr><td style="text-align:center;font-size: 13px;">
+                          <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=auth" style="color:#875A7B;"></a>
+                        </td></tr>
+                      </tbody></table>
+                  </td></tr>
+                  </tbody></table>
+            </field>
+        </record>
+
     </data>
 </odoo>

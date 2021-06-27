@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+
 <!--        To view their own record only-->
         <record id="hr_resignation_personal_rule" model="ir.rule">
             <field name="name">Employee Resignation User</field>
@@ -9,11 +10,19 @@
             <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         </record>
         <!--    Manager permission to view all record   -->
-        <record id="hr_resignation_personal_rule_manager" model="ir.rule">
+        <record id="hr_resignation_personal_rule_department_manager" model="ir.rule">
             <field name="name">Employee Resignation Manager</field>
             <field ref="hr_resignation.model_hr_resignation" name="model_id"/>
-            <field name="domain_force">['|',('employee_id.user_id','!=',user.id),('employee_id.user_id','=',False)]</field>
-            <field name="groups" eval="[(4, ref('hr.group_hr_user'))]"/>
+            <field name="domain_force">[('employee_id.department_id.manager_id.user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('pm_hr.group_acac_department_manager'))]"/>
+        </record>
+
+          <!--    HR Manager permission to view all record   -->
+        <record id="hr_resignation_personal_rule_hr_manager" model="ir.rule">
+            <field name="name">Employee Resignation HR Manager</field>
+            <field ref="hr_resignation.model_hr_resignation" name="model_id"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('hr.group_hr_manager'))]"/>
         </record>
     </data>
 </odoo>

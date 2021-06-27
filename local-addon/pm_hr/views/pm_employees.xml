@@ -121,10 +121,10 @@
                     
                 </xpath>
 
-                <xpath expr="//field[@name='department_id']" position="before">
-                    <field name="status" attrs="{'readonly': [('is_hr_user', '=', False)]}" />
-                    <field name="status_detail" attrs="{'readonly': [('is_hr_user', '=', False)]}"/>
-                </xpath>
+<!--                <xpath expr="//field[@name='department_id']" position="before">-->
+<!--                    <field name="status" attrs="{'readonly': [('is_hr_user', '=', False)]}" />-->
+<!--                    <field name="status_detail" attrs="{'readonly': [('is_hr_user', '=', False)]}"/>-->
+<!--                </xpath>-->
 
                 <xpath expr="//field[@name='address_home_id']" position="after">
 

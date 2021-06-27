@@ -3,7 +3,8 @@
 #    A part of Open HRMS Project <https://www.openhrms.com>
 #
 #    Cybrosys Technologies Pvt. Ltd.
-#    Copyright (C) 2020-TODAY Cybrosys Technologies (<https://www.cybrosys.com>).
+#    Copyright (C) 2018-TODAY Cybrosys Technologies (<https://www.cybrosys.com>).
+#    Author: Anusha P P (<https://www.cybrosys.com>)
 #
 #    This program is free software: you can modify
 #    it under the terms of the GNU Affero General Public License (AGPL) as
@@ -21,19 +22,18 @@
 ###################################################################################
 {
     'name': 'Open HRMS Advance Salary',
-    'version': '14.0.1.0.0',
+    'version': '13.0.1.0.2',
     'summary': 'Advance Salary In HR',
     'description': """
         Helps you to manage Advance Salary Request of your company's staff.
         """,
     'category': 'Generic Modules/Human Resources',
-    'live_test_url': 'https://youtu.be/fJ3RyE7RGz4',
-    'author': "Cybrosys Techno Solutions,Open HRMS",
+    'author': "Cybrosys Techno Solutions",
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': "https://www.openhrms.com",
     'depends': [
-        'hr_payroll_community', 'hr', 'account', 'hr_contract', 'ohrms_loan',
+        'hr_payroll_community', 'hr', 'account', 'hr_contract', 'ohrms_loan', 'pm_approval'
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -41,6 +41,7 @@
         'views/salary_structure.xml',
         'views/salary_advance.xml',
     ],
+    'demo': [],
     'images': ['static/description/banner.png'],
     'license': 'AGPL-3',
     'installable': True,
