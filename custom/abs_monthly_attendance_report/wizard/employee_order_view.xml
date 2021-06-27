@@ -30,6 +30,8 @@
 
      <menuitem id="main_menu_employe_order"
             name="Monthly Report"
+               groups="base"
+
             parent="hr_attendance.menu_hr_attendance_root"
             sequence="40"/>
 

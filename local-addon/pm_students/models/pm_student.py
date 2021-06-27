@@ -55,7 +55,7 @@ class OpStudentCourse(models.Model):
                                          ('dismissed', 'Dismissed')
                                          ], 'Status', default='active')
 
-    p_e_subject_ids = fields.Many2many('op.subject', relation='student_e_subjects_rel', readonly=True,
+    p_e_subject_ids = fields.Many2many('op.subject', relation='student_e_subjects_rel', readonly=False,
                                        string='Exempted Subjects')
     is_saved = fields.Boolean(default=False)
     cancel_date = fields.Date(default=lambda self: fields.Datetime.now())
@@ -451,46 +451,46 @@ class OpStudent(models.Model):
 
 
 
-    @api.model
-    def create(self, val):
-        print("GEGE")
-        print(val)
-        course_id = 0
-        batch_id = 0
-        class_id = 0
-        res = 0
-        if "course_detail_ids" in val:
-            batch_id = val['course_detail_ids'][0][2]['batch_id']
-            course_id = val['course_detail_ids'][0][2]['course_id']
-            class_id = val['course_detail_ids'][0][2]['class_id']
-        elif "batch_id" in val:
-            batch_id = val['batch_id']
-            course_id = val['course_id']
-            class_id = val['class_id']
-        if course_id or batch_id:
-            is_scholarship = val.get('is_scholarship')
-            status = val.get('scholarship_status')
-            print("**********Status")
-            print(status)
-            student_app_id = 0
-            if is_scholarship and status:
-                code = 3
-                status_object = self.env['pm.scholarship.status'].browse(status)
-                if status_object.percentage != 100:
-                    code = 2
-                print("code is", code)
-                student_app_id = self.get_student_id(course_id, batch_id, code)
-            else:
-                student_app_id = self.get_student_id(course_id, batch_id, False)
-            val['student_app_id'] = student_app_id
-            val['batch_id'] = batch_id
-            res = super(OpStudent, self).create(val)
-
-            # Store Student Progression detail in this case, the student have been enrolled
-            progress_obj = self.env['pm.student.progress'].sudo()
-            progress_obj.store_progression(res.id, course_id, batch_id, class_id, 'active')
-
-            self.get_student_starting_data(course_id, batch_id, res.id)
+    # @api.model
+    # def create(self, val):
+    #     print("GEGE")
+    #     print(val)
+    #     course_id = 0
+    #     batch_id = 0
+    #     class_id = 0
+    #     res = 0
+    #     if "course_detail_ids" in val:
+    #         batch_id = val['course_detail_ids'][0][2]['batch_id']
+    #         course_id = val['course_detail_ids'][0][2]['course_id']
+    #         class_id = val['course_detail_ids'][0][2]['class_id']
+    #     elif "batch_id" in val:
+    #         batch_id = val['batch_id']
+    #         course_id = val['course_id']
+    #         class_id = val['class_id']
+    #     if course_id or batch_id:
+    #         is_scholarship = val.get('is_scholarship')
+    #         status = val.get('scholarship_status')
+    #         print("**********Status")
+    #         print(status)
+    #         student_app_id = 0
+    #         if is_scholarship and status:
+    #             code = 3
+    #             status_object = self.env['pm.scholarship.status'].browse(status)
+    #             if status_object.percentage != 100:
+    #                 code = 2
+    #             print("code is", code)
+    #             student_app_id = self.get_student_id(course_id, batch_id, code)
+    #         else:
+    #             student_app_id = self.get_student_id(course_id, batch_id, False)
+    #         val['student_app_id'] = student_app_id
+    #         val['batch_id'] = batch_id
+    #         res = super(OpStudent, self).create(val)
+    #
+    #         # Store Student Progression detail in this case, the student have been enrolled
+    #         progress_obj = self.env['pm.student.progress'].sudo()
+    #         progress_obj.store_progression(res.id, course_id, batch_id, class_id, 'active')
+    #
+    #         self.get_student_starting_data(course_id, batch_id, res.id)
 
         return res
     def write(self, val):

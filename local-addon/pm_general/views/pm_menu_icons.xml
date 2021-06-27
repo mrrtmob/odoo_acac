@@ -114,7 +114,7 @@
 
     <!-- transfers -->
     <!-- hr_employee_transfer,static/description/transfer_icon.png (old icon) -->
-    <menuitem name="Transfers" id="hr_employee_transfer.menu_employee_transfer" web_icon="pm_general,static/description/hr_green/Transfer.png" sequence="240"/>
+<!--    <menuitem name="Transfers" id="hr_employee_transfer.menu_employee_transfer" web_icon="pm_general,static/description/hr_green/Transfer.png" sequence="240"/>-->
 
     <!-- recruitment -->
     <!-- hr_recruitment,static/description/icon.png (old icon) -->
