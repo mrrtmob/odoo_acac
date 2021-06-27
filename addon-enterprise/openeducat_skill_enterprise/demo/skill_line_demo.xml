@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="skill_line_demo1" model="op.skill.line">
+            <field name="student_id" ref="openeducat_core.op_student_1"/>
+            <field name="skill_type_id" ref="openeducat_skill_enterprise.skill_demo1"/>
+            <field name="rating">5</field>
+        </record>
+
+        <record id="skill_line_demo2" model="op.skill.line">
+            <field name="student_id" ref="openeducat_core.op_student_1"/>
+            <field name="skill_type_id" ref="openeducat_skill_enterprise.skill_demo2"/>
+            <field name="rating">4</field>
+        </record>
+
+        <record id="skill_line_demo3" model="op.skill.line">
+            <field name="student_id" ref="openeducat_core.op_student_2"/>
+            <field name="skill_type_id" ref="openeducat_skill_enterprise.skill_demo1"/>
+            <field name="rating">5</field>
+        </record>
+
+        <record id="skill_line_demo4" model="op.skill.line">
+            <field name="student_id" ref="openeducat_core.op_student_2"/>
+            <field name="skill_type_id" ref="openeducat_skill_enterprise.skill_demo2"/>
+            <field name="rating">4</field>
+        </record>
+    </data>
+</odoo>

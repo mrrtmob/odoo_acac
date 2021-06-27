@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record id="pm_hr_salary_tax_range_config" model="ir.actions.act_window">
+            <field name="name">Salary Tax Configuration</field>
+            <field name="res_model">pm.tax.configuration</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+         <record id="view_pm_tax_configuration" model="ir.ui.view">
+            <field name="name">pm.tax.configuration</field>
+            <field name="model">pm.tax.configuration</field>
+            <field name="arch" type="xml">
+                <tree string="Salary Tax Configuration" editable="bottom">
+                    <field name="min_salary" string="Minimum Salary(៛)"/>
+                    <field name="max_salary" string="Maximum Salary(៛)"/>
+                    <field name="tax_rate" string="Tax Rate(%)"/>
+                </tree>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

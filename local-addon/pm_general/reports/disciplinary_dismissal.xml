@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_disciplinary_dismissal">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" style="font-family: 'Georgia'; font-size: 17px;">
+                    <style  type="text/css">
+                    </style>
+                    <div class="container-fluid">
+                        <t t-call="pm_general.template_header"/>
+                        <strong><u>Disciplinary suspension from the current Semester:</u></strong><br/>
+                        <strong>If you have any problems understanding this letter or your present position, do not hesitate to contact the Registrar office</strong><br/><br/>
+                        <p>Dear Student Name,</p>
+                        <p class="mt-0">Attitude, behaviour and attendance are attributes which the hospitality industry is looking for.
+                            Despite of having received two previous warning letters you continued to lose disciplinary points and your disciplinary mark has now fallen below 4.0. According to the Academy’s “Standards of Excellence” you are herewith suspended from the present semester.
+                        </p>
+                        <strong>You have the right to appeal this decision and must do so, in writing, within 48 hours (2 working days) of the date of this letter.</strong>
+                        <p class="mb-0 mt-2">The letter should be addressed to the Dean, clearly stating why you feel that you should be allowed to remain at the Academy and detailing any mitigating circumstances that contributed towards excessive disciplinary points.</p>
+                        <p class="m-0">Should we not receive an appeal letter within the time mentioned above, we will not be able to consider your particular circumstances. Consequently, in line with the Standard of Excellence you will be asked to leave the school and the semester will be marked as failed.</p>
+                        <p class="mt-0">The academics office is open from 9.00 am until 5.00 pm Monday to Friday.</p>
+                        <strong>Please be informed that you are not eligible for any refund of the tuition fee!</strong>
+                        <t t-call="pm_general.signature"/>
+                        <t t-call="pm_general.template_footer"/>
+                        <t t-call="pm_general.template_border"></t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

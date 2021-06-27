@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="assets_frontend" inherit_id="website.assets_frontend">
+
+            <xpath expr="//script[last()]" position="after">
+                <script type="text/javascript" src="/openeducat_discipline/static/js/load_editore.js"/>
+            </xpath>
+        </template>
+        <template id="layout" inherit_id="website.layout" name="Forum Layout" primary="True">
+            <xpath expr="//div[@id='wrapwrap']" position="attributes">
+                <attribute name="groups"/>
+            </xpath>
+            <xpath expr="//div[@id='wrapwrap']" position="attributes">
+                <attribute name="groups"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

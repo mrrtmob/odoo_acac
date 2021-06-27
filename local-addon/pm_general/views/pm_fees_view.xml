@@ -1,0 +1,113 @@
+<odoo>
+    <data>
+
+<!--     <record id="view_fees_terms_form_inherit" model="ir.ui.view">-->
+<!--        <field name="name">op.fees.terms.form.custom</field>-->
+<!--            <field name="model">op.fees.terms</field>-->
+<!--            <field name="inherit_id" ref="openeducat_fees.view_fees_terms_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='line_ids']" position="replace">-->
+<!--                <field name="line_ids">-->
+<!--                    <tree>-->
+<!--                        <field name="due_days" required="1"/>-->
+<!--                        <field name="total" readonly="1"/>-->
+<!--                        <field name="fees_element_line">-->
+<!--                            <field name="product_id"/>-->
+<!--                            <field name="total"/>-->
+<!--                        </field>-->
+<!--                    </tree>-->
+<!--                    <form string="Fees Term Line">-->
+<!--                        <group colspan="4">-->
+<!--                            <field name="due_days" required="1"/>-->
+<!--                            <field name="fees_element_line">-->
+<!--                                <tree string="Information" editable="top">-->
+<!--                                    <field name="product_id"/>-->
+<!--                                    <field name="price"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </group>-->
+<!--                    </form>-->
+<!--                </field>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="view_pm_product_fee_tree" model="ir.ui.view">
+        <field name="name">pm.product.fee.tree</field>
+        <field name="model">product.product</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Course Fee">
+                <field name="name"/>
+                <field name="default_code"/>
+                <field name="taxes_id" widget="many2many_tags"/>
+                <field name="lst_price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_pm_product_fee_form" model="ir.ui.view">
+        <field name="name">pm.product.fee.form</field>
+        <field name="model">product.product</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+           <form string="Course Fee">
+                    <sheet>
+                        <div name="smart_button" class="oe_button_box">
+                        </div>
+                        <field name="active" invisible="1"/>
+                        <group>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </group>
+                        <group colspan="4" col="4">
+                            <field name="type" readonly="1"/>
+                            <field name="lst_price"/>
+                            <field name="default_code"/>
+                            <field name="property_account_income_id"/>
+                            <field name="taxes_id" widget="many2many_tags"/>
+                        </group>
+                    </sheet>
+                </form>
+        </field>
+    </record>
+
+         <record id="view_pm_product_fee_search" model="ir.ui.view">
+            <field name="name">pm.product.fee.search</field>
+             <field name="model">product.product</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search>
+                     <field name="name" />
+                    <filter string="Archived" name="inactive"
+                            domain="[('active', '=', False)]"/>
+                    <newline/>
+                </search>
+            </field>
+        </record>
+
+
+
+    <record model="ir.actions.act_window" id="act_open_pm_fee_view">
+        <field name="name">Course Fee</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_pm_product_fee_search"/>
+        <field name="domain">[('type', '=', 'service')]</field>
+       <field name="context" eval="{'default_type': 'service'}" />
+       <field name="view_ids" eval="[(5, 0, 0),
+    (0, 0, {'view_mode': 'tree', 'view_id': ref('pm_general.view_pm_product_fee_tree')}),
+    (0, 0, {'view_mode': 'form', 'view_id': ref('pm_general.view_pm_product_fee_form')})]"/>
+     </record>
+
+
+
+
+
+
+
+    </data>
+</odoo>

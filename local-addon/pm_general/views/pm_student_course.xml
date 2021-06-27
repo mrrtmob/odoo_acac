@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="custom_view_op_student_course_tree" model="ir.ui.view">
+            <field name="name">op.student.course.tree</field>
+            <field name="model">op.student.course</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_student_course_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='roll_number']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='batch_id']" position='replace'>
+                    <field name="batch_id" string="Term"/>
+                </xpath>
+                
+            </field>
+        </record>
+    </data>
+</odoo>

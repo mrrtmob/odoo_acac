@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_tests" name="Website Attendance Tests" inherit_id="web.assets_tests">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/openeducat_attendance_enterprise/static/tests/tours/attendance_test.js"></script>
+        </xpath>
+    </template>
+</odoo>

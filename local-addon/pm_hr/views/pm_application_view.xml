@@ -1,0 +1,416 @@
+<odoo>
+    <data>
+
+        <record id="pm_custom_job_kanban" model="ir.ui.view">
+            <field name="name">hr.job.kanban</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr_recruitment.view_hr_job_kanban"/>
+                <field name="arch" type="xml">
+                     <xpath expr="//kanban" position="attributes">
+                        <attribute name="create">0</attribute>
+                    </xpath>
+                </field>
+        </record>
+
+         <record id="pm_custom_aplicant_kanban" model="ir.ui.view">
+            <field name="name">hr.applicant.kanban.custom</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
+                <field name="arch" type="xml">
+                     <xpath expr="//field[@name='priority']" position="before">
+                        <field name="application_number"/>
+                    </xpath>
+                </field>
+        </record>
+
+        <record id="pm_custom_appplicant_tree" model="ir.ui.view">
+            <field name="name">hr.applicant.tree.custom</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='name']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                     <xpath expr="//field[@name='medium_id']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                     <xpath expr="//field[@name='partner_name']" position="after">
+                         <field name="total_score"/>
+                    </xpath>
+                </field>
+        </record>
+
+
+        <record id="pm_custom_applicant_form" model="ir.ui.view">
+            <field name="name">hr.applicant.custom</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='create_employee_from_applicant']" position="replace">
+
+
+                <button name="%(applicant_create_employee_act)d" string="Create Employee" type="action"
+                                class="oe_highlight" attrs="{'invisible': ['|', ('emp_id', '!=', False), ('stage_id','!=',5)]}"/>
+
+            </xpath>
+
+
+             <xpath expr="//header" position="inside">
+                <button name="send_shortlisted_email" string="Send Email" type="object"
+                        attrs="{'invisible':[('stage_id','!=',2)]}"
+                        class="btn-primary"/>
+
+                <button name="send_interview_email" string="Send Interview Invitation" type="object"
+                        attrs="{'invisible':[('stage_id','!=',3)]}"
+                        class="btn-primary"/>
+                <button name="unsuccessful_applicant" string="Send Unsuccessful Interview" type="object"
+                        attrs="{'invisible':[('stage_id','!=',3)]}"
+                        class="btn-primary"/>
+
+                <button name="action_job_offer_send" string="Send Job Offer" type="object"
+                        attrs="{'invisible':[('stage_id','!=',4)]}"
+                        class="btn-primary"/>
+                     <field name="is_saved" invisible="1"/>
+            </xpath>
+
+
+             <xpath expr="//form/sheet" position="replace">
+                 <sheet>
+
+
+
+                  <div class="oe_button_box" name="button_box">
+                    <button name="action_applications_email" class="oe_stat_button" icon="fa-pencil" type="object" attrs="{'invisible': [('application_count', '=', 0)]}">
+                        <field name="application_count" widget="statinfo" string="Other Applications"/>
+                    </button>
+                  <button class="oe_stat_button"
+                        icon="fa-file-text-o"
+                        name="action_get_attachment_tree_view"
+                        type="object">
+                        <field name="documents_count" widget="statinfo" string="Documents"/>
+                    </button>
+                    <button name="action_makeMeeting" class="oe_stat_button" icon="fa-calendar" type="object" help="Schedule interview with this applicant">
+                        <field name="meeting_count" widget="statinfo" string="Meetings"/>
+                    </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <field name="kanban_state" widget="kanban_state_selection"/>
+                    <field name="active" invisible="1"/>
+                    <field name="show_practical_score" invisible="1"/>
+                    <field name="legend_normal" invisible="1"/>
+                    <field name="legend_blocked" invisible="1"/>
+                    <field name="legend_done" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name"/></h1>
+                        <h2 class="o_row">
+                            <div>
+                                <label for="partner_name" class="oe_edit_only"/>
+                                <field name="partner_name"/>
+                            </div>
+                        </h2>
+                        <br/>
+                          <h2 class="o_row">
+                            <div>
+                                <label for="job_id" class="oe_edit_only"/>
+                                 <field name="job_id" required="1" options="{'no_create': True}"/>
+                            </div>
+                        </h2>
+                          <br/>
+                        <h2 class="o_row" attrs="{'invisible':[('total_score','=',0)]}">
+                            <div>
+                                <label for="total_score" class="oe_edit_only"/>
+                                 <field name="total_score" readonly="1" />
+                            </div>
+                        </h2>
+                    </div>
+                   <br/>
+
+
+                     <notebook colspan="4">
+
+
+
+                     <page name="job_description" string="Applicant Infomation">
+                         <group>
+                            <group>
+                                <field name="partner_id" required="0" invisible="1"/>
+                                <field name="title_id"/>
+                                <field name="email_from" widget="email"/>
+                                <field name="email_cc" groups="base.group_no_one"/>
+                                <field name="partner_phone" widget="phone"/>
+                                <field name="partner_mobile" widget="phone"/>
+                                <field name="address" widget="phone"/>
+
+                            </group>
+                            <group>
+                                <field name="application_number" readonly="1"/>
+                                <field name="announcement_no"/>
+                                <field name="categ_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                                <field name="user_id"/>
+                                <field name="source_id"/>
+                                <field name="priority" widget="priority"/>
+                                <field name="total_score"/>
+                            </group>
+                            <group string="Interview Info">
+                                <field name="interviewer" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                                <field name="interview_date"/>
+                                <field name="interviewer_place"/>
+                            </group>
+                            <group string="Job">
+                                <field name="department_id"/>
+                                <field name="company_id" invisible="1" groups="base.group_multi_company" options="{&quot;no_open&quot;:True}"/>
+                            </group>
+
+                          <group string="Contract">
+                                <label for="current_salary"/>
+                                <div class="o_row">
+                                    <field name="current_salary"/>
+                                    <span attrs="{'invisible':[('salary_expected_extra','=',False)]}"> + </span>
+                                    <field name="salary_expected_extra" placeholder="Extra advantages..."/>
+                                </div>
+                                <label for="salary_expected"/>
+                                <div class="o_row">
+                                    <field name="salary_expected"/>
+                                    <span attrs="{'invisible':[('salary_expected_extra','=',False)]}"> + </span>
+                                    <field name="salary_expected_extra" placeholder="Extra advantages..."/>
+                                </div>
+                                <label for="salary_proposed"/>
+                                <div class="o_row">
+                                    <field name="salary_proposed"/>
+                                    <span attrs="{'invisible':[('salary_proposed_extra','=',False)]}"> + </span>
+                                    <field name="salary_proposed_extra" placeholder="Extra advantages..."/>
+                                </div>
+                                <field name="availability"/>
+                                <field name="emp_id" invisible="1"/>
+                            </group>
+                        </group>
+
+                          <div class="row">
+                            <div class="o_hr_skills_group o_group_resume col-lg-7 d-flex">
+                            <separator string="Resume"/>
+                                <field mode="tree" nolabel="1" name="resume_line_ids" widget="hr_resume">
+                                    <tree>
+                                        <field name="line_type_id"/>
+                                        <field name="name"/>
+                                        <field name="description"/>
+                                        <field name="date_start"/>
+                                        <field name="date_end"/>
+                                        <field name="display_type" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div class="o_hr_skills_group o_group_skills col-lg-5 d-flex flex-column">
+                                <separator string="Skills"/>
+                                <field mode="tree" nolabel="1" name="employee_skill_ids" widget="hr_skills">
+                                    <tree>
+                                        <field name="skill_type_id" invisible="1"/>
+                                        <field name="skill_id"/>
+                                        <field name="skill_level_id"/>
+                                        <field name="level_progress" widget="progressbar"/>
+                                    </tree>
+                                </field>
+                            </div>
+                        </div>
+
+
+
+                        <separator string="Application Summary"/>
+                        <field name="description" placeholder="Feedback of interviews..."/>
+                     </page>
+
+                        <page string="Scoring Rules">
+                           <group col="4" colspan="4" string="Interview Score">
+
+                                <label for="interview_score"/>
+                                <div class="o_row" name="interview_score">
+                                    <field name="interview_score" nolabel="1"/>
+                                    <span>/ 4</span>
+                                </div>
+
+                              <label for="practical_score" attrs="{'invisible': [('show_practical_score', '=' , False)]}"/>
+                                <div class="o_row" name="practical_score" attrs="{'invisible': [('show_practical_score', '=' , False)]}">
+                                    <field name="practical_score" nolabel="1"/>
+                                    <span>/ 4</span>
+                                </div>
+
+                                <label for="jd_score"/>
+                                <div class="o_row" name="jd_score">
+                                    <field name="jd_score" nolabel="1"/>
+                                    <span>/ 4</span>
+                                </div>
+
+                                <label for="total_score"/>
+                                <div class="o_row" name="total_score">
+                                    <field name="total_score" nolabel="1"/>
+                                    <span>/ 4</span>
+                                </div>
+                                <field name="personality_test"  widget="many2many_tags"/>
+                            </group>
+                        </page>
+                        <page string="Interview Questions">
+                            <group string="Specific Functional" attrs="{'invisible': [('job_id', '=', False)]}">
+                                   <field name="question_ids"  attrs="{'invisible': [('job_id', '=', False)], 'readonly': [('is_saved', '=', False)]}"  nolabel="1">
+                                    <tree editable="top">
+                                        <field name="interview_question_id"
+                                               domain="[('type','=','technical'), ('job_position_id', '=', parent.job_id)]"   string="Question"/>
+                                        <field name="expected_answer"/>
+                                        <field name="question_weight" string="Weight"/>
+                                        <field name="score"/>
+                                        <field name="no_scoring"/>
+                                        <field name="comment"/>
+                                    </tree>
+                                </field>
+
+                                 <group class="oe_subtotal_footer oe_right">
+                                    <div class="oe_subtotal_footer_separator oe_inline">
+                                        <label for="technical_score"/>
+                                    </div>
+                                    <field name="technical_score" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+                                    <div class="oe_subtotal_footer_separator oe_inline">
+                                        <label for="technical_weighted"/>
+                                    </div>
+                                    <field name="technical_weighted" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                            <group string="Characteristic / Personality Questions" attrs="{'invisible': [('job_id', '=', False)]}">
+                                 <field name="personality_ids"  attrs="{'invisible': [('job_id', '=', False)], 'readonly': [('is_saved', '=', False)] }"  nolabel="1">
+                                    <tree editable="top">
+                                      <field name="interview_question_id"
+                                             domain="[('type', '=', 'personality')]" string="Question"/>
+                                        <field name="expected_answer"/>
+                                        <field name="question_weight" string="Weight"/>
+                                        <field name="score"/>
+                                        <field name="no_scoring"/>
+                                         <field name="comment"/>
+                                    </tree>
+                                </field>
+                               <group class="oe_subtotal_footer oe_right">
+                                    <div class="oe_subtotal_footer_separator oe_inline">
+                                        <label for="personality_score"/>
+                                    </div>
+                                    <field name="personality_score" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+                                    <div class="oe_subtotal_footer_separator oe_inline">
+                                        <label for="personality_weighted"/>
+                                    </div>
+                                    <field name="personality_weighted" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                            <group string="Motivations / Working Relationships" attrs="{'invisible': [('job_id', '=', False)]}">
+                                 <field name="motivation_ids"  attrs="{'invisible': [('job_id', '=', False)], 'readonly': [('is_saved', '=', False)]}"  nolabel="1">
+                                    <tree editable="top">
+                                        <field name="interview_question_id" domain="[('type', '=', 'motivation')]" />
+                                        <field name="expected_answer"/>
+                                        <field name="question_weight" string="Weight"/>
+                                        <field name="score"/>
+                                        <field name="no_scoring"/>
+                                         <field name="comment"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <div class="oe_subtotal_footer_separator oe_inline">
+                                        <label for="motivation_score"/>
+                                    </div>
+                                    <field name="motivation_score" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+                                    <div class="oe_subtotal_footer_separator oe_inline">
+                                        <label for="motivation_weighted"/>
+                                    </div>
+                                    <field name="motivation_weighted" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                            <group string="Basic / Administrative" attrs="{'invisible': [('job_id', '=', False)]}">
+                                  <field name="administrative_ids"  attrs="{'invisible': [('job_id', '=', False)], 'readonly': [('is_saved', '=', False)]}"  nolabel="1">
+                                    <tree editable="top">
+                                        <field name="interview_question_id"  domain="[('type', '=', 'basic')]" string="Question"/>
+                                        <field name="expected_answer" force_save="1"/>
+                                        <field name="question_weight" string="Weight" force_save="1"/>
+                                        <field name="score"/>
+                                        <field name="no_scoring" force_save="1"/>
+                                         <field name="comment"/>
+                                    </tree>
+                                </field>
+
+                                  <group class="oe_subtotal_footer oe_right">
+                                    <div class="oe_subtotal_footer_separator oe_inline">
+                                        <label for="basic_score"/>
+                                    </div>
+                                    <field name="basic_score" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+                                    <div class="oe_subtotal_footer_separator oe_inline">
+                                        <label for="basic_weighted"/>
+                                    </div>
+                                    <field name="basic_weighted" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Job Offer Information" name="information" attrs="{'invisible': [('stage_id','not in', [4, 5])]}">
+                            <group name="main_info">
+                               
+                                <group name="salary_and_advantages" string="Job Offer Info">
+                                    <label for="wage"/>
+                                    <div class="o_row" name="wage">
+                                        <field name="wage" nolabel="1"  attrs="{'required': [('stage_id','in', [4, 5])]}"/>
+                                        <span>/ month</span>
+                                    </div>
+                                    <field name="contract_period"/>
+                                    <field name="desired_start_date" attrs="{'required': [('stage_id','in', [4, 5])]}"/>
+                                    <field name="struct_id" attrs="{'required': [('stage_id','in', [4, 5])]}"/>
+                                </group>
+                                <group name="salary_and_advantages" string="Holidays">
+                                    <label for="annual_leave"/>
+                                    <div class="o_row">
+                                        <field name="annual_leave" nolabel="1"/>
+                                        <span>day(s) / year</span>
+                                    </div>
+                                    <label for="public_holiday"/>
+                                    <div class="o_row">
+                                        <field name="public_holiday" nolabel="1"/>
+                                        <span>day(s) / year</span>
+                                    </div>
+                                </group>
+                                <group string="Allowance">
+                                   <label for="housing_allowance"/>
+                                    <div class="o_row">
+                                        <field name="housing_allowance" nolabel="1"/>
+                                        <span>/ month</span>
+                                    </div>
+                                   <label for="travel_allowance"/>
+                                    <div class="o_row">
+                                        <field name="travel_allowance" nolabel="1"/>
+                                        <span>/ month</span>
+                                    </div>
+                                   <label for="education_allowance"/>
+                                    <div class="o_row">
+                                        <field name="education_allowance" nolabel="1"/>
+                                        <span>/ month</span>
+                                    </div>
+                                   <label for="meal_allowance"/>
+                                    <div class="o_row">
+                                        <field name="meal_allowance" nolabel="1"/>
+                                        <span>/ month</span>
+                                    </div>
+                                   <label for="medical_allowance"/>
+                                    <div class="o_row">
+                                        <field name="medical_allowance" nolabel="1"/>
+                                        <span>/ month</span>
+                                    </div>
+                                   <label for="other_allowance"/>
+                                    <div class="o_row">
+                                        <field name="other_allowance" nolabel="1"/>
+                                        <span>/ month</span>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                     </notebook>
+                 </sheet>
+            </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="interview_question_report">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <div class="page" style="page-break-before: always;">
+                        <style  type="text/css">
+                            @font-face {
+                                font-family: 'Georgia';
+                                font-style: normal;
+                                src: url('/pm_general/static/src/fonts/georgia/Georgia.ttf') format('truetype');
+                            }
+                            .container-style {
+                                font-family: 'Georgia';
+                                font-size: 17px;
+                                color: #404040;
+                            }
+                            .img-logo {
+                                width: 250px;
+                            }
+                            .font-unset {
+                                font-family: unset !important;
+                            }
+                            .content .value {
+                                padding-bottom: 1px;
+                                transform: translateY(-1);
+                                border-bottom: 1px solid black;
+                            }
+                            table th {
+                                background: #BFBFBF;
+                            }
+                            .w-100px {
+                                width: 100px !important;
+                            }
+                            .w-260 {
+                                width: 260px;
+                            }
+                            .signature-container .signature {
+                                width: 80%;
+                                padding-bottom: 100px;
+                                border-bottom: 1px solid black;
+                            }
+                            .application-description {
+                                min-height: 150px !important;
+                            }
+                            h5 {
+                                font-weight: bold; 
+                            }
+                        </style>
+                        <div class="container-fluid container-style px-5" >
+
+                            <!-- title and header -->
+                            <div class="text-center">
+                                 <img src="/pm_general/static/src/img/icon.png" class="img-logo" />
+                                <h3>Interview Questions and Scoring Form</h3>
+                            </div>
+
+                            <!-- description -->
+                            <div class="content p-3">
+                                <div class="row">
+                                    <div class="col-3 p-0 label">Date:</div>
+                                    <div class="col-9 p-0 value"><t t-esc="applicant['interview_date']" /></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 p-0 label">Applicant Name:</div>
+                                    <div class="col-9 p-0 value"><t t-esc="applicant['name']" /></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 p-0 label">Position Applied for:</div>
+                                    <div class="col-9 p-0 value"><t t-esc="applicant['job_id']['name']" /></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 p-0 label">Interviewer Name:</div>
+                                    <div class="col-9 p-0 value"><t t-esc="interview_name" /></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 p-0 label">Interview held at:</div>
+                                    <div class="col-9 p-0 value"><t t-esc="applicant['interviewer_place']" /></div>
+                                </div>
+                            </div>
+
+                            <!-- Q&A table -->
+                            <!-- <p class="text-center p-3 font-italic"><u><b>Q&amp;A Table</b></u></p> -->
+                            <div style="position:relative">
+                                <h5 class="">Specific functional questions (<t t-esc="technical_weight" />%)</h5>
+                                <table class="table table-bordered border-dark">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center align-middle w-260">Question</th>
+                                            <th class="text-center align-middle">Scoring Criteria</th>
+                                            <th class="text-center align-middle w-100px">Weight</th>
+                                            <th class="text-center align-middle w-100px px-0">Score 1-4</th>
+                                            <th>Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="interview_questions" t-as="question">
+                                            <tr>
+                                                <td class="align-middle"><t t-esc="question['interview_question_id']['name']" /></td>
+                                                <td class="align-middle">
+                                                    <div class="raw-html">
+                                                        <t t-raw="question['expected_answer']" />
+                                                    </div>
+                                                </td>
+                                                <td class="text-center font-italic align-middle"><t t-esc="question['question_weight']"/></td>
+                                                <td class="text-center align-middle">
+                                                    <t t-if="question['no_scoring']">
+                                                        N/A
+                                                    </t>
+                                                    <t t-if="not question['no_scoring']">
+                                                        <t t-if="question['score'] > 0">
+                                                            <t t-esc="question['score']" />
+                                                        </t>
+                                                    </t>
+                                                </td>
+                                                <td><t t-esc="question['comment']"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="position:relative">
+                                <h5 class="">Character / personality questions  (<t t-esc="personality_weight" />%)</h5>
+                                <table class="table table-bordered border-dark">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center align-middle w-260">Question</th>
+                                            <th class="text-center align-middle">Scoring Criteria</th>
+                                            <th class="text-center align-middle w-100px">Weight</th>
+                                            <th class="text-center align-middle w-100px px-0">Score 1-4</th>
+                                            <th>Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="personality_question" t-as="question">
+                                            <tr>
+                                                <td class="align-middle"><t t-esc="question['interview_question_id']['name']" /></td>
+                                                <td class="align-middle">
+                                                    <div class="raw-html">
+                                                        <t t-raw="question['expected_answer']" />
+                                                    </div>
+                                                </td>
+                                                <td class="text-center font-italic align-middle">
+                                                    <t t-esc="question['question_weight']"/>
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <t t-if="question['no_scoring']">
+                                                        N/A
+                                                    </t>
+                                                    <t t-if="not question['no_scoring']">
+                                                        <t t-if="question['score'] > 0">
+                                                            <t t-esc="question['score']" />
+                                                        </t>
+                                                    </t>
+                                                </td>
+                                                <td><t t-esc="question['comment']"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="position:relative">
+                                <h5 class="">Motivations / working relationships  (<t t-esc="motivation_weight" />%)</h5>
+                                <table class="table table-bordered border-dark">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center align-middle w-260">Question</th>
+                                            <th class="align-middle">Scoring Criteria</th>
+                                            <th class="text-center align-middle w-100px">Weight</th>
+                                            <th class="text-center align-middle w-100px px-0">Score 1-4</th>
+                                            <th>Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="personality_question" t-as="question">
+                                            <tr>
+                                                <td class="align-middle"><t t-esc="question['interview_question_id']['name']" /></td>
+                                                <td class="align-middle">
+                                                    <div class="raw-html">
+                                                        <t t-raw="question['expected_answer']" />
+                                                    </div>
+                                                </td>
+                                                <td class="text-center font-italic align-middle">
+                                                    <t t-esc="question['question_weight']"/>
+                                                </td>
+                                                 <td class="text-center align-middle">
+                                                    <t t-if="question['no_scoring']">
+                                                        N/A
+                                                    </t>
+                                                    <t t-if="not question['no_scoring']">
+                                                        <t t-if="question['score'] > 0">
+                                                            <t t-esc="question['score']" />
+                                                        </t>
+                                                    </t>
+                                                </td>
+                                                <td><t t-esc="question['comment']"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table> 
+                            </div>  
+                            <div style="position:relative">
+                                <h5 class="">Administrative questions  (<t t-esc="basic_weight" />%)</h5>
+                                <table class="table table-bordered border-dark">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center align-middle w-260">Question</th>
+                                            <th class="align-middle">Scoring Criteria</th>
+                                            <th class="text-center align-middle w-100px">Weight</th>
+                                            <th class="text-center align-middle w-100px px-0">Score 1-4</th>
+                                            <th>Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="basic_questions" t-as="question">
+                                            <tr>
+                                                <td class="align-middle"><t t-esc="question['interview_question_id']['name']" /></td>
+                                                <td class="align-middle">
+                                                    <div class="raw-html">
+                                                        <t t-raw="question['expected_answer']" />
+                                                    </div>
+                                                </td>
+                                                <td class="text-center font-italic align-middle">
+                                                    <t t-esc="question['question_weight']"/>
+                                                </td>
+                                                 <td class="text-center align-middle">
+                                                    <t t-if="question['no_scoring']">
+                                                        N/A
+                                                    </t>
+                                                    <t t-if="not question['no_scoring']">
+                                                        <t t-if="question['score'] > 0">
+                                                            <t t-esc="question['score']" />
+                                                        </t>
+                                                    </t>
+                                                </td>
+                                                <td><t t-esc="question['comment']"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>  
+                            </div>
+                            <!-- total score and formula -->
+                            <div class="py-1">
+                                <div class="mb-0"><u>Total Score: <t t-esc="applicant['interview_score']" /></u></div>
+                            </div>
+
+                            <div t-attf-class="#{'application-description' if not applicant['description'] else ''}">
+                                <p class="m-0"><u>Consensus/ General Comments by interviewers:</u></p>
+                                <p class="p-0" t-esc="applicant['description']" />
+                            </div>
+
+                            <!-- signature -->
+                            <p><u>Signatures of Interviewers:</u></p>
+                            <div class="row signature-container">
+                                <div class="col-3">
+                                    <div class="signature">
+                                        <p>Line Manager:</p>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="signature">
+                                        <p>Operations Manager:</p>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="signature">
+                                        <p>COO:</p>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="signature">
+                                        <p>Dean:</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

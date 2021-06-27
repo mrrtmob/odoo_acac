@@ -1,0 +1,674 @@
+<odoo>
+  <data>
+
+      <template id="student_assets_backend_css" inherit_id="web.assets_backend">
+        <xpath expr="//link" position="before">
+            <link rel="stylesheet" type="text/css" href="/pm_leads/static/css/style.css"/>
+        </xpath>
+    </template>
+
+
+       <record id="ir_cron_student_reminder_action" model="ir.cron">
+            <field name="name">Student Postponed Reminder</field>
+            <field name="model_id" ref="model_op_student"/>
+            <field name="state">code</field>
+            <field name="code">model.student_reminder_scheduler()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+
+            <record id="view_pm_student_progression_tree" model="ir.ui.view">
+                <field name="name">pm.student.progression.tree</field>
+                <field name="model">pm.student.progress</field>
+                <field name="priority" eval="9"/>
+                <field name="arch" type="xml">
+                    <tree create="false" edit="false">
+                        <field name="date"/>
+                        <field name="course_id"/>
+                        <field name="batch_id"/>
+                        <field name="class_id"/>
+                        <field name="education_status" widget="label_selection"
+                               options = "{'classes': {'graduated': 'warning',
+                               'dismissed': 'danger', 'withdrawn': 'danger', 'postponed': 'danger',
+                               'active': 'success', 'enrollment': 'success', 'return': 'success'}}"/>
+                        <field name="remarks"/>
+                    </tree>
+                </field>
+            </record>
+
+      <record id="view_pm_student_custom_kanban" model="ir.ui.view">
+          <field name="name">pm.student.kanban</field>
+          <field name="model">op.student</field>
+          <field name="inherit_id" ref="openeducat_core.kanban_view_student"/>
+          <field name="arch" type="xml">
+                <xpath expr="//kanban/templates//div//div/ul" position="inside">
+                    <field name="education_status" string="Status" widget="label_selection"
+                           options="{'classes': {'graduated': 'primary', 'active': 'success', 'dismissed': 'danger', 'postponed': 'warning','withdrawn': 'danger'}}"/>
+                </xpath>
+                <xpath expr="//kanban/templates//div//div/ul" position="before">
+                     <h5>
+                      <field name="student_app_id"/>
+                    </h5>
+                </xpath>
+
+              <xpath expr="//field[@name='phone']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                </xpath>
+          </field>
+      </record>
+      <record id="view_pm_student_custom_tree" model="ir.ui.view">
+          <field name="name">pm.student.tree</field>
+          <field name="model">op.student</field>
+          <field name="inherit_id" ref="openeducat_core.view_op_student_tree"/>
+          <field name="arch" type="xml">
+             <xpath expr="//field[@name='title']" position="before">
+                <field name="student_app_id"/>
+            </xpath>
+            <xpath expr="//field[@name='blood_group']" position="attributes">
+               <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='emergency_contact']" position="attributes">
+               <attribute name="invisible">1</attribute>
+            </xpath>
+<!--            <xpath expr="//field[@name='library_card_id']" position="attributes">-->
+<!--               <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+          </field>
+      </record>
+
+
+
+    <record id="view_pm_student_custom_form" model="ir.ui.view">
+        <field name="name">op.student.custom.form</field>
+        <field name="model">op.student</field>
+         <field name="inherit_id" ref="openeducat_core.view_op_student_form"/>
+         <field name="arch" type="xml">
+
+             <xpath expr="//widget[@name='web_ribbon']" position="replace">
+                 <widget name="web_ribbon" title="Active" bg_color="bg-success" attrs="{'invisible': [('education_status', '!=', 'active')]}"/>
+                 <widget name="web_ribbon" title="Postponed" bg_color="bg-danger" attrs="{'invisible': [('education_status', '!=', 'postponed')]}"/>
+                 <widget name="web_ribbon" title="Withdrawn" bg_color="bg-danger" attrs="{'invisible': [('education_status', '!=', 'withdrawn')]}"/>
+                 <widget name="web_ribbon" title="Dismissed" bg_color="bg-danger" attrs="{'invisible': [('education_status', '!=', 'dismissed')]}"/>
+                 <widget name="web_ribbon" title="Graduated" bg_color="bg-warning" attrs="{'invisible': [('education_status', '!=', 'graduated')]}"/>
+             </xpath>
+
+
+            <xpath expr="//header" position="inside">
+                  <button string="Return Student"
+                          class="btn oe_stat_button" type="action"
+                          attrs="{'invisible': [('education_status', '=', 'active')]}"
+                          name="%(student_return_wizard)d"/>
+             </xpath>
+
+            <xpath expr="//page[@name='badge']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+             </xpath>
+
+             <xpath expr="//page[5]" position="attributes">
+                 <attribute name="string">Payment Schedule</attribute>
+             </xpath>
+
+
+<!--             <xpath expr="//button[@name='get_parent']" position="replace">-->
+<!--                 <button class="btn oe_stat_button" type="object" name="get_parent" style="border-right: 1px solid;" icon="fa-user-o" string="Emergency Contact">-->
+<!--			    </button>-->
+<!--             </xpath>-->
+
+             <xpath expr="//button[@name='action_view_invoice']" position="replace">
+                 <button class="btn oe_stat_button" type="object"
+                            name="action_view_invoice"
+                            groups="openeducat_core.group_op_back_office_admin,pm_accounting.group_acac_accountant"
+                            style="border-right: 1px solid;"
+                            icon="fa-pencil-square-o">
+                        <field string="Invoiced" name="total_invoiced" widget="statinfo"/>
+                    </button>
+             </xpath>
+
+             <xpath expr="//button[@name='create_student_user']" position="replace">
+                    <button type="object" name="create_student_user"
+                                string="Create Student User"
+                                groups="openeducat_core.group_op_back_office_admin"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('user_id', '!=', False)]}"/>
+             </xpath>
+
+               <xpath expr="//div[@name='smart_button']" position="inside">
+                <button class="btn oe_stat_button" type="object"
+                        name="get_result"
+                        string="Final Result"
+                        attrs="{'invisible': [('term_result_id', '=', False)]}"
+                        style="border-right: 1px solid;"
+                        icon="fa-paste">
+                </button>
+
+                <button class="btn oe_stat_button" type="object"
+                        name="get_progression"
+                        string="Progression"
+                        style="border-right: 1px solid;"
+                        icon="fa-flickr">
+                </button>
+            </xpath>
+
+
+
+
+
+
+             <!-- hide button -->
+             <xpath expr="//button[@name='get_job_post']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+             </xpath>
+             <xpath expr="//button[@name='get_skill']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+             </xpath>
+
+            <xpath expr="//field[@name='last_name']" position="replace">
+                <field name="last_name" placeholder="Family Name" required="1"/>
+            </xpath>
+             <xpath expr="//page[@name='personal_information']" position="replace">
+                  <page string="Personal Information">
+                     <group>
+                        <group>
+                            <field name="student_app_id"/>
+                            <field name="education_status" string="Status" />
+<!--                            <field name="current_semester" />-->
+                            <field name="khmer_name"/>
+                            <field name="birth_date" string="Date of Birth" required="1"/>
+                            <field name="birth_place"/>
+                            <field name="gender"/>
+                            <field name="user_id" placeholder="User" readonly="1" attrs="{'invisible':[('id', '=', False)]}"/>
+<!--                            <field name="education_status" string="Status" />-->
+<!--                               style="color:Blue;" attrs="{'readonly':[('education_status', '=', 'active')]}"-->
+<!--                                   decoration-success="education_status=='active'"-->
+<!--                                   decoration-primary="education_status=='graduated'"-->
+<!--                                   decoration-info="education_status=='postponed'"-->
+<!--                                   decoration-warning="education_status=='withdrawn'"-->
+<!--                                   decoration-danger="education_status=='dismissed'"-->
+                            <field name="email"  required="1" placeholder="Email"/>
+                            <field name="mobile" required="1" placeholder="Mobile Phone" widget="phone" />
+                            <field name="phone" placeholder="Mobile Phone 1" widget="phone" string="Mobile 1" />
+                            <field name="facebook"/>
+<!--                            <field name="current_semester" />-->
+                            <field name="contact_name" required="1" placeholder="Emergency Contact"/>
+                            <field name="emergency_number"/>
+<!--                            <field name="mobile" required="1" placeholder="Mobile Phone"/>-->
+<!--                            <label for="street" string="Address"/>-->
+                            <field name="id_card"/>
+                            <field name="passport_number"/>
+                            <field name="visa_number"/>
+                            <field name="visa_expiry"/>
+                            <field name="marital_status"/>
+                            <field name="nationality"  attrs="{'required': True}" />
+                            <field string="Native Language" required="1" name="primary_language"/>
+                            <field name="other_language"  widget="many2many_tags"/>
+                        </group>
+                         <group>
+                             <label for="street" string="Address"/>
+                             <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                                <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                            </div>
+                             <label for="p_street" string="Permanent Address"/>
+                            <div class="o_address_format">
+                                <field name="p_street" placeholder="Street..." class="o_address_street"/>
+                                <field name="p_street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="p_city" placeholder="City" class="o_address_city"/>
+                                <field name="p_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                                <field name="p_zip" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="p_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                            </div>
+                            <field name="constrains"/>
+                            <field name="hobby"/>
+                            <field name="medical_checkup"/>
+                            <field name="special_medical" placeholder="Medical Check Up"
+                                           attrs="{'required':[('medical_checkup','=',False)]}"/>
+                            <field name="motivational_letter"/>
+                            <field name="enroll_reason_id"
+                                       attrs="{'invisible': [('motivational_letter','=', False)]}"/>
+                         </group>
+<!--                         <group string="Additional Info">-->
+<!--                            <field name="khmer_name"/>-->
+<!--                            <field name="id_card"/>-->
+<!--                            <field name="passport_number"/>-->
+<!--                            <field name="marital_status"/>-->
+<!--                            <field name="nationality"/>-->
+<!--                            <field string="Native Language" required="1" name="primary_language"/>-->
+<!--                            <field name="other_language" widget="many2many_other_language"/>-->
+<!--                            <field name="shoe_size"/>-->
+<!--                            <field name="uniform_size"/>-->
+<!--                            <field name="job_position"/>-->
+<!--                            <field name="working_experience"/>-->
+<!--                            <field name="constrains"/>-->
+<!--                            <field name="hobby"/>-->
+<!--                        </group>-->
+
+<!--                        <group string="Student Material">-->
+<!--                            <group colspan="4">-->
+<!--                             <field name="chef_uniform"/>-->
+<!--                             <field name="shoes"/>-->
+<!--                             <field name="knife"/>-->
+<!--                             <field name="study_material"/>-->
+<!--                            </group>-->
+<!--                            <group colspan="10">-->
+<!--                                <group>-->
+<!--                                    <field name="n_locker_key_s1" />-->
+<!--                                    <field name="n_locker_key_s4" />-->
+<!--                                </group>-->
+<!--                                <group>-->
+<!--                                    <field name="s1_returned" />-->
+<!--                                    <field name="s4_returned" />-->
+<!--                                </group>-->
+<!--                            </group>-->
+<!--                        </group>-->
+                         <group string="Marketing">
+<!--                            <field name="campaign_id"/>-->
+<!--                            <field name="source_id"/>-->
+<!--                            <field name="referred"/>-->
+                            <field name="acac_contact" />
+                            <field name="lead_source" />
+                            <field name="additional_source" />
+                            <field name="lead_participation">
+                                <tree editable="bottom">
+                                    <field name="participation_id" />
+                                    <field name="point" />
+                                </tree>
+                            </field>
+                        </group>
+
+                       <group string="Family Info">
+<!--                            <field name="family_status"/>-->
+<!--                            <field name="family_business"/>-->
+<!--                            <field name="family_income"/>-->
+<!--                            <field name="family_size"/>-->
+                            <field name="family_size"/>
+                            <field name="parents"/>
+                            <field name="siblings"/>
+                            <field name="family_income"/>
+                            <field name="other_depends"/>
+                        </group>
+
+<!--                         tem:-->
+
+<!--                         <group name="medical_history_ids" colspan="4" string="Medical History">-->
+<!--                            <field name="medical_history_ids">-->
+<!--                                <tree editable="bottom">-->
+<!--                                    <field name="name" />-->
+<!--                                    <field name="date" />-->
+<!--                                    <field name="hospital" />-->
+<!--                                    <field name="condition" />-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </group>-->
+
+
+
+<!--                         <group string="Extra">-->
+<!--                           <field name="medical_checkup"/>-->
+<!--                           <field name="special_medical" placeholder="Medical Check Up"-->
+<!--                                           attrs="{'required':[('medical_checkup','=',False)]}"/>-->
+<!--                           <field name="motivational_letter"/>-->
+<!--                           <field name="enroll_reason_id"-->
+<!--                                       attrs="{'invisible': [('motivational_letter','=', False)]}"/>-->
+<!--                         </group>-->
+                    </group>
+                  </page>
+             </xpath>
+
+
+              <xpath expr="//page[@name='educational']" position="replace">
+
+                   <page string="Course Details" name="course_details">
+                        <group>
+                            <group colspan="3">
+                                <field name="gr_no"/>
+                            </group>
+                        </group>
+                        <group>
+                            <separator string="Admission Details" colspan="4"/>
+                            <field name="course_detail_ids" required="1" nolabel="1">
+                                <tree string="Course Details" delete="false" decoration-success="p_active==True" decoration-muted="p_active==False">
+                                    <field name="course_id" />
+                                    <field name="batch_id" context="{'course_id': course_id,'get_parent_batch':1}"/>
+                                    <field name="class_id" />
+                                    <field name="education_status"/>
+                                    <field name="p_active"/>
+                                    <field name="p_e_subject_ids" widget="many2many_tags"/>
+                                    <field name="subject_ids"  widget="many2many_tags"/>
+                                </tree>
+                                <form string="Student Course Detail">
+                                    <sheet>
+                                        <group>
+                                            <field name="is_saved" invisible="1"/>
+                                            <group>
+                                             <field name="course_id" force_save="1" attrs="{'readonly': [('is_saved', '!=', False)]}"/>
+                                             <field name="batch_id" force_save="1" context="{'course_id': course_id,'get_parent_batch':1}" attrs="{'readonly': [('is_saved', '!=', False)]}"/>
+                                             <field name="class_id" force_save="1"/>
+
+                                            </group>
+                                            <group>
+                                                 <field name="education_status"/>
+                                                 <field name="p_active"/>
+                                            </group>
+                                        </group>
+                                        <group string="Postpone Info" attrs="{'invisible': [('education_status', '=', 'active')]}">
+                                              <field name="return_date"/>
+                                              <field name="cancel_date"/>
+                                              <field name="remarks"/>
+                                        </group>
+                                        <group>
+                                            <field name="p_e_subject_ids" widget="many2many_tags"/>
+                                            <field name="subject_ids" readonly="1"  widget="many2many_tags"/>
+                                        </group>
+                                    </sheet>
+
+                                </form>
+                            </field>
+                        </group>
+
+                         <group>
+                            <separator string="Semester Details"  colspan="4" />
+                            <newline />
+                            <field name="student_semester_detail" nolabel="1">
+                                <tree decoration-success="state=='ongoing'" editable="top"  delete="false">
+                                       <field name="semester_id" />
+                                       <field name="state"/>
+                                       <field name="batch_id"/>
+                                       <field name="remark"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                       <group col="4" colspan="4">
+                            <field name="prev_institute_id"/>
+                            <field name="prev_course_id"/>
+                            <field name="prev_result"/>
+                             <field name="high_school_id" />
+                            <field name="highest_education"/>
+                            <field name="english_score"/>
+                            <field name="is_scholarship"/>
+                            <field name="scholarship_status"
+                                   attrs="{'required':[('is_scholarship','=',True)],'invisible': [('is_scholarship','=', False)]}"/>
+
+                        </group>
+                 </page>
+
+             </xpath>
+
+        <xpath expr="//field[@name='fees_detail_ids']/tree" position="inside">
+            <field name="payable" invisible="1"/>
+        </xpath>
+        <xpath expr="//field[@name='fees_detail_ids']/tree" position="attributes">
+            <attribute name="decoration-muted">payable==False</attribute>
+        </xpath>
+
+
+             <xpath expr="//page[@name='course_details']" position="after">
+                 <page string="Education &amp; Professional experience">
+                    <group>
+                        <field name="schooling_year" />
+                        <field name="high_school_id" />
+                        <field name="highest_education"/>
+                        <field name="lead_educational_achievement">
+                            <tree class="exp_tree" editable="top">
+                                <field name="name" />
+                                <field name="high_school_id" />
+                                 <field name="is_equivalent" />
+                            </tree>
+                        </field>
+                        <field name="lead_working_experience">
+                            <tree editable="top">
+                                <field name="title_id" />
+                                <field name="company" />
+                                <field name="year" />
+                            </tree>
+                        </field>
+                    </group>
+                 </page>
+             </xpath>
+
+             <xpath expr="//page[@name='discipline']" position="after">
+                 <page string="Attendance">
+                     <group string="Attendance">
+                        <field name="pin" string="PIN"/>
+                        <label for="barcode"/>
+                        <div class="o_row">
+                            <field name="barcode"/>
+                            <button string="Generate" class="btn btn-link" type="object" name="generate_random_barcode"
+                                    attrs="{'invisible': [('barcode', '!=', False)]}"/>
+                        </div>
+                    </group>
+                     <field name="semester_attendance" colspan="4" readonly="1" nolabel="1">
+                        <tree string="Semester Discipline" decoration-primary="state=='first_warning'" decoration-warning="state=='second_warning'" decoration-danger="state=='dismissed'">
+                            <field name="semester_id"/>
+                            <field name="total_hours"/>
+                            <field name="no_permission_absence"/>
+                            <field name="state"/>
+                        </tree>
+                     </field>
+                 </page>
+                 <page string="Grade">
+                     <field name="term_result_id" invisible="1" />
+                     <field name="semester_result" colspan="4" readonly="1" nolabel="1">
+                        <tree string="Semester Discipline"  decoration-danger="status=='fail'">
+                            <field name="semester_id"/>
+                            <field name="student_id"/>
+                            <field name="gpa"/>
+                            <field name="status"/>
+                        </tree>
+                     </field>
+                 </page>
+             </xpath>
+
+             <xpath expr="//page[@name='library']" position="attributes">
+                 <attribute name="string"><![CDATA[Library & Material]]></attribute>
+             </xpath>
+             <xpath expr="//field[@name='media_movement_lines']" position="after">
+                 <group string="Student Material">
+                    <group colspan="4">
+                     <field name="chef_uniform"/>
+                     <field name="shoes"/>
+                     <field name="knife"/>
+                     <field name="study_material"/>
+                    </group>
+                    <group colspan="10">
+                        <group>
+                            <field name="n_locker_key_s1" />
+                            <field name="n_locker_key_s4" />
+                        </group>
+                        <group>
+                            <field name="s1_returned" />
+                            <field name="s4_returned" />
+                        </group>
+                    </group>
+                </group>
+             </xpath>
+
+         </field>
+    </record>
+
+
+    <record id="view_pm_student_d_custom_form" model="ir.ui.view">
+        <field name="name">pm.student.discipline.custom</field>
+        <field name="model">op.student</field>
+        <field name="inherit_id" ref="openeducat_discipline.view_op_student_inherit_discipline"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='discipline']" position="replace">
+             <page name="discipline" string="Discipline">
+                 <field name="semester_discipline" colspan="4" readonly="1" nolabel="1">
+                    <tree string="Semester Discipline" decoration-primary="state=='first_warning'" decoration-warning="state=='second_warning'" decoration-danger="state=='dismissed'">
+                        <field name="semester_id"/>
+                        <field name="discipline_point"/>
+                        <field name="state"/>
+                    </tree>
+                 </field>
+             </page>
+             </xpath>
+        </field>
+    </record>
+
+    <record id="custom_view_op_student_search" model="ir.ui.view">
+        <field name="name">op.student.search</field>
+        <field name="model">op.student</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Student">
+                <filter string="Active" name="education_status" domain="[('education_status', '=', 'active')]"/>
+                <filter string="Postponed" name="education_status" domain="[('education_status', '=', 'postponed')]"/>
+                <filter string="Withdrawn" name="education_status" domain="[('education_status', '=', 'withdrawn')]"/>
+                <filter string="Graduated" name="education_status" domain="[('education_status', '=', 'graduated')]"/>
+                <filter string="Dismissed" name="education_status" domain="[('education_status', '=', 'dismissed')]"/>
+                <newline/>
+                <group expand="0" string="Group By...">
+                    <filter name="gender" string="Gender"
+                            domain="[]" context="{'group_by':'gender'}"/>
+                    <filter name="current_semester" string="Semester"
+                            domain="[]" context="{'group_by':'current_semester'}"/>
+                    <filter name="batch_id" string="Term"
+                            domain="[]" context="{'group_by':'batch_id'}"/>
+                    <filter name="nationality" string="Nationality"
+                            domain="[]" context="{'group_by':'nationality'}"/>
+                    <filter name="language" string="Language"
+                            domain="[]" context="{'group_by':'lang'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <!-- custom filter -->
+    <record id="student_search_inherit" model="ir.ui.view">
+        <field name="name">op.student.search</field>
+        <field name="model">op.student</field>
+        <field name="inherit_id" ref="openeducat_core.view_op_student_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[1]" position="replace">
+<!--                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>-->
+                <filter string="Active" name="education_status" domain="[('education_status', '=', 'active')]"/>
+                <filter string="Postponed" name="education_status" domain="[('education_status', '=', 'postponed')]"/>
+                <filter string="Withdrawn" name="education_status" domain="[('education_status', '=', 'withdrawn')]"/>
+                <filter string="Graduated" name="education_status" domain="[('education_status', '=', 'graduated')]"/>
+                <filter string="Dismissed" name="education_status" domain="[('education_status', '=', 'dismissed')]"/>
+                 <filter name="scholarship_student" string="Scholarship Students" domain="[('is_scholarship','=',True)]"/>
+                <group expand="0" string="Group By...">
+                    <filter name="gender" string="Gender"
+                            domain="[]" context="{'group_by':'gender'}"/>
+                    <filter name="nationality" string="Nationality"
+                            domain="[]" context="{'group_by':'nationality'}"/>
+                    <filter name="language" string="Language"
+                            domain="[]" context="{'group_by':'lang'}"/>
+<!--tem-->
+<!--                    <filter name="course_detail_ids" string="Class"-->
+<!--                            domain="[('p_active', '=', True)]" context="{'group_by':'class_id'}"/>-->
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="batch_search_inherit" model="ir.ui.view">
+        <field name="name">op.batch.search.inherit</field>
+        <field name="model">op.batch</field>
+        <field name="inherit_id" ref="openeducat_core.view_op_batch_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[1]" position="before">
+                <filter string="Active Term" name="state_active" domain="[('state', '=', 'active')]"/>
+                <filter string="Finished Term" name="state_finish" domain="[('state', '=', 'finished')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_open_op_student_view">
+        <field name="name">Students</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">op.student</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="custom_view_op_student_search"/>
+        <field name="domain">[('education_status','!=','active')]</field>
+        <field name="context">{}</field>
+    </record>
+
+
+    <menuitem id="crm_menu_leads"
+        name="Student"
+        parent="crm.crm_menu_root"
+        groups="crm.group_use_lead"
+        action="act_open_op_student_view"
+        sequence="5"/>
+
+    <!-- use to remove student progression from UI -->
+    <record id="make_invisible" model="res.groups">
+        <field name="name">Invisible</field>
+    </record>
+    <record model="ir.ui.menu" id="openeducat_student_progress_enterprise.student_progrss_analysis_menu">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+
+    <record model="ir.actions.act_window.view" id="act_open_op_student_view_kanban">
+        <field name="act_window_id" ref="act_open_op_student_view"/>
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="openeducat_core.kanban_view_student"/>
+    </record>
+
+       <record model="ir.actions.act_window" id="act_open_student_pm_student_progression_view">
+        <field name="name">Student Progression</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pm.student.progress</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="custom_view_op_student_course_form" model="ir.ui.view">
+        <field name="name">op.student.course.form</field>
+        <field name="model">op.student.course</field>
+        <field name="inherit_id" ref="openeducat_core.view_op_student_course_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//form' position='replace'>
+                <form string="Student Course Detail">
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <field name="student_id"/>
+                            <field name="course_id"/>
+                            <field name="batch_id" string="Term" domain="[('course_id', '=', course_id)]"/>
+                            <field name="class_id"/>
+                            <field name="p_active"/>
+                        </group>
+                        <group col="4" string="Exempted Subjects">
+                            <field name="p_e_subject_ids" colspan="4" nolabel="1"/>
+                        </group>
+                        <group col="4" string="Subjects">
+                            <field name="subject_ids" colspan="4" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- use to custom student user detail -->
+    <record id="custom_view_users_simple_form" model="ir.ui.view">
+        <field name="name">custom.res.users</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_simple_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='mobile']" position="after">
+                <field name="phone" string="Mobile 1" />
+            </xpath>
+        </field>
+    </record>
+
+  </data>
+</odoo>

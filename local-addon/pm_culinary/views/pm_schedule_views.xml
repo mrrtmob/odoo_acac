@@ -1,0 +1,144 @@
+<odoo>
+  <data>
+    <template id="purchase_assets_backend_css" inherit_id="web.assets_backend">
+      <xpath expr="//link" position="before">
+        <link rel="stylesheet" type="text/css" href="/pm_culinary/static/css/style.css"/>
+      </xpath>
+    </template>
+
+    <record id="pm_schedule_view_search" model="ir.ui.view">
+      <field name="name">pm.schedule.view.search</field>
+      <field name="model">pm.schedule</field>
+      <field name="arch" type="xml">
+        <search string="Schedules">
+          <field name="name" />
+
+          <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+          <filter string="Submitted" name="submitted" domain="[('state', '=', 'submitted')]"/>
+          <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
+          <filter string="Rejected" name="approved" domain="[('state', '=', 'rejected')]"/>
+
+          <group expand="0" string="Group By...">
+            <filter string="Event Date" name="group_by_event_date"
+                    domain="[]" context="{'group_by':'event_date'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <record id="pm_schedule_view_list" model="ir.ui.view">
+      <field name="name">pm.schedule.view.list</field>
+      <field name="model">pm.schedule</field>
+      <field name="arch" type="xml">
+        <tree string="Schedules">
+          <field name="name" />
+          <field name="state" widget="label_selection" options="{'classes': {'draft': 'primary', 'submitted': 'secondary', 'approved': 'success', 'rejected': 'danger'}}"/>
+          <field name="event_date" />
+          <field name="currency_id" invisible="1" />
+          <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+          <field name="price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="pm_schedule_view_kanban" model="ir.ui.view">
+      <field name="name">pm.schedule.view.kanban</field>
+      <field name="model">pm.schedule</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="id" />
+          <field name="currency_id"/>
+
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click">
+                <div class="oe_kanban_details">
+                  <strong class="o_kanban_record_title">
+                    <field name="name" />
+                  </strong>
+
+                  <ul>
+                    <li>Event Date: <field name="event_date" widget="datetime" /></li>
+                    <li>Total Cost: <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" /></li>
+                    <li>Selling Price: <field name="price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" /></li>
+                  </ul>
+
+                  <field name="state" widget="label_selection" options="{'classes': {'draft': 'primary', 'submitted': 'secondary', 'approved': 'success', 'rejected': 'danger'}}"/>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record id="pm_schedule_view_form" model="ir.ui.view">
+      <field name="name">pm.schedule.view.form</field>
+      <field name="model">pm.schedule</field>
+      <field name="arch" type="xml">
+        <form>
+          <header groups="base.group_user">
+              <button name="act_submit" states="draft" string="Submit" type="object" class="oe_highlight"/>
+              <button name="act_approve" states="submitted" groups="pm_approval.group_pm_approval_team" string="Approve" type="object" class="oe_highlight"/>
+              <button name="act_reject" states="submitted" groups="pm_approval.group_pm_approval_team" string="Reject"
+                                type="object" class="btn-danger"/>
+              <button name="act_reset" states="rejected" string="Reset" type="object" />
+
+              <field name="state" widget="statusbar"
+                               statusbar_visible="draft,submitted,approved,rejected"/>
+          </header>
+
+          <sheet>
+            <field name="currency_id" attrs="{'invisible': 1}" />
+
+            <group col="4" modifiers="{}">
+              <field name="name" />
+              <field name="event_date" />
+              <field name="purpose" />
+              <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+              <field name="number_of_portion" />
+              <field name="price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+              <field name="account_number" />
+            </group>
+
+            <group string="Description">
+              <field name="description" nolabel="1" />
+            </group>
+
+            <group string="Menus">
+              <field name="schedule_menu_ids" widget="section_and_note_one2many" nolabel="1">
+                <tree class="tree-with-section" editable="bottom">
+                  <control>
+                    <create name="add_schedule_menu_control" string="Add a menu"/>
+                    <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                    <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                  </control>
+
+                  <field name="display_type" invisible="1"/>
+                  <field name="currency_id" invisible="1" />
+                  <field name="sequence" widget="handle"/>
+                  <field name="menu_id" attrs="{'required': [('display_type', '=', False)]}" />
+                  <field name="name" widget="section_and_note_text" attrs="{'invisible': [('menu_id', '!=', False)]}" />
+                  <field name="yield_percentage" />
+                  <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" readonly="1" force_save="1" />
+                  <field name="price_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" readonly="1" force_save="1" />
+                </tree>
+              </field>
+            </group>
+          </sheet>
+
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="schedule_action" model="ir.actions.act_window">
+      <field name="name">Schedules</field>
+      <field name="res_model">pm.schedule</field>
+      <field name="view_mode">tree,kanban,form</field>
+    </record>
+  </data>
+</odoo>

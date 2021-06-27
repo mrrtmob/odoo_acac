@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_op_admission_form_inherit" model="ir.ui.view">
+            <field name="name">op.admission.form.inherit</field>
+            <field name="model">op.admission</field>
+            <field name="inherit_id" ref="openeducat_admission.view_op_admission_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                </xpath>
+
+                <xpath expr="//header" position="inside">
+                    <button name="send_email" string="Send by Email" type="object"
+                            attrs="{'invisible':[('state', 'in', 'done')]}"
+                            class="btn-primary"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_op_admission_tree_inherit" model="ir.ui.view">
+            <field name="name">op.admission.tree.inherit</field>
+            <field name="model">op.admission</field>
+            <field name="inherit_id" ref="openeducat_admission.view_op_admission_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_op_admission_search_inherit" model="ir.ui.view">
+            <field name="name">op.admission.search.inherit</field>
+            <field name="model">op.admission</field>
+            <field name="inherit_id" ref="openeducat_admission.view_op_admission_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="." position="inside">
+                    <searchpanel>
+                        <field name="course_id" icon="fa fa-book"/>
+                    </searchpanel>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_dashboard_op_admission_view">
+            <field name="name">Admissions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.admission</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="search_view_id" ref="openeducat_admission.view_op_admission_search"/>
+            <field name="domain">[('course_id','in',[active_id]), ('state','=','done')]</field>
+        </record>
+        <record model="ir.actions.act_window" id="act_admission_analysis_pivot_view">
+            <field name="name">Admission Analysis</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.admission</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_id" ref="openeducat_admission.view_op_admission_pivot"/>
+            <field name="view_mode">pivot</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="op_admission_analysis_pivot_view" model="ir.actions.act_window.view">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">pivot</field>
+            <field name="view_id" ref="openeducat_admission.view_op_admission_pivot"/>
+            <field name="act_window_id" ref="act_admission_analysis_pivot_view"/>
+        </record>
+    </data>
+</odoo>

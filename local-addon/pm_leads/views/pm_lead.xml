@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><data>
+
+       <record id="ir_cron_lead_reminder_action" model="ir.cron">
+            <field name="name">Follow Up Reminder</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">model.lead_reminder_scheduler()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+      <template id="crm_assets_backend_css" inherit_id="web.assets_backend">
+        <xpath expr="//link" position="before">
+            <link rel="stylesheet" type="text/css" href="/pm_leads/static/css/style.css"/>
+        </xpath>
+    </template>
+
+    <record id="crm_lead_view_form" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit.pm.lead</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+
+        <button name="%(crm.action_crm_lead2opportunity_partner)d" position="replace">
+        </button>
+
+           <button name="%(crm.crm_lead_lost_action)d" position="replace">
+                 <button name="%(crm.crm_lead_lost_action)d" string="Mark Lost"
+                                type="action" context="{'default_lead_id': active_id}" attrs="{'invisible': [('active', '=', False)]}"/>
+            </button>
+
+        <xpath expr="//field[@name='stage_id']" position="after">
+             <button groups="pm_leads.group_acac_marketing" class="oe_highlight" name="convert_to_admission" attrs="{'invisible': [('type', '=', 'admission')]}" string="Convert to Admission" type="object"/>
+        </xpath>
+
+             <xpath expr="//div[@name='button_box']" position="after">
+                 <field name="image" widget="image" class="oe_left oe_avatar"/>
+            </xpath>
+
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="placeholder">Lead Description</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='website']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lang_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='email_cc']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='function']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='lead_priority']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='contact_name']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='title']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='title']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <label for="contact_name" position="attributes">
+               <attribute name="invisible">1</attribute>
+            </label>
+
+            <!-- admission conversion -->
+            <xpath expr="//group/group[2]" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group/group[4]" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+
+
+              <!-- left side -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <!-- Add your fields or attributes here-->
+                    <field name="first_name"/>
+                    <field name="last_name" string="Family Name"/>
+                    <field name="khmer_name"/>
+                    <field name="dob"/>
+                    <field name="gender"/>
+<!--                    <field name="user_id" placeholder="User" readonly="1"/>-->
+                </xpath>
+
+
+              <xpath expr="//field[@name='user_id']" position="before">
+                   <label for="street" string="Permanent Address"/>
+                    <div class="o_address_format">
+                        <field name="p_street" placeholder="Street..." class="o_address_street"/>
+                        <field name="p_street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="p_city" placeholder="City" class="o_address_city"/>
+                        <field name="p_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                        <field name="p_zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="p_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                    </div>
+                  <field name="id_card" />
+                  <field name="passport_number" />
+                  <field name="visa_number" />
+                  <field name="visa_expiry" />
+                  <field name="marital_status" />
+                  <field name="nationality" attrs="{'required': True}"  />
+                  <field name="primary_language" string="Native Language" />
+                  <field name="other_language" widget="many2many_tags"/>
+                  <field name="constrains" />
+                  <field name="hobby" />
+             </xpath>
+
+<!--                <xpath expr="//field[@name='status']" position="attributes">-->
+<!--                    <attribute name="required">1</attribute>-->
+<!--                </xpath>-->
+
+               <xpath expr="//field[@name='mobile']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+             <xpath expr="//field[@name='mobile']" position="after">
+                 <field name="phone" widget="phone" string="Mobile 1" />
+                 <field name="facebook" />
+                 <label for="contact_name"/>
+                <div class="o_row">
+                    <field name="contact_name"/>
+                </div>
+            </xpath>
+
+<!--            <xpath expr="//group/group[3]/field[@name='phone']" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+
+        <!-- APPLICATION DOCUMENTS -->
+        <xpath expr="//page[1]" position="replace">
+            <page  string="APPLICATION DOCUMENTS">
+                <group>
+                    <group>
+                        <field name="application_form" />
+                        <field name="application_fee"/>
+                        <!-- attrs="{'required':[('special_medical','=',False)]}"-->
+                        <field name="medical_checkup" />
+<!--                        attrs="{'required':[('medical_checkup','=',False)]}"-->
+                        <field name="special_medical" placeholder="Medical Check Up"/>
+                        <field name="motivational_letter" />
+                        <field name="pictures" />
+                    </group>
+                    <group>
+                        <field name="uniform_size" />
+                        <field name="shoe_size" />
+                        <field name="english_score" />
+                    </group>
+                    <group string="Scholarship">
+                        <field name="scholar_application" />
+                        <field name="financial_status" />
+                    </group>
+                </group>
+            </page>
+        </xpath>
+
+        <!-- Education and Professional experience -->
+<!--        <xpath expr="//page[2]" position="attributes">-->
+<!--            <attribute name="string">Education and Professional experience</attribute>-->
+<!--        </xpath>-->
+        <xpath expr="//page[2]" position="replace">
+<!--            <attribute name="string">Education and Professional experience</attribute>-->
+            <page string="Education and Professional experience">
+                <group>
+<!--                    <group>-->
+                        <field name="schooling_year" />
+                        <field name="high_school_id" />
+                        <field name="highest_education"/>
+                        <field name="intake"/>
+                        <field name="desired_course"/>
+                        <field name="lead_educational_achievement">
+                            <tree class="exp_tree" editable="top">
+                                <field name="name" />
+                                <field name="high_school_id" />
+                                <field name="major" />
+                                 <field name="is_equivalent" />
+                            </tree>
+                        </field>
+                        <field name="lead_working_experience">
+                            <tree editable="top">
+                                <field name="title_id" />
+                                <field name="company" />
+                                <field name="year" />
+                            </tree>
+                        </field>
+<!--                    </group>-->
+                </group>
+            </page>
+        </xpath>
+
+          <xpath expr="//page[3]" position="after">
+              <page  string="Lead Profile">
+                  <group>
+                      <group>
+                        <field name="rank" />
+                        <field name="status"/>
+                        <field name="status_detail" />
+                        <field name="acac_contact" />
+                        <field name="lead_source" />
+                        <field name="additional_source" />
+                        <field name="meet_date" />
+
+                        <field name="lead_participation">
+                            <tree editable="top">
+                                <field name="participation_id" />
+                                <field name="point" />
+                            </tree>
+                        </field>
+
+                      </group>
+                        <group string="Marketing Score" colspan="12">
+                            <group col="12" colspan="12">
+                                <group>
+                                    <field name="total_point" />
+                                </group>
+                            </group>
+                            <group col="12">
+                                <field name="m_motivational_letter" />
+                            </group>
+                           <group col="12">
+                              <field name="m_responded" />
+                           </group>
+                           <group col="12">
+                              <field name="m_applied" />
+                           </group>
+                           <group col="12">
+                              <field name="m_regularly_contacts" />
+                           </group>
+                           <group col="12">
+                              <field name="m_regularly_visit" />
+                           </group>
+                           <group col="5">
+                              <field name="m_overall_impression" />
+                           </group>
+                        </group>
+
+                    </group>
+                  <group>
+                      <group>
+                          <field name="campaign_id" />
+                          <field name="referred" />
+                      </group>
+                  </group>
+                    <group >
+                        <group string="Family Info">
+                            <field name="family_size"/>
+                            <field name="parents"/>
+                            <field name="siblings"/>
+                            <field name="family_income"/>
+                            <field name="other_depends"/>
+                         </group>
+
+                        <group string="Admission Info">
+                            <field name="cancel_reason" string="Remarks"/>
+                            <field name="return_date"/>
+                            <field name="cancel_date"/>
+                         </group>
+
+
+                    </group>
+            </page>
+         </xpath>
+
+        </field>
+    </record>
+
+      <record id="view_crm_lead_inherit_search" model="ir.ui.view">
+      <field name="name">crm.search.lead.expand.filter</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+      <field name="arch" type="xml">
+
+       <xpath expr="//search/group" position="inside">
+             <filter string="High School" name="highschool" context="{'group_by':'high_school_id'}"/>
+             <filter string="Rank" name="rank" context="{'group_by':'rank'}"/>
+             <filter string="Intake" name="intake" context="{'group_by':'intake'}"/>
+        </xpath>
+
+
+       <xpath expr="//search/filter[@name='assigned_to_me']" position="before">
+              <filter string="First Contact" name="first_contact" domain="[('rank', '=',  'first_contact')]" />
+              <filter string="Potential" name="potential" domain="[('rank', '=',  'potential')]" />
+              <filter string="High Potential" name="high_potential" domain="[('rank', '=',  'high_potential')]" />
+        </xpath>
+
+      </field>
+    </record>
+
+       <record id="high_school_search_view" model="ir.ui.view">
+        <field name="name">lead.search.view</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <search string="High School">
+                <filter name="group_lead" string="Leads" context="{'default_type': 'lead','group_by':'high_school_id'}"/>
+                 <filter string="Unassigned" name="unassigned_leads"
+                            domain="['&amp;', '|', ['type', '=', 'lead'], ['type', '=', False], '|', ['type', '=', 'lead'], ['type', '=', False]]"/>
+            </search>
+        </field>
+    </record>
+
+
+      <record id="lost_search_view" model="ir.ui.view">
+            <field name="name">crm.lost.reason.tree</field>
+            <field name="model">crm.lost.reason</field>
+            <field name="arch" type="xml">
+                <tree string="Channel" editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+      <record id="highschool_graph" model="ir.ui.view">
+        <field name="name">lead.highschool.graph</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <graph string="Appointment Graph" type="pie">
+                <field name="high_school_id" />
+            </graph>
+        </field>
+    </record>
+
+    <record id="lost_reason_view" model="ir.ui.view">
+        <field name="name">lead.reason.view</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <graph string="Lost Reason" type="bar">
+                <field name="lost_reason"/>
+            </graph>
+        </field>
+    </record>
+
+
+
+    <record id="campaign_graph" model="ir.ui.view">
+        <field name="name">lead.campaign.graph</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <graph string="Campaign Lead" type="line">
+                <field name="campaign_id" />
+            </graph>
+        </field>
+    </record>
+
+    <record id="campaign_lead_graph" model="ir.ui.view">
+        <field name="name">lead.campaign.graph</field>
+        <field name="model">utm.campaign</field>
+        <field name="arch" type="xml">
+            <graph string="Campaign Lead" type="bar">
+                <field name="name" string="Campaign"/>
+                <field name="cost_per_lead" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!--  lead conversion  -->
+    <record id="lead_conversion_view" model="ir.ui.view">
+        <field name="name">crm.lead.conversion</field>
+        <field name="model">pm_lead_conversion</field>
+        <field name="arch" type="xml">
+<!--            <h1><field name="conversion_rate" type="measure"/></h1>-->
+            <graph string="Lead Conversion Rate" type="pie">
+                <field name="name" string="Lead Conversion Rate"/>
+                <field name="conversion_rate" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- monthly new lead -->
+    <record id="monthly_new_lead_view" model="ir.ui.view">
+        <field name="name">crm.opportunity.report.graph.lead</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <graph string="Leads Analysis" stacked="true">
+                <field name="create_date" interval="month" type="col" />
+            </graph>
+        </field>
+    </record>
+
+    <!-- replace mobile 1 with mobile in tree view -->
+    <record id="view_crm_lead_inherit_tree" model="ir.ui.view">
+      <field name="name">crm.search.lead.inherit.tree_view</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+      <field name="arch" type="xml">
+
+          <xpath expr="//field[@name='phone']" position="replace">
+              <field name="mobile" />
+          </xpath>
+
+          <xpath expr="//field[@name='contact_name']" position="replace">
+              <field name="rank" />
+          </xpath>
+
+          <xpath expr="//field[@name='team_id']" position="attributes">
+              <attribute name="invisible">1</attribute>
+          </xpath>
+
+          <xpath expr="//field[@name='tag_ids']" position="attributes">
+              <attribute name="invisible">1</attribute>
+          </xpath>
+
+          <xpath expr="//field[@name='user_id']" position="replace">
+              <field name="acac_contact" />
+          </xpath>
+      </field>
+    </record>
+
+    <record id="pm_lead_educational_achievement_view_list" model="ir.ui.view">
+      <field name="name">pm.lead.educational.achievement.view.list</field>
+      <field name="model">pm.lead.educational.achievement</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" />
+          <field name="school" />
+          <field name="is_equivalent" />
+        </tree>
+      </field>
+    </record>
+
+
+</data></odoo>
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!--        <record id="pm_inherit_survey_form_view" model="ir.ui.view">-->
+<!--            <field name="name">pm.inherit.survey.form.view</field>-->
+<!--            <field name="model">survey.survey</field>-->
+<!--            <field name="inherit_id" ref="survey.survey_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//form/sheet/group[1]" position="replace">-->
+<!--                       <group>-->
+<!--                            <field name="active" invisible="1"/>-->
+<!--                            <field name="department_id" string="Department"/>-->
+<!--                            <field name="job_id" string="Job Position"/>-->
+<!--                        </group>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="pm_inherit_appraisal_form_view" model="ir.ui.view">
+            <field name="name">pm.inherit.appraisal.form.view</field>
+            <field name="model">hr.appraisal</field>
+            <field name="inherit_id" ref="oh_appraisal.hr_appraisal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='appraisal_deadline']" position="before">
+                      <field name="appraisal_start" attrs="{'readonly':[('check_draft','!=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="pm_inherit_survey_form_view" model="ir.ui.view">
+            <field name="name">pm.inherit.survey.form.view</field>
+            <field name="model">survey.user_input</field>
+            <field name="inherit_id" ref="survey.survey_user_input_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_resend']" position="after">
+                      <button name="action_share_survey" string="Share Survey" type="object" class="oe_highlight"/>
+                </xpath>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

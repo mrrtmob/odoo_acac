@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="op_misbehaviour_category_1" model="op.misbehaviour.category">
+            <field name="name">Neglecting Rules</field>
+            <field name="misbehaviour_type">major</field>
+            <field name="misbehaviour_template_id" eval="email_neglecting_school_rules_template" />
+        </record>
+
+        <record id="op_misbehaviour_category_2" model="op.misbehaviour.category">
+            <field name="name">Cheat in the exam</field>
+            <field name="misbehaviour_type">major</field>
+            <field name="parent_id" ref="op_misbehaviour_category_1"/>
+            <field name="misbehaviour_template_id" eval="email_neglecting_school_rules_template" />
+        </record>
+
+        <record id="op_misbehaviour_category_3" model="op.misbehaviour.category">
+            <field name="name">Use of abusive language</field>
+            <field name="misbehaviour_type">major</field>
+            <field name="parent_id" ref="op_misbehaviour_category_1"/>
+            <field name="misbehaviour_template_id" eval="email_neglecting_school_rules_template" />
+        </record>
+
+        <record id="op_misbehaviour_category_4" model="op.misbehaviour.category">
+            <field name="name">Beating fellow students</field>
+            <field name="misbehaviour_type">major</field>
+            <field name="parent_id" ref="op_misbehaviour_category_1"/>
+            <field name="misbehaviour_template_id" eval="email_cheating_in_the_exam_template" />
+        </record>
+
+        <record id="op_misbehaviour_category_5" model="op.misbehaviour.category">
+            <field name="name">Misconduct Rules</field>
+            <field name="misbehaviour_type">minor</field>
+            <field name="misbehaviour_template_id" eval="email_cheating_in_the_exam_template" />
+        </record>
+
+        <record id="op_misbehaviour_category_6" model="op.misbehaviour.category">
+            <field name="name">Vernacular Speaking</field>
+            <field name="misbehaviour_type">minor</field>
+            <field name="parent_id" ref="op_misbehaviour_category_5"/>
+            <field name="misbehaviour_template_id" eval="email_cheating_in_the_exam_template" />
+        </record>
+
+        <record id="op_misbehaviour_category_7" model="op.misbehaviour.category">
+            <field name="name">Coming to school late</field>
+            <field name="misbehaviour_type">minor</field>
+            <field name="parent_id" ref="op_misbehaviour_category_5"/>
+            <field name="misbehaviour_template_id" eval="email_cheating_in_the_exam_template" />
+        </record>
+
+        <record id="op_misbehaviour_category_8" model="op.misbehaviour.category">
+            <field name="name">Teasing fellow or new students</field>
+            <field name="misbehaviour_type">minor</field>
+            <field name="parent_id" ref="op_misbehaviour_category_5"/>
+            <field name="misbehaviour_template_id" eval="email_cheating_in_the_exam_template" />
+        </record>
+    </data>
+</odoo>

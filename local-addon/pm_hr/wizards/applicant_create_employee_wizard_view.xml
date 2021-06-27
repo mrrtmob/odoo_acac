@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="pm_applicant_create_employee_view" model="ir.ui.view">
+            <field name="name">wizard.pm.applicant.employee.form</field>
+            <field name="model">wizard.pm.applicant.employee</field>
+            <field name="arch" type="xml">
+                <form string="Create Employee">
+                    <div>
+                         <label for="email_login"  required="1" class="oe_edit_only" string="Email Address"/>
+                         <h2><field name="email_login"/></h2>
+                    </div>
+                    <group string="User Role">
+                        <field name="role_ids" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="role_id" />
+                        </tree>
+                    </field>
+                    </group>
+
+                    <footer groups="base.group_user">
+                        <button name="create_employee" type="object" string="Create Employee" class="oe_highlight"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="applicant_create_employee_act">
+            <field name="name">Create Employee</field>
+            <field name="res_model">wizard.pm.applicant.employee</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="pm_applicant_create_employee_view"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

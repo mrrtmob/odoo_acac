@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="wizard_recipe_detail_form" model="ir.ui.view">
+            <field name="name">wizard.recipe.detail.form</field>
+            <field name="model">wizard.recipe.detail</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="recipe_id" invisible="1" />
+                        <field name="is_sub_recipe" invisible="1" />
+                        <field name="custom_field" widget="radio" attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
+                        <field name="number_of_portion" attrs="{'invisible': [('custom_field', '=', 'makes')]}" />
+                        <field name="makes" attrs="{'invisible': [('custom_field', '=', 'number_of_portion')]}" />
+                        <field name="uor" attrs="{'invisible': [('custom_field', '=', 'number_of_portion')]}" />
+                    </group>
+                    <footer>
+                        <button string="Print" type="object" name="print_report" class="oe_highlight"/>
+                        <button special="cancel" string="Close" type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="wizard_recipe_detail_action" name="Recipe Details" res_model="wizard.recipe.detail"
+                    binding_model="pm.recipe" binding_views="form" binding_type="report" view_mode="form" target="new" />
+    </data>
+</odoo>

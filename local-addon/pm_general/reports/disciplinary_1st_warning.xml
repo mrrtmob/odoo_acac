@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_disciplinary_1st_warning">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" style="font-family: 'Georgia'; font-size: 17px;">
+                    <style  type="text/css">
+                    </style>
+                    <div class="container-fluid">
+                        <t t-call="pm_general.template_header"/>
+                        <strong><u>Notification Points at 5</u></strong><br/><br/>
+                        <strong>If you have any problems understanding this letter or your present position, do not hesitate to contact Registrar of the Academy.</strong><br/><br/>
+                        <p>Dear NAME,</p>
+                        <p>We would like to draw your attention to the present situation of your behaviour/appearance mark, which stands currently at No. points.</p>
+                        <p>Attitude and adhering to established and agreed standards are a central and important part of any future leader.</p>
+                        <p>I would like to encourage you to take the necessary steps in adjusting your attitude and/or follow the Academy’s dress code and appearance standards in order not to jeopardize your study at the Academy.</p>
+                        <strong>A Student will be suspended from the semester should the behavior/appearance mark fall below the 4.0 points. The Semester will be invalidated!</strong><br/><br/>
+                        <p>Good luck in your continues studies and should you have any further questions, please do not hesitate to contact the Student Affair officer or Registrar.</p>
+                        <t t-call="pm_general.signature"/>
+                        <t t-call="pm_general.template_footer"/>
+                        <t t-call="pm_general.template_border"></t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

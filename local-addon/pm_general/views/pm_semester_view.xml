@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+         <record id="view_pm_semester_tree" model="ir.ui.view">
+            <field name="name">pm.semester.tree</field>
+            <field name="model">pm.semester</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Semester">
+                    <field name="name"/>
+                    <field name="course_id"/>
+                    <field name="semester_code"/>
+                    <field name="semester_order"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_pm_semester_form" model="ir.ui.view">
+            <field name="name">pm.semester.form</field>
+            <field name="model">pm.semester</field>
+            <field name="priority" eval="9"/>
+            <field name="arch" type="xml">
+                <form string="Semester">
+                    <header>
+                       <button
+                            name="action_draft"
+                            string="Reset"
+                            type="object"
+                            groups="openeducat_core.group_op_back_office_admin"
+                        />
+                        <button name="start_semester" states="pending" type="object" string="Start Semester" class="oe_highlight"/>
+                        <button name="execute_semester_end" states="active" type="object" string="Complete Semester" class="oe_highlight"/>
+
+<!--                        tem: error act_cancel-->
+<!--                        <button name="act_cancel" states="draft" type="object" string="Cancel"/>-->
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group col="4" name="main">
+                            <field name="name"/>
+                            <field name="semester_code"/>
+                            <field name="semester_order"/>
+                            <field name="course_id"/>
+                             <field name="batch_id"
+                                           context="{'course_id': course_id,'get_parent_batch':1}"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="is_internship"/>
+                            
+                        </group>
+                    </sheet>
+                     <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+         <record id="view_pm_semester_search" model="ir.ui.view">
+            <field name="name">pm.semester</field>
+            <field name="model">pm.semester</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Exam">
+<!--                    tem:hide active-->
+<!--                    <filter string="Archived" name="inactive"-->
+<!--                            domain="[('active', '=', False)]"/>-->
+                    <newline/>
+                    <filter string="Active Semester" name="state_active" domain="[('state', '=', 'active')]"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="State" name="group_by_result_state"
+                                domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Semester Order" name="group_by_semester"
+                                domain="[]" context="{'group_by':'semester_order'}"/>
+                    </group>
+                       <searchpanel>
+                           <field name="batch_id" string="Terms" icon="fa fa-book"/>
+                       </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_pm_semester_view">
+            <field name="name">Semester</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.semester</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+             <field name="search_view_id" ref="view_pm_semester_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window.view" id="act_open_pm_semester_view_form">
+            <field name="act_window_id" ref="act_open_pm_semester_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_pm_semester_form"/>
+        </record>
+
+         <record model="ir.actions.act_window.view" id="act_open_pm_semester_view_tree">
+            <field name="act_window_id" ref="act_open_pm_semester_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_pm_semester_tree"/>
+        </record>
+
+         <record id="view_op_semester_result_search" model="ir.ui.view">
+            <field name="name">pm.semester.marksheet.register.search</field>
+            <field name="model">pm.semester.marksheet.register</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Exam">
+                    <filter string="Archived" name="inactive"
+                            domain="[('active', '=', False)]"/>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="State" name="group_by_result_state"
+                                domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Semester" name="group_by_semester"
+                                domain="[]" context="{'group_by':'semester_id'}"/>
+                    </group>
+                       <searchpanel>
+                           <field name="batch_id" string="Terms" icon="fa fa-book"/>
+                       </searchpanel>
+                </search>
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="act_open_pm_semester_result_view">
+            <field name="name">Semester Results</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.semester.marksheet.register</field>
+            <field name="binding_view_types">form</field>
+            <field name="search_view_id" ref="view_op_semester_result_search"/>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+         <record model="ir.actions.act_window" id="act_open_pm_term_result_view">
+            <field name="name">Final Results</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.term.marksheet.register</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+         <record model="ir.actions.act_window" id="act_open_student_pm_term_result_view">
+            <field name="name">Final Results</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.term.result</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('term_marksheet_register_id.state', '=', 'validated')]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_pm_student_semester_result_view">
+            <field name="name">Student Semester Results</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.semester.result</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+             <field name="domain">[('semester_mark_sheet_id.state', '=', 'validated')]</field>
+            <field name="context">{}</field>
+        </record>
+
+
+         <record id="view_pm_semester_marksheet_register_tree" model="ir.ui.view">
+            <field name="name">pm.semester.marksheet.register.tree</field>
+            <field name="model">pm.semester.marksheet.register</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Semester Result" create="false">
+                    <field name="name"/>
+                    <field name="semester_id"/>
+                    <field name="total_pass"/>
+                    <field name="total_failed"/>
+                    <field name="generated_date"/>
+                    <field name="generated_by"/>
+                    <field name="state" widget="label_selection" options="{'classes': {'draft': 'primary', 'validated': 'success','cancelled': 'danger'}}"/>
+                </tree>
+            </field>
+        </record>
+
+         <record id="view_pm_semester_marksheet_register_form" model="ir.ui.view">
+                <field name="name">pm.semester.marksheet.register.form</field>
+                <field name="model">pm.semester.marksheet.register</field>
+                <field name="priority" eval="9"/>
+                <field name="arch" type="xml">
+                    <form string="Semester Result">
+                         <header>
+                            <button name="action_validate"
+                                    states="draft" type="object" string="Validate Semester Marksheet"
+                                    groups="openeducat_core.group_op_back_office"
+                                    class="oe_highlight"/>
+
+                              <button
+                                name="action_draft"
+                                string="Reset"
+                                type="object"
+                                states="validated"
+                            />
+                            <button name="act_cancel" states="draft" type="object" string="Cancel"/>
+                            <field name="state" widget="statusbar" statusbar_visible="draft,validate"/>
+                        </header>
+                        <sheet>
+                            <group col="4" name="main">
+                                <field name="name"/>
+                                <field name="semester_id"/>
+                                <field name="generated_date"/>
+                                <field name="generated_by"/>
+                            </group>
+                          <group string="Statistics">
+                              <field name="total_pass"/>
+                              <field name="total_failed"/>
+                              <field name="rank_low"/>
+                              <field name="rank_middle"/>
+                              <field name="rank_top"/>
+                         </group>
+
+                             <group string="Student Results">
+                            <field name="semester_result_ids" colspan="4" readonly="1" nolabel="1">
+                                <tree string="Exam" default_order='gpa desc' decoration-danger="status=='fail'">
+                                    <field name="student_id"/>
+                                    <field name="gpa"/>
+                                    <field name="grade"/>
+                                    <field name="status"/>
+                                    <field name="fail_reasons" widget="many2many_tags"/>
+                                </tree>
+                            </field>
+                        </group>
+                        </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </form>
+                </field>
+            </record>
+
+         <record id="view_pm_semester_result_form" model="ir.ui.view">
+                <field name="name">pm.semester.result.form</field>
+                <field name="model">pm.semester.result</field>
+                <field name="priority" eval="9"/>
+                <field name="arch" type="xml">
+                    <form string="Semester Result">
+                        <sheet>
+                            <group col="4" name="main">
+                                <field name="student_id"/>
+                                <field name="semester_id"/>
+                                <field name="result"/>
+                                <field name="grade"/>
+                                <field name="status"/>
+                                <field name="fail_reasons" widget="many2many_tags"/>
+                                <field name="fail_practical"/>
+                                <field name="fail_more_subjects"/>
+                                <field name="fail_minimun"/>
+                            </group>
+                             <group string="Subject Results">
+                            <field name="semester_res_line" colspan="4" readonly="1" nolabel="1">
+                                    <tree decoration-success="exam_state=='resit'" decoration-muted="exam_state=='covered'" decoration-danger="exam_state=='fail_resit'" string="Exam">
+    <!--                                <tree string="Exam">-->
+                                        <field name="subject_id"/>
+                                        <field name="total_score"/>
+                                        <field name="status"/>
+                                        <field name="grade"/>
+                                        <field name="exam_state"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+         <record id="view_pm_term_marksheet_register" model="ir.ui.view">
+                <field name="name">pm.term.marksheet.register.form</field>
+                <field name="model">pm.term.marksheet.register</field>
+                <field name="priority" eval="9"/>
+                <field name="arch" type="xml">
+                    <form string="Final Result">
+
+                         <header>
+                            <button name="action_validate"
+                                    states="draft" type="object" string="Validate Semester Marksheet"
+                                    groups="openeducat_core.group_op_back_office"
+                                    class="oe_highlight"/>
+
+                              <button
+                                name="action_draft"
+                                string="Reset"
+                                type="object"
+                                groups="openeducat_core.group_op_back_office"
+                                states="validated"
+                            />
+                            <button name="act_cancel" states="draft" type="object" string="Cancel"/>
+                            <field name="state" widget="statusbar" statusbar_visible="draft,validate"/>
+                        </header>
+
+                        <sheet>
+                            <group col="4" name="main">
+                                <field name="name"/>
+                                <field name="batch_id"/>
+                                <field name="total_pass"/>
+                                <field name="total_failed"/>
+                                <field name="generated_date"/>
+                                <field name="generated_by"/>
+                            </group>
+                             <group string="Student Results">
+                            <field name="term_result_ids" colspan="4" readonly="1" nolabel="1">
+                                    <tree decoration-danger="status=='fail'">
+    <!--                                <tree string="Exam">-->
+                                        <field name="student_id"/>
+                                        <field name="status"/>
+                                        <field name="gpa"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+         <record id="view_pm_term_marksheet_register_tree" model="ir.ui.view">
+                <field name="name">pm.term.marksheet.register.tree</field>
+                <field name="model">pm.term.marksheet.register</field>
+                <field name="priority" eval="9"/>
+                <field name="arch" type="xml">
+                    <tree create="false" edit="false">
+                        <field name="name"/>
+                        <field name="batch_id"/>
+                        <field name="total_pass"/>
+                        <field name="total_failed"/>
+                        <field name="generated_date"/>
+                        <field name="generated_by"/>
+                    </tree>
+                </field>
+            </record>
+
+
+         <record id="view_pm_term_result_form" model="ir.ui.view">
+                <field name="name">pm.term.result.form</field>
+                <field name="model">pm.term.result</field>
+                <field name="priority" eval="9"/>
+                <field name="arch" type="xml">
+                    <form string="Term Results">
+                        <sheet>
+                            <group col="4" name="main">
+                               <field name="student_id"/>
+                               <field name="batch_id"/>
+                               <field name="gpa"/>
+                               <field name="status"/>
+                            </group>
+
+                            <group string="Semester Results">
+                                <field name="term_associated_ids" string="Results">
+                                    <tree create="false" edit="false" decoration-danger="status=='fail'">
+                                         <field name="semester_id"/>
+                                         <field name="gpa"/>
+                                         <field name="status"/>
+                                    </tree>
+                                </field>
+                            </group>
+
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+         <record id="view_pm_term_result_tree" model="ir.ui.view">
+                <field name="name">pm.term.result.tree</field>
+                <field name="model">pm.term.result</field>
+                <field name="priority" eval="9"/>
+                <field name="arch" type="xml">
+                    <tree create="false">
+                         <field name="student_id"/>
+                         <field name="batch_id"/>
+                         <field name="gpa"/>
+                         <field name="term_associated_ids" string="Results" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                         <field name="status" widget="label_selection" options="{'classes': {'pass': 'success','fail': 'danger'}}"/>
+                    </tree>
+                </field>
+            </record>
+
+         <record id="view_pm_semester_result_tree" model="ir.ui.view">
+                <field name="name">pm.term.semester.tree</field>
+                <field name="model">pm.semester.result</field>
+                <field name="priority" eval="9"/>
+                <field name="arch" type="xml">
+                    <tree create="false">
+                         <field name="student_id"/>
+                         <field name="semester_id"/>
+                         <field name="gpa"/>
+                         <field name="grade"/>
+                         <field name="status" widget="label_selection" options="{'classes': {'pass': 'success','fail': 'danger'}}"/>
+                    </tree>
+                </field>
+            </record>
+
+        <record model="ir.ui.menu" id="openeducat_exam.menu_op_exam_session">
+             <field name="name">Exam Schedules</field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <!-- custom report file -->
+        <record id="paperformat_transcript"
+                model="report.paperformat">
+            <field name="name">European A4</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">43</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <!-- custom button -->
+        <report id="action_get_report_transcript"
+            model="op.student"
+            string="Transcript"
+            report_type="qweb-pdf"
+            name="pm_students.student_transcript"
+            file="pm_students.student_transcript"
+            menu="False"
+            paperformat="paperformat_transcript"
+        />
+
+
+        <!-- for template action -->
+      <!-- CourseAbsences 1st Warning -->
+      <report id="course_absences_1st_warning"
+        model="op.student.progression"
+        string="Course Absences 1st Warning"
+        report_type="qweb-pdf"
+        name="pm_general.report_absence_1st_warning"
+        file="pm_general.report_absence_1st_warning"
+        menu="False"
+        paperformat="paperformat_transcript"
+      />
+
+      <!-- CourseAbsences Invalidation -->
+      <report id="course_absences_invalidation"
+        model="op.student.progression"
+        string="Course Absence Invalidation"
+        report_type="qweb-pdf"
+        name="pm_general.report_absence_invalidation"
+        file="pm_general.report_absence_invalidation"
+        menu="False"
+        paperformat="paperformat_transcript"
+      />
+
+      <!-- Disciplinary 1st Warning -->
+      <report id="disciplinary_1st_warning"
+        model="op.student.progression"
+        string="Disciplinary 1st Warning"
+        report_type="qweb-pdf"
+        name="pm_general.report_disciplinary_1st_warning"
+        file="pm_general.report_disciplinary_1st_warning"
+        menu="False"
+        paperformat="paperformat_transcript"
+      />
+
+      <!-- Disciplinary 2nd Warning -->
+      <report id="disciplinary_2nd_warning"
+        model="op.student.progression"
+        string="Disciplinary 2nd Warning"
+        report_type="qweb-pdf"
+        name="pm_general.report_disciplinary_2nd_warning"
+        file="pm_general.report_disciplinary_2nd_warning"
+        menu="False"
+        paperformat="paperformat_transcript"
+      />
+
+      <!-- Disciplinary Dismissal Letter -->
+      <report id="disciplinary_dismissal"
+        model="op.student.progression"
+        string="Disciplinary 2nd Warning"
+        report_type="qweb-pdf"
+        name="pm_general.report_disciplinary_dismissal"
+        file="pm_general.report_disciplinary_dismissal"
+        menu="False"
+        paperformat="paperformat_transcript"
+      />
+
+      <!-- Internship 1st Warning -->
+      <report id="internship_1st_warning"
+        model="op.student.progression"
+        string="Internship 1st Warning"
+        report_type="qweb-pdf"
+        name="pm_general.report_internship_1st_warning"
+        file="pm_general.report_internship_1st_warning"
+        menu="False"
+        paperformat="paperformat_transcript"
+      />
+
+     <!-- Internship 2nd Warning -->
+      <report id="internship_2nd_warning"
+        model="op.student.progression"
+        string="Internship 2nd Warning"
+        report_type="qweb-pdf"
+        name="pm_general.report_internship_2nd_warning"
+        file="pm_general.report_internship_2nd_warning"
+        menu="False"
+        paperformat="paperformat_transcript"
+      />
+
+    <!-- Internship Dismissal -->
+      <report id="internship_dismissal"
+        model="op.student.progression"
+        string="Internship Dismissal"
+        report_type="qweb-pdf"
+        name="pm_general.report_internship_dismissal"
+        file="pm_general.report_internship_dismissal"
+        menu="False"
+        paperformat="paperformat_transcript"
+      />
+
+      <!-- Semester Absence 1st Warning -->
+      <report id="semester_1st_warning"
+        model="op.student.progression"
+        string="Semester Absence 1st Warning"
+        report_type="qweb-pdf"
+        name="pm_general.report_semester_1st_warning"
+        file="pm_general.report_semester_1st_warning"
+        menu="False"
+        paperformat="paperformat_transcript"
+      />
+
+      <!-- Semester Absences 2nd Warning -->
+      <report id="semester_2nd_warning"
+        model="op.student.progression"
+        string="Semester Absences 2nd Warning"
+        report_type="qweb-pdf"
+        name="pm_general.report_semester_2nd_warning"
+        file="pm_general.report_semester_2nd_warning"
+        menu="False"
+        paperformat="paperformat_transcript"
+      />
+
+      <!-- Semester Absence Dismissal -->
+      <report id="semester_absence_dismissal"
+        model="op.student.progression"
+        string="Semester Absences 2nd Warning"
+        report_type="qweb-pdf"
+        name="pm_general.report_semester_absence_dismissal"
+        file="pm_general.report_semester_absence_dismissal"
+        menu="False"
+        paperformat="paperformat_transcript"
+      />
+
+<!--    tem:-->
+
+<!--        <record id="custom_get_transcript" model="ir.ui.view">-->
+<!--        <field name="name">op.student.transcript.form</field>-->
+<!--        <field name="model">op.student.progression</field>-->
+<!--        <field name="inherit_id" ref="openeducat_student_progress_enterprise.view_student_progress_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//page[1]" position="replace">-->
+<!--                <page string="Transcript" name="get_transcript">-->
+<!--                    <group>-->
+<!--                        <button string="Get Transcript" type="action" name="%(action_get_report_transcript)d" class="oe_highlight" />-->
+
+<!--                        <button string="Course Absences 1st Warning" type="action" name="%(course_absences_1st_warning)d" class="oe_highlight" />-->
+<!--                        <button string="Course Absences Invalidation" type="action" name="%(course_absences_invalidation)d" class="oe_highlight" />-->
+<!--                        <button string="Disciplinary 1st Warning" type="action" name="%(disciplinary_1st_warning)d" class="oe_highlight" />-->
+<!--                        <button string="Disciplinary 2nd Warning" type="action" name="%(disciplinary_2nd_warning)d" class="oe_highlight" />-->
+<!--                        <button string="Disciplinary Dismissal Letter" type="action" name="%(disciplinary_dismissal)d" class="oe_highlight" />-->
+<!--                        <button string="Internship 1st Warning" type="action" name="%(internship_1st_warning)d" class="oe_highlight" />-->
+<!--                        <button string="Internship 2nd Warning" type="action" name="%(internship_2nd_warning)d" class="oe_highlight" />-->
+<!--                        <button string="Internship Dismissal" type="action" name="%(internship_dismissal)d" class="oe_highlight" />-->
+<!--                        <button string="Semester Absence 1st Warning" type="action" name="%(semester_1st_warning)d" class="oe_highlight" />-->
+<!--                        <button string="Semester Absences 2nd Warning" type="action" name="%(semester_2nd_warning)d" class="oe_highlight" />-->
+<!--                        <button string="Semester Absence Dismissal" type="action" name="%(semester_absence_dismissal)d" class="oe_highlight" />-->
+<!--                    </group>-->
+<!--                </page>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+</odoo>

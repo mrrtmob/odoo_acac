@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="student_progression_discipline_portal_inherit"
+              inherit_id="openeducat_student_progress_enterprise.openeducat_student_progression_portal_data"
+              priority="20">
+
+        <xpath expr="//ul[hasclass('nav-pills')]" position="inside">
+            <li class="activity_info">
+                <a href="#discipline" aria-expanded="false" data-toggle="tab">
+                    <h5 class="mb0">
+                        Discipline
+                    </h5>
+                </a>
+            </li>
+        </xpath>
+        <xpath expr="//div[hasclass('tab-content')]" position="inside">
+            <div class="tab-pane fade" id="discipline">
+                <div t-if="progression.discipline_lines">
+                    <table t-if="progression.discipline_lines" class="mt8 table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Course</th>
+                                <th>Created by</th>
+                                <th>Recipients</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="progression.discipline_lines.sorted(key=lambda record: record.date, reverse=False)"
+                               t-as="discipline_data">
+                                <tr>
+                                    <td>
+                                        <span t-esc="discipline_data.date"
+                                              t-options='{"widget":"date"}'/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="discipline_data.course_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="discipline_data.discipline_master.name"/>
+                                    </td>
+
+                                    <td>
+                                        <t t-foreach="discipline_data.recipients_ids"
+                                           t-as="recipients">
+                                            <span t-esc="recipients.name"/>
+                                            <br/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <span t-esc="{'draft':'Draft', 'email_sent':'Email Sent',
+                                                        'awaiting_letter':'Awaiting Letter', 'action_taken':'Action Taken',
+                                                         'awaiting_meeting':'Awaiting Meeting', 'suspended':'Suspended',
+                                                         'done':'Done'}[discipline_data.state]"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

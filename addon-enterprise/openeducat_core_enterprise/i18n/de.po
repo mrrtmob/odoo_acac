@@ -1,0 +1,1112 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* openeducat_core_enterprise
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-30 08:57+0000\n"
+"PO-Revision-Date: 2019-09-30 08:57+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_batch_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_course_dashboard_kanban_view
+msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
+msgstr "<I class = \"fa fa-Ellipsen-v\" role = \"img\" aria-label = \"Manage\" title = \"Verwalten\" />"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_batch_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_course_dashboard_kanban_view
+msgid "<span>New</span>"
+msgstr "<Span> New </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_batch_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_course_dashboard_kanban_view
+msgid "<span>Reports</span>"
+msgstr "<Span> Berichte </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_batch_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_course_dashboard_kanban_view
+msgid "<span>Views</span>"
+msgstr "<Span> Views </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_data
+msgid "<strong>Batch:</strong>"
+msgstr "<Strong> Batch: </ strong>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Birth Date</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Geburtstags- </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Blood Group</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Blutgruppe </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>City</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> City </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_data
+msgid "<strong>Compulsory Sbjects:</strong>"
+msgstr "<Strong> Pflicht Sbjects: </ strong>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Country</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Land </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_data
+msgid "<strong>Course:</strong>"
+msgstr "<Strong> Kurs: </ strong>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_data
+msgid "<strong>Elective Subjects:</strong>"
+msgstr "<Strong> Wahlfächer: </ strong>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Email</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> E-Mail </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Gender</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Gender </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.student_portal_educational_information
+msgid "<strong>Gr Number:</strong>"
+msgstr "<Strong> Gr Nummer: </ strong>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_data
+msgid "<strong>Max Unit Load:</strong>"
+msgstr "<Strong> Max Unit Load: </ strong>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_data
+msgid "<strong>Min Unit Load:</strong>"
+msgstr "<Strong> Min Unit Load: </ strong>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Mobile</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Mobil </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Name</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Name </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Nationality</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Nationalität </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>State</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Staat </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_data
+msgid "<strong>Status:</strong>"
+msgstr "<Strong> Status: </ strong>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Street2</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Street2 </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Street</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Straße </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_data
+msgid "<strong>Student:</strong>"
+msgstr "<Strong> Student: </ strong>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Visa Info</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Visa Info </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "<strong>Zip</strong>\n"
+"                                                        <span style=\"float: right;text-align: right;\">:</span>"
+msgstr "<Strong> Zip </ strong>\n"
+"                                                        <Span style = \"float: right; text-align: right;\"> </ span>"
+
+#. module: openeducat_core_enterprise
+#: selection:op.gamification.badge,rule_auth:0
+msgid "A selected list of users"
+msgstr "Eine ausgewählte Liste von Benutzern"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_needaction
+msgid "Action Needed"
+msgstr "Aktion notwendig"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__active
+msgid "Active"
+msgstr "Aktiv"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.student_portal_educational_information
+msgid "Admission Detail"
+msgstr "Der Eintritt Details"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_res_company__affiliation_ids
+msgid "Affiliation Board"
+msgstr "Zugehörigkeit Vorstand"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__rule_auth
+msgid "Allowance to Grant"
+msgstr "Zulage gewährt"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_batch_form_onboard
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_course_form_onboard
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_subject_form_onboard
+msgid "Apply"
+msgstr "Anwenden"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_attachment_count
+msgid "Attachment Count"
+msgstr "# Anhänge"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__rule_auth_user_ids
+msgid "Authorized Users"
+msgstr "Autorisierte Benutzer"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student__badge_id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student_wizard__badge_id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__name
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.op_badge_kanban_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.op_student_badge_form_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_student_form_badge_inherit
+msgid "Badge"
+msgstr "Abzeichen"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.op_student_badge_form_view
+msgid "Badge Description"
+msgstr "Abzeichen Beschreibung"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student__badge_name
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.op_student_badge_form_view
+msgid "Badge Name"
+msgstr "Abzeichen-Namen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model,name:openeducat_core_enterprise.model_op_badge_student_wizard
+msgid "Badge Student Wizard"
+msgstr "Abzeichen Studenten Wizard"
+
+#. module: openeducat_core_enterprise
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.student_badge_list_action
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_student__student_badge_ids
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.op_student_badge_tree_view
+msgid "Badges"
+msgstr "Abzeichen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.act_dashboard_op_batch_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_list
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.student_portal_educational_information
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_batch_form_onboard
+msgid "Batch"
+msgstr "Stapel"
+
+#. module: openeducat_core_enterprise
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.action_onboarding_batch_layout
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_batch_layout_step
+msgid "Batch Configuration"
+msgstr "Batch-Konfiguration"
+
+#. module: openeducat_core_enterprise
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.open_batch_dashboard_kanban
+#: model:ir.ui.menu,name:openeducat_core_enterprise.menu_batch_dashboard_openeducat
+msgid "Batch Dashboard"
+msgstr "Batch-Dashboard"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_create_subject_registration
+msgid "Batch:"
+msgstr "Stapel:"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_course_dashboard_kanban_view
+msgid "Batches"
+msgstr ""
+
+#. module: openeducat_core_enterprise
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.act_open_op_board_affiliation_view
+#: model:ir.model,name:openeducat_core_enterprise.model_op_board_affiliation
+#: model:ir.ui.menu,name:openeducat_core_enterprise.menu_op_board_affiliation
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_board_affiliation_form
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_board_affiliation_tree
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_res_company_affiliation_form
+msgid "Board Affiliation"
+msgstr "Foren-Zugehörigkeit"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_board_affiliation__name
+msgid "Board Name"
+msgstr ""
+
+#. module: openeducat_core_enterprise
+#: model:op.badge.student,badge_name:openeducat_core_enterprise.op_badge_student_3
+#: model:op.gamification.badge,name:openeducat_core_enterprise.op_gamification_badge_3
+msgid "Brilliant"
+msgstr "Brillant"
+
+#. module: openeducat_core_enterprise
+#: model:op.gamification.badge,description:openeducat_core_enterprise.op_gamification_badge_3
+msgid "Brilliant in particular thing, Great work."
+msgstr "Brilliant insbesondere Sache, Gute Arbeit."
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_student_badge_wizard_grant
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__rule_max
+msgid "Check to set a monthly limit per person of sending this badge"
+msgstr "Überprüfen Sie eine monatliche Limit pro Person setzen dieses Abzeichen des Sendens"
+
+#. module: openeducat_core_enterprise
+#. openerp-web
+#: code:addons/openeducat_core_enterprise/static/src/xml/custom.xml:8
+#, python-format
+msgid "Choose Batches"
+msgstr "wählen Sie Batches"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.actions.act_window,help:openeducat_core_enterprise.student_badge_list_action
+msgid "Click to create a badge."
+msgstr "Klicken Sie auf ein Abzeichen zu erstellen."
+
+#. module: openeducat_core_enterprise
+#: selection:res.company,onboarding_batch_layout_state:0
+#: selection:res.company,onboarding_course_layout_state:0
+#: selection:res.company,onboarding_subject_layout_state:0
+#: selection:res.company,openeducat_core_onboard_panel:0
+msgid "Closed"
+msgstr "Geschlossen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_board_affiliation__code
+msgid "Code"
+msgstr ""
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_batch__color
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_course__color
+msgid "Color Index"
+msgstr ""
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student__comment
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student_wizard__comment
+msgid "Comment"
+msgstr "Kommentar"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model,name:openeducat_core_enterprise.model_res_company
+msgid "Companies"
+msgstr "Unternehmen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_hr_employee__company_id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_batch__company_id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_board_affiliation__company_id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_course__company_id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_faculty__company_id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_student__company_id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_subject__company_id
+msgid "Company"
+msgstr "Unternehmen"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_create_subject_registration
+msgid "Compulsory Subjects:"
+msgstr "Pflichtfächer:"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_subject__course_id
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_list
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.student_portal_educational_information
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_course_form_onboard
+msgid "Course"
+msgstr "Kurs"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_course_layout_step
+msgid "Course Configuration"
+msgstr "Kurs-Konfiguration"
+
+#. module: openeducat_core_enterprise
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.open_course_dashboard_kanban
+#: model:ir.ui.menu,name:openeducat_core_enterprise.menu_course_dashboard_openeducat
+msgid "Course Dashboard"
+msgstr "Kurs-Dashboard"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_create_subject_registration
+msgid "Course:"
+msgstr "Kurs:"
+
+#. module: openeducat_core_enterprise
+#: model:ir.ui.menu,name:openeducat_core_enterprise.menu_op_course_sub_1
+msgid "Courses"
+msgstr "Kurse"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_list
+msgid "Create Subject registration"
+msgstr "Erstellen Betreff Anmeldung"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student__create_date
+msgid "Created"
+msgstr "Erstellt"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student__create_uid
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student_wizard__create_uid
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_board_affiliation__create_uid
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student_wizard__create_date
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_board_affiliation__create_date
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__create_date
+msgid "Created on"
+msgstr "Erstellt am"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_batch_layout_step
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_course_layout_step
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_subject_layout_step
+msgid "Customize"
+msgstr "Anpassen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.ui.menu,name:openeducat_core_enterprise.menu_main_dashboard_openeducat
+msgid "Dashboard"
+msgstr "Instrumententafel"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_student_badge_wizard_grant
+msgid "Describe what they did and why it matters."
+msgstr "Beschreiben Sie, was sie taten und warum es wichtig ist."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_board_affiliation__note
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__description
+msgid "Description"
+msgstr "Beschreibung"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student__display_name
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student_wizard__display_name
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_board_affiliation__display_name
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: openeducat_core_enterprise
+#: selection:res.company,onboarding_batch_layout_state:0
+#: selection:res.company,onboarding_course_layout_state:0
+#: selection:res.company,onboarding_subject_layout_state:0
+#: selection:res.company,openeducat_core_onboard_panel:0
+msgid "Done"
+msgstr "Getan"
+
+#. module: openeducat_core_enterprise
+#: model:op.gamification.badge,description:openeducat_core_enterprise.op_gamification_badge_1
+msgid "Done good job in work"
+msgstr "Geschehen gute Arbeit bei der Arbeit"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.student_portal_educational_information
+msgid "Educational\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+msgstr "Lehrreich\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_create_subject_registration
+msgid "Elective Subjects:"
+msgstr "Die Wahlfächer:"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model,name:openeducat_core_enterprise.model_hr_employee
+msgid "Employee"
+msgstr "Mitarbeiter"
+
+#. module: openeducat_core_enterprise
+#: selection:op.gamification.badge,rule_auth:0
+msgid "Everyone"
+msgstr "Jedermann"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_follower_ids
+msgid "Followers"
+msgstr "Abonnenten"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Abonnenten (Kanäle)"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Abonnenten (Partner)"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__level
+msgid "Forum Badge Level"
+msgstr "Forum-Abzeichen Ebene"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model,name:openeducat_core_enterprise.model_op_gamification_badge
+msgid "Gamification Badge"
+msgstr "Gamification-Pin"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model,name:openeducat_core_enterprise.model_op_badge_student
+msgid "Gamification Student badge"
+msgstr "Gamification Studenten Abzeichen"
+
+#. module: openeducat_core_enterprise
+#: model:op.badge.student,badge_name:openeducat_core_enterprise.op_badge_student_1
+#: model:op.gamification.badge,name:openeducat_core_enterprise.op_gamification_badge_1
+msgid "Good Job"
+msgstr "Gut gemacht"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_student_badge_wizard_grant
+msgid "Grant Badge"
+msgstr "Grant-Abzeichen"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_student_badge_wizard_grant
+msgid "Grant Badge To"
+msgstr "Grant-Abzeichen"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.op_student_badge_form_view
+msgid "Grant this Badge"
+msgstr "Erteilen dieses Abzeichen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__granted_employees_count
+msgid "Granted Employees Count"
+msgstr "Bewilligte Mitarbeiteranzahl"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_student_form_badge_inherit
+msgid "Granted by"
+msgstr "Erteillt von"
+
+#. module: openeducat_core_enterprise
+#: model:op.gamification.badge,description:openeducat_core_enterprise.op_gamification_badge_2
+msgid "Great in problem solving and fast"
+msgstr "Große bei der Problemlösung und schnell"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student__id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student_wizard__id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_board_affiliation__id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__id
+msgid "ID"
+msgstr ""
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__remaining_sending
+msgid "If a maximum is set"
+msgstr "Wenn ein Maximum eingestellt"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Falls markiert, benötigen neue Nachrichten Ihre Kenntnisnahme."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Falls markiert, benötigen neue Nachrichten Ihre Kenntnisnahme."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Das Senden mancher Nachrichten ist fehlgeschlagen wenn dieses Fenster angekreuzt ist."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__image
+msgid "Image"
+msgstr "Bild"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_is_follower
+msgid "Is Follower"
+msgstr "Ist ein Abonnent"
+
+#. module: openeducat_core_enterprise
+#: selection:res.company,onboarding_batch_layout_state:0
+#: selection:res.company,onboarding_course_layout_state:0
+#: selection:res.company,onboarding_subject_layout_state:0
+#: selection:res.company,openeducat_core_onboard_panel:0
+msgid "Just done"
+msgstr "Gerade fertig geworden"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model,name:openeducat_core_enterprise.model_op_course
+msgid "LMS Course"
+msgstr "LMS-Kurs"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student____last_update
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student_wizard____last_update
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_board_affiliation____last_update
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge____last_update
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student__write_uid
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student_wizard__write_uid
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_board_affiliation__write_uid
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert durch"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student__write_date
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student_wizard__write_date
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_board_affiliation__write_date
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__rule_max_number
+msgid "Limitation Number"
+msgstr "Limitierungsnummer"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_batch_layout_step
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_course_layout_step
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_subject_layout_step
+msgid "Looks great!"
+msgstr "Sieht großartig aus!"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Hauptanhänge"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_create_subject_registration
+msgid "Maximum Unit Load:"
+msgstr "Maximale Unit Load:"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_has_error
+msgid "Message Delivery error"
+msgstr "Error beim senden der Nachricht"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_ids
+msgid "Messages"
+msgstr "Nachrichten"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_create_subject_registration
+msgid "Minimum Unit Load:"
+msgstr "Mindest Unit Load:"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__rule_max
+msgid "Monthly Limited Sending"
+msgstr "Monat Begrenztes Senden"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__stat_this_month
+msgid "Monthly total"
+msgstr "Monatliche Gesamt"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__stat_my_monthly_sending
+msgid "My Monthly Sending Total"
+msgstr "Mein Monat Senden Gesamt"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__stat_my_this_month
+msgid "My Monthly Total"
+msgstr "Mein Monatsgesamt"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__stat_my
+msgid "My Total"
+msgstr "Mein Gesamt"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_list
+msgid "Name"
+msgstr ""
+
+#. module: openeducat_core_enterprise
+#: selection:op.gamification.badge,rule_auth:0
+msgid "No one, assigned through challenges"
+msgstr "Niemand, durch Herausforderungen zugewiesen"
+
+#. module: openeducat_core_enterprise
+#: selection:res.company,onboarding_batch_layout_state:0
+#: selection:res.company,onboarding_course_layout_state:0
+#: selection:res.company,onboarding_subject_layout_state:0
+#: selection:res.company,openeducat_core_onboard_panel:0
+msgid "Not done"
+msgstr "Nicht durchgeführt"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Anzahl der Aktionen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_has_error_counter
+msgid "Number of error"
+msgstr "Fehlernummer"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Anzahl der Nachrichten, die eine Aktion erfordern"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Anzahl der Nachrichten mit einem Fehler beim Senden."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Anzahl ungelesener Nachrichten"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__stat_count_distinct
+msgid "Number of users"
+msgstr "Anzahl der Nutzer"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__rule_auth_badge_ids
+msgid "Only the people having these badges can give this badge"
+msgstr "Nur die Menschen diese Abzeichen hat, kann dieses Abzeichen geben"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__rule_auth_user_ids
+msgid "Only these people can give this badge"
+msgstr "Nur diese Leute dieses Abzeichen geben"
+
+#. module: openeducat_core_enterprise
+#. openerp-web
+#: code:addons/openeducat_core_enterprise/static/src/js/openeducat_main_dashboard.js:196
+#, python-format
+msgid "OpenEduCat"
+msgstr ""
+
+#. module: openeducat_core_enterprise
+#: model:ir.model,name:openeducat_core_enterprise.model_op_batch
+msgid "OpenEduCat Batch"
+msgstr ""
+
+#. module: openeducat_core_enterprise
+#: model:ir.model,name:openeducat_core_enterprise.model_op_faculty
+msgid "OpenEduCat Faculty"
+msgstr "OpenEduCat Fakultät"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__owner_ids
+msgid "Owners"
+msgstr "Besitzer"
+
+#. module: openeducat_core_enterprise
+#: selection:op.gamification.badge,rule_auth:0
+msgid "People having some badges"
+msgstr "Menschen einige Abzeichen mit"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "Personal Information\n"
+"                                    <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+msgstr "Persönliche Informationen\n"
+"                                    <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+#. module: openeducat_core_enterprise
+#: model:op.badge.student,badge_name:openeducat_core_enterprise.op_badge_student_2
+#: model:op.gamification.badge,name:openeducat_core_enterprise.op_gamification_badge_2
+msgid "Problem Solver"
+msgstr "Problemlöser"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_student_form_badge_inherit
+msgid "Received Badges"
+msgstr "Auszeichnungen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__remaining_sending
+msgid "Remaining Sending Allowed"
+msgstr "Verbleibende Sende erlaubt"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__rule_auth_badge_ids
+msgid "Required Badges"
+msgstr "Erforderliche Abzeichen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__challenge_ids
+msgid "Reward of Challenges"
+msgstr "Belohnung von Herausforderungen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__goal_definition_ids
+msgid "Rewarded by"
+msgstr "belohnt durch"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.student_portal_educational_information
+msgid "Roll Number"
+msgstr "Rollennummer"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_create_subject_registration
+msgid "SUBMIT\n"
+"                                    <span class=\"fa fa-long-arrow-right\"/>"
+msgstr "EINREICHEN\n"
+"                                    <Span class = \"fa fa-long-arrow-right\" />"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_batch_layout_step
+msgid "See how to create a Batch."
+msgstr "Sehen Sie, wie eine Batch erstellen."
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_course_layout_step
+msgid "See how to create a course."
+msgstr "Sehen Sie, wie einen Kurs zu erstellen."
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_subject_layout_step
+msgid "See how to create a subject."
+msgstr "Sehen Sie, wie ein Thema zu erstellen."
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_create_subject_registration
+msgid "Select your option"
+msgstr "Wählen Sie Ihre Option"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student__sender_id
+msgid "Sender"
+msgstr "Absender"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_batch_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_course_dashboard_kanban_view
+msgid "Settings"
+msgstr "Einstellungen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_res_company__onboarding_batch_layout_state
+msgid "State of the onboarding batch layout step"
+msgstr "Zustand des Onboarding-Batch-Layout Schritt"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_res_company__onboarding_course_layout_state
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_res_company__openeducat_core_onboard_panel
+msgid "State of the onboarding course layout step"
+msgstr "Zustand des Onboarding natürlich Layoutschritt"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_res_company__onboarding_subject_layout_state
+msgid "State of the onboarding subject layout step"
+msgstr "Zustand des Layouts Schritt Onboarding Thema"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_list
+msgid "Status"
+msgstr ""
+
+#. module: openeducat_core_enterprise
+#: model:ir.model,name:openeducat_core_enterprise.model_op_student
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student__student_id
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_badge_student_wizard__student_id
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_list
+msgid "Student"
+msgstr ""
+
+#. module: openeducat_core_enterprise
+#: model:ir.ui.menu,name:openeducat_core_enterprise.op_student_badge_menu
+msgid "Student Badges"
+msgstr "Student Abzeichen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.action_student_grant_wizard
+msgid "Student Grant Badge"
+msgstr "Student Grant-Abzeichen"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+msgid "Student Information"
+msgstr "Schüler Informationen"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_my_student_information
+msgid "Student Profile"
+msgstr "Studenten Profil"
+
+#. module: openeducat_core_enterprise
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.act_batch_dashboard_op_student_view
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.act_course_dashboard_op_student_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_batch_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_course_dashboard_kanban_view
+msgid "Students"
+msgstr "Studenten"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model,name:openeducat_core_enterprise.model_op_subject
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_subject_form_onboard
+msgid "Subject"
+msgstr "Gegenstand"
+
+#. module: openeducat_core_enterprise
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.action_onboarding_subject_layout
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.onboarding_subject_layout_step
+msgid "Subject Configuration"
+msgstr "Betreff Konfiguration"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_create_subject_registration
+msgid "Subject Registration Form"
+msgstr "Betreff Anmeldeformular"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_list
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_subject_registration
+msgid "Subject Registration List"
+msgstr "Betreff Registrierungsliste"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_data
+msgid "Subject Registration information"
+msgstr "Betrifft Registrierungsinformationen"
+
+#. module: openeducat_core_enterprise
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.act_dashboard_op_subject_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_course_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.student_portal_educational_information
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_course_form_onboard
+msgid "Subjects"
+msgstr "Fächer"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__owner_ids
+msgid "The list of instances of this badge granted to users"
+msgstr "Die Liste der Instanzen dieses Abzeichen an Benutzer vergeben"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__unique_owner_ids
+msgid "The list of unique users having received this badge."
+msgstr "Die Liste der einzelnen Nutzer dieses Abzeichen erhalten zu haben."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__rule_max_number
+msgid "The maximum number of time this badge can be sent per month per person."
+msgstr "Die maximale Anzahl der Zeit kann dieses Abzeichen pro Person pro Monat gesendet werden."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__stat_my_this_month
+msgid "The number of time the current user has received this badge this month."
+msgstr "Die Anzahl der Zeit der aktuelle Benutzer dieses Abzeichen in diesem Monat erhalten hat."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__stat_my
+msgid "The number of time the current user has received this badge."
+msgstr "Die Anzahl der Zeit der aktuelle Benutzer hat dieses Abzeichen erhalten hat."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__stat_my_monthly_sending
+msgid "The number of time the current user has sent this badge this month."
+msgstr "Die Anzahl der Zeit der aktuelle Benutzer dieses Abzeichen in diesem Monat gesendet hat."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__stat_count_distinct
+msgid "The number of time this badge has been received by unique users."
+msgstr "Die Anzahl der Zeit Diese Auszeichnung wurde von Unique User erhalten."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__stat_this_month
+msgid "The number of time this badge has been received this month."
+msgstr "Die Anzahl der Zeit dieses Abzeichen in diesem Monat empfangen wurde."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__stat_count
+msgid "The number of time this badge has been received."
+msgstr "Die Anzahl der Zeit dieses Abzeichen empfangen wurde."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_badge_student__sender_id
+msgid "The user who has send the badge"
+msgstr "Der Benutzer, der das Abzeichen hat schicken"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__goal_definition_ids
+msgid "The users that have succeeded theses goals will receive automatically the badge."
+msgstr "Der Anwender, die Thesen Ziele gelungen, erhält automatisch das Abzeichen."
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_create_subject_registration
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.openeducat_enterprise_student_portal
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_data
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.portal_student_subject_registration_list
+msgid "There are currently no information for your account!!!"
+msgstr "Es liegen noch keine Informationen für Ihr Konto !!!"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__image
+msgid "This field holds the image         used for the badge, limited to 256x256"
+msgstr "Dieses Feld enthält das Bild für das Abzeichen verwendet, beschränkt auf 256x256"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.actions.act_window,help:openeducat_core_enterprise.open_batch_dashboard_kanban
+msgid "This is the Batch Dashboard."
+msgstr "Dies ist die Batch-Steuerung."
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.actions.act_window,help:openeducat_core_enterprise.open_course_dashboard_kanban
+msgid "This is the Course Dashboard."
+msgstr "Dies ist die Kurs-Dashboard."
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__stat_count
+msgid "Total"
+msgstr ""
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__unique_owner_ids
+msgid "Unique Owners"
+msgstr "eindeutige Empfänger"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_unread
+msgid "Unread Messages"
+msgstr "Ungelesene Nachrichten"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Anzahl der ungelesenen Nachrichten"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,field_description:openeducat_core_enterprise.field_op_gamification_badge__website_message_ids
+msgid "Website Messages"
+msgstr "Website-Nachrichten"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__website_message_ids
+msgid "Website communication history"
+msgstr "Website-Kommunikationshistorie"
+
+#. module: openeducat_core_enterprise
+#: model:ir.model.fields,help:openeducat_core_enterprise.field_op_gamification_badge__rule_auth
+msgid "Who can grant this badge"
+msgstr "Wer kann dieses Abzeichen gewähren"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_student_badge_wizard_grant
+msgid "Who would you like to reward?"
+msgstr "Wem möchten Sie belohnen?"
+
+#. module: openeducat_core_enterprise
+#: selection:op.gamification.badge,level:0
+msgid "bronze"
+msgstr "Bronze-"
+
+#. module: openeducat_core_enterprise
+#: model:ir.actions.act_window,name:openeducat_core_enterprise.action_onboarding_course_layout
+msgid "course Configuration"
+msgstr "Kurs-Konfiguration"
+
+#. module: openeducat_core_enterprise
+#: selection:op.gamification.badge,level:0
+msgid "gold"
+msgstr "Gold"
+
+#. module: openeducat_core_enterprise
+#: selection:op.gamification.badge,level:0
+msgid "silver"
+msgstr "Silber"
+
+#. module: openeducat_core_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_core_enterprise.view_op_student_form_badge_inherit
+msgid "the"
+msgstr "das"
+

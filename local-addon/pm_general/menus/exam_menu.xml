@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+<!--        tem:remove acac_marketing-->
+
+             <menuitem id="menu_pm_admission_sub"
+                  name="Semester"
+                  parent="openeducat_core.menu_op_school_config_course"
+                  sequence="20"
+                  action="act_open_pm_semester_view"
+                  groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+
+          <menuitem id="menu_pm_fee_management"
+                  name="Fee Management"
+                  parent="openeducat_core.menu_op_school_config"
+                  sequence="30"
+                  action="act_open_pm_fee_view"
+                  groups="openeducat_core.group_op_back_office_admin"/>
+
+        <menuitem id="openeducat_fees.menu_fees_terms"
+              name="Fee Terms"
+              groups="openeducat_core.group_op_back_office_admin"
+              parent="menu_pm_fee_management"/>
+         <menuitem id="menu_pm_fee_product_sub"
+              name="Course Fees"
+              parent="menu_pm_fee_management"
+              sequence="30"
+              action="act_open_pm_fee_view"
+              groups="openeducat_core.group_op_back_office_admin"/>
+
+
+
+
+
+            <menuitem id="menu_pm_semester_result_root"
+                  name="Result"
+                  parent="openeducat_exam.menu_op_exam_root"
+                  sequence="10"
+                  groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+
+          <menuitem id="menu_pm_class_exam"
+                  name="Class Exam"
+                  parent="openeducat_exam.menu_op_school_exam_result"
+                  sequence="25"
+                  action="act_open_pm_class_exam"
+                  groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+
+          <menuitem id="menu_pm_semester_result_template"
+                  name="Generate Result for a Semester"
+                  parent="menu_pm_semester_result_root"
+                  sequence="60"
+                  action="act_open_semester_result_template_view"
+                  groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+
+        <menuitem name="Generate Result for a Subject"
+            id="openeducat_exam.menu_op_result_template"
+            parent="menu_pm_semester_result_root" />
+
+        <menuitem
+            name="Generate Final Result"
+            id="menu_pm_final_result_template"
+            sequence="20"
+            groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"
+            action="act_open_final_result_template_view"
+            parent="menu_pm_semester_result_root" />
+
+          <menuitem
+              name="Subject Results"
+              id="openeducat_exam.menu_op_marksheet_register_sub"
+              parent="menu_pm_semester_result_root"
+              sequence="20"/>
+
+          <menuitem id="menu_pm_term_result"
+              name="Final Results"
+              parent="menu_pm_semester_result_root"
+              sequence="5"
+              action="act_open_pm_term_result_view"
+              groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+
+          <menuitem id="menu_pm_semester_result"
+              name="Semester Results"
+              parent="menu_pm_semester_result_root"
+              sequence="10"
+              action="act_open_pm_semester_result_view"
+              groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+
+          <menuitem id="menu_pm_student_semester_result"
+              name="Semester Result List"
+              parent="openeducat_exam.menu_op_exam_general"
+              sequence="50"
+              action="pm_general.act_open_pm_student_semester_result_view"
+              groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+
+          <menuitem id="menu_pm_student_final_result"
+              name="Final Result List"
+              parent="openeducat_exam.menu_op_exam_general"
+              sequence="60"
+              action="pm_general.act_open_student_pm_term_result_view"
+              groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+
+
+<!--             <record model="ir.actions.act_window" id="act_open_op_batch_view">-->
+<!--                <field name="name">Term</field>-->
+<!--            </record>-->
+            <record model="ir.ui.menu" id="openeducat_core.menu_op_batch_sub">
+              <field name="name">Terms</field>
+            </record>
+
+           <record model="ir.actions.act_window" id="openeducat_core.act_open_op_batch_view">
+            <field name="name">Terms</field>
+            </record>
+
+            <record model="ir.actions.act_window" id="openeducat_exam.act_open_op_marksheet_register_view">
+                <field name="name">Subject Results</field>
+            </record>
+
+            <record model="ir.ui.menu" id="openeducat_core_enterprise.menu_batch_dashboard_openeducat">
+              <field name="name">Term Dashboard</field>
+            </record>
+            <record model="ir.ui.menu" id="openeducat_attendance.menu_op_attendance_root">
+              <field name="name">Student Attendances</field>
+            </record>
+
+            <record model="ir.ui.menu" id="openeducat_classroom.menu_op_classroom_sub">
+              <field name="name">Class List</field>
+            </record>
+
+             <record id="openeducat_core_enterprise.open_batch_dashboard_kanban" model="ir.actions.act_window">
+                <field name="name">Term Dashboard</field>
+                <field name="help" type="html">
+                    <p>This is the Term Dashboard.</p>
+                </field>
+            </record>
+
+
+            <record id="openeducat_discipline.menu_op_discipline" model="ir.ui.menu">
+                <field name="groups_id" eval="[(4,ref('openeducat_core.group_op_faculty'))]"/>
+            </record>
+
+             <record id="openeducat_exam.menu_exam_configuration" model="ir.ui.menu">
+                <field name="groups_id" eval="[(4, ref('openeducat_core.group_op_back_office')), (4, ref('openeducat_core.group_op_back_office_admin'))]"/>
+            </record>
+             <record id="openeducat_attendance.menu_op_attendance_register_sub" model="ir.ui.menu">
+                <field name="groups_id" eval="[(4, ref('openeducat_core.group_op_back_office')), (4, ref('openeducat_core.group_op_back_office_admin'))]"/>
+            </record>
+
+             <record id="openeducat_core.menu_op_student_root" model="ir.ui.menu">
+                <field name="groups_id" eval="[(4,ref('pm_leads.group_see_student_app'))]"/>
+            </record>
+             <record id="openeducat_core.menu_op_student_main_student" model="ir.ui.menu">
+                <field name="groups_id" eval="[(4,ref('pm_leads.group_see_student_app'))]"/>
+            </record>
+
+
+            <record id="base.menu_administration" model="ir.ui.menu">
+                <field name="groups_id" eval="[(3,ref('base.group_erp_manager'))]"/>
+            </record>
+
+            <record id="base.edit_menu_access" model="ir.ui.menu">
+                  <field name="groups_id" eval="[(3,ref('base.group_erp_manager'))]"/>
+            </record>
+    </data>
+</odoo>

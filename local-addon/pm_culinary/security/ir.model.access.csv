@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pm_culinary,access_pm_culinary,model_pm_culinary,group_acac_culinary,1,1,1,1
+access_pm_ingredient_category,access_pm_ingredient_category,model_pm_ingredient_category,group_acac_culinary,1,1,1,1
+access_pm_recipe,access_pm_recipe,model_pm_ingredient_category,group_acac_culinary,1,1,1,1
+access_pm_recipe_line,access_pm_recipe_line,model_pm_ingredient_category,group_acac_culinary,1,1,1,1
+access_pm_recipe,access_pm_recipe,model_pm_recipe,group_acac_culinary,1,1,1,1
+access_pm_recipe_line,access_pm_recipe_line,model_pm_recipe_line,group_acac_culinary,1,1,1,1
+access_pm_nutrition,access_pm_nutrition,model_pm_nutrition,group_acac_culinary,1,1,1,1
+access_pm_ingredient_nutrition,access_pm_ingredient_nutrition,model_pm_ingredient_nutrition,group_acac_culinary,1,1,1,1
+access_pm_brand,access_pm_brand,model_pm_brand,group_acac_culinary,1,1,1,1
+access_pm_menu,access_pm_menu,model_pm_menu,group_acac_culinary,1,1,1,1
+access_pm_menu_line,access_pm_menu_line,model_pm_menu_line,group_acac_culinary,1,1,1,1
+access_pm_schedule,access_pm_schedule,model_pm_schedule,group_acac_culinary,1,1,1,1
+access_pm_schedule_menu,access_pm_schedule_menu,model_pm_schedule_menu,group_acac_culinary,1,1,1,1
+access_pm_ingredient_origin,access_pm_ingredient_origin,model_pm_ingredient_origin,group_acac_culinary,1,1,1,1
+access_pm_supplier_industry,access_pm_supplier_industry,model_pm_supplier_industry,base.group_user,1,1,1,1
+access_pm_product_uom,access_pm_product_uom,model_pm_product_uom,base.group_user,1,1,1,1

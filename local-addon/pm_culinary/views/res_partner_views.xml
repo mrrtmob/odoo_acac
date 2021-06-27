@@ -1,0 +1,117 @@
+<odoo>
+  <data>
+    <record id="view_partner_form" model="ir.ui.view">
+      <field name="name">view.partner.form.inherited.pm_culinary</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="openeducat_core.student_portal_view" />
+      <field name="arch" type="xml">
+        <xpath expr="//div[@name='button_box']" position="attributes">
+          <attribute name="attrs">{'invisible': [('partner_type', '=', 'account_holder')]}</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='name']" position="attributes">
+          <attribute name="placeholder">Name in English</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='name']" position="after">
+          <field name="name_in_khmer" placeholder="Name in Khmer" />
+        </xpath>
+
+        <xpath expr="//div[@class='portal_user']" position="attributes">
+          <attribute name="attrs">{'invisible': [('partner_type', '!=', 'other')]}</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='type']" position="before">
+          <field name="partner_type" invisible="context.get('default_partner_type', False)" required="True" />
+          <field name="code" attrs="{'invisible': [('partner_type', '=', 'account_holder')]}" />
+        </xpath>
+
+        <xpath expr="//field[@name='type']" position="before">
+          <field name="grade" attrs="{'invisible': [('partner_type', '=', 'account_holder')]}" />
+        </xpath>
+
+        <xpath expr="//field[@name='vat']" position="attributes">
+          <attribute name="string">VAT#</attribute>
+          <attribute name="attrs">{'invisible': [('partner_type', '=', 'account_holder')]}</attribute>
+        </xpath>
+
+        <xpath expr="//label[@for='phone']" position="attributes">
+          <attribute name="string">Mobile 1</attribute>
+        </xpath>
+
+        <xpath expr="//label[@for='mobile']" position="attributes">
+          <attribute name="string">Mobile 2</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='vat']" position="after">
+          <field name="tax_payer_type" attrs="{'invisible': [('partner_type', '=', 'account_holder')]}" />
+          <field name="supplier_industry_id" />
+        </xpath>
+
+        <xpath expr="//field[@name='title']" position="after">
+          <field name="id" string="System ID" />
+        </xpath>
+
+        <xpath expr="//page[@name='sales_purchases']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <!-- <xpath expr="//page[@name='accounting']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath> -->
+
+        <xpath expr="//field[@name='category_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <!-- Contacts & Addresses -->
+        <xpath expr="//field[@name='child_ids']" position="attributes">
+          <attribute name="context">
+            {'default_parent_id': active_id, 'default_user_id': user_id, 'default_type': 'contact'}
+          </attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='child_ids']//form//field[@name='type']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='child_ids']//form//field[@name='title']" position="attributes">
+          <attribute name="attrs">{}</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='child_ids']//form//div[@name='div_address']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='child_ids']//form//label[@for='street']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='child_ids']//form//label[@for='street']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='child_ids']//form//field[@name='phone']" position="attributes">
+          <attribute name="string">Mobile 1</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='child_ids']//form//field[@name='mobile']" position="attributes">
+          <attribute name="string">Mobile 2</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='child_ids']//kanban//templates//div[@class='oe_kanban_details']//field[@name='name']" position="before">
+          <field name="title" />
+        </xpath>
+      </field>
+    </record>
+
+    <record id="res_partner_action" model="ir.actions.act_window">
+      <field name="name">Suppliers</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_mode">kanban,tree,form</field>
+      <field name="domain">[('partner_type', '=', 'supplier')]</field>
+      <field name="context" eval="{'default_partner_type': 'supplier'}"/>
+    </record>
+  </data>
+</odoo>

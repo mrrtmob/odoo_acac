@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--         Action for Student-->
+       <record model="ir.actions.act_window" id="act_open_total_students">
+            <field name="name">Total Students</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.student</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="openeducat_core.view_op_student_search"/>
+            <field name="domain">[('course_detail_ids.batch_id','in',[active_id])]</field>
+        </record>
+
+       <record model="ir.actions.act_window" id="act_open_active_students">
+            <field name="name">Active Students</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.student</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="openeducat_core.view_op_student_search"/>
+            <field name="domain">[('course_detail_ids.batch_id','in',[active_id]),('course_detail_ids.education_status','in',['active'])]</field>
+        </record>
+
+       <record model="ir.actions.act_window" id="act_crm_inactive_students">
+            <field name="name">Inactive Students</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.student</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="openeducat_core.view_op_student_search"/>
+            <field name="domain">[('course_detail_ids.batch_id','in',[active_id]),('course_detail_ids.education_status','not in',['active'])]</field>
+        </record>
+
+       <record model="ir.actions.act_window" id="act_open_postponed_students">
+            <field name="name">Postponed Students</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.student</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="openeducat_core.view_op_student_search"/>
+            <field name="domain">[('course_detail_ids.batch_id','in',[active_id]),('course_detail_ids.education_status','in',['postponed'])]</field>
+        </record>
+       <record model="ir.actions.act_window" id="act_open_withdrawn_students">
+            <field name="name">Withdrawn Students</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.student</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="openeducat_core.view_op_student_search"/>
+            <field name="domain">[('course_detail_ids.batch_id','in',[active_id]),('course_detail_ids.education_status','in',['withdrawn'])]</field>
+        </record>
+
+       <record model="ir.actions.act_window" id="act_open_dismissed_count_students">
+            <field name="name">Dismissed Students</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.student</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="openeducat_core.view_op_student_search"/>
+            <field name="domain">[('course_detail_ids.batch_id','in',[active_id]),('course_detail_ids.education_status','in',['dismissed'])]</field>
+        </record>
+
+       <record model="ir.actions.act_window" id="act_open_graduated_count_students">
+            <field name="name">Dismissed Students</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.student</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="openeducat_core.view_op_student_search"/>
+            <field name="domain">[('course_detail_ids.batch_id','in',[active_id]),
+                ('course_detail_ids.education_status','=',['graduated']),('course_detail_ids.p_active', '=', [True])]</field>
+        </record>
+
+        <!--         Action for Semesters -->
+          <record model="ir.actions.act_window" id="act_open_all_semester">
+            <field name="name">Semesters</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.semester</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="pm_general.view_pm_semester_search"/>
+            <field name="domain">[('batch_id','in',[active_id])]</field>
+        </record>
+          <record model="ir.actions.act_window" id="act_open_active_semester">
+            <field name="name">Active Semester</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.semester</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="pm_general.view_pm_semester_search"/>
+            <field name="domain">[('batch_id','in',[active_id]),('state', '=', 'active')]</field>
+        </record>
+          <record model="ir.actions.act_window" id="act_open_pending_semester">
+            <field name="name">Pending Semesters</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.semester</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="pm_general.view_pm_semester_search"/>
+            <field name="domain">[('batch_id','in',[active_id]),('state', '=', 'pending')]</field>
+        </record>
+          <record model="ir.actions.act_window" id="act_open_finished_semester">
+            <field name="name">Finished Semesters</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.semester</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="pm_general.view_pm_semester_search"/>
+            <field name="domain">[('batch_id','in',[active_id]),('state', '=', 'finished')]</field>
+        </record>
+
+        <!--  Action for Disciplines -->
+
+          <record model="ir.actions.act_window" id="act_open_discipline">
+            <field name="name">Semester Disciplines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.student.discipline</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('semester_id','in',[active_id])]</field>
+        </record>
+          <record model="ir.actions.act_window" id="act_open_first_discipline">
+            <field name="name">First Warning Disciplines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.student.discipline</field>
+              <field name="binding_view_types">form</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('semester_id','in',[active_id]), ('state', '=', 'first_warning')]</field>
+        </record>
+          <record model="ir.actions.act_window" id="act_open_second_discipline">
+            <field name="name">Second Warning Disciplines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.student.discipline</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('semester_id','in',[active_id]),('state', '=', 'second_warning')]</field>
+        </record>
+
+        <!--  Action for Absence -->
+          <record model="ir.actions.act_window" id="act_open_absence">
+            <field name="name">Semester Disciplines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.semester.attendance</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('semester_id','in',[active_id])]</field>
+        </record>
+          <record model="ir.actions.act_window" id="act_open_first_absence">
+            <field name="name">First Warning Disciplines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.semester.attendance</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('semester_id','in',[active_id]), ('state', '=', 'first_warning')]</field>
+        </record>
+          <record model="ir.actions.act_window" id="act_open_second_absence">
+            <field name="name">Second Warning Disciplines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.semester.attendance</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('semester_id','in',[active_id]),('state', '=', 'second_warning')]</field>
+        </record>
+
+        <!-- active student by gender -->
+        <record id="active_student_by_gender" model="ir.ui.view">
+            <field name="name">active.student.gender</field>
+            <field name="model">op.student</field>
+            <field name="arch" type="xml">
+                <graph string="Active Student By Gender" type="pie">
+                    <field name="gender" />
+                </graph>
+            </field>
+        </record>
+        <record id="active_gender" model="ir.actions.act_window">
+            <field name="name">Active Student By Gender</field>
+            <field name="res_model">op.student</field>
+            <field name="view_mode">graph</field>
+            <field name="domain">[('education_status','=','active')]</field>
+            <field name="view_id" ref="active_student_by_gender"/>
+        </record>
+        <!-- end active student by gender -->
+
+        <!-- active student by nationality -->
+        <record id="active_student_by_nationality" model="ir.ui.view">
+            <field name="name">active.student.nationality</field>
+            <field name="model">op.student</field>
+            <field name="arch" type="xml">
+                <graph string="Total Active Student By Nationality" type="pie">
+                    <field name="nationality" />
+                </graph>
+            </field>
+        </record>
+        <record id="active_nationality" model="ir.actions.act_window">
+            <field name="name">Total Active Student By Nationality</field>
+            <field name="res_model">op.student</field>
+            <field name="view_mode">graph</field>
+            <field name="domain">[('education_status','=','active')]</field>
+            <field name="view_id" ref="active_student_by_nationality"/>
+        </record>
+        <!-- end active student by nationality -->
+
+        <!-- graduate student nationality -->
+        <record id="graduate_student_by_nationality" model="ir.ui.view">
+            <field name="name">graduate.student.nationality</field>
+            <field name="model">op.student</field>
+            <field name="arch" type="xml">
+                <graph string="Total Active Graduated Student by Nationality" type="bar">
+                    <field name="nationality" />
+                </graph>
+            </field>
+        </record>
+        <record id="graduate_nationality" model="ir.actions.act_window">
+            <field name="name">Total Active Graduated Student by Nationality</field>
+            <field name="res_model">op.student</field>
+            <field name="view_mode">graph</field>
+            <field name="domain">[('education_status','=','graduated')]</field>
+            <field name="view_id" ref="graduate_student_by_nationality"/>
+        </record>
+        <!-- end graduate student nationality -->
+
+        <!-- student internship by country -->
+        <record id="internship_student_by_country" model="ir.ui.view">
+            <field name="name">internship.student.country</field>
+            <field name="model">op.student</field>
+            <field name="arch" type="xml">
+                <graph string="Student Internship By Country" type="bar">
+                    <field name="nationality" />
+                </graph>
+            </field>
+        </record>
+        <record id="internship_country" model="ir.actions.act_window">
+            <field name="name">Student Internship By Country</field>
+            <field name="res_model">op.student</field>
+            <field name="view_mode">graph</field>
+            <field name="domain">[('count_internship','=',True)]</field>
+            <field name="view_id" ref="internship_student_by_country"/>
+        </record>
+        <!-- end student internship by country -->
+
+        <!-- active student by term -->
+        <record id="active_student_by_term" model="ir.ui.view">
+            <field name="name">active.student.term</field>
+            <field name="model">op.student</field>
+            <field name="arch" type="xml">
+                <graph string="Total Active Student By Term" type="line">
+                    <field name="batch_name" />
+                </graph>
+            </field>
+        </record>
+        <record id="active_term" model="ir.actions.act_window">
+            <field name="name">Total Active Student By Term</field>
+            <field name="res_model">op.student</field>
+            <field name="view_mode">graph</field>
+            <field name="domain">[('education_status','=','active')]</field>
+            <field name="view_id" ref="active_student_by_term"/>
+        </record>contex
+        <!-- end active student by term -->
+
+        <!-- student by high school -->
+        <record id="student_by_high_school" model="ir.ui.view">
+            <field name="name">student.school</field>
+            <field name="model">op.student</field>
+            <field name="arch" type="xml">
+                <graph string="Student By High School" type="line">
+                    <field name="high_school_id" />
+                </graph>
+            </field>
+        </record>
+        <record id="student_high_school" model="ir.actions.act_window">
+            <field name="name">Student By High School</field>
+            <field name="res_model">op.student</field>
+            <field name="view_mode">graph</field>
+            <field name="domain"></field>
+            <field name="view_id" ref="student_by_high_school"/>
+        </record>
+        <!-- end student by high school -->
+
+        <record id="student_view_dashboard" model="ir.ui.view">
+            <field name="name">Dashboard Form</field>
+            <field name="model">board.board</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard">
+                    <board style="1-1">
+                        <column>
+                              <action
+                                string="Total Active Student By Gender"
+                                name="%(active_gender)d"/>
+                            <action
+                                string="Total Active Graduated Student by Nationality"
+                                name="%(graduate_nationality)d"/>
+                            <action
+                                string="Total Active Student By Term"
+                                name="%(active_term)d"/>
+                        </column>
+
+                        <column>
+                            <action
+                                string="Total Active Student By Nationality"
+                                name="%(active_nationality)d"/>
+                            <action
+                                string="Student Internship By Country"
+                                name="%(internship_country)d"/>
+                            <action
+                                string="Student By High School"
+                                name="%(student_high_school)d"/>
+                        </column>
+
+                    </board>
+                </form>
+            </field>
+        </record>
+
+         <record id="pm_custom_attendance_dashboard_kanban_view" model="ir.ui.view">
+            <field name="name">pm.batch.attendance.dashboard.kanban</field>
+            <field name="model">op.batch</field>
+            <field name="inherit_id" ref="openeducat_core_enterprise.openeducat_batch_dashboard_kanban_view"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div[@name='openeducat_views']" position="attributes">
+                         <attribute name="invisible">1</attribute>
+                    </xpath>
+                    <xpath expr="//div[@name='openeducat_new']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                    <xpath expr="//div[@name='graph_section']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                    <xpath expr="//div[@name='openeducat_reports']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+<!--        &lt;!&ndash; access to view &ndash;&gt;-->
+<!--        <record id="act_student_dashboard" model="ir.actions.act_window">-->
+<!--            <field name="name">Dashboard</field>-->
+<!--            <field name="res_model">board.board</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="usage">menu</field>-->
+<!--            <field name="view_id" ref="student_view_dashboard"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; add menu item dashboard to student&ndash;&gt;-->
+<!--        <menuitem-->
+<!--            id="student_menu_dashboard"-->
+<!--            name="Dashboard"-->
+<!--            string="Dashboard"-->
+<!--            parent="openeducat_core.menu_op_student_root"-->
+<!--            action="act_student_dashboard"-->
+<!--            sequence="2"/>-->
+
+
+            <record model="ir.actions.act_window" id="act_open_batch_dashboard_kanban">
+                <field name="name">Dashboard</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">op.batch</field>
+                <field name="binding_view_types">form</field>
+                <field name="view_mode">kanban,tree,form</field>
+                <field name="search_view_id" ref="openeducat_core.view_op_batch_search" />
+                <field name="domain">[]</field>
+                <field name="context">{"search_default_state_active":1}</field>
+            </record>
+
+           <record model="ir.actions.act_window.view" id="act_open_op_student_view_kanban">
+                <field name="act_window_id" ref="act_open_batch_dashboard_kanban"/>
+                <field name="sequence" eval="5"/>
+                <field name="view_mode">kanban</field>
+                <field name="view_id" ref="openeducat_core_enterprise.openeducat_batch_dashboard_kanban_view"/>
+            </record>
+
+         <menuitem id="pm_menu_term_dashboard"
+                name="Term Dashboard"
+                parent="openeducat_core.menu_op_student_root"
+                groups="pm_leads.group_acac_registrar,openeducat_core.group_op_back_office,pm_leads.group_see_student_app"
+                action="act_open_batch_dashboard_kanban"
+                sequence="1"/>
+
+        <record id="pm_semester_dashboard_kanban_view" model="ir.ui.view">
+            <field name="name">pm.semester.dashboard.kanban</field>
+            <field name="model">pm.semester</field>
+            <field name="arch" type="xml">
+                <kanban create="true" class="oe_background_grey o_kanban_dashboard o_account_kanban"
+                        banner_route="/openeducat_core_enterprise/openeducat_core_enterprise_onboarding_panel">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} " style="width:306px;">
+                                <div t-attf-class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary">
+                                            <a type="edit" class="mr-auto">
+                                                <field name="name"/>
+                                            </a>
+                                        </div>
+                                        <div class="o_secondary">
+                                            <a>
+                                                <field name="semester_code"/>
+                                            </a>
+                                            <field name="state" string="Status" widget="label_selection"
+                                             options="{'classes': {'pending': 'primary', 'active': 'success', 'finished': 'warning'}}"/>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_manage_button_section">
+                                        <a class="o_kanban_manage_toggle_button" href="#">
+                                            <i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="container o_kanban_card_content">
+                                    <div class="row col-md-12" style="padding-right:0px;">
+                                        <div name="first_column" class="col-md-6 o_kanban_primary_left">
+                                          <b>Absence</b><br/>
+
+                                            <a name="%(act_open_absence)d"
+                                               type="action" style="overflow: visible;">
+                                                <field name="absence_count"/> Absence
+                                            </a><br/>
+                                            <a name="%(act_open_first_absence)d"
+                                               type="action" style="overflow: visible;">
+                                                <field name="absence_first_count"/> First Warning
+                                            </a><br/>
+                                            <a name="%(act_open_second_absence)d"
+                                               type="action" style="overflow: visible;">
+                                                <field name="absence_second_count"/> Second Warning
+                                            </a><br/>
+                                            <div name="second_column" class=" o_kanban_primary_right"></div>
+                                        </div>
+                                        <div name="third_column" class="col-md-6 o_kanban_primary_right">
+                                          <b>Disciplinary</b><br/>
+                                            <a name="%(act_open_discipline)d"
+                                               type="action" style="overflow: visible;">
+                                                <field name="discipline_count"/> Discipline
+                                            </a><br/>
+                                            <a name="%(act_open_first_discipline)d"
+                                               type="action" style="overflow: visible;">
+                                                <field name="discipline_first_count"/> First Warning
+                                            </a><br/>
+                                            <a name="%(act_open_second_discipline)d"
+                                               type="action" style="overflow: visible;">
+                                                <field name="discipline_second_count"/> Second Warning
+                                            </a><br/>
+                                        </div>
+                                </div>
+                                <div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+                                    <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                        <div role="menuitem" aria-haspopup="true" class="col-md-8">
+                                            <ul class="oe_kanban_colorpicker" data-field="color" role="menu"/>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <a role="menuitem" type="edit">Settings</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+         <record id="pm_batch_report_dashboard_kanban_view" model="ir.ui.view">
+            <field name="name">pm.batch.report.dashboard.kanban</field>
+            <field name="model">op.batch</field>
+            <field name="inherit_id" ref="openeducat_core_enterprise.openeducat_batch_dashboard_kanban_view"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div[@name='first_column']" position="replace">
+                         <div name="first_column" class="col-md-6 o_kanban_primary_left">
+                              <b>Student Details</b><br/>
+                                <a name="%(openeducat_core_enterprise.act_batch_dashboard_op_student_view)d"
+                                   type="action" style="overflow: visible;">
+                                    <field name="student_count"/> Students
+                                </a><br/>
+                                <div name="second_column" class=" o_kanban_primary_right">
+                                <a name="%(act_open_active_students)d"
+                                    type="action" style="overflow: visible;">
+                                      <span><field name="active_count"/> Active</span>
+                                </a><br/>
+                               <a name="%(act_open_postponed_students)d"
+                                    type="action" style="overflow: visible;">
+                                    <span><field name="postpone_count"/> Postponed</span><br/>
+                                </a>
+                               <a name="%(act_open_withdrawn_students)d"
+                                    type="action" style="overflow: visible;">
+                                      <span><field name="withdrawn_count"/> Withdrawn</span><br/>
+                                </a>
+                               <a name="%(act_open_dismissed_count_students)d"
+                                    type="action" style="overflow: visible;">
+                                     <span><field name="dismissed_count"/> Dismissed</span><br/>
+                                </a>
+
+                               <a name="%(act_open_graduated_count_students)d"
+                                    type="action" style="overflow: visible;">
+                                        <field name="graduated_count"/>
+                                        Graduated
+                                </a>
+                                </div>
+                            </div>
+                    </xpath>
+                    <xpath expr="//div[@name='third_column']" position="replace">
+                         <div name="third_column" class="col-md-6 o_kanban_primary_left">
+                                <b>Semester Details</b><br/>
+                                <a name="%(act_open_all_semester)d"
+                                   type="action" style="overflow: visible;">
+                                    <field name="semester_count"/> Semesters
+                                </a><br/>
+                                <a name="%(act_open_active_semester)d"
+                                   type="action" style="overflow: visible;">
+                                     <span> <field name="active_semester_count"/> Active </span><br/>
+                                </a><br/>
+                                <a name="%(act_open_pending_semester)d"
+                                   type="action" style="overflow: visible;">
+                                         <span> <field name="pending_semester_count"/> Pending </span><br/>
+                                </a><br/>
+                                <a name="%(act_open_finished_semester)d"
+                                   type="action" style="overflow: visible;">
+                                    <span> <field name="finish_semester_count"/> Finished</span><br/>
+                                </a><br/>
+
+                        </div>
+                    </xpath>
+                    <xpath expr="//field[@name='code']" position="after">
+                        <field name="state" string="Status" widget="label_selection"
+                                             options="{'classes': {'pending': 'primary', 'active': 'success', 'finished': 'warning'}}"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="act_open_semester_dashboard_kanban">
+            <field name="name">Semester Dashboard</field>
+            <field name="res_model">pm.semester</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[]</field>
+            <field name="search_view_id" ref="pm_general.view_pm_semester_search" />
+            <field name="context">{"search_default_state_active":1}</field>
+        </record>
+
+        <record id="open_semester_dashboard_kanban" model="ir.actions.act_window.view">
+            <field name="act_window_id" ref="act_open_semester_dashboard_kanban"/>
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="pm_semester_dashboard_kanban_view"/>
+        </record>
+
+        <menuitem id="pm_menu_semester_dashboard"
+                  name="Semester Dashboard"
+                  action="act_open_semester_dashboard_kanban"
+                  parent="openeducat_core.menu_op_student_root"
+                  groups="pm_leads.group_acac_registrar,openeducat_core.group_op_back_office,pm_leads.group_see_student_app"
+                  sequence="2"/>
+
+
+
+
+
+    <record id="pm_crm_dashboard_custom_student" model="ir.ui.view">
+            <field name="name">Student Dashboard CRM</field>
+            <field name="model">op.batch</field>
+            <field name="arch" type="xml">
+                  <kanban create="true" class="oe_background_grey o_kanban_dashboard o_account_kanban">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} " style="width:306px;">
+                                <div t-attf-class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary">
+                                            <a>
+                                                <field name="name"/>
+                                            </a>
+                                        </div>
+                                        <div class="o_secondary">
+                                            <a>
+                                                <field name="code"/>
+                                            </a>
+                                               <field name="state" string="Status" widget="label_selection"
+                                             options="{'classes': {'pending': 'primary', 'active': 'success', 'finished': 'warning'}}"/>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_manage_button_section">
+                                        <a class="o_kanban_manage_toggle_button" href="#">
+                                            <i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="container o_kanban_card_content">
+
+                                         <a name="%(act_crm_inactive_students)d" type="action" style="overflow: visible;">
+                                             <h3 style="align: center;"> <field name="inactive_count"/> Students</h3>
+                                         </a>
+
+
+                                        <br/>
+                                    <div class="row col-md-12" style="padding-right:0px;">
+
+                                        <div name="first_column" class="col-md-6 o_kanban_primary_left">
+                                                <a name="%(act_open_postponed_students)d"
+                                                    type="action" style="overflow: visible;">
+                                                    <span><field name="postpone_count"/> Postponed</span><br/>
+                                                </a>
+                                               <a name="%(act_open_withdrawn_students)d"
+                                                    type="action" style="overflow: visible;">
+                                                      <span><field name="withdrawn_count"/> Withdrawn</span><br/>
+                                                </a>
+
+                                        </div>
+                                        <div name="third_column" class="col-md-6 o_kanban_primary_right">
+                                               <a name="%(act_open_dismissed_count_students)d"
+                                                type="action" style="overflow: visible;">
+                                                 <span><field name="dismissed_count"/> Dismissed</span><br/>
+                                            </a>
+
+                                           <a name="%(act_open_graduated_count_students)d"
+                                                type="action" style="overflow: visible;">
+                                                    <field name="graduated_count"/>
+                                                    Graduated
+                                            </a>
+                                         </div>
+                                </div>
+                            </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="act_open_crm_dashbaord_student">
+        <field name="name">Students</field>
+        <field name="res_model">op.batch</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('pm_crm_dashboard_custom_student')})]"/>
+    </record>
+
+
+    <menuitem id="crm_menu_leads"
+        name="Student"
+        parent="crm.crm_menu_root"
+        groups="crm.group_use_lead"
+        action="act_open_crm_dashbaord_student"
+        sequence="5"/>
+
+
+    </data>
+</odoo>

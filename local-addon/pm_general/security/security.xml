@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.rule" id="pm_exam_session_rule">
+           <field name="name">Own Exam Schedule </field>
+           <field name="model_id" ref="model_op_exam_session"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_faculty'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[('faculty_id.user_id','=', user.id)]</field>
+         </record>
+
+         <record model="ir.rule" id="pm_exam_session_rule_back_admin">
+           <field name="name">See All Exam Session Back Office Admin</field>
+           <field name="model_id" ref="model_op_exam_session"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_back_office_admin'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[(1, '=', 1)]</field>
+         </record>
+        <record model="ir.rule" id="pm_exam_session_rule_back_office">
+           <field name="name">See All Exam Session Back Office</field>
+           <field name="model_id" ref="model_op_exam_session"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_back_office'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[(1, '=', 1)]</field>
+         </record>
+
+        <record model="ir.rule" id="pm_exam_rule">
+           <field name="name">Own Exam</field>
+           <field name="model_id" ref="model_op_exam"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_faculty'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[('faculty_id.user_id','=', user.id)]</field>
+         </record>
+        <record model="ir.rule" id="pm_exam_rule_back_admin">
+           <field name="name">See All Exams Back Office Admin</field>
+           <field name="model_id" ref="model_op_exam"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_back_office_admin'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[(1, '=', 1)]</field>
+         </record>
+        <record model="ir.rule" id="pm_exam_rule_back_office">
+           <field name="name">See All Exams Back Office</field>
+           <field name="model_id" ref="model_op_exam"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_back_office'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[(1, '=', 1)]</field>
+         </record>
+
+        <record model="ir.rule" id="pm_class_exam_rule">
+           <field name="name">Own Class Exam </field>
+           <field name="model_id" ref="model_pm_class_exam"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_faculty'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[('faculty_id.user_id','=', user.id)]</field>
+         </record>
+
+         <record model="ir.rule" id="pm_exam_class_rule_back_admin">
+           <field name="name">See All Exams Class Back Office Admin</field>
+           <field name="model_id" ref="model_pm_class_exam"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_back_office_admin'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[(1, '=', 1)]</field>
+         </record>
+
+        <record model="ir.rule" id="pm_exam_class_rule_back_office">
+           <field name="name">See All Exams Class Back Office</field>
+           <field name="model_id" ref="model_pm_class_exam"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_back_office'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[(1, '=', 1)]</field>
+         </record>
+
+        <record model="ir.rule" id="pm_class_exam_attendee_rule">
+           <field name="name">Own Exam Attendees </field>
+           <field name="model_id" ref="model_op_exam_attendees"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_faculty'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[('exam_id.faculty_id.user_id','=',user.id)]</field>
+         </record>
+
+        <record model="ir.rule" id="pm_class_exam_attendee_see_all_rule">
+           <field name="name">See All Exam Attendees </field>
+           <field name="model_id" ref="model_op_exam_attendees"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_back_office_admin'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[(1, '=', 1)]</field>
+         </record>
+
+        <record model="ir.rule" id="op_attendance_sheet_see_all_rule">
+           <field name="name">See All Attendance Sheets Back Office</field>
+           <field name="model_id" ref="model_op_attendance_sheet"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_back_office'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[(1, '=', 1)]</field>
+         </record>
+
+        <record model="ir.rule" id="op_attendance_sheet_see_own_rule">
+           <field name="name">See Own Attendance Sheets</field>
+           <field name="model_id" ref="model_op_attendance_sheet"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_faculty'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[('faculty_id.user_id','=',user.id)]</field>
+         </record>
+
+        <record model="ir.rule" id="op_attendance_sheet_admin_see_all_rule">
+           <field name="name">See All Attendance Sheets</field>
+           <field name="model_id" ref="model_op_attendance_sheet"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_back_office_admin'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[(1, '=', 1)]</field>
+         </record>
+
+
+        <!--        Override Attendance Rules-->
+        <record id="openeducat_attendance.rule_faculty_attendance_line" model="ir.rule">
+            <field name="domain_force">
+                [('attendance_id.faculty_id.emp_id.user_id','=',user.id)]
+            </field>
+        </record>
+
+         <record model="ir.rule" id="op_attendance_line_see_all_rule">
+           <field name="name">See All Attendance Line Back Office</field>
+           <field name="model_id" ref="model_op_attendance_line"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_back_office'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[(1, '=', 1)]</field>
+         </record>
+
+
+        <record model="ir.rule" id="op_attendance_line_admin_see_all_rule">
+           <field name="name">See All Attendance Line</field>
+           <field name="model_id" ref="model_op_attendance_line"/>
+           <field name="groups" eval="[(4, ref('openeducat_core.group_op_back_office_admin'))]"/>
+           <field eval="1" name="perm_unlink"/>
+           <field eval="1" name="perm_write"/>
+           <field eval="1" name="perm_read"/>
+           <field eval="1" name="perm_create"/>
+           <field name="domain_force">[(1, '=', 1)]</field>
+         </record>
+
+        <!-- marketing -->
+<!--        <record model="ir.rule" id="op_student_records_owner">-->
+<!--           <field name="name">Student Records Owner</field>-->
+<!--           <field name="model_id" ref="openeducat_core.model_op_student"/>-->
+<!--           <field name="groups" eval="[(4, ref('pm_leads.group_acac_marketing_user'))]"/>-->
+<!--           <field eval="1" name="perm_unlink"/>-->
+<!--           <field eval="1" name="perm_write"/>-->
+<!--           <field eval="1" name="perm_read"/>-->
+<!--           <field eval="1" name="perm_create"/>-->
+<!--           <field name="domain_force">[('create_uid','=', user.id)]</field>-->
+<!--         </record>-->
+    </data>
+</odoo>

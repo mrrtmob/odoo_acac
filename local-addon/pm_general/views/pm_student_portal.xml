@@ -1,0 +1,593 @@
+<odoo>
+    <data>
+        <!-- Discipline -->
+        <template id="pm_student_portal_discipline" inherit_id="openeducat_discipline.student_portal_discipline">
+            <xpath expr="//div[@id='discipline']" position="replace">
+             <div class="tab-pane fade" id="discipline">
+                <div class="mb-4">
+                    <h4>Discipline</h4>
+                </div>
+                 <table class="mt16 table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Semester 1</th>
+                            <th>Points 2</th>
+                            <th>State 3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="student.semester_discipline" t-as="discipline_data">
+                            <tr decoration-primary="state=='first_warning'" decoration-warning="state=='second_warning'" decoration-danger="state=='dismissed'">
+                                <td>
+                                   <t t-foreach="discipline_data.semester_id" t-as="semester">
+                                       <a t-attf-href="/student/discipline/data/#{stud_id}/#{semester.id}">
+                                            <span t-esc="semester.name"/>
+                                       </a>
+                                   </t>
+                                </td>
+                                <td>
+                                     <span t-esc="discipline_data.discipline_point"/>
+                                </td>
+                                <td>
+                                    <span t-esc="discipline_data.state"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+            </xpath>
+        </template>
+
+        <!-- Discipline Detail -->
+        <template id="pm_student_portal_discipline_detail">
+            <t t-call="portal.portal_layout">
+                 <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Discipline Detail</t>
+                </t>
+                <t t-if="not student_discipline.id">
+                    <p>There are currently no information for your account!!!</p>
+                </t>
+
+               <div style="background-color:white; padding: 20px 40px 20px 40px;">
+                    <div class="mt32">
+                        <div class="row col-md-12">
+                            <div t-if="student_discipline.id" class="row col-md-6" style="padding-left:0;">
+                                <div t-if="student_discipline.semester_id.name" class="col-md-4">
+                                    <strong>Semester:</strong>
+                                </div>
+                                <div t-if="student_discipline.semester_id.name" class="col-md-8">
+                                    <span t-esc="student_discipline.semester_id.name"/>
+                                </div>
+                                <div t-if="student_discipline.state" class="col-md-4">
+                                    <strong>State:</strong>
+                                </div>
+                                <div t-if="student_discipline.state" class="col-md-8">
+                                    <span t-esc="student_discipline.state"/>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-6">
+                                <div t-if="student_discipline.discipline_point" class="col-md-4">
+                                    <strong>Discipline Point:</strong>
+                                </div>
+                                <div t-if="student_discipline.discipline_point" class="col-md-8">
+                                    <span t-esc="'%.2f'%student_discipline.discipline_point"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="mt32" t-if="disciplines">
+                        <t t-call="portal.portal_table">
+                            <thead>
+                                <tr>
+                                    <th>Misbehaviour Category</th>
+                                    <th>Misbehaviour Type</th>
+                                    <th>Date</th>
+                                    <th>State</th>
+                                    <th>Created By</th>
+                                    <th>Demerit Point</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="disciplines" t-as="discipline">
+                                    <tr>
+                                        <td>
+                                            <t t-if="discipline.misbehaviour_category_id">
+                                                <span class="text-capitalize" t-esc="discipline.misbehaviour_category_id.name" />
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span class="text-capitalize" t-esc="discipline.misbehaviour_type" />
+                                        </td>
+                                        <td>
+                                            <span t-esc="discipline.date" />
+                                        </td>
+                                        <td>
+                                            <span class="text-capitalize" t-esc="discipline.state" />
+                                        </td>
+                                        <td>
+                                            <span class="text-capitalize" t-esc="discipline.create_uid.partner_id.name" />
+                                        </td>
+                                        <td>
+                                            <span t-esc="'%.2f'%discipline.demerit_points" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <!-- Education Course Detail -->
+        <template id="pm_student_portal_educational" inherit_id="openeducat_core_enterprise.student_portal_educational_information">
+            <xpath expr="//div[@id='education_info']" position="replace">
+                <div class="tab-pane fade" id="education_info">
+                    
+                    <div class="mb-4">
+                        <h4>Admission Detail</h4>
+                    </div>
+                    <table class="mt16 table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Term</th>
+                                <th>Subjects</th>
+                                <th>Exempted Subjects</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="student.course_detail_ids" t-as="course_detail">
+                                <tr>
+                                    <td>
+                                        <span t-esc="course_detail.course_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="course_detail.batch_id.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-foreach="course_detail.subject_ids" t-as="subject">
+                                            <li style=" list-style-type: none;" t-esc="subject.name"/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-foreach="course_detail.p_e_subject_ids" t-as="esubject">
+                                            <li style=" list-style-type: none;" t-esc="esubject.name"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>    
+            </xpath>
+        </template>
+
+        <!-- Internship -->
+        <template id="pm_student_portal_placement_offers" inherit_id="openeducat_placement_enterprise.student_portal_placement_offers">
+            <xpath expr="//a[@href='#placement_offers']" position="replace">
+                <a href="#placement_offers" aria-expanded="false" data-toggle="tab">
+                    <h5 class="mb0">
+                       Internships
+                    </h5>
+                </a>
+                
+            </xpath>
+            <xpath expr="//div[@id='placement_offers']" position="replace">
+                <div class="tab-pane fade" id="placement_offers">
+                    <div class="mb-4">
+                        <h4>Internships</h4>
+                    </div>
+                    <table class="mt16 table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Join date</th>
+                                <th>End Date</th>
+                                <th>Completed</th>    
+                                <th>Absences</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="student.placement_line" t-as="placement" t-if="placement.state == 'join'">
+                                <tr>
+                                    <td>
+                                        <span t-esc="placement.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="placement.join_date" t-options="{'widget': 'date'}"/>
+                                    </td>
+                                    <td class="numspan">
+                                        <span t-esc="placement.p_end_date" t-options="{'widget': 'date'}"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="placement.p_completed"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="placement.p_absences"/>
+                                    </td>
+                                    <td>
+                                        <t t-if="placement.p_status == 'in_progress'">
+                                            <span class="badge badge-pill badge-muted"><i class="fa fa-fw fa-clock-o" aria-label="In Progress" title="In Progress" role="img"></i><span class="d-none d-md-inline"> In Progress</span></span>
+                                        </t>
+                                   
+                                        <t t-if="placement.p_status == 'passed'" >
+                                            <span class="badge badge-pill badge-success"><i class="fa fa-fw fa-check" aria-label="Passed" title="Passed" role="img"></i><span class="d-none d-md-inline"> Passed</span></span>
+                                        </t>
+                                        <t t-if="placement.p_status == 'failed'">
+                                            <span class="badge badge-pill badge-danger"><i class="fa fa-fw fa-remove" aria-label="Failed" title="Failed" role="img"></i><span class="d-none d-md-inline"> Failed</span></span>
+                                        </t>           
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </xpath>
+        </template>
+        <!-- Hidden -->
+        <template id="pm_student_portal_job_post_detail" inherit_id="openeducat_job_enterprise.student_portal_job_post_detail">
+             <xpath expr="//a[@href='#job_post_detail']" position="replace">
+                <a style="display:none" href="#job_post_detail" aria-expanded="false" data-toggle="tab">
+                    <h5 class="mb0">
+                       Internships
+                    </h5>
+                </a>
+            </xpath>
+        </template>
+        <template id="pm_student_portal_student_skill" inherit_id="openeducat_skill_enterprise.student_portal_student_skill">
+             <xpath expr="//a[@href='#skills']" position="replace">
+                <a style="display:none" href="#skills" aria-expanded="false" data-toggle="tab">
+                    <h5 class="mb0">
+                       Internships
+                    </h5>
+                </a>
+            </xpath>
+        </template>
+
+        <!-- Exam -->
+        <template id="pm_student_portal_exam" inherit_id="openeducat_exam_enterprise.openeducat_exam_portal">
+            
+            <xpath expr="." position="replace">
+                <t t-call="portal.portal_layout">
+                    <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                    <t t-call="portal.portal_searchbar">
+                        <t t-set="title">Exam List</t>
+                    </t>
+                    <t t-if="not exam_ids">
+                        <div class="alert alert-warning mt8" role="alert">
+                            There are no records.
+                        </div>
+                    </t>
+
+                    <t t-if="exam_ids" t-call="portal.portal_table">
+                        <thead>
+                            <tr class="thead-light">
+                                <th>Exam</th>
+                                <th>Subject</th>
+                                <th>Total Marks</th>
+                                <th>Exam Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="exam_ids" t-foreach="exam_ids" t-as="exam">
+                                <tr>
+                                    <td>
+                                        <a t-attf-href="/student/exam/data/#{stud_id}/#{exam.id}">
+                                            <t t-foreach="exam.exam_id" t-as="result_data">
+                                                <span t-esc="result_data.name"/>
+                                            </t>
+                                        </a>
+
+                                    </td>
+                                    <td>
+                                        <t t-foreach="exam.exam_id" t-as="result_data">
+                                            <t t-foreach="result_data.subject_id" t-as="subject">
+                                                <span t-esc="subject.name"/>
+                                            </t>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <span t-esc="exam.marks"/> /  
+                                        <t t-foreach="exam.exam_id" t-as="result_data">
+                                            <span t-esc="result_data.total_marks"/>  
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-foreach="exam.exam_id" t-as="result_data">
+                                            <span t-esc="result_data.start_time" t-options="{'widget': 'date'}"/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-foreach="exam.exam_id" t-as="result_data">
+                                            <t >
+                                                <span t-if="exam.marks and exam.marks &gt; result_data.min_marks" class="badge badge-pill badge-success">
+                                                    <i class="fa fa-fw fa-check" aria-label="Finished" title="Finished"
+                                                    role="img"></i>
+                                                    <span class="d-none d-md-inline">Pass</span>
+                                                </span>
+                                                 <span t-else="" class="badge badge-pill badge-danger">
+                                                     <i class="fa fa-fw fa-remove" aria-label="Cancel" title="Cancel" role="img"></i>
+                                                    <span class="d-none d-md-inline">Fail</span>
+                                                </span>
+                                            </t>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <!-- <t t-if="exam_ids" t-foreach="exam_ids" t-as="exam">
+                                <tr>
+                                    <td>
+                                        <a t-attf-href="/student/exam/data/#{stud_id}/#{exam.id}">
+                                            <t t-foreach="exam.result_line[1]" t-as="result_data">
+                                                <span t-esc="result_data.exam_id.session_id.name"/>
+                                            </t>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span t-esc="exam.total_marks"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="exam.percentage"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="exam.grade"/>
+                                    </td>
+                                    <td>
+                                        <t t-if="exam.status == 'pass'">
+                                            <span class="badge badge-pill badge-success">
+                                                <i class="fa fa-fw fa-check" aria-label="Finished" title="Finished"
+                                                role="img"></i>
+                                                <span class="d-none d-md-inline">Pass</span>
+                                            </span>
+                                        </t>
+                                        <t t-if="exam.status == 'fail'">
+                                            <span class="badge badge-pill badge-danger">
+                                                <i class="fa fa-fw fa-remove" aria-label="Cancel" title="Cancel" role="img"></i>
+                                                <span class="d-none d-md-inline">Fail</span>
+                                            </span>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t> -->
+                        </tbody>
+                    </t>
+                </t>
+            </xpath>
+            
+        </template>
+
+        <!-- Exam Detail -->
+        <template id="pm_student_portal_exam_detail" inherit_id="openeducat_exam_enterprise.openeducat_exam_portal_data">
+
+            <xpath expr="." position="replace">
+                <t t-call="portal.portal_layout">
+                    <t t-set="o_portal_fullwidth_alert" groups="project.group_project_user">
+                        <t t-call="portal.portal_back_in_edit_mode">
+                            <t t-set="backend_url"
+                               t-value="'/web#model=op.exam.attendees&amp;id=%s&amp;view_type=form' % (name)"/>
+                        </t>
+                    </t>
+                    <t t-call="portal.portal_record_layout">
+                        <t t-set="card_header">
+                            <h5 class="mb-0">
+                                <small class="text-muted">Exam Information</small>
+                            </h5>
+                        </t>
+                    </t>
+
+                    <div t-if="exam_id" style="background-color:white; padding: 20px 40px 20px 40px;">
+                    <div class="mt32">
+                        <div t-if="exam_id.student_id" class="row col-md-12">
+                            <div class="row col-md-6" style="padding-left:0;">
+                                <div t-if="exam_id.student_id.name" class="col-md-4">
+                                    <strong>Exam Name:</strong>
+                                </div>
+                                <div t-if="exam_id.student_id.name" class="col-md-8">
+                                    <span t-esc="exam_id.exam_id.name"/>
+                                </div>
+                                <div t-if="exam_id.status" class="col-md-4">
+                                    <strong>Status:</strong>
+                                </div>
+                                <div t-if="exam_id.status" class="col-md-8">
+                                    <span t-esc="exam_id.status"/>
+                                </div>
+                                <div t-if="exam_id.room_id" class="col-md-4">
+                                    <strong>Room:</strong>
+                                </div>
+                                <div t-if="exam_id.room_id" class="col-md-8">
+                                    <span t-esc="exam_id.room_id.name"/>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-6">
+                                <div t-if="exam_id.student_id" class="col-md-4">
+                                    <strong>Student:</strong>
+                                </div>
+                                <div t-if="exam_id.student_id" class="col-md-8">
+                                    <span t-esc="exam_id.student_id.name"/>
+                                </div>
+                                <div t-if="exam_id.marks" class="col-md-4">
+                                    <strong>Marks:</strong>
+                                </div>
+                                <div t-if="exam_id.marks" class="col-md-8">
+                                    <span t-esc="exam_id.marks"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </t>
+            </xpath>
+
+        </template>
+
+        <!-- Attendance -->
+        <template id="pm_student_portal_attendance" inherit_id="openeducat_attendance_enterprise.openeducat_attendance_portal">
+            <xpath expr="." position="replace">
+            <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Attendance List</t>
+            </t>
+
+            <div class="mb-3">
+                <strong class="text-secondary">Student Passcode</strong>&#160;&#160;&#160;&#160;
+                <span t-esc="student_passcode"></span>
+            </div>
+
+            <t t-if="not student_attendance">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no records.
+                </div>
+            </t>
+
+            <t t-if="student_attendance">
+                <t t-if="student_attendance" t-call="portal.portal_table">
+                    <thead>
+                        <tr t-attf-class="{{'thead-light' if not groupby == 'none' else ''}}">
+                            <th>Semester</th>
+                            <th>Total Missing Hours</th>
+                            <th>Absence Without Permission</th>
+                            <th>State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="student_attendance" t-as="attendance">
+                            <tr>
+                                <td>
+                                    <a t-attf-href="/student/attendance/data/#{stud_id}/#{attendance.id}">
+                                        <span t-esc="attendance.semester_id.name"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <span t-esc="attendance.total_hours"></span>
+                                </td>
+                                <td>
+                                    <span t-esc="attendance.no_permission_absence"></span>
+                                </td>
+                                <td>
+                                    <span t-esc="attendance.state"></span>
+                                </td>
+                            </tr>
+
+<!--                            <field name="semester_attendance" colspan="4" readonly="1" nolabel="1">-->
+<!--                                <tree string="Semester Discipline" decoration-primary="state=='first_warning'" decoration-warning="state=='second_warning'" decoration-danger="state=='dismissed'">-->
+<!--                                    <field name="semester_id"/>-->
+<!--                                    <field name="total_hours"/>-->
+<!--                                    <field name="no_permission_absence"/>-->
+<!--                                    <field name="state"/>-->
+<!--                                </tree>-->
+<!--                             </field>-->
+
+                        </t>
+                    </tbody>
+                </t>
+            </t>
+        </t>
+            </xpath>
+        </template>
+
+        <!-- Attendance Detail -->
+        <template id="pm_student_portal_attendance_detail">
+            <xpath expr="." position="replace">
+                <t t-call="portal.portal_layout">
+                    <t t-set="o_portal_fullwidth_alert" groups="project.group_project_user">
+                        <t t-call="portal.portal_back_in_edit_mode">
+                            <t t-set="backend_url"
+                               t-value="'/web#model=op.exam.attendees&amp;id=%s&amp;view_type=form' % (name)"/>
+                        </t>
+                    </t>
+                    <t t-call="portal.portal_record_layout">
+                        <t t-set="card_header">
+                            <h5 class="mb-0">
+                                <small class="text-muted">Attendance Information</small>
+                            </h5>
+                        </t>
+                    </t>
+
+                    <div t-if="attendances" style="background-color:white; padding: 20px 40px 20px 40px;">
+                        <div class="mt32">
+                            <div t-if="attendances.id" class="row col-md-12">
+                                <div class="row col-md-6" style="padding-left:0;">
+                                    <div t-if="attendances.semester_id.name" class="col-md-4">
+                                        <strong>Semester:</strong>
+                                    </div>
+                                    <div t-if="attendances.semester_id.name" class="col-md-8">
+                                        <span t-esc="attendances.semester_id.name"/>
+                                    </div>
+                                    <div t-if="attendances.no_permission_absence" class="col-md-4">
+                                        <strong>Absence Without Permission:</strong>
+                                    </div>
+                                    <div t-if="attendances.no_permission_absence" class="col-md-8">
+                                        <span t-esc="attendances.no_permission_absence"/>
+                                    </div>
+                                </div>
+
+                                <div class="row col-md-6">
+                                    <div t-if="attendances.total_hours" class="col-md-4">
+                                        <strong>Total Missing Hour:</strong>
+                                    </div>
+                                    <div t-if="attendances.total_hours" class="col-md-8">
+                                        <span t-esc="attendances.total_hours"/>
+                                    </div>
+                                    <div t-if="attendances.state" class="col-md-4">
+                                        <strong>State:</strong>
+                                    </div>
+                                    <div t-if="attendances.state" class="col-md-8">
+                                        <span t-esc="attendances.state"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt32" t-if="subject_attendances">
+                        <t t-call="portal.portal_table">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Subject</th>
+                                    <th>Absence Hours</th>
+                                    <th>Absence Percentage</th>
+                                    <th>Absence Without Permission</th>
+                                    <th>State</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="subject_attendances" t-as="subject">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="subject.student_id.name" />
+                                        </td>
+                                        <td>
+                                            <span t-esc="subject.subject_id.name" />
+                                        </td>
+                                        <td>
+                                            <span t-esc="'%.2f'%subject.subject_total_absent_id.total_absent_hour" />
+                                        </td>
+                                        <td>
+                                            <span t-esc="'%.2f'%subject.subject_total_absent_id.total_absent_percent" />
+                                        </td>
+                                        <td>
+                                            <span t-esc="subject.subject_total_absent_id.no_permission_absencse" />
+                                        </td>
+                                        <td>
+                                            <span class="text-capitalize" t-esc="subject.subject_total_absent_id.state" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </t>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="student_descipline_progression_report"
+              inherit_id="openeducat_student_progress_enterprise.student_progression_report"
+              priority="20">
+        <xpath expr="//div[hasclass('progression')]" position="after">
+            <div t-if="objs.discipline_lines" class="row mt32" style="page-break-inside:avoid;">
+                <div class="col-md-12" style="page-break-inside:avoid;">
+                    <div class="row mb16 col-md-6" style="page-break-inside:avoid;">
+                        <strong>Discipline:</strong>
+                    </div>
+                    <table class="table table-bordered" style="page-break-inside:avoid;">
+                        <thead class="text-center" style="background-color:#eeeeee; font-size:14px; font-weight:600;">
+                            <tr>
+                                <th>Date</th>
+                                <th>Course</th>
+                                <th>Create By</th>
+                                <th>Recipients</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center" style="font-size:12px;">
+                            <t t-foreach="objs.discipline_lines.sorted(key=lambda record: record.date, reverse=False)"
+                               t-as="lines">
+                                <tr>
+                                    <td>
+                                        <t t-esc="lines.date" t-options="{'widget': 'date'}"/>
+                                    </td>
+                                    <td>
+                                        <t t-foreach="lines.course_id" t-as="course">
+                                            <t t-esc="course.name"/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-foreach="lines.discipline_master" t-as="create_by">
+                                            <t t-esc="create_by.name"/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-foreach="lines.recipients_ids" t-as="recipients">
+                                            <t t-esc="recipients.name"/>
+                                            <br/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-esc="{'draft':'Draft', 'email_sent':'Email Sent',
+                                                            'awaiting_letter':'Awaiting Letter', 'action_taken':'Action Taken',
+                                                            'awaiting_meeting':'Awaiting Meeting', 'suspended':'Suspended',
+                                                            'done':'Done'}[lines.state]"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

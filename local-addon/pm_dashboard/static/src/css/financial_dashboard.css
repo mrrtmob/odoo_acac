@@ -1,0 +1,66 @@
+#financial-dashboard{
+    font-family: 'Georgia' !important;
+}
+
+/* retention rate */
+.working-capital, .current-ratio  {
+    color: #fff;
+}
+.working-capital p:first-child,
+.current-ratio p:first-child{
+    font-size: 12px;
+    text-align: left;
+}
+
+.working-capital {
+    background-color: #370031 !important;
+}
+
+.current-ratio {
+    background-color: #4f0147 !important;
+}
+/* end retention rate */
+
+/* chart legend */
+#payable_by_target_legend ul,
+#budget_line_chart_legend ul,
+#budget_stacked_chart_legend ul,
+#ytd_vs_budget_legend ul{
+    text-align: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+#payable_by_target_legend ul li,
+#budget_line_chart_legend ul li,
+#budget_stacked_chart_legend ul li,
+#ytd_vs_budget_legend ul li{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#payable_by_target_legend ul li span,
+#budget_line_chart_legend ul li span,
+#budget_stacked_chart_legend ul li span,
+#ytd_vs_budget_legend ul li span{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+}
+
+#budget_line_chart_legend ul li span{
+    border-radius: 50%;
+}
+/* end chart legend */
+
+.sub-title{
+    background-color: #fde39b;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}

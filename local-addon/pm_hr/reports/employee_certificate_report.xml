@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="employee_certificate_report">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <style  type="text/css">
+                            @font-face {
+                                font-family: 'Georgia';
+                                font-style: normal;
+                                src: url('/pm_general/static/src/fonts/georgia/Georgia.ttf') format('truetype');
+                            }
+                            .container-style {
+                                font-family: 'Georgia';
+                                font-size: 18px;
+                                color: #404040;
+                            }
+                            .img-logo {
+                                width: 250px;
+                              
+                                
+                            }
+                            .font-unset {
+                                font-family: unset !important;
+                            }
+                            .mt-5rem{
+                                margin-top: 5rem;
+                            }
+                          
+                        </style>
+                        <div class="container-fluid container-style px-5">
+                            <div class="" style="position:relative">
+                                <div class="" style="float:left;width:500px">
+                                    <p style="margin: 0">Academy of Culinary Arts Cambodia</p>
+                                    <p style="margin: 0">#23, St. 139, Sangkat Veal Vong</p>
+                                    <p style="margin: 0">Khan 7 Makara, Phnom Penh</p>
+                                    <p style="margin-top: 0">Cambodia</p>
+                                    <p> <span t-esc="current_date" t-options='{"widget": "date", "format": "MMMM dd, yyyy"}' /> </p>
+                                </div> 
+                                <div class="">
+                                    <img src="/pm_general/static/src/img/icon.png"  style="float:right; width:250px"  />  
+                                </div>  
+                            </div>  
+                            <div style="clear: both"></div>   
+                            <!-- title and header -->
+                            <h5 class="w-100 text-center py-5 text-black">CERTIFICATE OF EMPLOYMENT</h5>
+                                
+                            <p class="text-left">To Whom It May Concern:</p>
+                            <!-- description -->
+                            <!-- November 07, 2016 -->
+                            <p>This is to certify that
+                                <span t-if="get_data['gender'] == 'male'"> Mr.</span>
+                                <span t-if="get_data['gender'] == 'female'">
+                                    <span t-if="get_data['marital'] != 'married'">Ms. </span>
+                                    <span t-if="get_data['marital'] == 'married'">Mrs. </span>
+                                </span>
+                                <span t-esc="get_data['name'].upper()" />,
+                                <span t-if="passport_id">
+                                    Passport No. <span t-esc="passport_id" />
+                                </span>
+                                <span t-else="">
+                                    <span t-if="identification_id">
+                                        ID Card No. <span t-esc="identification_id" />
+                                    </span>
+                                </span>
+                                has been employed with the Academy of Culinary Arts Cambodia from <span t-esc="date_from" t-options='{"widget": "date", "format": "MMMM dd, yyyy"}' />
+                                to <span t-esc="date_to" t-options='{"widget": "date", "format": "MMMM dd, yyyy"}'/> in the capacity of  <span t-esc="job_position"/>.
+                                
+                                <p>
+                                    This certification is being issued upon his/her request for whatever purpose it
+                                    may serve.
+                                </p>
+                                
+                            </p>
+                            
+                                <!-- signature -->
+                            <div class="mt-5rem text-center" style="width: 200px">
+                                <hr/>
+                                <p style="margin-bottom: 0;"><span t-esc="approver"/></p>  
+                                <p><span t-esc="approver_position"/></p>
+                                <!-- <t t-call="pm_hr.template_footer"/> -->
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

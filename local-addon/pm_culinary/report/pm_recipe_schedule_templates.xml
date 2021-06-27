@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="report_recipe_schedule_template_document">
+    <t t-call="web.external_layout">
+      <style>
+        .o_report_layout_background {
+          background: none !important;
+        }
+      </style>
+
+      <div class="page">
+        <div class="oe_structure" />
+
+        <div class="row">
+          <div class="col-12">
+            <h2>Recipe Schedule from <t t-esc="from_date" /> to <t t-esc="to_date" /></h2>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+          <div class="col-12">
+            <t t-foreach="dates" t-as="date">
+              <h4 t-esc="date"></h4>
+
+              <ul>
+                <t t-foreach="result[date]" t-as="recipe_name">
+                  <li><span t-esc="recipe_name" /></li>
+                </t>
+              </ul>
+            </t>
+          </div>
+        </div>
+
+        <div class="oe_structure"/>
+      </div>
+    </t>
+  </template>
+
+  <template id="report_recipe_schedule_template">
+    <t t-call="web.html_container">
+      <t t-call="pm_culinary.report_recipe_schedule_template_document" />
+    </t>
+  </template>
+</odoo>

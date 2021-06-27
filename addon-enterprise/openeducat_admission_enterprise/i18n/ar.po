@@ -1,0 +1,184 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* openeducat_admission_enterprise
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-26 04:55+0000\n"
+"PO-Revision-Date: 2019-09-26 04:55+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_op_admission
+msgid "Admission"
+msgstr "القبول"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_op_admission_register
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Admission Register"
+msgstr "تسجيل الدخول"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.actions.act_window,name:openeducat_admission_enterprise.action_onboarding_admission_register_layout
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "Admission Register Configuration"
+msgstr "سجل تكوين القبول"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.actions.act_window,name:openeducat_admission_enterprise.act_dashboard_op_admission_view
+msgid "Admissions"
+msgstr "القبول"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Applications"
+msgstr "تطبيقات"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Apply"
+msgstr "تطبيق"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: openeducat_admission_enterprise
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_res_company
+msgid "Companies"
+msgstr "المؤسسات"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_op_admission__company_id
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_op_admission_register__company_id
+msgid "Company"
+msgstr "شركة"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Confirm"
+msgstr "تأكيد"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "Customize"
+msgstr "يعدل أو يكيف"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Done"
+msgstr "تم"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.openeducat_course_admission_dashboard_kanban_view
+msgid "Enroll Students"
+msgstr "تسجيل الطلاب"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Fees Amount"
+msgstr "رسوم المبلغ"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Fees Collection Details\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+msgstr "رسوم تفاصيل المجموعات\n"
+"                                <span style=\"float:left;padding: 0 20px 0 20px;\">+</span>"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.actions.server,name:openeducat_admission_enterprise.invoice_cron_ir_actions_server
+#: model:ir.cron,cron_name:openeducat_admission_enterprise.invoice_cron
+#: model:ir.cron,name:openeducat_admission_enterprise.invoice_cron
+msgid "Fees Invoice Cron"
+msgstr "رسوم الفاتورة كرون"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Invoice"
+msgstr "فاتورة"
+
+#. module: openeducat_admission_enterprise
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Just done"
+msgstr "مجرد القيام به"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "Looks great!"
+msgstr "يبدو رائعا!"
+
+#. module: openeducat_admission_enterprise
+#: selection:res.company,onboarding_admission_register_layout_state:0
+#: selection:res.company,openeducat_admission_onboard_panel:0
+msgid "Not done"
+msgstr "لم تفعل"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.onboarding_admission_layout_step
+msgid "See how to create a Admission Register."
+msgstr "معرفة كيفية إنشاء القبول التسجيل."
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Set to Draft"
+msgstr "تعيين كمسودة"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Start Admission"
+msgstr "بدء القبول"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.view_op_admission_register_form_onboard
+msgid "Start Application"
+msgstr "بدء التطبيق"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_res_company__openeducat_admission_onboard_panel
+msgid "State of the onboarding admission layout step"
+msgstr "حالة الخطوة تخطيط التأهيل لقبول"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model.fields,field_description:openeducat_admission_enterprise.field_res_company__onboarding_admission_register_layout_state
+msgid "State of the onboarding admission register layout step"
+msgstr "حالة الخطوة تخطيط تسجيل الدخول التأهيل ل"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Status"
+msgstr "الحالة"
+
+#. module: openeducat_admission_enterprise
+#: model:ir.model,name:openeducat_admission_enterprise.model_op_student_fees_details
+msgid "Student Fees Details"
+msgstr "تفاصيل رسوم الطالب"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "Submit Date"
+msgstr "تاريخ النشر"
+
+#. module: openeducat_admission_enterprise
+#: model_terms:ir.ui.view,arch_db:openeducat_admission_enterprise.student_portal_fees_collection_details
+msgid "View invoice"
+msgstr "عرض الفاتورة"
+

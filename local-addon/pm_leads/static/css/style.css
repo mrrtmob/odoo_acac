@@ -1,0 +1,7 @@
+#financial-dashboard{
+    font-family: 'Georgia' !important;
+}
+
+.exp_tree [data-name="is_equivalent"] {
+    width: 100px;
+}

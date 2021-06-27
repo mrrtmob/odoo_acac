@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="track_pr_line_template">
+        <div>
+            <strong>The quantity has been updated.</strong>
+            <ul>
+                <li><t t-esc="line.product_id.display_name"/>:</li>
+                Quantity: <t t-esc="line.product_qty" /> -&gt; <t t-esc="float(product_qty)"/><br/>
+                Estimated Cost <t t-esc="line.estimated_cost"/>
+            </ul>
+        </div>
+    </template>
+
+    <template id="track_pr_line_template_qty_order">
+        <div>
+            <strong>The ordered quantity has been updated.</strong>
+            <ul>
+                <li><t t-esc="line.product_id.display_name"/>:</li>
+                Ordered Quantity: <t t-esc="line.qty_to_order" /> -&gt; <t t-esc="float(qty_to_order)"/><br/>
+                Cost <t t-esc="line.estimated_cost"/> -&gt; <t t-esc="float(estimated_cost)"/><br/>
+            </ul>
+        </div>
+    </template>
+
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_internship_1st_warning">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" style="font-family: 'Georgia'; font-size: 17px;">
+                    <style  type="text/css">
+                    </style>
+                    <div class="container-fluid">
+                        <t t-call="pm_general.template_header"/>
+                        <strong><u>Absence 1<sup>st</sup> warning Letter</u></strong><br/><br/>
+                        <strong>If you have any problems understanding this letter or your present position, do not hesitate to contact the Registrar of the Academy.</strong><br/><br/>
+                        <p>Dear Student Name,</p>
+                        <p>
+                            Please refer to the absence rules listed below. The Academy has been known that you have missed a substantial amount of hours/days of your internship which could jeopardize your internship and continues study at the Academy.
+                        </p>
+                        <p class="mt-0">
+                            Your present absences accumulate to:	No hrs.
+                        </p>
+                        <strong>Should you miss more than 10% of your Internship periods during the semester you will be suspended and this semester will be invalidated.</strong><br/><br/>
+                        <p>We hope that you understand the seriousness of your present position. If you have any problems in terms of health or other matters, which could continue to affect you in the future, please feel free to contact the Operation Manager or myself.
+                            Good luck in your studies and should you have any further questions, please do not hesitate to contact me.
+                        </p>
+                        <t t-call="pm_general.signature"/>
+                        <t t-call="pm_general.template_footer"/>
+                        <t t-call="pm_general.template_border"></t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

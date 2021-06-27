@@ -1,0 +1,35 @@
+<odoo>
+  <data>
+    <record id="pm_menu_line_view_list" model="ir.ui.view">
+      <field name="name">pm.menu.line.view.list</field>
+      <field name="model">pm.menu.line</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom">
+          <field name="line_type" invisible="1" />
+          <field name="currency_id" invisible="1" />
+          <field name="sequence" widget="handle"/>
+          <field name="recipe_id" required="1" force_save="1" />
+          <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+          <field name="price_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="pm_menu_line_view_form" model="ir.ui.view">
+      <field name="name">pm.menu.line.view.form</field>
+      <field name="model">pm.menu.line</field>
+      <field name="arch" type="xml">
+        <form>
+          <field name="currency_id" invisible="1" />
+
+          <group col="4">
+            <field name="recipe_id" readonly="True"/>
+            <newline />
+            <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+            <field name="price_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+          </group>
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

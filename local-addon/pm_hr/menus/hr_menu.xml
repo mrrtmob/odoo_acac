@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+         <menuitem id="menu_pm_hr_recruitment"
+              name="Requests"
+              parent="hr_recruitment.menu_hr_recruitment_root"
+              sequence="10"
+              action="pm_hr_recruiting_action"
+              groups="pm_hr.group_acac_department_manager,hr_recruitment.group_hr_recruitment_user"/>
+
+         <menuitem id="menu_pm_hr_interview_question"
+              name="Interview Questions"
+              parent="hr_recruitment.menu_hr_recruitment_configuration"
+              sequence="3"
+              action="pm_hr_interview_question"
+              groups="pm_hr.group_acac_department_manager,hr_recruitment.group_hr_recruitment_user"/>
+
+         <menuitem id="menu_pm_hr_salary_tax_range_config"
+              name="Salary Tax Range"
+              parent="hr.menu_human_resources_configuration"
+              sequence="6"
+              action="pm_hr_salary_tax_range_config"
+              groups="pm_hr.group_acac_department_manager,hr_recruitment.group_hr_recruitment_user"/>
+
+        <menuitem id="menu_pm_activity_list"
+                  name="Activity List"
+                  parent="hr.menu_hr_root"
+                  action="action_hr_activity_list"
+                  sequence="3"
+                 />
+
+        <menuitem id="menu_hr_employee_promotion"
+                  name="Promotion"
+                  parent="hr.menu_hr_employee_payroll"
+                  action="hr_promotion_action"
+                  sequence="3"
+                  groups="hr_recruitment.group_hr_recruitment_manager"/>
+
+        <menuitem id="menu_hr_employee_transfers"
+                  name="Transfers"
+                  parent="hr.menu_hr_employee_payroll"
+                  action="hr_transfers_action"
+                  sequence="4"
+                  groups="hr_recruitment.group_hr_recruitment_manager"/>
+
+        <menuitem id="menu_hr_employee_training"
+                  name="Training"
+                  parent="hr.menu_hr_employee_payroll"
+                  action="hr_training_action"
+                  sequence="5"
+                  groups="hr_recruitment.group_hr_recruitment_manager"/>
+
+         <record id="hr_resignation.employee_resignation_approved" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('pm_hr.group_acac_department_manager'))]"/>
+        </record>
+
+
+         <record id="hr.menu_hr_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+
+<!--         <record id="abs_monthly_attendance_report.main_menu_employe_order" model="ir.ui.menu">-->
+<!--            <field name="groups_id" eval="[(4,ref('pm_hr.group_human_resource_manager'))]"/>-->
+<!--        </record>-->
+
+         <record id="hr_recruitment.hr_applicant_category_menu" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+         <record id="hr_recruitment.menu_hr_recruitment_degree" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+         <record id="hr_recruitment.menu_hr_recruitment_source" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+         <record id="hr_recruitment.menu_hr_recruitment_stage" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+
+
+
+           <record model="ir.ui.menu" id="hr_recruitment.menu_hr_department">
+              <field name="sequence">1</field>
+            </record>
+           <record model="ir.ui.menu" id="hr_recruitment.menu_hr_job_position_config">
+              <field name="sequence">2</field>
+            </record>
+           <record model="ir.ui.menu" id="hr_recruitment.menu_hr_recruitment_source">
+              <field name="sequence">4</field>
+            </record>
+           <record model="ir.ui.menu" id="hr_recruitment.hr_applicant_category_menu">
+              <field name="sequence">5</field>
+            </record>
+           <record model="ir.ui.menu" id="hr_recruitment.menu_hr_recruitment_degree">
+              <field name="sequence">6</field>
+            </record>
+           <record model="ir.ui.menu" id="hr_recruitment.hr_recruitment_menu_config_activity_type">
+              <field name="sequence">7</field>
+            </record>
+           <record model="ir.ui.menu" id="hr_recruitment.menu_hr_recruitment_stage">
+              <field name="sequence">8</field>
+            </record>
+
+           <record model="ir.ui.menu" id="hr_recruitment.menu_hr_recruitment_global_settings">
+              <field name="sequence">9</field>
+            </record>
+
+<!--           <record model="ir.ui.menu" id="ohrms_loan.menu_base_hr_loan_request">-->
+<!--              <field name="active">0</field>-->
+<!--            </record>-->
+
+
+    </data>
+</odoo>

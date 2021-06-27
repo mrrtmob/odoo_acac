@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+         <record model="ir.ui.view" id="employee_recommendation_form">
+            <field name="name">employee.recommendation.form</field>
+            <field name="model">employee.recommendation</field>
+            <field name="arch" type="xml">
+                <form string="Employee Recommendation">
+                    <group col="4" colspan="4">
+                      
+                        <field name="approver"/>
+                        
+                    </group>
+                    <group>
+                        <field name="recommendation"/>
+                    </group>
+                    <footer>
+                        <span groups="base.group_user">
+                            <button string="Print" type="object" name="print_report" class="oe_highlight"/>
+                            <button special="cancel" string="Close" type="object"/>
+                        </span>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="employee_recommendation_act" name="Recommendation Letter"
+                    res_model="employee.recommendation" binding_model="hr.employee"
+                    view_mode="form" target="new" binding_views="form"
+                    binding_type="report"/>    
+    </data>
+</odoo>

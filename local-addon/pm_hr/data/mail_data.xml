@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="email_applicant_shortlisted" model="mail.template">
+            <field name="name">Applicant Shortlisted Mail Template</field>
+            <field name="subject">Your Job Application: ${object.job_id.name | safe}</field>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="email_to">${(object.email_from or '') | safe}</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 10px;">Application Number</span>
+                                                        <br/>
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            ${object.application_number}
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear ${object.title_id.name or ''}. ${object.partner_name or ''},
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                                We confirm we successfully received your application for the job <strong>${object.job_id.name}</strong> at ${object.company_id.name}.
+                                                            </p>
+                                                             % if object.user_id:
+                                                                You will soon be contacted by:
+                                                                <br/>
+                                                                <br/>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td width="75">
+                                                                            <img src="/web/image/res.users/${object.user_id.id}/image_128" class="rounded-circle" alt="Avatar" style="vertical-align:baseline; width: 64px; height: 64px; object-fit: cover;" />
+                                                                        </td>
+                                                                        <td>
+                                                                            <strong>${object.user_id.name}</strong><br/>
+                                                                            <span>Email: ${object.user_id.email or ''}</span><br/>
+                                                                            <span>Phone: ${object.user_id.phone or ''}</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <br/><br/>
+                                                            % endif
+                                                            See you soon,
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${object.company_id.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${object.company_id.phone}
+                                                        % if object.company_id.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${object.company_id.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.email}
+                                                        </a>
+                                                        % endif
+                                                        % if object.company_id.website
+                                                        |
+                                                        <a href="'%s' % ${object.company_id.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+        <record id="email_applicant_interview" model="mail.template">
+            <field name="name">Applicant Interview Mail Template</field>
+            <field name="subject">Interview Invitation for: ${object.job_id.name | safe}</field>
+            <field name="email_from">${(user.email or '')|safe} ,</field>
+            <field name="email_to">${(object.email_to or object.email_from) | safe}</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 10px;">Application Number</span>
+                                                        <br/>
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            ${object.application_number}
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear ${object.title_id.name or ''}. ${object.partner_name or ''},
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                            Thank you for your application to the <strong>${object.job_id.name | safe}</strong> role at ${object.company_id.name}
+                                                            <br/>
+                                                            We would like to invite you to interview for the role on <strong>${format_datetime(object.interview_date, tz=object.company_id.tz)}</strong> at <strong>${object.interviewer_place}</strong>.
+                                                            <br/>
+                                                            Please reply to this email directly with your availability
+                                                            <br/>
+                                                            We look forward to speaking with you.
+                                                            <br/>
+                                                            <br/>
+                                                            Sincerely,
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${object.company_id.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${object.company_id.phone}
+                                                        % if object.company_id.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${object.company_id.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.email}
+                                                        </a>
+                                                        % endif
+                                                        % if object.company_id.website
+                                                        |
+                                                        <a href="'%s' % ${object.company_id.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+        <record id="email_applicant_job_offer" model="mail.template">
+            <field name="name">Applicant Job Offer Template</field>
+            <field name="subject">Your Job Offer for: ${object.job_id.name | safe}</field>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="email_to">${(object.email_from or '') | safe}</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 10px;">Application Number</span>
+                                                        <br/>
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            ${object.application_number}
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear ${object.title_id.name or ''}. ${object.partner_name or ''},
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                              Congratulations on your offer from ${object.company_id.name}! We are delighted to offer you the position of ${object.job_id.name} with an anticipated start date of ${object.desired_start_date}.
+                                                            <br/>
+                                                               As discussed, [over the phone, during your interview, etc.], please find attached your detailed offer letter. If you choose to accept this offer, please sign, scan, and email your letter to me at ${object.user_id.email or ''} by [decision deadline].
+                                                            <br/>
+                                                               In the meantime, please don’t hesitate to reach out to me, either through email or by calling me directly at ${object.user_id.phone or ''} if you should have any questions or concerns.
+
+                                                            <br/>
+                                                               We are looking forward to hearing from you and hope you’ll join our team!
+                                                            <br/>
+                                                            <br/>
+                                                            Sincerely,
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${object.company_id.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${object.company_id.phone}
+                                                        % if object.company_id.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${object.company_id.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.email}
+                                                        </a>
+                                                        % endif
+                                                        % if object.company_id.website
+                                                        |
+                                                        <a href="'%s' % ${object.company_id.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+                  <field name="report_template" ref="action_report_applicant"/>
+                  <field name="report_name">${(object.partner_name or '').replace('/','_')} Job Offer</field>
+                  <field name="auto_delete" eval="True"/>
+         </record>
+
+          <record id="email_applicant_unsuccessful_interview" model="mail.template">
+            <field name="name">Applicant Unsuccessful Interview</field>
+            <field name="subject">Interview Result for: ${object.job_id.name | safe}</field>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="email_to">${(object.email_from or '') | safe}</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 10px;">Application Number</span>
+                                                        <br/>
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            ${object.application_number}
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear ${object.title_id.name or ''}. ${object.partner_name or ''},
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                             Thank you so much for taking time to interview with us for the role of ${object.job_id.name}. We really appreciate your interest in working for Academy of Culinary Arts Cambodia.
+
+                                                             I am writing to let you know that unfortunately on this occasion your application was not successful. The selected candidate more closely matched the job requirements of the position.
+
+                                                             We do appreciate you taking the time to meet with us and encourage you to apply for other openings at our organization in the future.
+                                                            <br/>
+                                                            <br/>
+                                                            Sincerely,
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${object.company_id.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${object.company_id.phone}
+                                                        % if object.company_id.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${object.company_id.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.email}
+                                                        </a>
+                                                        % endif
+                                                        % if object.company_id.website
+                                                        |
+                                                        <a href="'%s' % ${object.company_id.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+        <!-- Unsuccessful Email Template  -->
+        <record id="email_applicant_unsuccessful" model="mail.template">
+            <field name="name">Unsuccessful Interview Mail Template</field>
+            <field name="subject">Interview Result: ${object.job_id.name | safe}</field>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="email_to">${(object.email_from or '') | safe}</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 10px;">Application Number</span>
+                                                        <br/>
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            ${object.application_number}
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear ${object.title_id.name or ''}. ${object.partner_name or ''},
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                                Thank you so much for taking time to interview with us for the role of <strong>${object.job_id.name}</strong>. We really appreciate your interest in working for Academy of Culinary Arts Cambodia.
+                                                            </p>
+                                                            <p>
+                                                                We do appreciate you taking the time to meet with us and encourage you to apply for other openings at our organization in the future.
+                                                            </p>
+                                                        
+                                                            Sincerely,
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle" align="left">
+                                                        ${object.company_id.name}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="middle" align="left" style="opacity: 0.7;">
+                                                        ${object.company_id.phone}
+                                                        % if object.company_id.email
+                                                        |
+                                                        <a href="'mailto:%s' % ${object.company_id.email}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.email}
+                                                        </a>
+                                                        % endif
+                                                        % if object.company_id.website
+                                                        |
+                                                        <a href="'%s' % ${object.company_id.website}"
+                                                           style="text-decoration:none; color: #454748;">
+                                                            ${object.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+
+    <!--Share Survey Answer-->
+
+          <record id="pm_mail_template_user_input_answer" model="mail.template">
+            <field name="name">Survey: Invite</field>
+            <field name="model_id" ref="model_survey_user_input" />
+            <field name="subject"> ${object.survey_id.title} of ${object.partner_id.name}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear Sir/Madam<br/><br/>
+
+                            Please see the survey of ${object.survey_id.title} by ${object.partner_id.name}
+                        <div style="margin: 16px 0px 16px 0px;">
+                            <a href="${(object.survey_answer_link) | safe}"
+                                style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                                View Survey
+                            </a>
+                        </div>
+                        Thank you for your participation.
+                    </p>
+                </div>
+            </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="lead_hignschool" model="ir.actions.act_window">
+        <field name="name">CRM Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">graph</field>
+        <field name="search_view_id" ref="high_school_search_view"/>
+        <field name="domain">[('type','=','lead')]</field>
+        <field name="view_id" ref="highschool_graph"/>
+    </record>
+
+    <record id="lead_campagin" model="ir.actions.act_window">
+        <field name="name">CRM Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">graph</field>
+        <field name="domain">[('type','=','lead')]</field>
+        <field name="view_id" ref="campaign_graph"/>
+    </record>
+
+    <record id="lead_campagin_cost" model="ir.actions.act_window">
+        <field name="name">CRM Leads</field>
+        <field name="res_model">utm.campaign</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="campaign_lead_graph"/>
+    </record>
+
+    <record id="lost_reason" model="ir.actions.act_window">
+        <field name="name">CRM Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">graph</field>
+        <field name="domain">[('lost_reason','!=',False)]</field>
+        <field name="view_id" ref="lost_reason_view"/>
+    </record>
+
+    <!--  Lead conversion  -->
+    <record id="lead_conversion" model="ir.actions.act_window">
+        <field name="name">CRM Leads</field>
+        <field name="res_model">pm_lead_conversion</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="lead_conversion_view"/>
+    </record>
+
+    <!--  Monthly new leads Close loss reason  -->
+    <record id="monthly_new_lead" model="ir.actions.act_window">
+        <field name="name">CRM Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">graph</field>
+        <field name="domain">[('type','=','lead')]</field>
+        <field name="view_id" ref="monthly_new_lead_view"/>
+    </record>
+
+
+    <record id="dashboard_form_view" model="ir.ui.view">
+        <field name="name">Dashboard Form</field>
+        <field name="model">board.board</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard">
+                <board style="1-2">
+                    <column>
+                        <action
+                            string="Lead By High School"
+                            name="%(lead_hignschool)d"/>
+
+                          <action
+                            string="Lead By Campaign"
+                            name="%(lead_campagin)d"/>
+                        <action
+                            string="Lead conversion"
+                            name="%(lead_conversion)d"/>
+                    </column>
+
+                    <column>
+                        <action
+                            string="Campaign Cost Per Lead"
+                            name="%(lead_campagin_cost)d"/>
+                        <action
+                            string="Lost Reasons"
+                            name="%(lost_reason)d"/>
+                        <action
+                            string="Monthly New Leads"
+                            name="%(monthly_new_lead)d"/>
+                    </column>
+
+                </board>
+            </form>
+        </field>
+    </record>
+
+    <record id="marketing_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">board.board</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="dashboard_form_view"/>
+    </record>
+
+    <menuitem
+        name="Dashboard"
+        parent="crm.crm_menu_root"
+        action="marketing_dashboard"
+        sequence="1"
+        id="marketing_menu"
+    />
+
+    <record model="ir.ui.menu" id="crm.crm_menu_root">
+        <field name="action" ref="marketing_dashboard"></field>
+    </record>
+
+<!--    <menuitem-->
+<!--        action="marketing_dashboard"-->
+<!--        sequence="-1"-->
+<!--        id="crm.crm_menu_root"-->
+<!--    />-->
+
+    <!--  hide sale menu  -->
+    <record id="make_invisible" model="res.groups">
+        <field name="name">Invisible</field>
+    </record>
+    <record model="ir.ui.menu" id="crm.crm_menu_sales">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+</odoo>

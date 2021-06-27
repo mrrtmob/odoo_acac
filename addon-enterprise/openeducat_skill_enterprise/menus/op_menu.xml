@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_skill_main"
+                  name="Skills"
+                  sequence="60"
+                  web_icon="openeducat_skill_enterprise,static/description/icon.png"
+                  groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+
+        <menuitem id="menu_skill_category"
+                  name="Skills Category"
+                  parent="openeducat_job_enterprise.menu_configuration"
+                  sequence="10"
+                  action="act_open_op_skill_category_view"
+                  groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+
+        <menuitem id="menu_skill"
+                  name="Skills"
+                  parent="openeducat_job_enterprise.menu_configuration"
+                  sequence="10"
+                  action="act_open_op_skill_view"
+                  groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+    </data>
+</odoo>

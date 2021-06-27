@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="template_footer">
+        <div class="page">
+            <style type="text/css">
+                .report-footer {
+                    width: 100%;
+                    position: fixed;
+                    left: 10rem;
+                    top: 313mm;
+                }
+                .report-footer .content {
+                    max-width: 700px;
+                    color: #8c8c8c !important;
+                    font-size: 16px !important;
+                    font-family: unset !important;
+                }
+                .px-5r {
+                    padding-left: 4rem;
+                    padding-right: 4rem;
+                }
+            </style>
+            <div class="report-footer text-center d-flex justify-content-center">
+                <div class="content text-center">
+                    Shift 360 Foundation, c/o Academy of Culinary Arts-Cambodia (ACAC),<br/>
+                    # 23, Street 139, Sangkat Vealvong, Khan 7Makara, Phnom Penh,
+                    Cambodia <br/> <b>info@shift360.ch | www.shift360.ch</b>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

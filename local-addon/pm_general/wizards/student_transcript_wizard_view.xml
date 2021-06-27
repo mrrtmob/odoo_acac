@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="student_tanscript_form">
+            <field name="name">student.transcript.form</field>
+            <field name="model">student.transcript</field>
+            <field name="arch" type="xml">
+                <form string="Student Transcript Report">
+                    <group col="4" colspan="4">
+            
+                        <field name="course_id"/>
+                        <field name="batch_id" context="{'course_id': course_id,'get_parent_batch':1}"/>
+                        <field name="final" />
+                        <field name="semester_id" attrs="{'required':[('final', '=' , False)] , 'readonly':[('final', '=' , True)]}" context="{'batch_id': batch_id,'get_parent_semester':1}"/>
+                        
+                    </group>
+                    <footer>
+                        <span groups="base.group_user">
+                            <button string="Print" type="object" name="print_report" class="oe_highlight"/>
+                            <button special="cancel" string="Close" type="object"/>
+                        </span>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="student_transcript_act" name="Student Transcript"
+                    res_model="student.transcript" binding_model="op.student"
+                    view_mode="form" target="new" binding_views="form"
+                    groups="openeducat_core.group_op_back_office"/>
+    </data>
+</odoo>

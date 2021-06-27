@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="registration_assets_frontend" inherit_id="website.assets_frontend">
+            <xpath expr="script[last()]" position="after">
+                <script type="text/javascript" src="/openeducat_core_enterprise/static/src/js/custom.js"/>
+            </xpath>
+        </template>
+
+        <template id="assets_frontend_student_profile" name="Student Profile frontend assets"
+                  inherit_id="website.assets_frontend">
+            <xpath expr="." position="inside">
+                <link type="text/css"
+                      href="/openeducat_core_enterprise/static/src/scss/student_profile.scss"
+                      rel="stylesheet"/>
+            </xpath>
+        </template>
+        <template id="assets_tests" name="Core Assets Tests" inherit_id="web.assets_tests">
+            <xpath expr="." position="inside">
+                <script type="text/javascript"
+                        src="/openeducat_core_enterprise/static/tests/tours/student_profile_test.js"/>
+<!--                <script type="text/javascript"-->
+<!--                        src="/openeducat_core_enterprise/static/tests/tours/subject_registration_data_test.js"/>-->
+                <script type="text/javascript"
+                        src="/openeducat_core_enterprise/static/tests/tours/subject_registration_test.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

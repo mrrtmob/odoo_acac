@@ -1,0 +1,206 @@
+<odoo>
+    <data>
+
+        <record id="pm_custom_job_position" model="ir.ui.view">
+            <field name="name">hr.job.form.custom</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+
+            <field name="arch" type="xml">
+                  <xpath expr="//form/header" position="replace">
+                      <header>
+                             <button name="set_recruit" string="Start Recruitment" attrs="{'invisible': ['|',('status','!=','open'), ('state', '!=', 'approved')]}" type="object" class="oe_highlight" groups="base.group_user"/>
+                             <button name="set_open" string="Stop Recruitment" attrs="{'invisible': ['|',('status','!=','recruit'), ('state', '!=', 'approved')]}" type="object" groups="base.group_user"/>
+                              <field name="is_assignee" invisible="1"/>
+                             <button
+                                name="button_submit"
+                                string="Submit"
+                                states="draft"
+                                type="object"
+                                class="oe_highlight"
+                            />
+
+
+                            <button
+                                name="button_verify"
+                                string="Verify Request"
+                                type="object"
+                                attrs="{'invisible': ['|',('is_assignee','=',False),('state','!=','submitted')]}"
+                                class="oe_highlight"
+                                groups="hr_recruitment.group_hr_recruitment_manager"
+                            />
+
+                            <button
+                                name="button_approve"
+                                attrs="{'invisible': ['|',('is_assignee','=',False),('state','!=','first_approved')]}"
+                                string="Approve"
+                                type="object"
+                                class="oe_highlight"
+                                groups="base.group_user"
+                            />
+
+                            <field
+                                name="state"
+                                statusbar_visible="draft,submitted,first_approved,approved"
+                                widget="statusbar"
+                            />
+                      </header>
+                </xpath>
+
+
+
+
+
+
+                 <xpath expr="//div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button" icon="fa-pencil-square-o" name="view_pm_hr_interview_question_tree" type="object">
+                        <field name="question_count" widget="statinfo" string="Questions"/>
+                    </button>
+                </xpath>
+                 <xpath expr="//form/sheet/div[2]" position="inside">
+                    <div class="oe_edit_only">
+                        <label for="status" class="oe_inline" />
+                     </div>
+                      <h2>
+                       <field name="status" readonly="1"/>
+                    </h2>
+                </xpath>
+
+
+
+
+                <xpath expr="//field[@name='department_id']" position="replace">
+                   <field name="read_only" invisible="1"/>
+                      <field name="is_hr_user" invisible="1"/>
+                   <field name="department_id"  attrs="{'readonly': [('read_only', '=', True)]}"/>
+                     <field name="assigned_to" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                     <field name="due_date"/>-->
+                </xpath>
+             <xpath expr="//form/sheet/notebook" position="replace">
+                  <notebook colspan="4">
+                    <page name="job_description" string="Job Description and Requirements">
+                          <separator colspan="4" string="Job Description"/>
+                    <field nolabel="1" name="job_description" widget="html"  colspan="4"/>
+                    <br/><br />
+                    <separator colspan="4" string="Requirements"/>
+                        <field nolabel="1" name="job_requirement" widget="html"  colspan="4"/>
+                    <br/><br />
+                    <separator colspan="4" string="How to Apply"/>
+                        <field nolabel="1" name="how2apply" widget="html"  colspan="4"/>
+                    <br/><br />
+                    </page>
+                    <page string="Scoring Rules">
+                        <group col="4" colspan="4" name="personal_detail">
+                            <field name="personality_test" string="Personality Test"/>
+                            <field name="practical_test" string="Practical/Logical Test"/>
+                        </group>
+                    <separator string="Scoring Rules" />
+                    <group>
+                        <field string="Interview (%)" name="interview_weight"/>
+                        <field string="Job Description (%)" name="jd_weight"/>
+                        <field string="Practical (%)" name="practical_weight"/>
+                    </group>
+
+                    <separator string="Interview Question Category"/>
+                         <group col="4" colspan="4" name="personal_detail">
+                            <field string="Specific Function (%)" name="technical_weight"/>
+                            <field string="Character / Personality (%)" name="personality_weight"/>
+                            <field string="Motivation / Working Relationship (%)" name="motivation_weight"/>
+                            <field string="Basic / Administrative (%)" name="basic_weight"/>
+                          </group>
+
+                    </page>
+                     <page string="Questions">
+                         <field name="is_saved" invisible="1" />
+                          <separator string="Specific Functional"/>
+                            <field name="question_ids"  attrs="{'readonly': [('is_saved', '=', False)]}"  nolabel="1">
+                                <tree editable="top">
+                                    <field name="interview_question_id"
+                                           domain="[('type','=','technical'), ('job_position_id', '=', parent.id)]"   string="Question"/>
+                                    <field name="expected_answer"/>
+                                    <field name="question_weight" string="Weight"/>
+                                    <field name="no_scoring"/>
+                                </tree>
+                            </field>
+                          <br/>
+                          <separator string="Characteristic / Personality Questions"/>
+                            <field name="personality_question_ids"  attrs="{'readonly': [('is_saved', '=', False)]}"  nolabel="1">
+                                <tree editable="top">
+                                  <field name="interview_question_id"
+                                         domain="[('type', '=', 'personality')]" string="Question"/>
+                                    <field name="expected_answer"/>
+                                    <field name="question_weight"  string="Weight"/>
+                                    <field name="no_scoring"/>
+                                </tree>
+                            </field>
+                                 <br/>
+                          <separator string="Motivations / Working Relationships"/>
+                            <field name="motivation_question_ids"  attrs="{'readonly': [('is_saved', '=', False)]}"  nolabel="1">
+                                <tree editable="top">
+                                    <field  name="interview_question_id" domain="[('type', '=', 'motivation')]" />
+                                    <field name="expected_answer"/>
+                                    <field name="question_weight"  string="Weight"/>
+                                    <field name="no_scoring"/>
+                                </tree>
+                            </field>
+                             <br/>
+                          <separator string="Basic / Administrative"/>
+                            <field name="basic_question_ids"  attrs="{'readonly': [('is_saved', '=', False)]}"  nolabel="1">
+                                <tree editable="top">
+                                    <field name="interview_question_id"  domain="[('type', '=', 'basic')]" string="Question"/>
+                                    <field name="expected_answer"/>
+                                    <field name="question_weight"  string="Weight"/>
+                                    <field name="no_scoring"/>
+                                </tree>
+                            </field>
+                     </page>
+                    <page name="background" string="Background">
+                        <group>
+                            <field name="background"/>
+                        </group>
+                    </page>
+                </notebook>
+
+
+                </xpath>
+            </field>
+
+        </record>
+
+
+        <record id="pm_view_job_filter_custom" model="ir.ui.view">
+            <field name="name">hr.job.search.custom</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_job_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='in_recruitment']" position="replace">
+                    <filter name="in_recruitment" string="In Recruitment" domain="[('status', '=', 'recruit')]"/>
+                </xpath>
+                <xpath expr="//filter[@name='in_position']" position="replace">
+                     <filter name="in_position" string="In Position" domain="[('status', '=', 'open')]"/>
+                </xpath>
+
+              <xpath expr="//search" position="inside">
+                    <searchpanel>
+                        <field name="department_id" icon="fa-users"/>
+                    </searchpanel>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="pm_view_job_tree_custom" model="ir.ui.view">
+            <field name="name">hr.job.tree.custom</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="replace">
+                     <field name="status"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>

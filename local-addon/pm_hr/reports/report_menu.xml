@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- custom report file -->
+        <record id="paperformat_hr_employee"
+                model="report.paperformat">
+            <field name="name">European A4</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">43</field>
+            <field name="dpi">90</field>
+        </record>
+        <!-- landscape mode> -->
+        <record id="paperformat_hr_job_position"
+                model="report.paperformat">
+            <field name="name">European A4</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">43</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <!-- employee certificate -->
+        <report id="act_get_employee_certificate"
+            model="hr.employee"
+            string="Employee Certificate"
+            report_type="qweb-pdf"
+            name="pm_hr.employee_certificate_report"
+            file="pm_hr.employee_certificate_report"
+            menu="False"
+            paperformat="paperformat_hr_employee"
+        />
+          <!-- employee Recommendation -->
+        <report id="act_get_employee_recommendation"
+            model="hr.employee"
+            string="Employee Recommendation Letter"
+            report_type="qweb-pdf"
+            name="pm_hr.employee_recommendation_report"
+            file="pm_hr.employee_recommendation_report"
+            menu="False"
+            paperformat="paperformat_hr_employee"
+        />
+
+        <!-- offer letter -->
+        <report
+            id="act_get_offer_later"
+            model="hr.employee"
+            string="Offer Letter"
+            name="pm_hr.offer_letter_report"
+            file="pm_hr.offer_letter_report"
+            report_type="qweb-pdf"
+            menu="False"
+            paperformat="paperformat_hr_employee"/>
+
+        <!-- job announcement -->
+        <report
+            id="act_get_job_announcement"
+            model="hr.job"
+            string="Job Announcement"
+            name="pm_hr.job_announcement_report"
+            file="pm_hr.job_announcement_report"
+            report_type="qweb-pdf"
+            paperformat="paperformat_hr_employee"/>
+
+        <!-- interview question in applicant detail -->
+        <report
+            id="act_get_interview_question"
+            model="hr.applicant"
+            string="Interview Questions"
+            name="pm_hr.interview_question_report"
+            file="pm_hr.interview_question_report"
+            report_type="qweb-pdf"
+            paperformat="paperformat_hr_job_position"/>
+
+        <!-- interview question in job position -->
+        <report
+            id="act_get_interview_question_job_position"
+            model="hr.job"
+            string="Interview Questions"
+            name="pm_hr.interview_question_jop_position_report"
+            file="pm_hr.interview_question_jop_position_report"
+            report_type="qweb-pdf"
+            paperformat="paperformat_hr_job_position"/>
+
+    </data>
+</odoo>

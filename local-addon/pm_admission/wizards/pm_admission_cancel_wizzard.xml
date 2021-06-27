@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+          <record id="pm_cancel_admission_wizzard_view" model="ir.ui.view">
+            <field name="name">wizard.pm.admission.cancel.form</field>
+            <field name="model">wizard.pm.admission.cancel</field>
+            <field name="arch" type="xml">
+                <form string="Cancel Admission">
+                    <div>
+                         <label for="reason"  required="1" class="oe_edit_only" string="Cancel Reason"/>
+                         <h2><field name="reason"/></h2>
+                    </div>
+                    <group colspan="4">
+                        <field name="return_date" string="Return Date"/>
+                        <field name="cancel_date" string="Cancel Date"/>
+                    </group>
+
+                    <footer>
+                        <button name="cancel_admission" type="object" string="Cancel Admission" class="oe_highlight"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+       <record model="ir.actions.act_window" id="admission_cancel_wizzard">
+            <field name="name">Cancel Admission</field>
+            <field name="res_model">wizard.pm.admission.cancel</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="pm_cancel_admission_wizzard_view"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

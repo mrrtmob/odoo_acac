@@ -1,0 +1,40 @@
+<odoo>
+  <data>
+    <record id="product_category_list_view" model="ir.ui.view">
+      <field name="name">product.category.list.view.inherited.pm_culinary</field>
+      <field name="model">product.category</field>
+      <field name="inherit_id" ref="product.product_category_list_view" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='display_name']" position="before">
+          <field name="code" />
+        </xpath>
+      </field>
+    </record>
+
+    <record id="product_category_form_view" model="ir.ui.view">
+      <field name="name">product.category.form.view.inherited.pm_culinary</field>
+      <field name="model">product.category</field>
+      <field name="inherit_id" ref="product.product_category_form_view" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='parent_id']" position="before">
+          <field name="code" class="oe_inline" />
+        </xpath>
+
+        <!-- Inventory Valuation -->
+        <xpath expr="//group[2]" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <!-- Account Properties -->
+        <xpath expr="//group[3]" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <!-- Logistics -->
+        <xpath expr="//group[4]" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

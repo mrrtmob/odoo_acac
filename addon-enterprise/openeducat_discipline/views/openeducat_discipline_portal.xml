@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_home_menu_apology" name="Portal layout : Student apology form"
+              inherit_id="openeducat_core_enterprise.portal_breadcrumbs_inhetrite" priority="10">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+             <li t-if="page_name == 'appology_form' or appology_form  "
+                 t-attf-class="breadcrumb-item  #{'active ' if not appology_form else ''}">
+                <a t-if="discipline_ids" t-attf-href="/student/profile/?{{ keep_query() }}">
+                    Student Profile
+                </a>
+                <t t-else="">Student Profile</t>
+            </li>
+            <li t-if="discipline_ids" class="breadcrumb-item active">
+                Student Apology Form
+            </li>
+        </xpath>
+    </template>
+
+    <template id="student_portal_discipline"
+              inherit_id="openeducat_core_enterprise.openeducat_enterprise_student_portal" priority="55">
+        <xpath expr="//ul[hasclass('nav-pills')]" position="inside">
+            <li>
+                <a href="#discipline" aria-expanded="false" data-toggle="tab">
+                    <h5 class="mb0">
+                        Discipline
+                    </h5>
+                </a>
+            </li>
+        </xpath>
+        <xpath expr="//div[hasclass('tab-content')]" position="inside">
+            <div class="tab-pane fade" id="discipline">
+                <div class="mb-4">
+                    <h4>Discipline</h4>
+                </div>
+                <table class="mt16 table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Misbehaviour category</th>
+                            <th>Misbehave Type</th>
+                            <th>Action To Be Taken</th>
+                            <th>Meeting Date</th>
+                            <th t-if="user_id.sudo().is_student"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="student.discipline_ids" t-as="discipline_data">
+                            <tr>
+                                <td>
+                                    <t t-foreach="discipline_data.misbehaviour_category_id" t-as="category">
+                                        <span t-esc="category.parent_id.name"/>
+                                        /
+                                        <span t-esc="category.name"/>
+                                    </t>
+                                </td>
+                                <td>
+                                    <span t-esc="{'major':'Major', 'minor':'Minor'}[discipline_data.misbehaviour_type]"/>
+                                </td>
+                                <td>
+                                    <span t-esc="discipline_data.misbehaviour_action"/>
+                                </td>
+                                <td>
+                                    <span t-esc="discipline_data.meeting_datetime"
+                                          t-options='{"widget":"date"}'/>
+                                </td>
+
+                                <td t-if="user_id.sudo().is_student">
+                                    <a t-attf-href="/student/apology/letter/#{discipline_data.id}">
+                                        <button>Apology Form</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+
+
+    <template id="portal_student_submit_letter">
+        <t t-call="portal.portal_layout">
+             <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Apology Letter</t>
+            </t>
+            <t t-if="not discipline_ids">
+                <p>There are currently no information for your account!!!</p>
+            </t>
+
+            <div style="background-color:white; padding: 20px 40px 20px 40px;">
+                <div class="mt16">
+                    <form t-att-action="'/student/apology/letter/submit/%s' %(discipline_ids.id)" method="post"
+                          role="form"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="row col-md-12">
+                            <div class="col-md-2">
+                                <lanle>Subject:</lanle>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="list_name" class="form-control" t-att-value="subject_name"/>
+                            </div>
+                        </div>
+                        <div class="row mt16 col-md-12">
+                            <div class="col-md-2">
+                                <lanle>Recipients:</lanle>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="js-example-basic-multiple form-control" name="partner"
+                                        multiple="multiple" required="1">
+                                    <t t-foreach="discipline_ids.recipients_ids" t-as="rs">
+                                        <option t-att-value="rs.email" t-att-selected="rs.email">
+                                            <t t-esc="rs.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+                        <script>
+                            $(function()
+                            {
+                            $(".js-example-basic-multiple").select2()
+
+                            });
+                        </script>
+                        <div class=" mt16 col-md-12" style="padding-left:0;">
+                            <div class="col-md-2">
+                                Discription:
+                            </div>
+                            <div class="col-md-6">
+                                <textarea name="content" required="1"
+                                          id="content" class="form-control mt16 load_editor"/>
+                            </div>
+                        </div>
+                        <div class="form-group mt16 row col-md-12">
+                            <div class="col-md-2">
+                                <label class="control-label">Attachments:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="file" multiple="multiple" name="attachments"
+                                       class="inputfile" required="1"/>
+                            </div>
+                        </div>
+                        <div class="clearfix row col-md-12">
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary mb16 ">
+                                    SUBMIT
+                                    <span class="fa fa-long-arrow-right"/>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

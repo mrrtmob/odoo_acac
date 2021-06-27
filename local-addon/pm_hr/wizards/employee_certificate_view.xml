@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="employee_certificate_form">
+            <field name="name">employee.certificate.form</field>
+            <field name="model">employee.certificate</field>
+            <field name="arch" type="xml">
+                <form string="Employee Certificate">
+                    <group col="4" colspan="4">
+
+                        <field name="date_from" />
+                        <field name="date_to" />
+                        <field name="approver"/>
+                    </group>
+                    <footer>
+                        <span groups="base.group_user">
+                            <button string="Print" type="object" name="print_report" class="oe_highlight"/>
+                            <button special="cancel" string="Close" type="object"/>
+                        </span>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="employee_certificate_act" name="Employee Certificate"
+                    res_model="employee.certificate" binding_model="hr.employee"
+                    view_mode="form" target="new" binding_views="form"
+                    binding_type="report"/>
+
+<!--        <record id="employee_certificate_act" model="ir.actions.act_window">-->
+<!--            <field name="name">Employee Certificate</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="res_model">employee.certificate</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="target">new</field>-->
+<!--            <field name="binding_type">report</field>-->
+<!--        </record>-->
+       
+    </data>
+</odoo>

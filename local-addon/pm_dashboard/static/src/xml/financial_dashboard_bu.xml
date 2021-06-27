@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+    <t t-name="FinancialDashboard">
+        <div class="container-fluid p-0 pt-5" id="financial-dashboard">
+            <div class="row m-0">
+                <div class="col-lg-3 col-sm-12">
+                    <!-- student enrollment -->
+                    <div class="box-container student-enrollment">
+                        <div class="header">
+                            <p class="title">Working Capital</p>
+                        </div>
+                        <div class="body">
+                            <div class="box-data working-capital mb-2">
+                                <p>Working Capital</p>
+                                <p>$6,000</p>
+                            </div>
+                            <div class="box-data current-ratio mb-2">
+                                <p>Current Ratio</p>
+                                <p>1,0</p>
+                            </div>
+
+                            <!-- half doughnut chart -->
+                            <div class="text-center pt-4">
+                                <p>DAYS PAYABLE OUTSTANDING</p>
+                                <canvas id="payable_by_outstanding" height="130"></canvas>
+                            </div>
+
+                            <!-- bar chart -->
+                            <div class="text-center pt-4 mb-3">
+                                <p>ACCOUNTS PAYABLE PAYMENT TARGET</p>
+                                <canvas id="payable_by_target" height="150"></canvas>
+                                <div id="payable_by_target_legend" ></div>
+                            </div>
+
+                            <!-- current assets -->
+                            <div class="mb-3">
+                                <div class="sub-title d-flex justify-content-between">
+                                    <span>Current Assets</span><span>$129,000</span>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-left border-top-0">Cash</td>
+                                                <td class="text-right border-top-0">$34,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">Account Receivable</td>
+                                                <td class="text-right">$59,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">Inventory</td>
+                                                <td class="text-right">$31,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">Pre-Paid Expenses</td>
+                                                <td class="text-right">$5,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- current liabilities -->
+                            <div class="mb-3">
+                                <div class="sub-title d-flex justify-content-between">
+                                    <span>Current Liabilities</span><span>$68,000</span>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-left border-top-0">Accounts Payable</td>
+                                                <td class="text-right border-top-0">$25,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">Credit Card Debt</td>
+                                                <td class="text-right">$2,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">Bank Operating Credit</td>
+                                                <td class="text-right">$27,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">Accrued Expenses</td>
+                                                <td class="text-right">$9,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">Taxes Payable</td>
+                                                <td class="text-right">$5,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-9 col-sm-12">
+
+
+                    <!-- student performance -->
+                    <div class="row m-0">
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="box-container current-semester">
+                                <div class="header">
+                                    <p>Installment</p>
+                                </div>
+                                <div class="row m-0">
+                                    <div class="col-4 pl-0">
+                                        <div class="box-data graduated-box">
+                                            <p>Total Amount</p>
+                                            <p>100</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 pl-0">
+                                        <div class="box-data dropout-box">
+                                            <p>Outstanding</p>
+                                            <p>100</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 pl-0">
+                                        <div class="box-data postponed-box">
+                                            <p>Alerts</p>
+                                            <p>100</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="box-container current-semester">
+                                <div class="header">
+                                    <p>Opex Ratio</p>
+                                </div>
+                                <div class="row m-0">
+                                    <div class="col-4 pl-0">
+                                        <div class="box-data graduated-box">
+                                            <p>Last Month</p>
+                                            <p>100</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 pl-0">
+                                        <div class="box-data dropout-box">
+                                            <p>Current Month</p>
+                                            <p>100</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-container student-enrollment">
+                        <div class="header">
+                            <p class="title">Budget</p>
+                        </div>
+                        <div class="body">
+                            <div class="row m-0">
+                                <div class="col-md-6 col-sm-12">
+                                    <canvas id="budget_line_chart" height="130"></canvas>
+                                    <div id="budget_line_chart_legend" ></div>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <canvas id="budget_stacked_chart" height="130"></canvas>
+                                    <div id="budget_stacked_chart_legend" ></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="body mt-5">
+                            <div class="row m-0">
+                                <div class="col-lg-6 col-sm-12 d-flex align-items-center justify-content-center" >
+                                    <div style="width:100%;">
+                                        <canvas id="ytd_vs_budget" height="150"></canvas>
+                                        <div id="ytd_vs_budget_legend" ></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="mb-3">
+                                        <div class="sub-title">
+                                        Budget Main Accounts
+                                    </div>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Account</th>
+                                                        <th scope="col">Budget</th>                                       
+                                                        <th scope="col">Actual</th>                                                       
+                                                        <th scope="col">Variance</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="widget.finance_data.budgets" t-as="item">
+                                                        <tr>
+                                                            <td><t t-esc="item.name" /></td>
+                                                            <td>$<t t-esc="item.planned_amount"/></td>
+                                                            <td>$<t t-esc="item.actual_amount"/></td>
+                                                            <td>$<t t-esc="item.variance"/></td>
+                                                        </tr>
+                                                    </t>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="sub-title">
+                                        Top 5 Vendor Accounts
+                                    </div>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Account</th>
+                                                        <th scope="col">Current Month</th>
+                                                        <th scope="col">Monthly avg</th>
+                                                        <th scope="col">YTD Total</th>
+                                                        <th scope="col">%</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <t t-foreach="widget.finance_data.vendors" t-as="item">
+                                                    <tr>
+                                                        <td><t t-esc="item.vendor" /></td>
+                                                        <td>$<t t-esc="item.this_month"  t-field-options='{"widget": "monetary"}'/></td>
+                                                        <td>$<t t-esc="item.avg_12"/></td>
+                                                        <td>$<t t-esc="item.amount"/></td>
+                                                        <td><t t-esc="item.total_p"/> </td>
+                                                    </tr>
+                                                </t>   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_disciplinary_2nd_warning">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" style="font-family: 'Georgia'; font-size: 17px;">
+                    <style  type="text/css">
+                    </style>
+                    <div class="container-fluid">
+                        <t t-call="pm_general.template_header"/>
+                        <strong><u>Notification Points at 4.5</u></strong><br/><br/>
+                        <strong><i>If you have any problems understanding this letter or your present position, do not hesitate to contact the operation Manager or your Program Manager.</i></strong><br/><br/>
+                        <p>Dear NAME,</p>
+                        <p>Despite the reminder send to you on DATE, you have continued to lose valuable points from your behavior mark. Currently your mark stands at No. points.</p>
+                        <p>I would like to ensure that you understand that should the behaviour/appearance mark fall below 4 points you will leave us with no other option than to dismiss you from the current semester and your semester will be invalidated.</p>
+                        <p>I urge you to make yourself familiar and adhere with our standard of excellence to ensure that your conduct on at the Academy does allow you to go through this Semester without the thread that you may have to leave the Academy.</p>
+                        <t t-call="pm_general.signature"/>
+                        <t t-call="pm_general.template_footer"/>
+                        <t t-call="pm_general.template_border"></t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

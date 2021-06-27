@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="dashboard_assets_backend_js" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pm_dashboard/static/src/js/registrar_dashboard.js"/>
+            <script type="text/javascript" src="/pm_dashboard/static/src/js/financial_dashboard.js"/>
+            <script type="text/javascript" src="/pm_dashboard/static/src/js/marketing_dashboard.js"/>
+            <script type="text/javascript" src="/pm_dashboard/static/src/js/pm_hr_dashboard.js"/>
+            <!-- for chartjs -->
+            <script src="/pm_dashboard/static/lib/chartjs/chartjs.js" />
+            <script src="/pm_dashboard/static/lib/chartjs/chartjs-plugin-datalabels.min.js" />
+            <script>
+                // unregister globally
+                Chart.plugins.unregister(ChartDataLabels);
+
+            </script>
+        </xpath>
+    </template>
+
+    <template id="dashboard_assets_backend_css" inherit_id="web.assets_backend">
+        <xpath expr="//link" position="before">
+            <link rel="stylesheet" type="text/css" href="/pm_dashboard/static/src/css/registrar_dashboard.css"/>
+            <link rel="stylesheet" type="text/css" href="/pm_dashboard/static/src/css/financial_dashboard.css"/>
+            <link rel="stylesheet" type="text/css" href="/pm_dashboard/static/src/css/marketing_dashboard.css"/>
+            <link rel="stylesheet" type="text/css" href="/pm_dashboard/static/src/css/pm_hr_dashboard.css"/>
+        </xpath>
+    </template>
+
+
+    <data>
+
+        <!-- action -->
+
+        <!-- registrar -->
+        <record id="act_registrar_dashboard" model="ir.actions.client">
+            <field name="name">Registrar Dashboard</field>
+            <field name="tag">registrar_dashboard</field>
+        </record>
+
+        <!-- financial -->
+        <record id="act_financial_dashboard" model="ir.actions.client">
+            <field name="name">Financial Dashboard</field>
+            <field name="tag">financial_dashboard</field>
+        </record>
+
+        <!-- marketing -->
+        <record id="act_marketing_dashboard" model="ir.actions.client">
+            <field name="name">Marketing Dashboard</field>
+            <field name="tag">marketing_dashboard</field>
+        </record>
+
+        <!-- hr -->
+        <record id="act_pm_hr_dashboard" model="ir.actions.client">
+            <field name="name">HR Dashboard</field>
+            <field name="tag">pm_hr_dashboard</field>
+        </record>
+
+        <!-- end action -->
+
+        <!-- menu -->
+
+        <!-- registrar -->
+        <menuitem id="menu_registrar_dashboard"
+                  name="Registrar"
+                  parent="base.menu_board_root"
+                  sequence="7"
+                  action="act_registrar_dashboard"
+                  groups="pm_leads.group_acac_dean,pm_leads.group_acac_registrar" />
+
+        <!-- financial -->
+        <menuitem id="menu_financial_dashboard"
+                  name="Financial"
+                  parent="base.menu_board_root"
+                  sequence="8"
+                  action="act_financial_dashboard"
+                  groups="pm_leads.group_acac_dean,pm_accounting.group_acac_accountant"/>
+
+        <!-- marketing -->
+        <menuitem id="menu_marketing_dashboard"
+                  name="Marketing"
+                  parent="base.menu_board_root"
+                  sequence="9"
+                  action="act_marketing_dashboard"
+                  groups="pm_leads.group_acac_dean,pm_leads.group_acac_marketing,pm_leads.group_acac_marketing_user" />
+
+        <!-- HR -->
+        <menuitem id="menu_pm_hr_dashboard"
+                  name="HR"
+                  parent="base.menu_board_root"
+                  groups="pm_hr.group_human_resource_manager"
+                  sequence="10"
+                  action="act_pm_hr_dashboard" />
+
+        <!-- end menu -->
+    </data>
+
+</odoo>

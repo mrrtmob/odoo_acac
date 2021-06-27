@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="pm_custom_activity_list" model="ir.ui.view">
+            <field name="name">mail.activity.tree</field>
+            <field name="model">mail.activity</field>
+            <field name="arch" type="xml">
+               <tree string="Next Activities" decoration-danger="date_deadline &lt; current_date" decoration-success="date_deadline == current_date" default_order="date_deadline" create="false">
+                    <field name="res_name" string="Employee"/>
+                    <field name="summary"/>
+                    <field name="date_deadline"/>
+                    <button string="Complete Task" name="action_done" type="object" icon="fa-check text-success"/>
+                </tree>
+            </field>
+        </record>
+
+
+         <record id="action_hr_activity_list" model="ir.actions.act_window">
+            <field name="name">Activity List</field>
+            <field name="res_model">mail.activity</field>
+            <field name="context">{'default_res_model': 'hr.employee'}</field>
+            <field name="domain">[('user_id', '=', uid)]</field>
+            <field name="view_mode">tree</field>
+             <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'tree', 'view_id': ref('pm_hr.pm_custom_activity_list')})]"/>
+        </record>
+
+
+
+
+    </data>
+</odoo>
