@@ -87,7 +87,7 @@ class EducationalAchievement(models.Model):
         ('bachelor', 'Bachelor'),
         ('master', 'Master')
     ], 'Educational Achievements', required=True)
-    high_school_id = fields.Many2one('pm.high_school', 'School Name', required=True, index=True)
+    high_school_id = fields.Many2one('pm.high_school', 'School Name', required=False, index=True)
     school = fields.Char('School Name', required=False)
     major = fields.Char('Major')
     is_equivalent = fields.Boolean('Is Equivalent')

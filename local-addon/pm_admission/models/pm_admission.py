@@ -18,6 +18,8 @@ class OpAdmissionRegisterCustom(models.Model):
 class OpAdmission(models.Model):
     _inherit = 'op.admission'
     batch_id = fields.Many2one('op.batch', 'Term', domain=[], required=True, readonly=False)
+    name = fields.Char(
+        'Name', size=128, required=False, translate=False)
     readonly = fields.Boolean(compute="_compute_read_only")
     class_id = fields.Many2one('op.classroom', 'Class', required=False)
     fill_application = fields.Boolean('Fill Application')
