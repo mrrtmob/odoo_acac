@@ -13,6 +13,7 @@
         <field name="category_id" ref="module_category_acac"/>
         <field name="users" eval="[(4, ref('base.user_admin'))]"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user')),
+        (4, ref('group_see_student_app')),
         (4, ref('sales_team.group_sale_manager')),
         (4, ref('survey.group_survey_user')),
         (4, ref('event.group_event_manager')),]"/>
@@ -55,26 +56,30 @@
         (4, ref('pm_leads.group_acac_admin'))]"/>
     </record>
 
-<!--    <record id="group_acac_coo" model="res.groups">-->
-<!--        <field name="name">COO</field>-->
-<!--        <field name="category_id" ref="module_category_acac"/>-->
-<!--        <field name="users" eval="[(4, ref('base.user_admin'))]"/>-->
-<!--        <field name="implied_ids" eval="[(4, ref('base.group_user')),-->
-<!--        (4, ref('pm_leads.group_acac_admin'))]"/>-->
-<!--    </record>-->
+    <record id="group_acac_coo" model="res.groups">
+        <field name="name">COO</field>
+        <field name="category_id" ref="module_category_acac"/>
+        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+        (4, ref('pm_leads.group_acac_admin'))]"/>
+    </record>
 
-<!--    <record id="group_acac_ceo" model="res.groups">-->
-<!--        <field name="name">CEO</field>-->
-<!--        <field name="category_id" ref="module_category_acac"/>-->
-<!--        <field name="users" eval="[(4, ref('base.user_admin'))]"/>-->
-<!--        <field name="implied_ids" eval="[(4, ref('base.group_user')),-->
-<!--        (4, ref('pm_leads.group_acac_admin'))]"/>-->
-<!--    </record>-->
+    <record id="group_acac_ceo" model="res.groups">
+        <field name="name">CEO</field>
+        <field name="category_id" ref="module_category_acac"/>
+        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+        (4, ref('pm_leads.group_acac_admin'))]"/>
+    </record>
 
     <record id="group_see_student_app" model="res.groups">
         <field name="name">Group See Student Apps</field>
         <field name="users" eval="[(4, ref('base.user_admin'))]"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_nobody" model="res.groups">
+        <field name="name">Group Used to Hide Apps/Menus</field>
     </record>
 
     <record id="group_acac_registrar" model="res.groups">

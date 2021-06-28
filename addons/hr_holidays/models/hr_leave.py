@@ -751,7 +751,7 @@ class HolidaysRequest(models.Model):
         if not self._context.get('leave_fast_create'):
             leave_types = self.env['hr.leave.type'].browse(
                 [values.get('holiday_status_id') for values in vals_list if values.get('holiday_status_id')])
-            mapped_validation_type = {leave_type.id: leave_type.validation_type for leave_type in leave_types}
+            mapped_validation_type = {leave_type.id: leave_type.leave_validation_type for leave_type in leave_types}
 
             for values in vals_list:
 
@@ -777,9 +777,6 @@ class HolidaysRequest(models.Model):
             if self._context.get('import_file'):
                 holiday._onchange_leave_dates()
             if not self._context.get('leave_fast_create'):
-                # FIXME remove these, as they should not be needed
-                if employee_id:
-                    holiday.with_user(SUPERUSER_ID)._sync_employee_details()
                 if 'number_of_days' not in values and ('date_from' in values or 'date_to' in values):
                     holiday.with_user(SUPERUSER_ID)._onchange_leave_dates()
 
@@ -791,13 +788,13 @@ class HolidaysRequest(models.Model):
                 holiday_sudo.add_follower(employee_id)
                 if holiday.validation_type == 'manager':
                     holiday_sudo.message_subscribe(partner_ids=holiday.employee_id.leave_manager_id.partner_id.ids)
-                if holiday.holiday_status_id.validation_type == 'no_validation':
+                if holiday.validation_type == 'no_validation':
                     # Automatic validation should be done in sudo, because user might not have the rights to do it by himself
                     holiday_sudo.action_validate()
                     holiday_sudo.message_subscribe(
                         partner_ids=[holiday_sudo._get_responsible_for_approval().partner_id.id])
                     holiday_sudo.message_post(body=_("The time off has been automatically approved"),
-                                              subtype="mt_comment")  # Message from OdooBot (sudo)
+                                              subtype_id=35)  # Message from OdooBot (sudo)
                 elif not self._context.get('import_file'):
                     holiday_sudo.activity_update()
         return holidays
