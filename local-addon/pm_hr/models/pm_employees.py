@@ -175,7 +175,6 @@ class PmEmployees(models.Model):
     def on_change_employee(self):
         self.coach_id = self.parent_id.id
         self.leave_manager_id = self.parent_id.user_id.id
-        self.expense_manager_id = self.parent_id.user_id.id
 
     def launch_exit_plan(self):
         plan = self.env['hr.plan'].browse(2)

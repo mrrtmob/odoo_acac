@@ -136,6 +136,7 @@ class OpAdmission(models.Model):
     email_from = fields.Char('Email', help="Email address of the contact", tracking=40, index=True)
     user_id = fields.Many2one('res.users', string='ACAC Contact', index=True, tracking=True,
                               default=lambda self: self.env.user)
+    acac_contact = fields.Char('ACAC Contact')
     scholar_application = fields.Boolean('Scholar Application')
     financial_status = fields.Boolean('Proof of Financial Status')
     family_income = fields.Float('Source of Family income')
