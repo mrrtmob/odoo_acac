@@ -162,19 +162,20 @@ class PmSurveyUserInputInherit(models.Model):
         }
 
 
-    def write(self, vals):
-        print("**************************")
-
-        if vals['state'] == 'done':
-            appraisal = self.appraisal_id
-            partner = self.partner_id
-
-            if appraisal and partner:
-                appraisal.message_post_with_view(
-                    'pm_hr.pm_appraisal_template',
-                    values={'obj': self, 'partner_name': partner.name})
-
-        return super(PmSurveyUserInputInherit, self).write(vals)
+    # def write(self, vals):
+    #     print("**************************")
+    #     print(vals)
+    #
+    #     if vals['state'] == 'done':
+    #         appraisal = self.appraisal_id
+    #         partner = self.partner_id
+    #
+    #         if appraisal and partner:
+    #             appraisal.message_post_with_view(
+    #                 'pm_hr.pm_appraisal_template',
+    #                 values={'obj': self, 'partner_name': partner.name})
+    #
+    #     return super(PmSurveyUserInputInherit, self).write(vals)
 
 
 

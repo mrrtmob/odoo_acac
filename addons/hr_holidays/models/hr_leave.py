@@ -661,7 +661,7 @@ class HolidaysRequest(models.Model):
                                 duration=leave.number_of_hours_display,
                                 date=fields.Date.to_string(leave.date_from),
                             )
-                        ))
+                        ))                # Handle double validation
                     else:
                         res.append((
                             leave.id,

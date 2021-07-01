@@ -82,8 +82,6 @@ class PmApproval(models.Model):
     def _compute_approve(self):
         for record in self:
             model = record.approval_type_id.base_model.model
-            print('hit po')
-            print(model)
             if model == 'purchase.request':
                 print(22)
                 for approve_rule in record.approval_type_id.approval_rule_ids:
@@ -92,16 +90,11 @@ class PmApproval(models.Model):
 
             if model == 'purchase.order':
                 for approve_rule in record.approval_type_id.approval_rule_ids:
-                    print('---------------Rule State-----------')
                     print(approve_rule.po_state)
-                    print('---------------PO State-----------')
-                    print(record.state)
                     if approve_rule.po_state == record.state and approve_rule.procurement_type == record.procurement_type:
-                        print('hit condition')
                         record.approve = approve_rule.approve_id
 
             else:
-                print(11)
                 for approve_rule in record.approval_type_id.approval_rule_ids:
                     if approve_rule.state == record.state:
                         record.approve = approve_rule.approve_id
