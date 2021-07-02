@@ -2,5 +2,5 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_pm_approval,access_pm_approval,model_pm_approval,base.group_user,1,1,1,1
 access_pm_approval_type,access_pm_approval_type,model_pm_approval_type,base.group_user,1,1,1,1
 access_pm_approval_rule,access_pm_approval_rule,model_pm_approval_rule,base.group_user,1,1,1,1
-access_ir_actions_act_window_system2,ir_actions_act_window_system,base.model_ir_actions_act_window,group_pm_approval_team,1,1,1,1
-access_ir_actions_act_window_system3,ir_actions_act_window_system,base.model_ir_actions_act_window,base.group_erp_manager,1,1,1,1
+access_ir_actions_act_window_system2,ir_actions_act_window_system,base.model_ir_actions_act_window,base.group_user,1,1,1,1
+"access_ir_actions_act_window_view_group_system","ir_actions_act_window_view_group_system",base.model_ir_actions_act_window_view,base.group_user,1,1,1,1
