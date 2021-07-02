@@ -51,6 +51,7 @@
 
 
                 <button name="%(applicant_create_employee_act)d" string="Create Employee" type="action"
+                        groups="pm_hr.group_human_resource_manager"
                                 class="oe_highlight" attrs="{'invisible': ['|', ('emp_id', '!=', False), ('stage_id','!=',5)]}"/>
 
             </xpath>
