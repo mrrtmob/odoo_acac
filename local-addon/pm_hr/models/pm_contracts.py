@@ -13,6 +13,7 @@ class PmInheritContracts(models.Model):
     public_holiday = fields.Integer('Public Holiday')
     tax_deduction = fields.Float("Tax Deduction($)", compute="_compute_tax_rate", store=True)
     tax_rate = fields.Float("Tax Rate(%)", compute="_compute_tax_rate", store=True)
+    senoirity_start_date = fields.Date('Senoirity Start Date')
 
     name = fields.Char(
         string="Contract Reference",

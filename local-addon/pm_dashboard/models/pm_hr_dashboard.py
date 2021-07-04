@@ -357,20 +357,22 @@ class HrDashboard(models.Model):
             ('plan_type', '=', 'off'),
         ])
 
-        for index, on in enumerate(onboarding):
-            onboarding_checklist.append({
-                'name': on['summary'],
-                'no': index + 1,
-                'owner': on['user_id']['partner_id']['name'],
-                'expired_date': on['date_deadline']
-            })
-        for index, off in enumerate(offboarding):
-            offboarding_checklist.append({
-                'name': off['summary'],
-                'no': index + 1,
-                'owner': on['user_id']['partner_id']['name'],
-                'expired_date': on['date_deadline']
-            })
+        if onboarding and offboarding:
+
+            for index, on in enumerate(onboarding):
+                onboarding_checklist.append({
+                    'name': on['summary'],
+                    'no': index + 1,
+                    'owner': on['user_id']['partner_id']['name'],
+                    'expired_date': on['date_deadline']
+                })
+            for index, off in enumerate(offboarding):
+                offboarding_checklist.append({
+                    'name': off['summary'],
+                    'no': index + 1,
+                    'owner': on['user_id']['partner_id']['name'],
+                    'expired_date': on['date_deadline']
+                })
 
         probation = []
         probation_list = self.env['hr.employee'].search([('contract_id.trial_date_end', '>', ten_day_ago),

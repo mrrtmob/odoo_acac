@@ -63,7 +63,6 @@
       <menuitem
             id="crm.menu_crm_lead_categ"
             name="Tags"
-            action="crm.crm_lead_tag_action"
             parent="crm.menu_crm_config_lead"
             sequence="1"
             active="False" />

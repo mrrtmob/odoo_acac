@@ -72,7 +72,19 @@
          <record id="hr_recruitment.menu_hr_recruitment_source" model="ir.ui.menu">
             <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
         </record>
+
          <record id="hr_recruitment.menu_hr_recruitment_stage" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+
+         <record id="hr_reward_warning.hr_announcement" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+
+         <record id="hr_reward_warning.hr_student_announcement_sub_menu" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+         <record id="hr_reward_warning.hr_announcement_sub_menu" model="ir.ui.menu">
             <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
         </record>
 

@@ -18,6 +18,13 @@
                 <xpath expr="//group[@name='allowances']/div[hasclass('o_row')][1]" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
+                <xpath expr="//field[@name='structure_type_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='date_end']" position="after">
+                    <field name="trial_date_end"/>
+                </xpath>
 
                 <!-- change DA to Housing Allowance -->
                 <label for="da" position="replace">
@@ -62,8 +69,9 @@
                 </xpath>
 
                 <xpath expr="//group[@name='salary_and_advantages']" position="inside">
-                    <field name="tax_rate" />
-                    <field name="tax_deduction"/>
+                    <!-- <field name="tax_rate" />
+                    <field name="tax_deduction"/> -->
+                    <field name="senoirity_start_date"/>
                 </xpath>
 
             </field>

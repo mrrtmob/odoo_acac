@@ -30,6 +30,9 @@ access_purchase_request_line_purchase_base_user,purchase.request.line.base,model
 access_purchase_order,purchase.order,model_purchase_order,base.group_user,1,1,1,1
 access_purchase_order_line,purchase.order.line user,model_purchase_order_line,base.group_user,1,1,1,1
 
+access_model_purchase_request_line_make_purchase_order,model_purchase_request_line_make_purchase_order,model_purchase_request_line_make_purchase_order,base.group_user,1,1,1,1
+access_model_purchase_request_line_make_purchase_order_item,model_purchase_request_line_make_purchase_order_item,model_purchase_request_line_make_purchase_order_item,base.group_user,1,1,1,1
+
 
 
 

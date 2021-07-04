@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_pm_admission_pm_admission,pm_admission.pm_admission,model_pm_admission_pm_admission,base.group_user,1,1,1,1
+access_wizard_pm_admission_cancel,access_wizard_pm_admission_cancel,model_wizard_pm_admission_cancel,base.group_user,1,1,1,1

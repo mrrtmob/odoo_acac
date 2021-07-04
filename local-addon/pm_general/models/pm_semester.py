@@ -370,8 +370,7 @@ class PmSemesterResult(models.Model):
         required=True, track_visibility='onchange')
     semester_res_line = fields.One2many(
         'pm.semester.result.line', 'semester_result_id', 'Marksheets')
-    result = fields.Integer("Result", compute='_compute_result',
-                              store=True)
+    result = fields.Integer("Result", compute='_compute_result', store=True)
     grade = fields.Char('Grade', readonly=True, compute='_compute_grade', store=True)
     total_grade_point = fields.Float('Total Grade Points', compute="_compute_total_grade_point", store=True)
     gpa = fields.Float('GPA', readonly=True, digits=(12, 1), compute='_compute_gpa', store=True)
@@ -379,7 +378,7 @@ class PmSemesterResult(models.Model):
         [('draft', 'Draft'), ('validated', 'Validated'),
          ('cancelled', 'Cancelled')], 'Status',
         default="draft", required=True, track_visibility='onchange')
-    name = fields.Char('Semester Result', size=256, required=True,
+    name = fields.Char('Semester Result', size=256, required=False,
                        track_visibility='onchange')
     status = fields.Selection([
         ('pass', 'Pass'),
@@ -414,19 +413,28 @@ class PmSemesterResult(models.Model):
             if total_credit and record.total_grade_point:
                 print('total grade point', record.total_grade_point)
                 gpa = record.total_grade_point / total_credit
-                record.gpa = self.scale_gpa(gpa)
+
+                print('gpa1', gpa)
+                print('gpa', self.scale_gpa(gpa))
+                self.gpa = self.scale_gpa(gpa)
 
     def scale_gpa(self, gpa):
         grades = self.env['op.grade.configuration'].search([], order="id desc")
         for i in range(len(grades)):
             j = i + 1
             if j < len(grades):
+                print('heh')
                 if grades[i].grade_point <= gpa and grades[j].grade_point >= gpa:
+                    print('huu')
                     scale_down = gpa - grades[i].grade_point
                     scale_up = grades[j].grade_point - gpa
+
                     if scale_down < scale_up:
+                        print('up')
                         gpa = grades[i].grade_point
                     else:
+                        print('down')
+
                         gpa = grades[j].grade_point
                     return gpa
 
@@ -464,7 +472,8 @@ class PmSemesterResult(models.Model):
             print(sessions)
             total = sum(marks.values())
             subject_count = len(marks)
-            record.result = round(total / subject_count)
+            if total and subject_count:
+                record.result = round(total / subject_count)
 
     @api.depends('gpa')
     def _compute_grade(self):

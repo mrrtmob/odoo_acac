@@ -2,7 +2,7 @@
 import time
 from datetime import datetime
 from odoo import fields, models, api, _
-from odoo.exceptions import except_orm
+from odoo.exceptions import ValidationError
 from odoo import exceptions
 from odoo.http import request
 
@@ -159,29 +159,29 @@ class SalaryAdvancePayment(models.Model):
         emp_obj = self.env['hr.employee']
         address = emp_obj.browse([self.employee_id.id]).address_home_id
         if not address.id:
-            raise except_orm('Error!', 'Define home address for the employee. i.e address under private information of the employee.')
+            raise ValidationError('Define home address for the employee. i.e address under private information of the employee.')
         salary_advance_search = self.search([('employee_id', '=', self.employee_id.id), ('id', '!=', self.id),
                                              ('state', '=', 'approve')])
         current_month = datetime.strptime(str(self.date), '%Y-%m-%d').date().month
         for each_advance in salary_advance_search:
             existing_month = datetime.strptime(str(each_advance.date), '%Y-%m-%d').date().month
             if current_month == existing_month:
-                raise except_orm('Error!', 'Advance can be requested once in a month')
+                raise ValidationError('Advance can be requested once in a month')
         if not self.employee_contract_id:
-            raise except_orm('Error!', 'Define a contract for the employee')
+            raise ValidationError('Define a contract for the employee')
         struct_id = self.employee_contract_id.struct_id
         adv = self.advance
         amt = self.employee_contract_id.wage
         if adv > amt and not self.exceed_condition:
-            raise except_orm('Error!', 'Advance amount is greater than allotted')
+            raise ValidationError('Advance amount is greater than allotted')
 
         if not self.advance:
-            raise except_orm('Warning', 'You must Enter the Salary Advance amount')
+            raise ValidationError('You must Enter the Salary Advance amount')
         payslip_obj = self.env['hr.payslip'].search([('employee_id', '=', self.employee_id.id),
                                                      ('state', '=', 'done'), ('date_from', '<=', self.date),
                                                      ('date_to', '>=', self.date)])
         if payslip_obj:
-            raise except_orm('Warning', "This month salary already calculated")
+            raise ValidationError("This month salary already calculated")
 
         for slip in self.env['hr.payslip'].search([('employee_id', '=', self.employee_id.id)]):
             slip_moth = datetime.strptime(str(slip.date_from), '%Y-%m-%d').date().month
@@ -204,11 +204,11 @@ class SalaryAdvancePayment(models.Model):
         for each_advance in salary_advance_search:
             existing_month = datetime.strptime(str(each_advance.date), '%Y-%m-%d').date().month
             if current_month == existing_month:
-                raise except_orm('Error!', 'Advance can be requested once in a month')
+                raise ValidationError('Advance can be requested once in a month')
         if not self.debit or not self.credit or not self.journal:
-            raise except_orm('Warning', "You must enter Debit & Credit account and journal to approve ")
+            raise ValidationError("You must enter Debit & Credit account and journal to approve ")
         if not self.advance:
-            raise except_orm('Warning', 'You must Enter the Salary Advance amount')
+            raise ValidationError('You must Enter the Salary Advance amount')
 
         move_obj = self.env['account.move']
         timenow = time.strftime('%Y-%m-%d')

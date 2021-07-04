@@ -18,6 +18,8 @@ class OpAdmissionRegisterCustom(models.Model):
 class OpAdmission(models.Model):
     _inherit = 'op.admission'
     batch_id = fields.Many2one('op.batch', 'Term', domain=[], required=True, readonly=False)
+    name = fields.Char(
+        'Name', size=128, required=False, translate=False)
     readonly = fields.Boolean(compute="_compute_read_only")
     class_id = fields.Many2one('op.classroom', 'Class', required=False)
     fill_application = fields.Boolean('Fill Application')
@@ -136,6 +138,7 @@ class OpAdmission(models.Model):
     email_from = fields.Char('Email', help="Email address of the contact", tracking=40, index=True)
     user_id = fields.Many2one('res.users', string='ACAC Contact', index=True, tracking=True,
                               default=lambda self: self.env.user)
+    acac_contact = fields.Char('ACAC Contact')
     scholar_application = fields.Boolean('Scholar Application')
     financial_status = fields.Boolean('Proof of Financial Status')
     family_income = fields.Float('Source of Family income')

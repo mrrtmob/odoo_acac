@@ -383,7 +383,7 @@
             <field name="name">pm.semester.dashboard.kanban</field>
             <field name="model">pm.semester</field>
             <field name="arch" type="xml">
-                <kanban create="true" class="oe_background_grey o_kanban_dashboard o_account_kanban"
+                <kanban create="false" class="oe_background_grey o_kanban_dashboard o_account_kanban"
                         banner_route="/openeducat_core_enterprise/openeducat_core_enterprise_onboarding_panel">
                     <field name="id"/>
                     <field name="name"/>
@@ -568,7 +568,7 @@
             <field name="name">Student Dashboard CRM</field>
             <field name="model">op.batch</field>
             <field name="arch" type="xml">
-                  <kanban create="true" class="oe_background_grey o_kanban_dashboard o_account_kanban">
+                  <kanban create="false" class="oe_background_grey o_kanban_dashboard o_account_kanban">
                     <field name="id"/>
                     <field name="name"/>
                     <field name="color"/>

@@ -22,6 +22,7 @@
 ###################################################################################
 from odoo import models, fields, api, SUPERUSER_ID
 import datetime
+from odoo.exceptions import ValidationError
 
 
 class HrAppraisalForm(models.Model):
@@ -128,26 +129,12 @@ class HrAppraisalForm(models.Model):
         appraisal_reviewers_list = self.fetch_appraisal_reviewer()
         print(appraisal_reviewers_list)
 
-
-
-
         for appraisal_reviewers, survey_id in appraisal_reviewers_list:
             for reviewers in appraisal_reviewers:
-                print('id', self.ids[0])
-                print("survey", survey_id.id)
-                print("tital", survey_id.title)
-
-                url = survey_id.public_url
-                response = survey_id._create_answer(survey_id=survey_id.id,
-                                                             deadline=self.appraisal_deadline,
-                                                             partner_id=self.emp_id.user_id.partner_id.id,
-                                                             email=reviewers.work_email, appraisal_id=self.ids[0])
-                token = response.token
-
-                if token:
-                    url = url + '?answer_token=' + token
-
-                    html = """"<table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                print(reviewers.work_email)
+                url = survey_id.session_link
+                print(url)
+                html = """"<table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
             <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
             <tbody>
                 <!-- HEADER -->
@@ -162,71 +149,58 @@ class HrAppraisalForm(models.Model):
                             <tr><td colspan="2" style="text-align:center;">
                             <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;">
                             </td></tr>
-                        </tbody></table>
-                    </td>
-                </tr>
-                <!-- CONTENT -->
-                <tr>
-                    <td align="center" style="min-width:590px;">
-                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
-                            <tbody><tr><td valign="top">
-                                <div><p><font style="font-size:18px;">Dear """ + reviewers.name +"""  </font></p><p><br></p><p><span style="font-size:18px;"><b> </b>Please fill out the following survey</span></p><p><br></p><a href="""+str(url)+""" style="background-color:#875a7b;padding:10px;text-decoration:none;color:#fff;border-radius:5px"> <font style="font-size:18px;">View Survey</font></a><p></p><p><br></p><p><font style="font-size:18px;">Post your response for the appraisal till : """ + str(self.appraisal_deadline) +"""</font></p><p><br></p><p><font style="font-size:18px;"></font></p><p><font face="Odoo Unicode Support Noto, Lucida Grande, Helvetica, Verdana, Arial, sans-serif">&nbsp;</font></p><div><span style="font-size:10pt;font-family: Verdana; color: rgb(0, 0, 0); background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;"><br></span></div>
-                                </div>
-                            </td></tr>
-                            <tr><td style="text-align:center;">
-                              <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;">
-                            </td></tr>
-                        </tbody></table>
-                    </td>
-                </tr>
-                <!-- FOOTER -->
-                <tr>
-                    <td align="center" style="min-width:590px;">
-                        
-                    </td>
-                </tr>
-            </tbody>
-            </table>
-            </td></tr>
-            <!-- POWERED BY -->
-            <tr><td align="center" style="min-width:590px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
-                  <tbody><tr><td style="text-align:center;font-size: 13px;">
-                    <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=auth" style="color:#875A7B;"></a>
-                  </td></tr>
-                </tbody></table>
-            </td></tr>
-            </tbody></table> """
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                            <!-- CONTENT -->
+                            <tr>
+                                <td align="center" style="min-width:590px;">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                        <tbody><tr><td valign="top">
+                                            <div><p><font style="font-size:18px;">Dear """ + reviewers.name +"""  </font></p><p><br></p><p><span style="font-size:18px;"><b> </b>Please fill out the following survey</span></p><p><br></p><a href="""+str(url)+""" style="background-color:#875a7b;padding:10px;text-decoration:none;color:#fff;border-radius:5px"> <font style="font-size:18px;">View Survey</font></a><p></p><p><br></p><p><font style="font-size:18px;">Post your response for the appraisal till : """ + str(self.appraisal_deadline) +"""</font></p><p><br></p><p><font style="font-size:18px;"></font></p><p><font face="Odoo Unicode Support Noto, Lucida Grande, Helvetica, Verdana, Arial, sans-serif">&nbsp;</font></p><div><span style="font-size:10pt;font-family: Verdana; color: rgb(0, 0, 0); background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;"><br></span></div>
+                                            </div>
+                                        </td></tr>
+                                        <tr><td style="text-align:center;">
+                                          <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;">
+                                        </td></tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                            <!-- FOOTER -->
+                            <tr>
+                                <td align="center" style="min-width:590px;">
+                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        </td></tr>
+                        <!-- POWERED BY -->
+                        <tr><td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                              <tbody><tr><td style="text-align:center;font-size: 13px;">
+                                <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=auth" style="color:#875A7B;"></a>
+                              </td></tr>
+                            </tbody></table>
+                        </td></tr>
+                        </tbody></table> """
 
 
-                    mail_content = "Dear " + reviewers.name + "," + "<br>Please fill out the following survey " \
-                                                                    "related to " + self.emp_id.name + "<br>Click here to access the survey.<br>" + \
-                                   str(url) + "<br>Post your response for the appraisal till : " \
-                                   + str(self.appraisal_deadline)
-                    values = {'model': 'hr.appraisal', 'res_id': self.ids[0], 'subject': survey_id.title,
-                              'body_html': html, 'parent_id': None, 'email_from': self.env.user.email or None,
-                              'auto_delete': True, 'email_to': reviewers.work_email}
-                    result = self.env['mail.mail'].create(values)._send()
-                    if result is True:
-                        send_count += 1
-                        self.write({'tot_sent_survey': send_count})
-                        rec = self.env['hr.appraisal.stages'].search([('sequence', '=', 2)])
-                        self.state = rec.id
-                        self.check_sent = True
-                        self.check_draft = False
-                if self.hr_emp and self.emp_survey_id:
-                    print(self.emp_id.work_email)
-                    self.ensure_one()
-                    if not self.response_id:
-                        response = self.emp_survey_id._create_answer(survey_id=self.emp_survey_id.id,
-                                                                     deadline=self.appraisal_deadline,
-                                                                     partner_id=self.emp_id.user_id.partner_id.id,
-                                                                     email=reviewers.work_email,
-                                                                     appraisal_id=self.ids[0])
-                        self.response_id = response.id
-                    else:
-                        response = self.response_id
-                #     return self.emp_survey_id.with_context(survey_token=response.token).action_start_survey()
+                mail_content = "Dear " + reviewers.name + "," + "<br>Please fill out the following survey " \
+                                                                "related to " + self.emp_id.name + "<br>Click here to access the survey.<br>" + \
+                               str(url) + "<br>Post your response for the appraisal till : " \
+                               + str(self.appraisal_deadline)
+                values = {'model': 'hr.appraisal', 'res_id': self.ids[0], 'subject': survey_id.title,
+                          'body_html': html, 'parent_id': None, 'email_from': self.env.user.email or None,
+                          'auto_delete': True, 'email_to': reviewers.work_email}
+                result = self.env['mail.mail'].create(values)._send()
+                if result is True:
+                    send_count += 1
+                    self.write({'tot_sent_survey': send_count})
+                    rec = self.env['hr.appraisal.stages'].search([('sequence', '=', 2)])
+                    self.state = rec.id
+                    self.check_sent = True
+                    self.check_draft = False
 
     def action_get_answers(self):
         """ This function will return all the answers posted related to this appraisal."""

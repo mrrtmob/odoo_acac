@@ -148,8 +148,45 @@
              <record id="openeducat_core.menu_op_student_root" model="ir.ui.menu">
                 <field name="groups_id" eval="[(4,ref('pm_leads.group_see_student_app'))]"/>
             </record>
+
              <record id="openeducat_core.menu_op_student_main_student" model="ir.ui.menu">
                 <field name="groups_id" eval="[(4,ref('pm_leads.group_see_student_app'))]"/>
+            </record>
+
+             <record id="hr_employee_transfer.menu_employee_transfer" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="utm.menu_link_tracker_root" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="mail.menu_root_discuss" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="openeducat_job_enterprise.menu_job_main" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="sale.sale_menu_root" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="website.menu_website_configuration" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="openeducat_core.menu_academic_year" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="openeducat_core.menu_academic_term" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="openeducat_placement_enterprise.menu_op_placement_offer" model="ir.ui.menu">
+                 <field name="name">Internships</field>
             </record>
 
 
@@ -159,6 +196,38 @@
 
             <record id="base.edit_menu_access" model="ir.ui.menu">
                   <field name="groups_id" eval="[(3,ref('base.group_erp_manager'))]"/>
+            </record>
+
+            <record id="openeducat_core.menu_academic_year" model="ir.ui.menu">
+                  <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+            <record id="openeducat_core.menu_academic_term" model="ir.ui.menu">
+                  <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+            <record id="sale.sale_menu_root" model="ir.ui.menu">
+                  <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+            <record id="mail.menu_root_discuss" model="ir.ui.menu">
+                  <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+            <record id="website.menu_website_configuration" model="ir.ui.menu">
+                  <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+            <record id="utm.menu_link_tracker_root" model="ir.ui.menu">
+                  <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+            <record id="openeducat_job_enterprise.menu_job_main" model="ir.ui.menu">
+                  <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+            <record id="openeducat_placement_enterprise.menu_op_placement_offer" model="ir.ui.menu">
+                  <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+                <field name="name">Internships</field>
             </record>
     </data>
 </odoo>

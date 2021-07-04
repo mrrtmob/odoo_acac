@@ -145,7 +145,6 @@
 <!--                </xpath>-->
 
              <xpath expr="//group[@name='lead_info']" position="inside">
-                 <field name="mobile" required="1"/>
                  <field name="facebook"/>
                  <label for="contact_name"/>
                 <div class="o_row">

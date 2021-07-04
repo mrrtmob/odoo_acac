@@ -152,7 +152,8 @@
 
 
                         <group string="Marketing">
-                            <field name="user_id" attrs="{'readonly': [('state','=', 'done')]}" optional="show" string="ACAC Contact"/>
+<!--                            <field name="user_id" invisible="1" optional="show" string="ACAC Contact"/>-->
+                            <field name="acac_contact" attrs="{'readonly': [('state','=', 'done')]}"/>
                             <field name="lead_source" attrs="{'readonly': [('state','=', 'done')]}"/>
                             <field name="additional_source" attrs="{'readonly': [('state','=', 'done')]}"/>
                             <field name="lead_participation" attrs="{'readonly': [('state','=', 'done')]}">

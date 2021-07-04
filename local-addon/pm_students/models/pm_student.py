@@ -55,8 +55,7 @@ class OpStudentCourse(models.Model):
                                          ('dismissed', 'Dismissed')
                                          ], 'Status', default='active')
 
-    p_e_subject_ids = fields.Many2many('op.subject', relation='student_e_subjects_rel', readonly=True,
-                                       string='Exempted Subjects')
+    p_e_subject_ids = fields.Many2many('op.subject', relation='student_e_subjects_rel', readonly=False, string='Exempted Subjects')
     is_saved = fields.Boolean(default=False)
     cancel_date = fields.Date(default=lambda self: fields.Datetime.now())
     remarks = fields.Text("Remarks")

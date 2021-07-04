@@ -34,6 +34,7 @@
         'security/marketing_security.xml',
         'security/ir.model.access.csv',
         'views/pm_lead.xml',
+        'views/pm_campaign.xml',
         'views/marketing_dashboard.xml',
         'data/mail_data.xml',
     ],
