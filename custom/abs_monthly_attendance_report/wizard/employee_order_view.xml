@@ -33,10 +33,12 @@
                groups="base"
 
             parent="hr_attendance.menu_hr_attendance_root"
+            groups="pm_hr.group_human_resource_manager"
             sequence="40"/>
 
      <menuitem id="sub_menu_employee_order"
            name="Monthly Attendance Report"
            parent='main_menu_employe_order'
+           groups="pm_hr.group_human_resource_manager"
            action="action_employe_order"/>
 </odoo>

@@ -27,6 +27,7 @@ class HrLeaveAllocationCustom(models.Model):
     _inherit = "hr.leave.allocation"
 
     def _update_accrual(self):
+        print('Yikes')
 
 
         """

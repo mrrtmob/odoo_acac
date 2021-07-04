@@ -10,6 +10,7 @@ access_pm_job_basic_question,pm_job_basic_question,model_pm_job_basic_question,b
 access_pm_job_motivation_question,pm_job_motivation_question,model_pm_job_motivation_question,base.group_user,1,1,1,1
 access_pm_job_personality_question,pm_job_personality_question,model_pm_job_personality_question,base.group_user,1,1,1,1
 access_pm_training,pm_training,model_pm_training,base.group_user,1,1,1,1
+access_model_wizzard_appliant,model_wizzard_appliant,model_wizard_pm_applicant_employee,base.group_user,1,1,1,1
 access_pm_training_courses,pm_training_courses,model_pm_training_courses,base.group_user,1,1,1,1
 access_pm_applicant_question,pm_applicant_question,model_pm_applicant_question,hr_recruitment.group_hr_recruitment_user,1,1,1,1
 access_pm_applicant_personality,pm_applicant_personality,model_pm_applicant_personality,hr_recruitment.group_hr_recruitment_user,1,1,1,1
@@ -21,3 +22,10 @@ access_hr_appraisal_hr_appraisal_manager,oh_appraisal.hr_appraisal,oh_appraisal.
 access_hr_appraisal_hr_appraisal1_manager,oh_appraisal.hr_appraisal_stages,oh_appraisal.model_hr_appraisal_stages,pm_hr.group_acac_department_manager,1,1,1,1
 
 access_pm_employee_mdedical,pm_employee_mdedical,model_pm_employee_medical,base.group_user,1,1,1,1
+access_pm_employee_vaccination,pm_employee_vaccination,model_pm_employee_vaccination,base.group_user,1,1,1,1
+access_employe_order,model_employe_order,abs_monthly_attendance_report.model_employe_order,base.group_user,1,1,1,1
+access_mail_mail_user_custom,mail.mail.user.custom,mail.model_mail_mail,base.group_user,1,1,1,1
+
+model_pm_users_role_line,model_pm_users_role_line,model_pm_users_role_line,base.group_user,1,1,1,1
+
+
