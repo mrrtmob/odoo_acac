@@ -9,6 +9,10 @@
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="is_special_leave" attrs="{'readonly': [('state', 'not in', ('draft', 'confirm'))]}"/>
                 </xpath>
+
+                 <xpath expr="//form/sheet/div[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
             </field>
         </record>
 

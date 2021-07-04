@@ -64,6 +64,8 @@ access_account_move_line_registrar,name_account_move_line_registrar,account.mode
 access_account_partial_reconcile_registrar,name_account_partial_reconcile_registrar,account.model_account_partial_reconcile,openeducat_core.group_op_back_office,1,0,0,0
 access_account_analytic_line,name_account_analytic_line,account.model_account_analytic_line,openeducat_core.group_op_back_office,1,0,0,0
 
+"access_hr_employee_reward_registrar","hr.employee.reward.registrar","hr_reward_warning.model_hr_announcement","group_acac_registrar",1,1,1,1
+
 
 
 
