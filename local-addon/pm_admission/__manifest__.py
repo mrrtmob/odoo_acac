@@ -30,6 +30,7 @@
 
     # always loaded
     'data': [
+        'security/ir.model.access.csv',
         'data/mail_data.xml',
         'security/security.xml',
         'wizards/pm_admission_cancel_wizzard.xml',
