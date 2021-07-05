@@ -69,10 +69,10 @@ class PmSchedule(models.Model):
             record.cost = total_cost_per_portion * record.number_of_portion
             record.price = total_price_per_portion * record.number_of_portion
 
-    def send_mail(self):
-        template_id = 67
-        print('sending.... schedule mail')
-        self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
+    # def send_mail(self):
+    #     template_id = 67
+    #     print('sending.... schedule mail')
+    #     self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
 
     def act_submit(self):
         print('submit!!')
@@ -146,9 +146,9 @@ class PmSchedule(models.Model):
             approval.state = 'approved'
         self.state = 'approved'
 
-        template_id = 70
-        print('sending.... Schedule mail')
-        self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
+        # template_id = 70
+        # print('sending.... Schedule mail')
+        # self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
 
     def act_reject(self):
         approval = self.env['pm.approval'].search(
