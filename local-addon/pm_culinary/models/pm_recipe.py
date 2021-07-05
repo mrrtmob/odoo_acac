@@ -98,10 +98,10 @@ class PmRecipe(models.Model):
             if record.number_of_portion:
                 record.price_per_portion = record.price / record.number_of_portion
 
-    def     send_mail(self):
-        template_id = 62
-        print('sending....')
-        self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
+    # def     send_mail(self):
+    #     template_id = 62
+    #     print('sending....')
+    #     self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
 
     @api.depends('name')
     def _compute_record_url(self):
@@ -137,9 +137,9 @@ class PmRecipe(models.Model):
             approval.state = 'approved'
         self.state = 'approved'
 
-        template_id = 69
-        print('sending.... Recipe mail')
-        self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
+        # template_id = 69
+        # print('sending.... Recipe mail')
+        # self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
 
     def act_reject(self):
         approval = self.env['pm.approval'].search(

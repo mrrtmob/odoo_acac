@@ -22,6 +22,7 @@ access_hr_appraisal_hr_appraisal_manager,oh_appraisal.hr_appraisal,oh_appraisal.
 access_hr_appraisal_hr_appraisal1_manager,oh_appraisal.hr_appraisal_stages,oh_appraisal.model_hr_appraisal_stages,pm_hr.group_acac_department_manager,1,1,1,1
 
 access_pm_employee_mdedical,pm_employee_mdedical,model_pm_employee_medical,base.group_user,1,1,1,1
+access_pm_employee_vaccination,pm_employee_vaccination,model_pm_employee_vaccination,base.group_user,1,1,1,1
 access_employe_order,model_employe_order,abs_monthly_attendance_report.model_employe_order,base.group_user,1,1,1,1
 access_mail_mail_user_custom,mail.mail.user.custom,mail.model_mail_mail,base.group_user,1,1,1,1
 
