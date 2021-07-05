@@ -266,7 +266,7 @@ class PmEmployees(models.Model):
 
     @api.model
     def create(self, vals):
-        #vals['employee_number'] = self.env['ir.sequence'].next_by_code('hr.employee')
+        vals['employee_number'] = self.env['ir.sequence'].next_by_code('hr.employee')
         res = super(PmEmployees, self).create(vals)
         return res
 
