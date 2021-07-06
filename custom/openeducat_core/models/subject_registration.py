@@ -66,6 +66,7 @@ class OpSubjectRegistration(models.Model):
                 subject_ids.append(sub.id)
             course_id = self.env['op.student.course'].search([
                 ('student_id', '=', record.student_id.id),
+                ('batch_id', '=', record.batch_id.id),
                 ('course_id', '=', record.course_id.id)
             ], limit=1)
             if course_id:
@@ -80,12 +81,12 @@ class OpSubjectRegistration(models.Model):
     def action_submitted(self):
         self.state = 'submitted'
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'op.subject.registration') or '/'
-        return super(OpSubjectRegistration, self).create(vals)
+    # @api.model
+    # def create(self, vals):
+    #     if vals.get('name', 'New') == 'New':
+    #         vals['name'] = self.env['ir.sequence'].next_by_code(
+    #             'op.subject.registration') or '/'
+    #     return super(OpSubjectRegistration, self).create(vals)
 
     def get_subjects(self):
         for record in self:

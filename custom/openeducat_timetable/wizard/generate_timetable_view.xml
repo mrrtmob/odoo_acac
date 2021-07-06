@@ -43,6 +43,7 @@
                             <field name="batch_id" context="{'course_id': course_id,'get_parent_batch':1}"/>
                             <field name="start_date"/>
                             <field name="end_date"/>
+                            <field name="semester_id"  context="{'batch_id': batch_id,'get_parent_semester':1}"/>
                         </group>
                         <notebook>
                             <page name="monday" string="Monday">

@@ -30,6 +30,29 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="custom_view_op_placement_offer_tree" model="ir.ui.view">
+            <field name="name">op.placement.offer.search.custom</field>
+            <field name="model">op.placement.offer</field>
+            <field name="inherit_id" ref="openeducat_placement_enterprise.view_op_placement_offer_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+
+                    <filter string="Completed" name="completed" domain="[('p_completed', '=', True)]"/>
+
+
+                    <filter string="Semester" name="group_by_semester"
+                            domain="[]" context="{'group_by':'semester_id'}"/>
+                    <filter string="Company" name="group_by_company_name"
+                            domain="[]" context="{'group_by':'name'}"/>
+                    <filter string="Country" name="group_by_company_country"
+                            domain="[]" context="{'group_by':'p_country_id'}"/>
+
+                </xpath>
+            </field>
+        </record>
+
+
         <record id="custom_view_op_placement_offer_form" model="ir.ui.view">
             <field name="name">op.placement.offer.tree</field>
             <field name="model">op.placement.offer</field>

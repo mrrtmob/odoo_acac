@@ -329,3 +329,12 @@ class OpAttendanceLineCustom(models.Model):
 class OpSessionCustom(models.Model):
     _inherit = "op.session"
     semester_id = fields.Many2one('pm.semester', 'Semester', required=True)
+    day_sequence = fields.Integer()
+
+    @api.depends('start_datetime')
+    def _compute_day(self):
+        for record in self:
+            record.type = fields.Datetime.from_string(
+                record.start_datetime).strftime("%A")
+            print(record.start_datetime.weekday())
+            record.day_sequence = record.start_datetime.weekday()

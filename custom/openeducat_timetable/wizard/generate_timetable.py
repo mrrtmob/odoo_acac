@@ -35,6 +35,7 @@ class GenerateSession(models.TransientModel):
 
     course_id = fields.Many2one('op.course', 'Course', required=True)
     batch_id = fields.Many2one('op.batch', 'Batch', required=True)
+    semester_id = fields.Many2one('pm.semester', 'Semester', required=True)
     time_table_lines = fields.One2many(
         'gen.time.table.line', 'gen_time_table', 'Time Table Lines')
     time_table_lines_1 = fields.One2many(
@@ -59,8 +60,8 @@ class GenerateSession(models.TransientModel):
         'gen.time.table.line', 'gen_time_table', 'Time Table Lines7',
         domain=[('day', '=', '6')])
     start_date = fields.Date(
-        'Start Date', required=True, default=time.strftime('%Y-%m-01'))
-    end_date = fields.Date('End Date', required=True)
+        'Start Date', required=False, default=time.strftime('%Y-%m-01'))
+    end_date = fields.Date('End Date', required=False)
 
     @api.constrains('start_date', 'end_date')
     def check_dates(self):
@@ -113,6 +114,7 @@ class GenerateSession(models.TransientModel):
                             'end_datetime':
                             curr_end_date.strftime("%Y-%m-%d %H:%M:%S"),
                             'type': calendar.day_name[int(line.day)],
+                            'state': 'confirm',
                         })
             return {'type': 'ir.actions.act_window_close'}
 
@@ -127,7 +129,7 @@ class GenerateSessionLine(models.TransientModel):
     faculty_id = fields.Many2one('op.faculty', 'Faculty', required=True)
     subject_id = fields.Many2one('op.subject', 'Subject', required=True)
     timing_id = fields.Many2one('op.timing', 'Timing', required=True)
-    classroom_id = fields.Many2one('op.classroom', 'Classroom')
+    classroom_id = fields.Many2one('op.classroom', 'Class')
     day = fields.Selection([
         ('0', calendar.day_name[0]),
         ('1', calendar.day_name[1]),

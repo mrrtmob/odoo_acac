@@ -4,6 +4,12 @@ from odoo import models, fields, api, _
 from odoo.http import request
 from odoo.exceptions import ValidationError
 
+_TYPE = [
+    ('breakfast', 'Breakfast'),
+    ('lunch', 'Lunch'),
+    ('dinner', 'Dinner')
+]
+
 
 class PmRecipe(models.Model):
     _name = "pm.recipe"
@@ -20,7 +26,7 @@ class PmRecipe(models.Model):
     is_sub_recipe = fields.Boolean('Can be used as a sub-recipe', default=False, track_visibility='onchange')
     cost_per_portion = fields.Float('Cost Per Portion', compute='_compute_cost', store=True, track_visibility='onchange')
     preparation = fields.Html('Preparation')
-    type = fields.Char('Type')
+    type = fields.Selection(_TYPE)
     recipe_line_ids = fields.One2many('pm.recipe.line', 'recipe_id')
     cuisine = fields.Char(track_visibility='onchange')
     recipe_approver_email = fields.Char('Approver Email')
@@ -128,7 +134,6 @@ class PmRecipe(models.Model):
         })
         self.message_subscribe(partner_ids=[approval.approve.partner_id.id])
         self.approver = approval.approve
-        self.send_mail()
 
     def act_approve(self):
         approval = self.env['pm.approval'].search(

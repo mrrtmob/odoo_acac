@@ -76,7 +76,6 @@ class PmMenu(models.Model):
         self.message_subscribe(partner_ids=[approval.approve.partner_id.id])
         print('send mail')
         self.approver = approval.approve
-        self.send_mail()
 
     def act_approve(self):
         approval = self.env['pm.approval'].search(
