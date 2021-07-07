@@ -153,7 +153,6 @@
                                            attrs="{'required': [('display_type', '=', False)]}"
                                            context="{'default_is_food': True}"
                                            force_save="1"/>
-                                    <field name="preparation"/>
                                     <field name="quantity" string="EP" />
                                     <field name="waste_percentage" />
                                     <field name="as_purchased" />
@@ -190,7 +189,7 @@
                             </group>
                         </group>
 
-                      <separator colspan="4" string="Preparation"/>
+                      <separator colspan="4" string="Instruction"/>
                         <field name="preparation" widget="html"  colspan="4"/>
                         <br/>
                       <separator colspan="4" string="Nutritional Information"/>

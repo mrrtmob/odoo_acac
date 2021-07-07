@@ -23,6 +23,7 @@
         <field name="users" eval="[(4, ref('base.group_user'))]"/>
         <field name="implied_ids" eval="[(4,ref('base.group_user')),
                                         (4, ref('purchase_request.group_purchase_request_manager')),
+                                        (4, ref('purchase.group_purchase_manager')),
                                         (4, ref('group_acac_culinary')),
                                         (4, ref('pm_approval.group_pm_approval_team')),
                                         (4, ref('openeducat_core.group_op_faculty'))]"/>

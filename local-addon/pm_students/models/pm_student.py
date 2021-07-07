@@ -294,13 +294,17 @@ class OpStudent(models.Model):
              ('is_reminded', '=', False),
              ('return_date', '!=', None)])
 
+        today = fields.Date.today()
         print(all_course_search)
 
+
         for course in all_course_search:
-            today = datetime.date.today()
-            print('today', today)
+            print(today)
+            print(course.reminding_date)
             if today == course.return_date or today == course.reminding_date:
                 student = course.student_id
+
+                print("Student", student.name)
                 ir_model_data = self.env['ir.model.data']
                 try:
                     template_id = ir_model_data.get_object_reference('pm_leads', 'student_follow_up_reminder')[1]
