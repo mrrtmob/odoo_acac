@@ -1,5 +1,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+from odoo.http import request
+from datetime import datetime, timedelta
 
 
 
@@ -209,6 +211,35 @@ class OpBatch(models.Model):
     year_term = fields.Many2one('pm.term.order', string='Term Order')
     semester_ids = fields.One2many('pm.semester', 'batch_id', 'Semester(s)')
     class_ids = fields.One2many('op.classroom', 'batch_id', 'Class Room (s)')
+    record_url = fields.Char('Link', compute="_compute_record_url", store=True)
+
+    @api.depends('name')
+    def _compute_record_url(self):
+        for record in self:
+            base_url = request.env['ir.config_parameter'].get_param('web.base.url')
+            base_url += '/web#id=%d&view_type=form&model=op.batch' % (record.id)
+            record.record_url = base_url
+
+    def batch_scheduler(self):
+        all_terms = self.env['op.batch'].sudo().search(
+            [('state', '=', 'active'),
+             ('end_date', '!=', False)])
+        today = fields.Date.today()
+        for term in all_terms:
+            d = timedelta(days=14)
+            end_date = term.end_date
+            remind_date = term.end_date - d
+
+            if today == remind_date or today == end_date:
+                print(term.name)
+                ir_model_data = self.env['ir.model.data']
+                try:
+                    template_id = ir_model_data.get_object_reference('pm_general', 'term_ending_reminder')[1]
+                    print(template_id)
+                except ValueError:
+                    template_id = False
+                self.env['mail.template'].browse(template_id).send_mail(term.id, force_send=True)
+
 
     @api.constrains('year_term', 'state_date')
     def _check_term_order(self):

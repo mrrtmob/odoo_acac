@@ -1,7 +1,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from collections import Counter
-
+from odoo.http import request
+from datetime import datetime, timedelta
 
 class PmSemester(models.Model):
     _name = "pm.semester"
@@ -10,6 +10,9 @@ class PmSemester(models.Model):
     name = fields.Char("Semester Name", required=True)
     semester_code = fields.Char('Semester Code', size=16, required=True)
     color = fields.Integer(string='Color Index', default=0)
+    company_id = fields.Many2one(
+        'res.company', string='Company',
+        default=lambda self: self.env.user.company_id)
     course_id = fields.Many2one(
         'op.course', store=True, required=True)
     batch_id = fields.Many2one(
@@ -35,6 +38,14 @@ class PmSemester(models.Model):
         ('unique_semester_code',
          'unique(semester_code)', 'Code should be unique per Semester!')]
 
+    record_url = fields.Char('Link', compute="_compute_record_url", store=True)
+    @api.depends('name')
+    def _compute_record_url(self):
+        for record in self:
+            base_url = request.env['ir.config_parameter'].get_param('web.base.url')
+            base_url += '/web#id=%d&view_type=form&model=pm.semester' % (record.id)
+            record.record_url = base_url
+
     absence_count = fields.Integer(
         compute="_compute_semester_dashboard_data", string='Active')
     absence_first_count = fields.Integer(
@@ -48,8 +59,60 @@ class PmSemester(models.Model):
     discipline_second_count = fields.Integer(
         compute="_compute_semester_dashboard_data", string='Student')
 
+    def semester_scheduler(self):
+        all_semesters = self.env['pm.semester'].sudo().search(
+            [('state', '=', 'active'),
+             ('end_date', '!=', False)])
+        today = fields.Date.today()
+        for sem in all_semesters:
+            d = timedelta(days=7)
+            end_date = sem.end_date
+            remind_date = sem.end_date - d
+
+            if today == remind_date or today == end_date:
+                ir_model_data = self.env['ir.model.data']
+                try:
+                    template_id = ir_model_data.get_object_reference('pm_general', 'semester_ending_reminder')[1]
+                    print(template_id)
+                except ValueError:
+                    template_id = False
+                self.env['mail.template'].browse(template_id).send_mail(sem.id, force_send=True)
+
+
     def action_draft(self):
         self.write({'state': 'pending'})
+
+    def student_reminder_scheduler(self):
+        print("Hit Function")
+        all_course_search = self.env['op.student.course'].sudo().search(
+            [('education_status', '=', 'postponed'),
+             ('is_reminded', '=', False),
+             ('return_date', '!=', None)])
+
+        today = fields.Date.today()
+        print(all_course_search)
+
+        for course in all_course_search:
+            print(today)
+            print(course.reminding_date)
+            if today == course.return_date or today == course.reminding_date:
+                student = course.student_id
+
+                print("Student", student.name)
+                ir_model_data = self.env['ir.model.data']
+                try:
+                    template_id = ir_model_data.get_object_reference('pm_leads', 'student_follow_up_reminder')[1]
+                except ValueError:
+                    template_id = False
+                self.env['mail.template'].browse(template_id).send_mail(student.id, force_send=True)
+                if today == course.return_date:
+                    print('TODAY!!')
+                    course.is_reminded = True
+
+
+
+
+
 
     def _compute_semester_dashboard_data(self):
         for semester in self:

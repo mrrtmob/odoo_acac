@@ -94,7 +94,7 @@
                         <group col="4">
                             <field name="name" required="1"/>
                             <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
-                            <field name="type"/>
+                            <field name="type" string="Category"/>
                             <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
 
                             <label for="cost_in_percentage" />

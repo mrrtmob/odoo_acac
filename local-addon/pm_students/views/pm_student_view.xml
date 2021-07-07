@@ -597,11 +597,16 @@
 
 
     <menuitem id="crm_menu_leads"
-        name="Student"
+        name="Students"
         parent="crm.crm_menu_root"
-        groups="crm.group_use_lead"
         action="act_open_op_student_view"
         sequence="5"/>
+
+    <menuitem id="crm_menu_internships"
+        name="Internships"
+        parent="crm.crm_menu_root"
+        action="openeducat_placement_enterprise.act_open_op_placement_offer_view"
+        sequence="6"/>
 
     <!-- use to remove student progression from UI -->
     <record id="make_invisible" model="res.groups">

@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data>
+       <record id="ir_cron_semester_reminder_action" model="ir.cron">
+            <field name="name">Semester Reminder</field>
+            <field name="model_id" ref="model_pm_semester"/>
+            <field name="state">code</field>
+            <field name="code">model.semester_scheduler()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+           <record id="ir_cron_batch_reminder_action" model="ir.cron">
+            <field name="name">Batch Reminder</field>
+            <field name="model_id" ref="openeducat_core.model_op_batch"/>
+            <field name="state">code</field>
+            <field name="code">model.batch_scheduler()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
 
          <record id="view_pm_semester_tree" model="ir.ui.view">
             <field name="name">pm.semester.tree</field>
@@ -41,12 +64,12 @@
                         <group col="4" name="main">
                             <field name="name"/>
                             <field name="semester_code"/>
-                            <field name="semester_order"/>
                             <field name="course_id"/>
                              <field name="batch_id"
                                            context="{'course_id': course_id,'get_parent_batch':1}"/>
                             <field name="start_date"/>
                             <field name="end_date"/>
+                            <field name="semester_order"/>
                             <field name="is_internship"/>
                             
                         </group>
@@ -409,7 +432,4 @@
         <record model="ir.ui.menu" id="openeducat_exam.menu_op_exam_session">
              <field name="name">Exam Schedules</field>
         </record>
-
-
-    </data>
 </odoo>
