@@ -5,10 +5,23 @@ from odoo.http import request
 from odoo.exceptions import ValidationError
 
 _TYPE = [
-    ('breakfast', 'Breakfast'),
-    ('lunch', 'Lunch'),
-    ('dinner', 'Dinner')
+    ('cold_appetizer', 'Cold Appetizers'),
+    ('hot_appetizer', 'Hot Appetizers'),
+    ('soup', 'Soups'),
+    ('intermediate_course', 'Intermediate Courses'),
+    ('main_course', 'Main Courses'),
+    ('entremet', 'Entremets'),
+    ('dessert', 'Dessert')
 ]
+
+
+
+
+
+
+
+
+
 
 
 class PmRecipe(models.Model):
@@ -26,6 +39,7 @@ class PmRecipe(models.Model):
     is_sub_recipe = fields.Boolean('Can be used as a sub-recipe', default=False, track_visibility='onchange')
     cost_per_portion = fields.Float('Cost Per Portion', compute='_compute_cost', store=True, track_visibility='onchange')
     preparation = fields.Html('Preparation')
+    instruction = fields.Html('Instruction')
     type = fields.Selection(_TYPE)
     recipe_line_ids = fields.One2many('pm.recipe.line', 'recipe_id')
     cuisine = fields.Char(track_visibility='onchange')
