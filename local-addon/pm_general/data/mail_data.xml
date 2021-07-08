@@ -55,7 +55,7 @@
                                                         <br/>
                                                         <br/>
                                                         <p>
-                                                            Here is a reminder that term <strong>${object.name}</strong> of <strong>${object.course_id.name}</strong> will finish at  <strong>${object.end_date}</strong>.
+                                                            Here is a reminder that term <strong>${object.name}</strong> of <strong>${object.course_id.name}</strong> will finish at  <strong>${object.end_date.strftime('%d-%b-%Y')}</strong>.
                                                             <br/>
                                                             To see the detail, please click to following button
                                                             <br/>
@@ -168,7 +168,7 @@
                                                             <br/>
                                                             <br/>
                                                             <p>
-                                                                Here is a reminder that <strong>${object.name}</strong> of Term <strong>${object.batch_id.name}</strong> will finish at <strong>${object.end_date}</strong>.
+                                                                Here is a reminder that <strong>${object.name}</strong> of Term <strong>${object.batch_id.name}</strong> will finish at <strong>${object.end_date.strftime('%d-%b-%Y')}</strong>.
                                                                 <br/>
                                                                 To see the detail, please click to following button
                                                                 <br/>
@@ -279,7 +279,7 @@
                                                             <br/>
                                                             <br/>
                                                             <p>
-                                                                Our records show that <strong>${object.name}</strong> of Term <strong>${object.batch_id.name}</strong>  is already ended on <strong>${object.end_date}</strong> but haven't been closed.
+                                                                Our records show that <strong>${object.name}</strong> of Term <strong>${object.batch_id.name}</strong>  is already ended on <strong>${object.end_date.strftime('%d-%b-%Y')}</strong> but haven't been closed.
                                                                 <br/>
                                                                 To see the detail, please click to following button
                                                                 <br/>

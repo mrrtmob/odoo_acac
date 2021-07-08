@@ -410,7 +410,7 @@
                                                             <br/>
                                                             <br/>
                                                             <p>
-                                                                Here is a reminder that the probationary period for <strong>${object.title} ${object.employee_id.name}</strong> will end at <strong>${object.trial_date_end}</strong>.
+                                                                Here is a reminder that the probationary period for <strong>${object.title} ${object.employee_id.name}</strong> will end at <strong>${object.trial_date_end.strftime('%d-%b-%Y')}</strong>.
                                                                 <br/>
                                                                 To see the detail of the contract, please click to following button
                                                                 <br/>

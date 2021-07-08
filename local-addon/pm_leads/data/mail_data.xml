@@ -115,9 +115,9 @@
                                                             <br/>
                                                             <br/>
                                                             <p>
-                                                                This is a reminder to follow up <strong>${object.first_name} ${object.last_name}</strong>, a student that has been postponed on <strong>${object.cancel_date}</strong>.
+                                                                This is a reminder to follow up <strong>${object.first_name} ${object.last_name}</strong>, a student that has been postponed on <strong>${object.cancel_date.strftime('%d-%b-%Y')}</strong>.
                                                                 <br/>
-                                                                ${object.first_name} is intended to back on <strong>${object.return_date}</strong>.
+                                                                ${object.first_name} is intended to back on <strong>${object.return_date.strftime('%d-%b-%Y')}</strong>.
                                                             </p>
                                                         </div>
                                                     </td>

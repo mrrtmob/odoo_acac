@@ -238,7 +238,7 @@
 
           <div class="row">
             <div class="col-12">
-              <h4>Preparation</h4>
+              <h4>Pre-preparation</h4>
               <p t-field="o.preparation" />
             </div>
           </div>
@@ -249,7 +249,7 @@
 
           <div class="row">
             <div class="col-12">
-              <h4>Instruction</h4>
+              <h4>Preparation</h4>
               <p t-field="o.instruction" />
             </div>
           </div>

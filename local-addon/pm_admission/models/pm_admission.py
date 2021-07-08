@@ -686,7 +686,7 @@ class PmStudentFeesDetails(models.Model):
     payable = fields.Boolean(default=True)
 
     def _cron_create_invoice(self):
-        d = timedelta(days=7)
+        d = timedelta(days=10)
         date = datetime.today() - d
         fees_ids = self.env['op.student.fees.details'].search(
             [('date', '<', date), ('invoice_id', '=', False), ('payable', '=', True)])
@@ -694,12 +694,6 @@ class PmStudentFeesDetails(models.Model):
         ir_model_data = self.env['ir.model.data']
         for fees in fees_ids:
             fees.get_invoice()
-
-            try:
-                template_id = ir_model_data.get_object_reference('pm_admission', 'payment_reminder_template')[1]
-            except ValueError:
-                template_id = False
-            self.env['mail.template'].browse(template_id).send_mail(fees.id, force_send=True)
 
     def _cron_payment_reminder(self):
         today = datetime.today()

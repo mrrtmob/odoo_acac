@@ -189,11 +189,11 @@
                             </group>
                         </group>
 
-                      <separator colspan="4" string="Preparation"/>
+                      <separator colspan="4" string="Pre-preparation"/>
                         <field name="preparation" widget="html"  colspan="4"/>
                         <br/>
 
-                      <separator colspan="4" string="Instruction"/>
+                      <separator colspan="4" string="Preparation"/>
                         <field name="instruction" widget="html"  colspan="4"/>
                         <br/>
 

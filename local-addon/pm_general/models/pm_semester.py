@@ -63,6 +63,7 @@ class PmSemester(models.Model):
         all_semesters = self.env['pm.semester'].sudo().search(
             [('state', '=', 'active'),
              ('end_date', '!=', False)])
+        print(all_semesters)
         today = fields.Date.today()
         for sem in all_semesters:
             d = timedelta(days=7)
