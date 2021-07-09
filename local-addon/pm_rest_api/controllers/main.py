@@ -107,7 +107,9 @@ class PathmazingApi(RESTController):
         check_token()
         student = Student.get_student(self)
         if student:
-            student_img = self.get_image(student.id)
+            student_img = ""
+            if student.image_1920:
+                student_img = self.get_image(student.id)
             payment_data = []
             items = {}
             address = {
@@ -164,6 +166,7 @@ class PathmazingApi(RESTController):
             return Response(json.dumps(response, indent=4, cls=ObjectEncoder),
                             content_type='application/json;charset=utf-8', status=200)
 
+
     @http.route('/api/v1/student/update/address',
                 auth="user", type='http', new_street=None, new_street2=None, new_city=None, new_state_id=None,
                 new_country_id=None, token=None, methods=['PUT'], csrf=False)
@@ -172,63 +175,22 @@ class PathmazingApi(RESTController):
         check_params({'token': token})
         check_token()
         student = Student.get_student(self)
-        if student:
-            student_img = self.get_image(student.id)
-            state_name = ''
-            state_id_ = 0
-            country_name = ''
-            country_id_ = 0
-            if new_street:
-                student.write({'street': new_street})
-            elif new_street is not True:
-                student.write({'street': ''})
-            if new_street2:
-                student.write({'street2': new_street2})
-            elif new_street2 is not True:
-                student.write({'street2': ''})
-            if new_city:
-                student.write({'city': new_city})
-            elif new_city is not True:
-                student.write({'city': ''})
-            if new_state_id:
-                student.write({'state_id': new_state_id})
-                state = request.env['res.country.state'].sudo().search(
-                    [('id', '=', student.state_id.id)])
-                state_id_ = state.id
-                state_name = state.name
-            elif new_state_id is not True:
-                student.write({'state_id': False})
-            if new_country_id:
-                student.write({'country_id': new_country_id})
-                country = request.env['res.country'].sudo().search(
-                    [('id', '=', student.country_id.id)])
-                country_id_ = country.id
-                country_name = country.name
-            elif new_country_id is not True:
-                student.write({'country_id': False})
-            address = {
-                'street': student.street,
-                'street2': student.street2,
-                'city': student.city,
-                'state_id': state_id_,
-                'state': state_name,
-                'country_id': country_id_,
-                'country': country_name,
-            }
+        if not student:
             response = {
-                    'id': student.id,
-                    'first_name': student.first_name,
-                    'last_name': student.last_name,
-                    'student_app_id': student.student_app_id,
-                    'gender': student.gender,
-                    'image': student_img,
-                    'email': student.user_id.login,
-                    'birth_date': student.birth_date,
-                    'nationality': student.nationality.name,
-                    'mobile': student.mobile,
-                    'address': address,
-                }
+                'message': 'Invalid student not found'
+            }
             return Response(json.dumps(response, indent=4, cls=ObjectEncoder),
+                            content_type='application/json;charset=utf-8', status=404)
+        if student:
+            val = {
+                'street': new_street,
+                'street2': new_street2,
+                'city': new_city,
+                'state_id': int(new_state_id),
+                'country_id': int(new_country_id)
+            }
+            student.write(val)
+            return Response(json.dumps({'message': 'ok'}, indent=4, cls=ObjectEncoder),
                             content_type='application/json;charset=utf-8', status=200)
 
     @http.route('/api/v1/student/update/mobile',
@@ -237,83 +199,35 @@ class PathmazingApi(RESTController):
         check_params({'token': token})
         check_token()
         student = Student.get_student(self)
-        if student:
-            student_img = self.get_image(student.id)
-            if new_mobile:
-                student.write({'mobile': new_mobile})
-            address = {
-                'street': student.street,
-                'street2': student.street2,
-                'city': student.city,
-                'state_id': student.state_id.id,
-                'state': student.state_id.name,
-                'country_id': student.country_id.id,
-                'country': student.country_id.name,
-            }
+        if not student:
             response = {
-                'id': student.id,
-                'first_name': student.first_name,
-                'last_name': student.last_name,
-                'student_app_id': student.student_app_id,
-                'gender': student.gender,
-                'image': student_img,
-                'email': student.user_id.login,
-                'birth_date': student.birth_date,
-                'nationality': student.nationality.name,
-                'mobile': student.mobile,
-                'address': address,
+                'message': 'Invalid student not found'
             }
             return Response(json.dumps(response, indent=4, cls=ObjectEncoder),
+                            content_type='application/json;charset=utf-8', status=404)
+        if student:
+            student.write({'mobile': new_mobile})
+            return Response(json.dumps({'message': 'ok'}, indent=4, cls=ObjectEncoder),
                             content_type='application/json;charset=utf-8', status=200)
 
     @http.route('/api/v1/student/update/password',
                 auth="user", type='http', db=None, old_password=None, new_password=None, confirm_new_password=None,
                 token=None, methods=['PUT'], csrf=False)
-    def update_student_password(self, db=None, old_password=None, new_password=None, confirm_new_password=None,
-                                token=None, **kw):
+    def update_student_password(self, db=None, old_password=None, new_password=None,  token=None, **kw):
         check_params({'token': token})
         check_token()
         student = Student.get_student(self)
         if student:
-            student_img = self.get_image(student.id)
-            address = {
-                'street': student.street,
-                'street2': student.street2,
-                'city': student.city,
-                'state_id': student.state_id.id,
-                'state': student.state_id.name,
-                'country_id': student.country_id.id,
-                'country': student.country_id.name,
-            }
-            if old_password and new_password and confirm_new_password:
-                uid = request.session.authenticate(db, student.user_id.login, old_password)
-                if uid:
-                    if new_password == confirm_new_password:
-                        student.user_id.write({'password': new_password})
-                        print('correct')
-                        response = {
-                            'id': student.id,
-                            'first_name': student.first_name,
-                            'last_name': student.last_name,
-                            'student_app_id': student.student_app_id,
-                            'gender': student.gender,
-                            'image': student_img,
-                            'email': student.user_id.login,
-                            'birth_date': student.birth_date,
-                            'nationality': student.nationality.name,
-                            'mobile': student.mobile,
-                            'address': address,
-                        }
-                    elif new_password != confirm_new_password:
-                        response = {
-                            'message': 'new password is not matching',
-                        }
-                else:
-                    response = {
-                        'message': 'update fail',
-                    }
-            return Response(json.dumps(response, indent=4, cls=ObjectEncoder),
+            uid = request.session.authenticate(db, student.user_id.login, old_password)
+            if not uid:
+                return Response(
+                    json.dumps({'message': 'Please enter the correct old password'}, indent=4, cls=ObjectEncoder),
+                    content_type='application/json;charset=utf-8', status=404)
+
+            student.user_id.write({'password': new_password})
+            return Response(json.dumps({'message': 'ok'}, indent=4, cls=ObjectEncoder),
                             content_type='application/json;charset=utf-8', status=200)
+
 
     @http.route('/api/v1/country',
                 auth="user", type='http', token=None, methods=['GET'], csrf=False)
