@@ -104,8 +104,10 @@ class OpExamAttendeesCustom(models.Model):
     class_id = fields.Many2one('op.classroom', 'Class')
     class_exam_id = fields.Many2one('pm.class.exam', 'Class Exam',  ondelete="cascade")
     show_student = fields.Boolean(compute='_compute_show_student', store=True, default=True)
+    # exam_id = fields.Many2one('op.exam', 'Exam', required=False, related='class_exam_id.exam_id', store=True)
     exam_id = fields.Many2one(
-        'op.exam', 'Exam', required=False, related='class_exam_id.exam_id', store=True)
+        'op.exam', 'Exam', required=False, ondelete="cascade")
+    session_id = fields.Many2one('op.exam.session', related='exam_id.session_id', store=True)
 
     @api.depends('exam_id.exam_type', 'exam_id.session_id.state')
     def _compute_show_student(self):
