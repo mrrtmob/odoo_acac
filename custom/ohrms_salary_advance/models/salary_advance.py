@@ -157,9 +157,9 @@ class SalaryAdvancePayment(models.Model):
         """This Approve the employee salary advance request.
                    """
         emp_obj = self.env['hr.employee']
-        address = emp_obj.browse([self.employee_id.id]).address_home_id
-        if not address.id:
-            raise ValidationError('Define home address for the employee. i.e address under private information of the employee.')
+        # address = emp_obj.browse([self.employee_id.id]).address_home_id
+        # if not address.id:
+        #     raise ValidationError('Define home address for the employee. i.e address under private information of the employee.')
         salary_advance_search = self.search([('employee_id', '=', self.employee_id.id), ('id', '!=', self.id),
                                              ('state', '=', 'approve')])
         current_month = datetime.strptime(str(self.date), '%Y-%m-%d').date().month
@@ -170,10 +170,10 @@ class SalaryAdvancePayment(models.Model):
         if not self.employee_contract_id:
             raise ValidationError('Define a contract for the employee')
         struct_id = self.employee_contract_id.struct_id
-        adv = self.advance
-        amt = self.employee_contract_id.wage
-        if adv > amt and not self.exceed_condition:
-            raise ValidationError('Advance amount is greater than allotted')
+        # adv = self.advance
+        # amt = self.employee_contract_id.wage
+        # if adv > amt and not self.exceed_condition:
+        #     raise ValidationError('Advance amount is greater than allotted')
 
         if not self.advance:
             raise ValidationError('You must Enter the Salary Advance amount')
@@ -189,7 +189,7 @@ class SalaryAdvancePayment(models.Model):
                 slip_day = datetime.strptime(str(slip.date_from), '%Y-%m-%d').date().day
                 current_day = datetime.strptime(str(self.date), '%Y-%m-%d').date().day
                 if current_day - slip_day < struct_id.advance_date:
-                    raise exceptions.Warning(
+                    raise ValidationError(
                         _('Request can be done after "%s" Days From prevoius month salary') % struct_id.advance_date)
 
         approver = self.get_approver('first_approved')
