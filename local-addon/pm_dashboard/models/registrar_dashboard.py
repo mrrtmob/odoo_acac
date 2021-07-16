@@ -326,6 +326,9 @@ class RegistrarDashboard(models.AbstractModel):
             }
             result['terms'].append(obj)
 
+        print("***********REs")
+        print(result)
+
         return result
 
     @api.model

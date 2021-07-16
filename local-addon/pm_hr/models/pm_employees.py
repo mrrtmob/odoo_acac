@@ -10,6 +10,21 @@ class PmInheritEmployeeFamily(models.Model):
     phone = fields.Char('Contact No')
     email = fields.Char('Email')
 
+class PmEmployeeSession(models.Model):
+    _name = 'pm.employee.session'
+    name = fields.Char("Session")
+
+class PmDepartmentCustom(models.Model):
+    _inherit = 'hr.department'
+    code = fields.Char("Code")
+
+class PmDepartmentBudget(models.Model):
+    _name = 'pm.department.budget'
+    name = fields.Char("Department Budget Allocation")
+
+
+
+
 class PmEmployeeMedical(models.Model):
     _name = 'pm.employee.medical'
     name = fields.Char('Medical Test')
@@ -48,6 +63,9 @@ class PmEmployees(models.Model):
     vaccination_history_ids = fields.One2many('pm.employee.vaccination', inverse_name='employee_id')
     first_name = fields.Char(string="First Name", required = True)
     last_name = fields.Char(string="Last Name", required = True)
+    fte = fields.Integer("Full-Time Equivalent")
+    session_id = fields.Many2one(comodel_name="pm.employee.session", string="Session")
+    department_budget_id = fields.Many2one(comodel_name="pm.department.budget", string="Department Budget Allocation")
     # for current residential address
     cra_street = fields.Char('Street...')
     ph_remaining = fields.Float("Public Holiday", defualt=0)

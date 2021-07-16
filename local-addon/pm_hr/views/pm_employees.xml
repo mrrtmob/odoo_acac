@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <record id="custom_department_form_view" model="ir.ui.view" >
+             <field name="name">custom.department.form.view</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.view_department_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="code" string="Department Code"/>
+                </xpath>
+
+            </field>
+
+        </record>
 
         <!-- Inherit Employee Form View -->
         <record id="custom_employee_form_view" model="ir.ui.view">
@@ -81,6 +93,9 @@
                                 <field name="ID_expiration_date"/>
                                 <field name="passport_id"/>
                                 <field name="passport_expiration_date"/>
+                                <field name="fte"/>
+                                <field name="session_id"/>
+                                <field name="department_budget_id"/>
                             </group>
                             <group string="Work Permit">
                                 <field name="visa_no"/>
