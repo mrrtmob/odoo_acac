@@ -78,10 +78,10 @@
                   <header groups="base.group_user">
                         <button name="act_submit" states="draft" string="Submit" type="object"
                                 class="oe_highlight"/>
-                        <button name="act_approve" states="submitted" groups="pm_approval.group_pm_approval_team" string="Approve"
+                        <button name="act_approve" states="submitted" groups="pm_culinary.group_acac_culinary_head,pm_leads.group_acac_dean" string="Approve"
                                 type="object" class="oe_highlight"/>
-                        <button name="act_reject" states="submitted" groups="pm_approval.group_pm_approval_team" string="Reject"
-                                type="object" class="btn-danger"/>
+                        <button name="act_reject" states="submitted" groups="pm_culinary.group_acac_culinary_head,pm_leads.group_acac_dean" string="Reject"
+                                type="object"/>
                         <button name="act_reset" states="rejected" string="Reset" type="object" />
 
                         <field name="state" widget="statusbar"
@@ -94,9 +94,8 @@
                         <group col="4">
                             <field name="name" required="1"/>
                             <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
-                            <field name="type"/>
+                            <field name="type" string="Category"/>
                             <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
-                            <field name="cuisine" />
 
                             <label for="cost_in_percentage" />
                             <div>
@@ -154,7 +153,6 @@
                                            attrs="{'required': [('display_type', '=', False)]}"
                                            context="{'default_is_food': True}"
                                            force_save="1"/>
-                                    <field name="preparation"/>
                                     <field name="quantity" string="EP" />
                                     <field name="waste_percentage" />
                                     <field name="as_purchased" />
@@ -191,9 +189,14 @@
                             </group>
                         </group>
 
-                      <separator colspan="4" string="Preparation"/>
+                      <separator colspan="4" string="Pre-preparation"/>
                         <field name="preparation" widget="html"  colspan="4"/>
                         <br/>
+
+                      <separator colspan="4" string="Preparation"/>
+                        <field name="instruction" widget="html"  colspan="4"/>
+                        <br/>
+
                       <separator colspan="4" string="Nutritional Information"/>
                         <field name="nutrition" widget="html"  colspan="4"/>
                         <br/>

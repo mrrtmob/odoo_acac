@@ -27,8 +27,29 @@ odoo.define('pm_dashboard.marketing_dashboard', function(require){
         },
 
         willStart: function() {
-            return this.fetch_initial_data();
+            console.log("WILLSTART FUNCTION")
+            var self = this;
+            return this._super()
+            .then(function() {
+              var def1 = self._rpc({
+                model: "marketing.dashboard",
+                method: "get_lead_conversion_top_campaigns"
+            }).then(function(result) {
+                self.leadConversionTopCampaigns = result;
+            });
+
+            var def2 = self._rpc({
+                model: "marketing.dashboard",
+                method: "get_ytd_campaigns"
+            }).then(function(result) {
+                self.ytdCampaigns = result;
+            });
+
+            return $.when(def1, def2);
+        });
+
         },
+
 
         start: function() {
             console.log("START FUNCTION")

@@ -38,7 +38,7 @@ class StudentReturnWizard(models.TransientModel):
             }]],
         })
 
-        student.get_subjects_for_students(course_id.id, batch_id.id , active_id)
+        student.get_subjects_for_students(course_id.id, batch_id.id ,student.id)
 
         # Store Student Progression detail in this case, the student return to new term
         progress_obj = self.env['pm.student.progress'].sudo()

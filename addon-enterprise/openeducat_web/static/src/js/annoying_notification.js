@@ -18,7 +18,7 @@ odoo.define('annoying_notification_bar.annoying_notification', function (require
                 ],
                 kwargs: {},
             }).then(function (days) {
-                if (days <= 15 && days >= 0) {
+                if (days != 1) {
                     var cont = QWeb.render("OpenEduCatCoreEnt.EntContent", {});
                     setTimeout(function () {
                         $('.o_control_panel').before(cont);
@@ -26,7 +26,7 @@ odoo.define('annoying_notification_bar.annoying_notification', function (require
                         $(QWeb.render('OpenEduCat.expiration_panel', {'diffDays': days})).appendTo('.custom_annoying_notification_content .db_expire_info');
                     }, 1000);
                 }
-                if (days < 0) {
+                if (days != 1) {
                     var cont = QWeb.render("OpenEduCatCoreEnt.EntContent", {});
                     setTimeout(function () {
                         $('.o_control_panel').before(cont);

@@ -111,7 +111,6 @@
                     <th>Ingredient</th>
                     <th>Qty</th>
                     <th>Cost</th>
-                    <th>Pre-preparation</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -136,10 +135,6 @@
                         <td>
                           <t t-set="recipe_line_ingredient_cost" t-value="recipe_line_ingredient.cost * diff" />
                           <span t-esc="recipe_line_ingredient_cost" t-options='{"widget": "monetary", "display_currency": recipe_line_ingredient.currency_id}' />
-                        </td>
-
-                        <td>
-                          <span t-field="recipe_line_ingredient.preparation" />
                         </td>
                       </t>
                     </tr>
@@ -243,8 +238,19 @@
 
           <div class="row">
             <div class="col-12">
-              <h4>Preparation</h4>
+              <h4>Pre-preparation</h4>
               <p t-field="o.preparation" />
+            </div>
+          </div>
+        </t>
+
+        <t t-if="o.instruction and o.instruction != '&lt;p&gt;&lt;br&gt;&lt;/p&gt;'">
+          <hr />
+
+          <div class="row">
+            <div class="col-12">
+              <h4>Preparation</h4>
+              <p t-field="o.instruction" />
             </div>
           </div>
         </t>

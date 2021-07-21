@@ -35,6 +35,37 @@ odoo.define('pm_dashboard.pm_hr_dashboard', function(require){
             console.log("WILLSTART FUNCTION")
             return this.fetch_initial_data();
         },
+        willStart: function() {
+            console.log("WILLSTART FUNCTION")
+            var self = this;
+            return this._super()
+            .then(function() {
+             var def1 = self._rpc({
+                model: "pm.hr.dashboard",
+                method: "get_employee_data"
+            }).then(function(result){
+                self.employees = result;
+            });
+
+            var def2 = self._rpc({
+                model: "pm.hr.dashboard",
+                method: "get_employee_chart_data"
+            }).then(function(result){
+                self.employee_chart = result;
+            });
+
+            var def3 = self._rpc({
+                model: "pm.hr.dashboard",
+                method: "get_hr_events"
+            }).then(function(result){
+                self.hr_events = result;
+            });
+
+            return $.when(def1, def2, def3);
+        });
+
+        },
+
 
         start: function() {
             console.log("START FUNCTION")

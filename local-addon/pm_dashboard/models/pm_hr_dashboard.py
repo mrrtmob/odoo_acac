@@ -84,7 +84,7 @@ class HrDashboard(models.Model):
     def get_department_leave(self):
         types = ['in_invoice', 'in_refund']
         # Fetch Bill
-        bills = self.env['account.move'].search([('type', 'in', types)])
+        bills = self.env['account.move'].search([('move_type', 'in', types)])
         data = {}
          #Loop bill & group by vendor name
         for bill in bills:
@@ -98,7 +98,7 @@ class HrDashboard(models.Model):
 
         query = """
                        SELECT SUM(amount_total) as total, invoice_partner_display_name as vendor
-                        FROM account_move where type IN ('in_invoice', 'in_refund')
+                        FROM account_move where move_type IN ('in_invoice', 'in_refund')
                         GROUP BY invoice_partner_display_name """
 
         self.env.cr.execute(query)

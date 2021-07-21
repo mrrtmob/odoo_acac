@@ -64,13 +64,32 @@ class OpStudentCourse(models.Model):
     is_reminded = fields.Boolean()
     starting_semester_id = fields.Many2one('pm.semester', 'Starting Semester')
 
+    @api.onchange('p_e_subject_ids')
+    def onChangeExemptedSubjects(self):
+        e_subjects = self.p_e_subject_ids
+        sub_array = []
+        for sub in self.subject_ids:
+            if sub not in e_subjects:
+                sub_array.append(sub._origin.id)
+        self.write({
+            'subject_ids': [[6, 0, list(set(sub_array))]]
+        })
+
+    @api.depends('p_e_subject_ids')
+    def onDepend(selfs):
+        print("GEGE")
+
+
+
+
+
 
     @api.depends('return_date')
     def _compute_remind_date(self):
         for course in self:
             if course.return_date:
                 return_date = course.return_date
-                d = timedelta(days=3)
+                d = timedelta(days=60)
                 date = return_date - d
                 course.reminding_date = date
 
@@ -275,13 +294,17 @@ class OpStudent(models.Model):
              ('is_reminded', '=', False),
              ('return_date', '!=', None)])
 
+        today = fields.Date.today()
         print(all_course_search)
 
+
         for course in all_course_search:
-            today = datetime.date.today()
-            print('today', today)
+            print(today)
+            print(course.reminding_date)
             if today == course.return_date or today == course.reminding_date:
                 student = course.student_id
+
+                print("Student", student.name)
                 ir_model_data = self.env['ir.model.data']
                 try:
                     template_id = ir_model_data.get_object_reference('pm_leads', 'student_follow_up_reminder')[1]
@@ -347,7 +370,6 @@ class OpStudent(models.Model):
 
     @api.depends('course_detail_ids.education_status')
     def _compute_student_status(self):
-        print("Trigger!!!")
         for student in self:
             student_course = student.course_detail_ids
             if student_course:
@@ -489,10 +511,14 @@ class OpStudent(models.Model):
             progress_obj = self.env['pm.student.progress'].sudo()
             progress_obj.store_progression(res.id, course_id, batch_id, class_id, 'active')
 
+            print('res', res)
+            print('res.id', res.id)
+
             self.get_student_starting_data(course_id, batch_id, res.id)
 
         return res
     def write(self, val):
+        print("here")
         print(val)
         res = super(OpStudent, self).write(val)
         if "course_detail_ids" in val:

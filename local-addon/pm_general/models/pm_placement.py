@@ -29,7 +29,7 @@ class OpPlacementOffer(models.Model):
     course_id = fields.Many2one('op.course', 'Course', required=True)
     batch_id = fields.Many2one(
         'op.batch', 'Term', required=True, track_visibility='onchange')
-    semester_id = fields.Many2one('pm.semester', 'Semester', required=True)
+    semester_id = fields.Many2one('pm.semester', 'Semester', required=True, domain=[('is_internship', '=', True)])
     subject_id = fields.Many2one('op.subject', 'Subject', required=True)
     gpa = fields.Float('GPA', readonly=True, digits=(12, 1), compute='_compute_gpa', store=True)
     color = fields.Integer(string='Color Index', default=0, compute="_compute_result_color")

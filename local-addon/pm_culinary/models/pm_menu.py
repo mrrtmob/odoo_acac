@@ -59,10 +59,10 @@ class PmMenu(models.Model):
             base_url += '/web#id=%d&view_type=form&model=pm.menu' % (record.id)
             record.record_url = base_url
 
-    def send_mail(self):
-        template_id = 66
-        print('sending.... recipe')
-        self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
+    # def send_mail(self):
+    #     template_id = 66
+    #     print('sending.... recipe')
+    #     self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
 
     def act_submit(self):
         print('submit!!')
@@ -76,7 +76,6 @@ class PmMenu(models.Model):
         self.message_subscribe(partner_ids=[approval.approve.partner_id.id])
         print('send mail')
         self.approver = approval.approve
-        self.send_mail()
 
     def act_approve(self):
         approval = self.env['pm.approval'].search(
@@ -85,9 +84,9 @@ class PmMenu(models.Model):
             approval.state = 'approved'
         self.state = 'approved'
 
-        template_id = 71
-        print('sending.... Menu mail')
-        self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
+        # template_id = 71
+        # print('sending.... Menu mail')
+        # self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
 
     def act_reject(self):
         approval = self.env['pm.approval'].search(

@@ -47,14 +47,14 @@ class FinanceDashboard(models.AbstractModel):
 
         query = """
                 SELECT SUM(amount_total) as amount, partner_id, invoice_partner_display_name as vendor
-                FROM account_move where type IN ('in_invoice', 'in_refund') AND date >= DATE ('%s') AND date <= DATE ('%s')  
+                FROM account_move where move_type IN ('in_invoice', 'in_refund') AND date >= DATE ('%s') AND date <= DATE ('%s')  
                 GROUP BY invoice_partner_display_name,partner_id ORDER BY amount DESC LIMIT 5"""  %(starting_day_of_current_year, ending_day_of_current_year)
         self.env.cr.execute(query)
         top_accounts = self.env.cr.dictfetchall()
         #total billed amount
         query3 = """
             SELECT SUM(amount_total) as amount
-            FROM account_move where type IN ('in_invoice', 'in_refund') AND date >= DATE ('%s') AND date <= DATE ('%s')"""  %(first_day_of_this_month, last_day_of_this_month) 
+            FROM account_move where move_type IN ('in_invoice', 'in_refund') AND date >= DATE ('%s') AND date <= DATE ('%s')"""  %(first_day_of_this_month, last_day_of_this_month)
         self.env.cr.execute(query3)
         total_bill = self.env.cr.dictfetchall()
 
@@ -63,7 +63,7 @@ class FinanceDashboard(models.AbstractModel):
         for item in top_accounts: 
             query2 = """
             SELECT SUM(amount_total) as amount,partner_id,invoice_partner_display_name as vendor
-            FROM account_move where type IN ('in_invoice', 'in_refund') AND date >= DATE ('%s') AND date <= DATE ('%s') AND partner_id = '%s'
+            FROM account_move where move_type IN ('in_invoice', 'in_refund') AND date >= DATE ('%s') AND date <= DATE ('%s') AND partner_id = '%s'
             GROUP BY invoice_partner_display_name, partner_id LIMIT 1"""  %(first_day_of_this_month, last_day_of_this_month,item['partner_id']) 
             self.env.cr.execute(query2)
             this_month = self.env.cr.dictfetchall()
@@ -100,9 +100,11 @@ class FinanceDashboard(models.AbstractModel):
                 planned_amount += bl.planned_amount
                 actual_amount += abs(bl.practical_amount)
             total_buget += planned_amount
-            total_actual += actual_amount   
-        total_actual_p = round(total_actual / total_buget * 100 , 2)
-        total_buget_p = round(100 - total_actual_p , 2)
+            total_actual += actual_amount
+        total_actual_p = 0
+        if total_actual > 0:
+            total_actual_p = round(total_actual / total_buget * 100 , 2)
+        total_buget_p = round(100 - total_actual_p, 2)
         result.append(total_actual_p)
         result.append(total_buget_p)
         

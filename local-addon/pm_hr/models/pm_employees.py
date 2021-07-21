@@ -10,6 +10,25 @@ class PmInheritEmployeeFamily(models.Model):
     phone = fields.Char('Contact No')
     email = fields.Char('Email')
 
+class PmEmployeeSession(models.Model):
+    _name = 'pm.employee.session'
+    name = fields.Char("Session")
+
+class PmEmployeeBudgetLine(models.Model):
+    _name = 'pm.employee.budget.line'
+    name = fields.Char("Budget Line")
+
+class PmDepartmentCustom(models.Model):
+    _inherit = 'hr.department'
+    code = fields.Char("Code")
+
+class PmDepartmentBudget(models.Model):
+    _name = 'pm.department.budget'
+    name = fields.Char("Department Budget Allocation")
+
+
+
+
 class PmEmployeeMedical(models.Model):
     _name = 'pm.employee.medical'
     name = fields.Char('Medical Test')
@@ -48,6 +67,10 @@ class PmEmployees(models.Model):
     vaccination_history_ids = fields.One2many('pm.employee.vaccination', inverse_name='employee_id')
     first_name = fields.Char(string="First Name", required = True)
     last_name = fields.Char(string="Last Name", required = True)
+    fte = fields.Integer("Full-Time Equivalent")
+    session_id = fields.Many2one(comodel_name="pm.employee.session", string="Session")
+    department_budget_id = fields.Many2one(comodel_name="pm.department.budget", string="Department Budget Allocation")
+    budget_line_id = fields.Many2one(comodel_name="pm.employee.budget.line", string="Budget Line")
     # for current residential address
     cra_street = fields.Char('Street...')
     ph_remaining = fields.Float("Public Holiday", defualt=0)
@@ -170,22 +193,22 @@ class PmEmployees(models.Model):
     # tem:
 
 
-    # @api.model
-    # def _get_next_employee_number(self):
-    #     next = ''
-    #     sequence = self.env['ir.sequence'].search([('code', '=', 'hr.employee')])
-    #     if sequence:
-    #         next = sequence.get_next_char(sequence.number_next_actual)
-    #     return next
+    @api.model
+    def _get_next_employee_number(self):
+        next = ''
+        sequence = self.env['ir.sequence'].search([('code', '=', 'hr.employee')])
+        if sequence:
+            next = sequence.get_next_char(sequence.number_next_actual)
+        return next
 
-    # employee_number = fields.Char(
-    #     string="Employee Number",
-    #     required=True,
-    #     readonly=True,
-    #     default=_get_next_employee_number,
-    #     track_visibility="onchange",
-    # )
-    employee_number = fields.Char(string="Employee ID")
+    employee_number = fields.Char(
+        string="Employee Number",
+        required=True,
+        readonly=True,
+        default=_get_next_employee_number,
+        track_visibility="onchange",
+    )
+
     @api.onchange('parent_id')
     def on_change_employee(self):
         self.coach_id = self.parent_id.id
@@ -266,7 +289,7 @@ class PmEmployees(models.Model):
 
     @api.model
     def create(self, vals):
-        #vals['employee_number'] = self.env['ir.sequence'].next_by_code('hr.employee')
+        vals['employee_number'] = self.env['ir.sequence'].next_by_code('hr.employee')
         res = super(PmEmployees, self).create(vals)
         return res
 

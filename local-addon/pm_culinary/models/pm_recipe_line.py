@@ -123,7 +123,8 @@ class PmRecipeLine(models.Model):
     def _compute_as_purchased(self):
         for record in self:
             if record.product_id:
-                record.as_purchased = record.quantity + (record.quantity * record.waste_percentage / 100)
+                # record.as_purchased = record.quantity + (record.quantity * record.waste_percentage / 100)
+                record.as_purchased = record.quantity * (100 / (100 - record.waste_percentage))
 
     @api.depends('product_id.product_tmpl_id.cost', 'product_id.product_tmpl_id.uom_id', 'uom_id', 'quantity', 'as_purchased')
     def _compute_cost(self):

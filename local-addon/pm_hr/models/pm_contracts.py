@@ -1,4 +1,6 @@
 from odoo import models, fields, api, _
+from odoo.http import request
+from datetime import datetime, timedelta
 
 
 class PmInheritContracts(models.Model):
@@ -23,6 +25,41 @@ class PmInheritContracts(models.Model):
     )
 
     state = fields.Selection(selection_add=[('terminated', 'Terminated')])
+
+    record_url = fields.Char('Link', compute="_compute_record_url", store=True)
+
+    @api.depends('name')
+    def _compute_record_url(self):
+        for record in self:
+            base_url = request.env['ir.config_parameter'].get_param('web.base.url')
+            base_url += '/web#id=%d&view_type=form&model=hr.contract' % (record.id)
+            record.record_url = base_url
+
+
+    def contract_scheduler(self):
+        print("gege")
+        contracts = self.env['hr.contract'].sudo().search(
+            [('state', '=', 'open'),
+             ('trial_date_end', '!=', False)])
+        today = fields.Date.today()
+        for con in contracts:
+            d = timedelta(days=7)
+            end_date = con.trial_date_end
+            print(end_date)
+            remind_date = end_date - d
+            print(remind_date)
+
+            if today == remind_date or today == end_date:
+                print(con.name)
+                ir_model_data = self.env['ir.model.data']
+                try:
+                    template_id = ir_model_data.get_object_reference('pm_hr', 'contract_prohibition_reminder')[1]
+                    print(template_id)
+                except ValueError:
+                    template_id = False
+                self.env['mail.template'].browse(template_id).send_mail(con.id, force_send=True)
+
+
 
 
     @api.depends('wage')

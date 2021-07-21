@@ -105,7 +105,7 @@
                                 domain="[]" context="{'group_by':'faculty_id'}"/>
                         <filter string="Course" name="group_by_session_course_id"
                                 domain="[]" context="{'group_by':'course_id'}"/>
-                        <filter string="Batch" name="group_by_session_batch_id"
+                        <filter string="Term" name="group_by_session_batch_id"
                                 domain="[]" context="{'group_by':'batch_id'}"/>
                         <filter string="Period" name="group_by_session_timing_id"
                                 domain="[]" context="{'group_by':'timing_id'}"/>
@@ -139,7 +139,7 @@
             <field name="name">session.kanban</field>
             <field name="model">op.session</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="type" class="o_kanban_small_column">
+                <kanban default_group_by="type" default_order="day_sequence"  class="o_kanban_small_column">
                     <field name="type"/>
                     <field name="color"/>
                     <templates>

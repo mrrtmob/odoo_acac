@@ -133,7 +133,6 @@ class OpStudentFeesDetails(models.Model):
         """ Create invoice for fee payment process of student """
         print("Hit Get Invoice")
 
-        _logger = logging.getLogger(__name__)
         inv_obj = self.env['account.move']
         partner_id = self.student_id.partner_id
         student = self.student_id
@@ -156,13 +155,12 @@ class OpStudentFeesDetails(models.Model):
         else:
             amount = self.amount
             name = product.name
-        _logger.info("---------------This is invoice info---------------")
-        invoice = inv_obj.create({
-            'partner_id': student.name,
-            'type': 'out_invoice',
-            'partner_id': partner_id.id,
+            invoice = inv_obj.create({
+                # 'partner_id': student.name,
+                'move_type': 'out_invoice',
+                'partner_id': partner_id.id,
 
-        })
+            })
         element_id = self.env['op.fees.element'].search([
             ('fees_terms_line_id', '=', self.fees_line_id.id)])
 
@@ -171,8 +169,6 @@ class OpStudentFeesDetails(models.Model):
         print('product', product)
         invoice_lines = []
         for records in element_id:
-            _logger.info("---------------this element has product lines---------------")
-            _logger.info("IT IS  INFO")
 
             if records:
                 line_values = {'name': records.product_id.name,
@@ -184,10 +180,10 @@ class OpStudentFeesDetails(models.Model):
                                'product_uom_id': records.product_id.uom_id.id,
                                'product_id': records.product_id.id, }
                 invoice_lines.append(line_values)
-                _logger.info('Create a %s with vals %s', self._name, line_values)
+
+        print(invoice_lines)
 
         if not element_id:
-            _logger.info("---------------No Line !!---------------")
             line_values = {'name': name,
                            # 'origin': student.gr_no,
                            'account_id': account_id,
@@ -197,11 +193,9 @@ class OpStudentFeesDetails(models.Model):
                            'product_uom_id': product.uom_id.id,
                            'product_id': product.id}
 
-            _logger.info('Create a %s with vals %s', self._name, line_values)
 
             invoice.write({'invoice_line_ids': [(0, 0, line_values)]})
 
-        _logger.info('Create invoice lines %s', self._name, invoice_lines)
         MoveLine = self.env['account.move.line'].with_context(check_move_validity=False)
         MoveLine.create(invoice_lines)
 
@@ -212,7 +206,7 @@ class OpStudentFeesDetails(models.Model):
         self.state = 'invoice'
         self.invoice_id = invoice.id
         return True
-
+    #
     def action_get_invoice(self):
         value = True
         if self.invoice_id:

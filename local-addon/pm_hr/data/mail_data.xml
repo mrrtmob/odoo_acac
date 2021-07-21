@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+
         <record id="email_applicant_shortlisted" model="mail.template">
             <field name="name">Applicant Shortlisted Mail Template</field>
             <field name="subject">Your Job Application: ${object.job_id.name | safe}</field>
@@ -359,6 +359,118 @@
                   <field name="auto_delete" eval="True"/>
          </record>
 
+     <record id="contract_prohibition_reminder" model="mail.template">
+            <field name="name">Contract: Prohibition Period Reminder</field>
+            <field name="subject">Probationary Periods for ${object.title} ${object.employee_id.name}</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 20px; font-weight: bold;">
+                                                            ${object.name}
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="/logo.png?company=${object.company_id.id}"
+                                                             style="padding: 0px; margin: 0px; height: auto; width: 80px;"
+                                                             alt="${object.company_id.name}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Dear management team,
+                                                            <br/>
+                                                            <br/>
+                                                            <p>
+                                                                Here is a reminder that the probationary period for <strong>${object.title} ${object.employee_id.name}</strong> will end at <strong>${object.trial_date_end.strftime('%d-%b-%Y')}</strong>.
+                                                                <br/>
+                                                                To see the detail of the contract, please click to following button
+                                                                <br/>
+                                                                <br/>
+                                                                <br/>
+                                                                <a href="${object.record_url}" style="text-decoration-thickness:initial;background-color:#875a7b;padding:10px;color:#fff;border-radius:5px">View Contract</a>
+                                                                <br/>
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                        <tr>
+                        <td align="center" style="min-width: 590px;">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                           style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                        <tr>
+                                            <td valign="middle" align="left">
+                                                ${object.company_id.name}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="middle" align="left" style="opacity: 0.7;">
+                                                ${object.company_id.phone}
+                                                % if object.company_id.email
+                                                |
+                                                <a href="'mailto:%s' % ${object.company_id.email}"
+                                                   style="text-decoration:none; color: #454748;">
+                                                    ${object.company_id.email}
+                                                </a>
+                                                % endif
+                                                % if object.company_id.website
+                                                |
+                                                <a href="'%s' % ${object.company_id.website}"
+                                                   style="text-decoration:none; color: #454748;">
+                                                    ${object.company_id.website}
+                                                </a>
+                                                % endif
+                                                </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+
           <record id="email_applicant_unsuccessful_interview" model="mail.template">
             <field name="name">Applicant Unsuccessful Interview</field>
             <field name="subject">Interview Result for: ${object.job_id.name | safe}</field>
@@ -609,6 +721,4 @@
             <field name="lang">${object.partner_id.lang}</field>
             <field name="auto_delete" eval="True"/>
         </record>
-
-    </data>
 </odoo>
