@@ -144,7 +144,7 @@ class ResConfigSettings(models.TransientModel):
         else:
             db_create_date = parser.parse(db_create_date)
             diffDate = now.date() - db_create_date.date()
-            diffDate = 15 - diffDate.days
+            diffDate = 1
         return diffDate
 
 
