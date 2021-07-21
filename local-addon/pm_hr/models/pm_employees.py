@@ -14,6 +14,10 @@ class PmEmployeeSession(models.Model):
     _name = 'pm.employee.session'
     name = fields.Char("Session")
 
+class PmEmployeeBudgetLine(models.Model):
+    _name = 'pm.employee.budget.line'
+    name = fields.Char("Budget Line")
+
 class PmDepartmentCustom(models.Model):
     _inherit = 'hr.department'
     code = fields.Char("Code")
@@ -66,6 +70,7 @@ class PmEmployees(models.Model):
     fte = fields.Integer("Full-Time Equivalent")
     session_id = fields.Many2one(comodel_name="pm.employee.session", string="Session")
     department_budget_id = fields.Many2one(comodel_name="pm.department.budget", string="Department Budget Allocation")
+    budget_line_id = fields.Many2one(comodel_name="pm.employee.budget.line", string="Budget Line")
     # for current residential address
     cra_street = fields.Char('Street...')
     ph_remaining = fields.Float("Public Holiday", defualt=0)

@@ -30,6 +30,7 @@ model_pm_users_role_line,model_pm_users_role_line,model_pm_users_role_line,base.
 
 access_pm_employee_session,model_pm_employee_session,model_pm_employee_session,base.group_user,1,1,1,1
 access_pm_department_budget,model_pm_department_budget,model_pm_department_budget,base.group_user,1,1,1,1
+access_pm_department_budget,model_pm_department_budget,model_pm_department_budget,base.group_user,1,1,1,1
 
 
 

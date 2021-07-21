@@ -3,6 +3,8 @@ from datetime import datetime
 
 from odoo import http, _
 from odoo.addons.portal.controllers.portal import CustomerPortal
+from odoo.addons.openeducat_rest.controllers.main import ObjectEncoder
+from odoo.http import Response
 from odoo.addons.pm_rest_api.controllers.aba_payway import ABAPayWay
 import json
 
@@ -65,8 +67,10 @@ class PaymentPortal(CustomerPortal):
             'push_back_url': push_back_url,
             'items': items,
         }
+        return Response(json.dumps(val, indent=4, cls=ObjectEncoder),
+                        content_type='application/json;charset=utf-8', status=200)
 
-        return request.render("pm_rest_api.pm_payment_form", val)
+    
 
     @http.route(['/student/aba/success'],
                 type='http', website=True)
