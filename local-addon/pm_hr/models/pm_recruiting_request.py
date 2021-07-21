@@ -96,7 +96,7 @@ class PmRecruitingRequest(models.Model):
         elif self.recruitment_type == 'promotion':
             print(4)
             self.show_promotion_form = True
-        elif self.recruitment_type == 'termination':
+        elif self.recruitment_type == 'termination' or 'rehire':
             print(5)
             self.show_termination_form = True
 
@@ -110,6 +110,7 @@ class PmRecruitingRequest(models.Model):
         ('transfer', 'Transfer'),
         ('promotion', 'Promotion'),
         ('replacement', 'Replacement'),
+        ('rehire', 'Rehire'),
         ('termination', 'Termination'),
     ], string='Request Type', default='new_position', required=True)
     employee_id = fields.Many2one('hr.employee', 'Employee Name')

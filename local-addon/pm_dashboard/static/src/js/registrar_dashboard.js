@@ -35,10 +35,17 @@ odoo.define('pm_dashboard.registrar_dashboard', function(require){
         willStart: function() {
             console.log("WILLSTART FUNCTION")
             var self = this;
-            //this._super();
-            return this.active_terms = self.fetch_active_terms();
-            //return  self.fetch_students_by_status();
-            
+            return this._super()
+            .then(function() {
+            var def0 = self._rpc({
+                    model: "registrar.dashboard",
+                    method: "get_active_terms"
+                }).then(function(result) {
+                    self.active_terms = result;
+                });
+        return $.when(def0);
+        });
+
         },
 
         start: function() {
@@ -78,6 +85,8 @@ odoo.define('pm_dashboard.registrar_dashboard', function(require){
                 }).then(function(result) {
                     self.active_terms = result;
                 });
+                console.log("DEF1")
+                console.log(def1)
             return def1;
         },
         fetch_students_by_status: function() {
@@ -97,7 +106,7 @@ odoo.define('pm_dashboard.registrar_dashboard', function(require){
                 self.currentSemester = result;
                 console.log('====', self.currentSemester);
             });
-           
+
             var def3 =  this._rpc({
                 model: "registrar.dashboard",
                 method: "get_current_term_alert_data"
