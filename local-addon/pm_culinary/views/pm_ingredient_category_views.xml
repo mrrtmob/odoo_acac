@@ -58,11 +58,66 @@
       </field>
     </record>
 
+
+     <record id="pm_recipe_category_view_list" model="ir.ui.view">
+      <field name="name">pm.recipe.category.view.list</field>
+      <field name="model">pm.recipe.category</field>
+      <field name="arch" type="xml">
+        <tree string="Recipe Categories">
+          <field name="code" />
+          <field name="name" string="Ingredient Category"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="pm_recipe_category_view_form" model="ir.ui.view">
+      <field name="name">pm.recipe.category.view.form</field>
+      <field name="model">pm.recipe.category</field>
+      <field name="arch" type="xml">
+        <form class="oe_form_configuration">
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button class="oe_stat_button"
+                icon="fa-th-list"
+               >
+                <div class="o_field_widget o_stat_info">
+                  <span class="o_stat_value"><field name="recipe_count"/></span>
+                  <span class="o_stat_text"> Recipe</span>
+                </div>
+              </button>
+            </div>
+
+            <div class="oe_title">
+              <label for="name" string="Category name" class="oe_edit_only"/>
+              <h1><field name="name" placeholder="e.g. Soups"/></h1>
+            </div>
+
+            <group name="first" col="2">
+              <field name="code" class="oe_inline" />
+              <field name="parent_id" class="oe_inline" />
+            </group>
+          </sheet>
+
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
     <record id="config_ingredient_category_action" model="ir.actions.act_window">
       <field name="name">Ingredient Categories</field>
       <field name="type">ir.actions.act_window</field>
       <field name="res_model">pm.ingredient.category</field>
-      <field name="view_mode">tree,kanban,form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="config_Recipe_category_action" model="ir.actions.act_window">
+      <field name="name">Recipes Categories</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">pm.recipe.category</field>
+      <field name="view_mode">tree,form</field>
     </record>
   </data>
 </odoo>

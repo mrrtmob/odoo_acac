@@ -78,11 +78,17 @@
                     groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
                     sequence="2" />
 
+          <menuitem id="menu_config_recipe_category"
+                    action="config_Recipe_category_action"
+                    parent="menu_ingredient_config_group"
+                    groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                    sequence="3" />
+
           <menuitem id="menu_config_ingredient_origin"
                     action="config_ingredient_origin_action"
                     parent="menu_ingredient_config_group"
                     groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
-                    sequence="3" />
+                    sequence="5" />
 
           <menuitem id="menu_config_nutrition"
                     action="config_nutrition_action"
