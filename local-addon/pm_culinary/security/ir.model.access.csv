@@ -16,3 +16,6 @@ access_pm_ingredient_origin,access_pm_ingredient_origin,model_pm_ingredient_orig
 access_pm_supplier_industry,access_pm_supplier_industry,model_pm_supplier_industry,base.group_user,1,1,1,1
 access_pm_product_uom,access_pm_product_uom,model_pm_product_uom,base.group_user,1,1,1,1
 access_pm_recipe_category,access_pm_recipe_category,model_pm_recipe_category,base.group_user,1,1,1,1
+
+access_product_product,access_product_product,product.model_product_product,group_acac_culinary,1,1,1,1
+access_product_template,access_product_template,product.model_product_template,group_acac_culinary,1,1,1,1
