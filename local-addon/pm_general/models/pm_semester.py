@@ -167,35 +167,35 @@ class PmSemester(models.Model):
         next_sem.write({
             'state': 'active'
         })
-        # no_pass = ['retake', 'fail']
-        # fail_students = []
-        # semester_detail = self.student_semester_detail
-        # for sd in semester_detail:
-        #     print('name:', sd.student_id.name)
-        #     print('Status:', sd.student_id.education_status)
-        #     print('Semester Status:', sd.state)
-        #     student_id = sd.student_id.id
-        #     if sd.state not in no_pass:
-        #         print('Pass Hz')
-        #         sd.state = 'complete'
-        #     else:
-        #         print('Fail Hz')
-        #         print(sd.student_id.name)
-        #         print(sd.state)
-        #         fail_students.append(student_id)
-        #
-        # print(fail_students)
-        # next_semester_detail = next_sem.student_semester_detail
-        # for nsd in next_semester_detail:
-        #     print('name:', nsd.student_id.name)
-        #     print('Status:', nsd.student_id.education_status)
-        #     print('Semester Status:', nsd.state)
-        #     student_id = nsd.student_id.id
-        #     if student_id not in fail_students:
-        #         nsd.state = 'ongoing'
-        #         print('Move to next')
-        #     else:
-        #         continue
+        no_pass = ['retake', 'fail']
+        fail_students = []
+        semester_detail = self.student_semester_detail
+        for sd in semester_detail:
+            print('name:', sd.student_id.name)
+            print('Status:', sd.student_id.education_status)
+            print('Semester Status:', sd.state)
+            student_id = sd.student_id.id
+            if sd.state not in no_pass:
+                print('Pass Hz')
+                sd.state = 'complete'
+            else:
+                print('Fail Hz')
+                print(sd.student_id.name)
+                print(sd.state)
+                fail_students.append(student_id)
+
+        print(fail_students)
+        next_semester_detail = next_sem.student_semester_detail
+        for nsd in next_semester_detail:
+            print('name:', nsd.student_id.name)
+            print('Status:', nsd.student_id.education_status)
+            print('Semester Status:', nsd.state)
+            student_id = nsd.student_id.id
+            if student_id not in fail_students:
+                nsd.state = 'ongoing'
+                print('Move to next')
+            else:
+                continue
 
         #find related child ids
         #set status to pass if student status = pass

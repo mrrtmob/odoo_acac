@@ -64,7 +64,7 @@ class RESTToken(models.Model):
         return False
 
     @api.model
-    def refresh_token(self, token, lifetime=3600):
+    def refresh_token(self, token, lifetime=172800):
         token = self.search([['token', '=', token]], limit=1)
         if token:
             timestamp = int(time.time() + lifetime)
@@ -77,7 +77,7 @@ class RESTToken(models.Model):
         return token.user.id if token and int(time.time()) < token.lifetime else False
 
     @api.model
-    def generate_token(self, uid, lifetime=3600):
+    def generate_token(self, uid, lifetime=172800):
         token = token_urlsafe()
         timestamp = int(time.time() + lifetime)
         return self.create({'token': token, 'lifetime': timestamp, 'user': uid})

@@ -24,10 +24,20 @@ odoo.define('pm_dashboard.financial_dashboard', function(require){
             this.finance_data = [];
         },
 
-        willStart: function() {
-           console.log("WILLSTART FUNCTION")
-           var self = this;
-           return self.fetch_finance_data();
+         willStart: function() {
+            console.log("WILLSTART FUNCTION")
+            var self = this;
+            return this._super()
+            .then(function() {
+                var def1 = self._rpc({
+                    model: "finance.dashboard",
+                    method: "get_finance_data"
+                }).then(function(result) {
+                    self.finance_data = result;
+                });
+            return $.when(def1);
+            });
+
         },
 
         start: function() {

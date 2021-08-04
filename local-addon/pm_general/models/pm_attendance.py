@@ -330,6 +330,38 @@ class OpSessionCustom(models.Model):
     _inherit = "op.session"
     semester_id = fields.Many2one('pm.semester', 'Semester', required=True)
     day_sequence = fields.Integer()
+    meeting_id = fields.Many2one('calendar.event', string='Meeting', copy=False)
+
+    def lecture_confirm(self):
+        print("confirm")
+        meeting_values = self._prepare_holidays_meeting_values()
+        meetings = self.env['calendar.event'].with_context(
+            no_mail_to_attendees=True,
+            active_model=self._name
+        ).create(meeting_values)
+        self.meeting_id = meetings.id
+        self.state = 'confirm'
+
+    def _prepare_holidays_meeting_values(self):
+        result = []
+        for session in self:
+            meeting_values = {
+                'name': session.name,
+                'duration': session.timing_id.duration,
+                'user_id': session.faculty_id.emp_id.user_id.id,
+                'start': session.start_datetime,
+                'stop': session.end_datetime,
+                'allday': False,
+                'privacy': 'confidential',
+                'event_tz': session.faculty_id.emp_id.user_id.tz,
+                'activity_ids': [(5, 0, 0)],
+            }
+            # Add the partner_id (if exist) as an attendee
+            if session.faculty_id.emp_id.user_id and session.faculty_id.emp_id.user_id.partner_id:
+                meeting_values['partner_ids'] = [
+                    (4, session.faculty_id.emp_id.user_id.partner_id.id)]
+            result.append(meeting_values)
+        return result
 
     @api.depends('start_datetime')
     def _compute_day(self):
@@ -338,3 +370,5 @@ class OpSessionCustom(models.Model):
                 record.start_datetime).strftime("%A")
             print(record.start_datetime.weekday())
             record.day_sequence = record.start_datetime.weekday()
+
+

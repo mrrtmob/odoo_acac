@@ -15,11 +15,20 @@ _TYPE = [
 ]
 
 
+class PmRecipeCategory(models.Model):
+    _name = "pm.recipe.category"
+    _inherit = "mail.thread"
+    name = fields.Char()
+    parent_id = fields.Many2one('pm.recipe.category', 'Parent Category', index=True, ondelete='cascade')
+    code = fields.Char()
+    category_image = fields.Binary('Image')
+    recipe_count = fields.Integer("Recipes", compute="_compute_count_recipe")
+    color = fields.Integer()
 
-
-
-
-
+    @api.depends('name')
+    def _compute_count_recipe(self):
+        for rec in self:
+            rec.recipe_count = self.env['pm.recipe'].search_count([('category_id', '=', rec.id)])
 
 
 
@@ -28,6 +37,7 @@ class PmRecipe(models.Model):
     _name = "pm.recipe"
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Recipe"
+    color = fields.Integer()
     name = fields.Char("Recipe Name", track_visibility='onchange')
     state = fields.Selection(
         [('draft', 'Draft'),
@@ -35,6 +45,7 @@ class PmRecipe(models.Model):
          ('rejected', 'Rejected'),
          ('approved', 'Approved')],
         'State', default='draft', track_visibility='onchange')
+    category_id = fields.Many2one('pm.recipe.category', 'Category')
     recipe_image = fields.Binary('Image')
     is_sub_recipe = fields.Boolean('Can be used as a sub-recipe', default=False, track_visibility='onchange')
     cost_per_portion = fields.Float('Cost Per Portion', compute='_compute_cost', store=True, track_visibility='onchange')

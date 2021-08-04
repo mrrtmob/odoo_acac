@@ -3,6 +3,8 @@ from datetime import datetime
 
 from odoo import http, _
 from odoo.addons.portal.controllers.portal import CustomerPortal
+from odoo.addons.openeducat_rest.controllers.main import ObjectEncoder
+from odoo.http import Response
 from odoo.addons.pm_rest_api.controllers.aba_payway import ABAPayWay
 import json
 
@@ -65,8 +67,39 @@ class PaymentPortal(CustomerPortal):
             'push_back_url': push_back_url,
             'items': items,
         }
-
         return request.render("pm_rest_api.pm_payment_form", val)
+        return Response(json.dumps(val, indent=4, cls=ObjectEncoder),
+                        content_type='application/json;charset=utf-8', status=200)
+
+    @http.route(['/student/payment/generate/<int:payment_id>'],
+                type='http', auth="user", website=True)
+    def portal_create_payment(self, payment_id):
+        PayWay = ABAPayWay()
+        merchant_id = PayWay.get_merchant_id()
+        payment_obj = request.env['op.student.fees.details'].sudo().browse(payment_id)
+        items = PayWay.get_transaction_items(payment_obj)
+        hash_data = PayWay.get_hash(str(merchant_id), str(payment_obj.id), str(payment_obj.amount), items)
+        api_url = PayWay.get_api_url()
+        push_back_url = PayWay.get_push_back_url()
+        student = payment_obj.student_id
+
+        val = {
+            'hash': hash_data,
+            'amount': payment_obj.amount,
+            'amount_display': str(payment_obj.amount)+'$',
+            'firstname': student.first_name,
+            'lastname': student.last_name,
+            'email': student.email,
+            'phone': student.mobile,
+            'tran_id': payment_obj.id,
+            'url': api_url,
+            'push_back_url': push_back_url,
+            'items': items,
+        }
+        return Response(json.dumps(val, indent=4, cls=ObjectEncoder),
+                        content_type='application/json;charset=utf-8', status=200)
+
+    
 
     @http.route(['/student/aba/success'],
                 type='http', website=True)
