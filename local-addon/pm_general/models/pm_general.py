@@ -80,7 +80,6 @@ class PmTermSemesterResult(models.Model):
         for rec in self:
             if rec.status == 'pass':
                 rec.color = 10
-
             elif rec.status == 'fail':
                 rec.color = 9
 
