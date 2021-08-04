@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 
 class PmRecipeLine(models.Model):
@@ -106,6 +106,9 @@ class PmRecipeLine(models.Model):
                 else:
                     if not record.product_id:
                         raise ValidationError(_("Ingredient or Sub Recipe cannot be blank."))
+    @api.depends('recipe_id.number_of_portion')
+    def onChnageRecipeYeild(self):
+        print("Yosh")
 
     @api.constrains('name')
     def _check_name(self):
