@@ -23,7 +23,6 @@ class PmRecipeCategory(models.Model):
     code = fields.Char()
     category_image = fields.Binary('Image')
     recipe_count = fields.Integer("Recipes", compute="_compute_count_recipe")
-    color = fields.Integer()
 
     @api.depends('name')
     def _compute_count_recipe(self):
@@ -102,6 +101,7 @@ class PmRecipe(models.Model):
     @api.depends('ingredients.cost', 'sub_recipes.cost', 'number_of_portion')
     def _compute_cost(self):
         for record in self:
+            print("YO!!")
             record.ingredients_cost = sum(record.ingredients.mapped('cost'))
             record.sub_recipes_cost = sum(record.sub_recipes.mapped('cost'))
 
@@ -120,6 +120,7 @@ class PmRecipe(models.Model):
 
     @api.depends('cost', 'cost_in_percentage')
     def _compute_price(self):
+        print("YO3!!")
         for record in self:
             record.price = (record.cost / record.cost_in_percentage) * 100
 
@@ -181,10 +182,13 @@ class PmRecipe(models.Model):
     def act_reset(self):
         self.state = 'draft'
 
-    def write(self, val):
-        if self.state == "approved":
-            head_of_culinary = self.env.user.has_group('pm_culinary.group_acac_culinary_head')
-            if not head_of_culinary:
-                raise ValidationError("Recipe record has already been approved, Please contact the administration")
-        res = super(PmRecipe, self).write(val)
-        return res
+
+    # This function is disable as an adjustment for Culinary to create recipe
+
+    # def write(self, val):
+    #     if self.state == "approved":
+    #         head_of_culinary = self.env.user.has_group('pm_culinary.group_acac_culinary_head')
+    #         if not head_of_culinary:
+    #             raise ValidationError("Recipe record has already been approved, Please contact the administration")
+    #     res = super(PmRecipe, self).write(val)
+    #     return res
