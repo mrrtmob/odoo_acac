@@ -13,6 +13,7 @@ class ReportRecipeDetail(models.AbstractModel):
             'custom_number_of_portion': data['number_of_portion'],
             'custom_makes': data['makes']
         }
+        print(custom_data)
 
         return {
             'doc_ids': docids,

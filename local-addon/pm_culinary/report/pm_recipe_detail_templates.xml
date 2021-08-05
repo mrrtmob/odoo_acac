@@ -41,10 +41,10 @@
             </div>
           </t>
 
-          <t t-if="o.type">
+          <t t-if="o.category_id">
             <div class="col-3">
-              <strong>Type</strong><br/>
-              <span t-field="o.type" />
+              <strong>Category</strong><br/>
+              <span t-field="o.category_id.name" />
             </div>
           </t>
 
