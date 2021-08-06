@@ -68,12 +68,10 @@ class PaymentPortal(CustomerPortal):
             'items': items,
         }
         return request.render("pm_rest_api.pm_payment_form", val)
-        return Response(json.dumps(val, indent=4, cls=ObjectEncoder),
-                        content_type='application/json;charset=utf-8', status=200)
 
     @http.route(['/student/payment/generate/<int:payment_id>'],
                 type='http', auth="user", website=True)
-    def portal_create_payment(self, payment_id):
+    def portal_generate_payment(self, payment_id):
         PayWay = ABAPayWay()
         merchant_id = PayWay.get_merchant_id()
         payment_obj = request.env['op.student.fees.details'].sudo().browse(payment_id)

@@ -47,7 +47,7 @@ class HrEmployeePrivate(models.Model):
         'The employee address has a company linked',
         compute='_compute_is_address_home_a_company',
     )
-    private_email = fields.Char(related='address_home_id.email', string="Private Email", groups="hr.group_hr_user")
+    private_email = fields.Char(string="Private Email", groups="hr.group_hr_user")
     country_id = fields.Many2one(
         'res.country', 'Nationality (Country)', groups="hr.group_hr_user", tracking=True)
     gender = fields.Selection([
@@ -96,7 +96,7 @@ class HrEmployeePrivate(models.Model):
     km_home_work = fields.Integer(string="Home-Work Distance", groups="hr.group_hr_user", tracking=True)
 
     image_1920 = fields.Image(default=_default_image)
-    phone = fields.Char(related='address_home_id.phone', related_sudo=False, readonly=False, string="Private Phone", groups="hr.group_hr_user")
+    phone = fields.Char(related_sudo=False, readonly=False, string="Private Phone", groups="hr.group_hr_user")
     # employee in company
     child_ids = fields.One2many('hr.employee', 'parent_id', string='Direct subordinates')
     category_ids = fields.Many2many(
