@@ -81,6 +81,7 @@ class PmEmployees(models.Model):
     cra_country_id = fields.Many2one(
         'res.country', 'Country', )
     is_hr_user = fields.Boolean('Approver', compute="compute_is_hr_user", readonly=True)
+    certificate = fields.Selection(selection_add=[('diploma', 'Diploma'), ('high_school', 'High School')])
 
     private_email = fields.Char("Email", readonly=False)
     phone = fields.Char(string="Phone", readonly=False)
@@ -98,13 +99,13 @@ class PmEmployees(models.Model):
 
 
     # for home country address
-    hca_street = fields.Char('Street...')
-    hca_city = fields.Char('City', size=64)
-    hca_zip = fields.Char('Zip', size=8)
+    hca_street = fields.Char('Street..')
+    hca_city = fields.Char('City..', size=64)
+    hca_zip = fields.Char('Zip..', size=8)
     hca_state_id = fields.Many2one(
-        'res.country.state', 'States')
+        'res.country.state', 'States..')
     hca_country_id = fields.Many2one(
-        'res.country', 'Country', )
+        'res.country', 'Country..', )
     joining_date = fields.Date('Contract Signed Date', required=True, readonly=False)
     leaving_date = fields.Date('Last Day')
     godfather_id = fields.Many2one(comodel_name='res.users', string='Godfather', required=False, copy=False, index=True)
@@ -289,6 +290,8 @@ class PmEmployees(models.Model):
 
     @api.model
     def create(self, vals):
+        print("FFFFFFFF")
+        print(self.env['ir.sequence'].next_by_code('hr.employee'))
         vals['employee_number'] = self.env['ir.sequence'].next_by_code('hr.employee')
         res = super(PmEmployees, self).create(vals)
         return res
