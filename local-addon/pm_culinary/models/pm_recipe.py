@@ -72,7 +72,7 @@ class PmRecipe(models.Model):
     sub_recipes_cost = fields.Float('Estimated Sub Recipes Cost', compute='_compute_cost')
     price = fields.Float('Selling Price', compute='_compute_price', tracking=True)
     cost_in_percentage = fields.Float('Cost (%)', required=True, default=30, tracking=True)
-    makes = fields.Float(tracking=True)
+    makes = fields.Float(tracking=True, default=1)
     uor = fields.Selection(
         [('kg', 'kg'),
          ('l', 'l')],
@@ -101,7 +101,6 @@ class PmRecipe(models.Model):
     @api.depends('ingredients.cost', 'sub_recipes.cost', 'number_of_portion')
     def _compute_cost(self):
         for record in self:
-            print("YO!!")
             record.ingredients_cost = sum(record.ingredients.mapped('cost'))
             record.sub_recipes_cost = sum(record.sub_recipes.mapped('cost'))
 
@@ -120,7 +119,6 @@ class PmRecipe(models.Model):
 
     @api.depends('cost', 'cost_in_percentage')
     def _compute_price(self):
-        print("YO3!!")
         for record in self:
             record.price = (record.cost / record.cost_in_percentage) * 100
 

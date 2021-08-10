@@ -40,9 +40,6 @@
         'views/student_view.xml',
         'menus/op_menu.xml'
     ],
-    'demo': [
-        'demo/activity_demo.xml',
-    ],
     'images': [
         'static/description/openeducat_activity_banner.jpg',
     ],

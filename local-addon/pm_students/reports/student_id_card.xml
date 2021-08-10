@@ -4,7 +4,7 @@
               inherit_id="openeducat_core.report_student_idcard"
               priority="40">
         <xpath expr="//div[hasclass('page')]" position="replace">
-            <div class="page" style="padding:150px 0 0 0;">
+            <div class="page">
                 <style>
                     .img-profile {
                         width: 70px;
@@ -49,8 +49,18 @@
                         margin-bottom: 1.7rem;
                     }
                 </style>
-                <div class="d-flex">
-                    <div class="border" style="width: 400px;">
+                <t t-set="counter" t-value="0"/>
+                <t t-foreach="docs" t-as="o">
+                    <br/>
+                    <br/>
+
+                    <t t-if="counter ==4">
+                        <div style="page-break-before:always;" ></div>
+                        <t t-set="counter" t-value="0"/>
+                    </t>
+
+                    <div class="d-flex justify-content-center">
+                    <div class="border" style="width: 400px; margin-right:80px" >
                         <div style="border-bottom: 2px solid #4f0147;" class="text-center">
 <!--                            <img src="/pm_students/static/src/img/no_bg_icon.png" class="img-brand p-2"/>-->
                         
@@ -105,6 +115,8 @@
                          
                     </div>
                 </div>
+                    <t t-set="counter" t-value="counter + 1" />
+                </t>
             </div>
         </xpath>
     </template>
