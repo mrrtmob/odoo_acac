@@ -101,7 +101,6 @@ class PmRecipe(models.Model):
     @api.depends('ingredients.cost', 'sub_recipes.cost', 'number_of_portion')
     def _compute_cost(self):
         for record in self:
-            print("YO!!")
             record.ingredients_cost = sum(record.ingredients.mapped('cost'))
             record.sub_recipes_cost = sum(record.sub_recipes.mapped('cost'))
 
@@ -120,7 +119,6 @@ class PmRecipe(models.Model):
 
     @api.depends('cost', 'cost_in_percentage')
     def _compute_price(self):
-        print("YO3!!")
         for record in self:
             record.price = (record.cost / record.cost_in_percentage) * 100
 
