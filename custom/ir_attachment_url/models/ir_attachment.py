@@ -9,6 +9,8 @@ import logging
 import requests
 
 from odoo import api, models
+import urllib3
+
 
 _logger = logging.getLogger(__name__)
 
@@ -20,6 +22,7 @@ class IrAttachment(models.Model):
     @api.depends("store_fname", "db_datas")
     def _compute_raw(self):
         url_records = self.filtered(lambda r: r.type == "url" and r.url)
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         print(url_records)
         for attach in url_records:
             r = requests.get(attach.url, timeout=5, verify=False)

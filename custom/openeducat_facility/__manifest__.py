@@ -36,9 +36,9 @@
         'views/facility_line_view.xml',
         'menus/op_menu.xml',
     ],
-    'demo': [
-        'demo/facility_demo.xml'
-    ],
+    # 'demo': [
+    #     'demo/facility_demo.xml'
+    # ],
     'images': [
         'static/description/openeducat_facility_banner.jpg',
     ],

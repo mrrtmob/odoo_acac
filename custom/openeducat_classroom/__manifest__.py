@@ -35,10 +35,10 @@
         'views/classroom_view.xml',
         'menus/op_menu.xml',
     ],
-    'demo': [
-        'demo/classroom_demo.xml',
-        'demo/facility_line_demo.xml'
-    ],
+    # 'demo': [
+    #     'demo/classroom_demo.xml',
+    #     'demo/facility_line_demo.xml'
+    # ],
     'images': [
         'static/description/openeducat_classroom_banner.jpg',
     ],
