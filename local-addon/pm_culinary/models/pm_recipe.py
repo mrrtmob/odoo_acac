@@ -72,7 +72,7 @@ class PmRecipe(models.Model):
     sub_recipes_cost = fields.Float('Estimated Sub Recipes Cost', compute='_compute_cost')
     price = fields.Float('Selling Price', compute='_compute_price', tracking=True)
     cost_in_percentage = fields.Float('Cost (%)', required=True, default=30, tracking=True)
-    makes = fields.Float(tracking=True)
+    makes = fields.Float(tracking=True, default=1)
     uor = fields.Selection(
         [('kg', 'kg'),
          ('l', 'l')],
