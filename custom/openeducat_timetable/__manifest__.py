@@ -44,10 +44,10 @@
         'views/timetable_templates.xml',
         'menus/op_menu.xml',
     ],
-    'demo': [
-        'demo/timing_demo.xml',
-        'demo/op_timetable_demo.xml'
-    ],
+    # 'demo': [
+    #     'demo/timing_demo.xml',
+    #     'demo/op_timetable_demo.xml'
+    # ],
     'images': [
         'static/description/openeducat_timetable_banner.jpg',
     ],
