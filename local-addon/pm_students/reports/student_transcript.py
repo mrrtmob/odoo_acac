@@ -2,7 +2,7 @@
 ###############################################################################
 #
 #    Tech-Receptives Solutions Pvt. Ltd.
-#    Copyright (C) 2009-TODAY Tech-Receptives(<http://www.techreceptives.com>).
+#    Copyright (C) 2009-TODAY Tech-Receptives(<http://www.techreceptives.com>).get_birth_place
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Lesser General Public License as
@@ -86,10 +86,9 @@ class StudentTranscriptReport(models.AbstractModel):
         for sc in student_courses:
             ex_subjects.append(sc.p_e_subject_ids)
 
-        print(ex_subjects)
+        semesters = self.env['pm.semester'].search([('batch_id', '=', data['batch_id'])])
+        total_course_credit = sum(x.total_credit for x in semesters)
         if data['is_final']:
-            semesters = self.env['pm.semester'].search([('batch_id', '=', data['batch_id'])])
-            total_course_credit = sum(x.total_credit for x in semesters)
             wiegh_average_gpa = 0
             ex_count = 0
             gpa = 0
@@ -124,7 +123,8 @@ class StudentTranscriptReport(models.AbstractModel):
                             'code': subject.code,
                             'name': subject.name,
                             'credits': subject.p_credits,
-                            'grade': grade
+                            'grade': grade,
+                            'score': srl.total_score
                         }
                         lst.append(dic)
 
@@ -147,6 +147,7 @@ class StudentTranscriptReport(models.AbstractModel):
                 }
                 lst.append(dic)
             gpa = round(wiegh_average_gpa / total_course_credit, 1)
+            semester_average = res.result
 
         # Transcript for one semester
         else:
@@ -216,6 +217,8 @@ class StudentTranscriptReport(models.AbstractModel):
         return [{'subjects': lst,
                  'absence': absence,
                 'gpa': gpa,
+                'semester_average': semester_average,
+                'total_course_credit': total_course_credit,
                 'discipline_points': discipline_points,
                 'total_credit': total_course_credit}]
        
