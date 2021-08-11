@@ -69,6 +69,7 @@ class StudentTranscriptReport(models.AbstractModel):
         lst = []
         gpa = 0
         absence = 0
+        semester_average =0
         # get student course
 
         student_courses = self.env['op.student.course'].search([('course_id', '=', data['course_id']),
@@ -147,7 +148,7 @@ class StudentTranscriptReport(models.AbstractModel):
                 }
                 lst.append(dic)
             gpa = round(wiegh_average_gpa / total_course_credit, 1)
-            semester_average = res.result
+
 
         # Transcript for one semester
         else:
@@ -189,6 +190,7 @@ class StudentTranscriptReport(models.AbstractModel):
                 ex_count = 0
                 sub_count = 0
                 for res in student_results:
+                    semester_average = res.result
                     print('1', res.semester_id.id)
                     print('2', data['semester_id'])
                     if res.semester_id.id == data['semester_id']:
