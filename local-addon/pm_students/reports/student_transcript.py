@@ -200,8 +200,8 @@ class StudentTranscriptReport(models.AbstractModel):
                     if res.semester_id.id == data['semester_id']:
                         print('hit coni')
                         gpa = res.gpa
-                        result = srl.total_score
                         for srl in res.semester_res_line:
+                            result = srl.total_score
                             if srl.exam_state != 'covered':
                                 subject = srl.subject_id
                                 grade = ''
