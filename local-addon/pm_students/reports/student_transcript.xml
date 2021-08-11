@@ -220,6 +220,11 @@
                                               <td class="text-center w150"></td>
                                               <td class="text-center w150">Passed</td>
                                             </tr>
+                                            <tr>
+                                              <td class="text-center w150">I</td>
+                                              <td class="text-center w150"></td>
+                                              <td class="text-center w150">Incomplete</td>
+                                            </tr>
                                           </tbody>
                                         </table>
                                     </div>
