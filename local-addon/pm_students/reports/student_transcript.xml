@@ -118,19 +118,16 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="absence">
-                                                <label class="m-0 font-weight-bold d-inline" style="padding-right: 103px;">Accumulative Credit</label>
+                                                <label class="m-0 font-weight-bold d-inline" style="padding-right: 73px;">Accumulative Credits</label>
                                                 <p class="d-inline text-right">
                                                    <t t-foreach="get_data" t-as="obj">
-                                                      <span t-esc="obj['total_course_credit']"/>
+                                                        72
                                                   </t>
                                                 </p>
                                             </div>
                                             <div class="discipline">
-                                                <label class="m-0 font-weight-bold d-inline"  style="padding-right: 50px;">Accumulative Credit</label>
+                                                <label class="m-0 font-weight-bold d-inline"  style="padding-right: 50px;">Accumulative Average</label>
                                                 <p class="d-inline text-right">
-<!--                                                   <t t-foreach="get_data" t-as="obj">-->
-<!--                                                      <span t-esc="obj['discipline_points']"/>-->
-<!--                                                  </t>-->
                                                 </p>
                                       </div>
                                         </div>

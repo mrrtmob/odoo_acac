@@ -46,7 +46,7 @@ class StudentTranscriptReport(models.AbstractModel):
     def get_student_bod(self, data): 
         student = self.env['op.student'].browse(data['student_id'])
         if student:
-            return student.birth_date.strftime('%d/%m/%Y')
+            return student.birth_date.strftime('%d/%b/%Y')
 
     def get_birth_place(self, data):
         student = self.env['op.student'].browse(data['student_id']) 
@@ -111,21 +111,24 @@ class StudentTranscriptReport(models.AbstractModel):
                 semester_credit = res.semester_id.total_credit
                 wiegh_average_gpa += res.gpa * semester_credit
                 for srl in res.semester_res_line:
+                    result = srl.total_score
                     if srl.exam_state != 'covered':
                         subject = srl.subject_id
                         grade = ''
                         if subject in ex_subjects:
                             grade = 'E'
+                            result = 'E'
                             ex_count += 1
                         else:
                             grade = srl.grade
+                            result = srl.total_score
                         sub_count += 1
                         dic = {
                             'code': subject.code,
                             'name': subject.name,
                             'credits': subject.p_credits,
                             'grade': grade,
-                            'score': srl.total_score
+                            'score': result
                         }
                         lst.append(dic)
 
@@ -197,22 +200,25 @@ class StudentTranscriptReport(models.AbstractModel):
                     if res.semester_id.id == data['semester_id']:
                         print('hit coni')
                         gpa = res.gpa
+                        result = srl.total_score
                         for srl in res.semester_res_line:
                             if srl.exam_state != 'covered':
                                 subject = srl.subject_id
                                 grade = ''
                                 if subject in ex_subjects:
                                     grade = 'E'
+                                    result = 'E'
                                     ex_count += 1
                                 else:
                                     grade = srl.grade
+                                    result = srl.total_score
                                 sub_count += 1
                                 dic = {
                                     'code': subject.code,
                                     'name': subject.name,
                                     'credits': subject.p_credits,
                                     'grade': grade,
-                                    'score': srl.total_score
+                                    'score': result
                                 }
                                 lst.append(dic)
                             else:
