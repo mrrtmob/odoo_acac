@@ -181,7 +181,8 @@ class StudentTranscriptReport(models.AbstractModel):
                         'code': pl.subject_id.code,
                         'name': pl.subject_id.name,
                         'credits': pl.subject_id.p_credits,
-                        'grade': grade
+                        'grade': grade,
+
                     }
 
                     lst.append(dic)
@@ -210,7 +211,8 @@ class StudentTranscriptReport(models.AbstractModel):
                                     'code': subject.code,
                                     'name': subject.name,
                                     'credits': subject.p_credits,
-                                    'grade': grade
+                                    'grade': grade,
+                                    'score': srl.total_score
                                 }
                                 lst.append(dic)
                             else:
