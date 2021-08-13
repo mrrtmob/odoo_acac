@@ -16,6 +16,7 @@ class PmRecipeLine(models.Model):
         domain="[('product_tmpl_id.is_food','=',True), ('product_tmpl_id.rank', '=', 'a')]"
     )
     quantity = fields.Float('Qty', digits=(12, 3))
+    initial_quantity = fields.Float('Initial Quantity', digits=(12, 3))
     # NOTE: unused
     uom_id = fields.Many2one('uom.uom', 'Unit',
                              domain="[('measure_type', '!=', 'working_time'),('measure_type', '!=', 'length')]")
@@ -132,6 +133,7 @@ class PmRecipeLine(models.Model):
     @api.depends('product_id.product_tmpl_id.cost', 'product_id.product_tmpl_id.uom_id', 'uom_id', 'quantity', 'as_purchased')
     def _compute_cost(self):
         for record in self:
+            print("_compute_cost recipe line")
             if record.product_id:
                 record.cost = record.product_id.product_tmpl_id.cost * record.as_purchased
             elif record.sub_recipe_id:
@@ -157,8 +159,12 @@ class PmRecipeLine(models.Model):
 
     @api.model
     def create(self, values):
+        print("Hit Create Line")
+        print(values['quantity'])
         if values.get('display_type', self.default_get(['display_type'])['display_type']):
             values.update(product_id=False, sub_recipe_id=False)
+
+        values['initial_quantity'] = values['quantity']
 
         line = super(PmRecipeLine, self).create(values)
 

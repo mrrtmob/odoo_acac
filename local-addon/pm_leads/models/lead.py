@@ -6,6 +6,19 @@ import datetime
 import simplejson
 from odoo.exceptions import ValidationError, UserError
 
+class PmCustomResPartner(models.Model):
+    _inherit = 'res.partner'
+    is_displayed = fields.Boolean(compute="_compute_display_contact", store=True)
+
+    @api.depends('name', 'display_name', 'phone', 'email')
+    def _compute_display_contact(self):
+        print("here")
+        for contact in self:
+            display = False
+            if contact.name and contact.display_name and contact.phone or contact.email:
+                print("true")
+                display = True
+            contact.is_displayed = display
 
 class NotEnrollReason(models.Model):
     _name = 'pm.not_enroll_reason'

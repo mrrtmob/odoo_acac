@@ -62,7 +62,7 @@ class PmRecipe(models.Model):
     record_url = fields.Char('Link', compute='_compute_record_url', store=True)
     approver = fields.Many2one('res.users', 'Approve By', readonly=True)
     date_of_test = fields.Date(track_visibility='onchange')
-    number_of_portion = fields.Integer('Yield', required=True, default=1, tracking=True)
+    number_of_portion = fields.Integer('Yield', required=True, default=10, tracking=True)
     cost = fields.Float('Total Cost', compute='_compute_cost', store=True, track_visibility='onchange')
     price_per_portion = fields.Float('Selling Price per Portion', compute='_compute_price_per_portion', track_visibility='onchange')
     ingredients = fields.One2many('pm.recipe.line', 'recipe_id', 'Ingredients & Preparation Instructions',
@@ -91,6 +91,16 @@ class PmRecipe(models.Model):
                 raise ValidationError(
                     _("Yield must be greater than 0."))
 
+    @api.onchange('number_of_portion')
+    def _update_ingredient_qty(self):
+        print('_update_ingredient_qty')
+        for record in self:
+            record.cost_per_portion = record.cost / record.number_of_portion
+            record.price_per_portion = record.price / record.number_of_portion
+            lines = record.ingredients
+            for line in lines:
+                line.quantity = line.initial_quantity * (record.number_of_portion / 10)
+
     @api.constrains('price')
     def _check_price(self):
         for record in self:
@@ -98,21 +108,18 @@ class PmRecipe(models.Model):
                 raise ValidationError(
                     _("Price must be greater than 0."))
 
-    @api.depends('ingredients.cost', 'sub_recipes.cost', 'number_of_portion')
+    @api.depends('ingredients.cost', 'sub_recipes.cost')
     def _compute_cost(self):
+        print("_compute_cost!!")
         for record in self:
             record.ingredients_cost = sum(record.ingredients.mapped('cost'))
             record.sub_recipes_cost = sum(record.sub_recipes.mapped('cost'))
 
             record.cost = record.ingredients_cost + record.sub_recipes_cost
 
-            if record.number_of_portion:
-                record.cost_per_portion = record.cost / record.number_of_portion
-            else:
-                record.cost_per_portion = 0
-
             # NOTE: update the recipe lines which use this recipe
             main_recipe_lines = self.env['pm.recipe.line'].search([('sub_recipe_id', '=', record.id)])
+            record.cost_per_portion = record.cost / record.number_of_portion
 
             for main_recipe_line in main_recipe_lines:
                 main_recipe_line._compute_cost()
@@ -122,8 +129,12 @@ class PmRecipe(models.Model):
         for record in self:
             record.price = (record.cost / record.cost_in_percentage) * 100
 
-    @api.depends('price', 'number_of_portion')
+
+
+
+    @api.depends('price')
     def _compute_price_per_portion(self):
+        print("_compute_price_per_portion!!")
         for record in self:
             if record.number_of_portion:
                 record.price_per_portion = record.price / record.number_of_portion
