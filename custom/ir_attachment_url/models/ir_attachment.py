@@ -22,11 +22,12 @@ class IrAttachment(models.Model):
     @api.depends("store_fname", "db_datas")
     def _compute_raw(self):
         url_records = self.filtered(lambda r: r.type == "url" and r.url)
-        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         print(url_records)
         for attach in url_records:
-            r = requests.get(attach.url, timeout=5, verify=False)
+            r = requests.get(attach.url)
+            print(r)
             attach.raw = r.content
+
 
         super(IrAttachment, self - url_records)._compute_raw()
 
@@ -144,4 +145,5 @@ class IrAttachment(models.Model):
             )
             attach.write({"store_fname": new_store_fname, "url": url})
             self._file_delete(old_store_fname)
+
 
