@@ -27,7 +27,7 @@ You can assign several contracts per employee.
         'views/assets.xml',
         'wizard/hr_departure_wizard_views.xml',
     ],
-    'demo': ['data/hr_contract_demo.xml'],
+    # 'demo': ['data/hr_contract_demo.xml'],
     'installable': True,
     'auto_install': False,
     'application': True,

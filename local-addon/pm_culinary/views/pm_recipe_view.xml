@@ -48,12 +48,14 @@
             <kanban class="o_res_partner_kanban">
               <field name="id" />
               <field name="name" />
+              <field name="is_expired" />
               <field name="recipe_image" />
               <field name="currency_id" />
 
               <templates>
                 <t t-name="kanban-box">
-                  <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
+                <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
+                  <!-- <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban #{kanban_color(record.color.raw_value)} "> -->
                     <t t-set="placeholder" t-value="'/pm_culinary/static/img/nologo.png'"/>
                     <div class="o_kanban_image_fill_left o_kanban_image_full" t-attf-style="background-image: url(#{kanban_image('pm.recipe', 'recipe_image', record.id.raw_value, placeholder)})" role="img"/>
                     <div class="oe_kanban_details">
@@ -65,6 +67,9 @@
                       </ul>
 
                       <field name="state" widget="label_selection" options="{'classes': {'draft': 'primary', 'submitted': 'secondary', 'approved': 'success', 'rejected': 'danger'}}"/>
+                    </div>
+                     <div class="float-right"  t-if="record.is_expired.raw_value">
+                        <span class="fa fa-circle text-warning" role="img" aria-label="This recipe haven't been modified in more than 60 days" title="This recipe haven't been modified in more than 60 days"></span>
                     </div>
                   </div>
                 </t>

@@ -22,6 +22,7 @@ class OpAdmission(models.Model):
         'Name', size=128, required=False, translate=False)
     readonly = fields.Boolean(compute="_compute_read_only")
     class_id = fields.Many2one('op.classroom', 'Class', required=False)
+    birth_place = fields.Many2one('res.country.state', 'Birth Place')
     fill_application = fields.Boolean('Fill Application')
     marital_status = fields.Selection([('single', 'Single'),
                                        ('married', 'Married')])
@@ -468,10 +469,11 @@ class OpAdmission(models.Model):
         for record in self:
             messages = ''
             if not record.class_id:
-                messages += 'Class is required </br>'
+                messages += 'Class is required <br>'
             if not record.contact_name:
-                messages += 'Emergency Contact </br>'
-
+                messages += 'Emergency Contact <br>'
+            print('*************')
+            print(messages)
             if len(messages):
                 notification = {
                     'type': 'ir.actions.client',
@@ -599,6 +601,7 @@ class OpAdmission(models.Model):
             details.update({
                 'title': student.title and student.title.id or False,
                 'first_name': student.first_name,
+                'birth_place': student.birth_place,
                 'middle_name': student.middle_name,
                 'khmer_name': student.khmer_name,
                 'last_name': student.last_name,

@@ -22,10 +22,8 @@ class IrAttachment(models.Model):
     @api.depends("store_fname", "db_datas")
     def _compute_raw(self):
         url_records = self.filtered(lambda r: r.type == "url" and r.url)
-        print(url_records)
         for attach in url_records:
             r = requests.get(attach.url)
-            print(r)
             attach.raw = r.content
 
 

@@ -113,6 +113,7 @@
                     <field name="last_name" string="Family Name"/>
                     <field name="khmer_name"/>
                     <field name="dob"/>
+                    <field name="birth_place"/>
                     <field name="gender"/>
 <!--                    <field name="user_id" placeholder="User" readonly="1"/>-->
                 </xpath>

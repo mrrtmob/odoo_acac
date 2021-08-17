@@ -140,6 +140,7 @@ class Lead(models.Model):
         ('o', 'Other')
     ], 'Gender', required=False)
     dob = fields.Date('Date of Birth')
+    birth_place = fields.Many2one('res.country.state', 'Birth Place')
     type = fields.Selection(selection_add=[('admission', 'Admission')], ondelete={'admission': 'cascade'})
     rank = fields.Selection([('first_contact', 'First Contact'),
                              ('potential', 'Potential'),
@@ -429,6 +430,7 @@ class Lead(models.Model):
                 'default_mobile': lead.mobile,
                 'default_phone': lead.phone,
                 'default_birth_date': lead.dob,
+                'default_birth_place': lead.birth_place,
                 'default_city': lead.city,
                 'default_zip': lead.zip,
                 'default_current_address': lead.current_address,

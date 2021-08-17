@@ -20,6 +20,7 @@ class PMStudentProgression(models.Model):
     education_status = fields.Selection([('active', 'Active'),
                                          ('return', 'Returned'),
                                          ('enrollment', 'Enrollment'),
+                                         ('​retake', '​Retake'),
                                          ('postponed', 'Postponed'),
                                          ('withdrawn', 'Withdrawn'),
                                          ('graduated', 'Graduated'),

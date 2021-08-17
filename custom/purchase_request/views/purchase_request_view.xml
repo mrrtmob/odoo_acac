@@ -446,6 +446,7 @@
     </record>
      <record id="purchase.menu_purchase_rfq" model="ir.ui.menu">
         <field name="name">Requests for Purchase Order</field>
+        <field name="sequence">25</field>
     </record>
 
 
