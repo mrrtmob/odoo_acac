@@ -19,6 +19,7 @@ class PMStudentProgression(models.Model):
     education_status = fields.Selection([('active', 'Active'),
                                          ('return', 'Returned'),
                                          ('enrollment', 'Enrollment'),
+                                         ('​retake', '​Retake'),
                                          ('postponed', 'Postponed'),
                                          ('withdrawn', 'Withdrawn'),
                                          ('graduated', 'Graduated'),
@@ -52,7 +53,8 @@ class OpStudentCourse(models.Model):
                                          ('postponed', 'Postponed'),
                                          ('withdrawn', 'Withdrawn'),
                                          ('graduated', 'Graduated'),
-                                         ('dismissed', 'Dismissed')
+                                         ('dismissed', 'Dismissed'),
+                                         ('retake', 'Retake')
                                          ], 'Status', default='active')
 
     p_e_subject_ids = fields.Many2many('op.subject', relation='student_e_subjects_rel', readonly=False, string='Exempted Subjects')

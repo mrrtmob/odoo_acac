@@ -3,6 +3,7 @@
 from odoo import models, fields, api, _
 from odoo.http import request
 from odoo.exceptions import ValidationError
+from datetime import datetime, timedelta
 
 _TYPE = [
     ('cold_appetizer', 'Cold Appetizers'),
@@ -36,7 +37,6 @@ class PmRecipe(models.Model):
     _name = "pm.recipe"
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Recipe"
-    color = fields.Integer()
     name = fields.Char("Recipe Name", track_visibility='onchange')
     state = fields.Selection(
         [('draft', 'Draft'),
@@ -83,6 +83,21 @@ class PmRecipe(models.Model):
 
     nutrition = fields.Html('Nutritional Information')
     allergic = fields.Html('Allergic')
+    color = fields.Integer(string='Color Index')
+    is_expired = fields.Boolean(string='Expired', default=False, compute="_compute_expire", store=True)
+
+    @api.depends('write_date')
+    def _compute_expire(self):
+        for rec in self:
+            today = fields.Date.today()
+            d = timedelta(days=60)
+            expired_date = today - d
+            print("WTF")
+            print(rec.write_date)
+            print("Expire")
+            print(expired_date)
+            if rec.write_date.date() < expired_date:
+               rec.is_expired = True
 
     @api.constrains('number_of_portion')
     def _check_number_of_portion(self):

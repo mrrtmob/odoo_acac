@@ -88,6 +88,22 @@
             <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
         </record>
 
+         <record id="ohrms_loan.menu_base_hr_loan_request" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('pm_leads.group_nobody'))]"/>
+        </record>
+
+         <record id="ohrms_loan.menu_hr_loans_and_advances" model="ir.ui.menu">
+            <field name="name">Salary Advances</field>
+        </record>
+
+         <record id="contacts.action_contacts" model="ir.actions.act_window">
+            <field name="domain">[('is_displayed','=',True)]</field>
+        </record>
+
+         <record id="ohrms_loan.menu_hr_loan_request" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('pm_leads.group_nobody'))]"/>
+        </record>
+
 
 
            <record model="ir.ui.menu" id="hr_recruitment.menu_hr_department">

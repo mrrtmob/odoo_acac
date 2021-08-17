@@ -110,6 +110,7 @@
                          <group>
                             <field name="khmer_name" attrs="{'readonly': [('state','=', 'done')]}"/>
                              <field name="birth_date" string="Date of Birth" attrs="{'readonly': [('state','=', 'done')]}" />
+                             <field name="birth_place" attrs="{'readonly': [('state','=', 'done')]}" />
                              <field name="gender" attrs="{'readonly': [('state','=', 'done')]}" />
                              <label for="street" string="Address"/>
                             <div class="o_address_format">

@@ -37,7 +37,7 @@
              'views/assets.xml',
              'menus/op_menu.xml',
              ],
-    'demo': ['demo/activity_announcement_demo.xml'],
+    # 'demo': ['demo/activity_announcement_demo.xml'],
 
     'images': [],
     'qweb': [
