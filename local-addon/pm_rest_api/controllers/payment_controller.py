@@ -87,7 +87,7 @@ class PaymentPortal(CustomerPortal):
         api_url = PayWay.get_api_url()
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id
-        base_url = request.env['ir.config_parameter'].get_param('web.base.url')
+        base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
         success_url = base_url + '/student/aba/success'
         print("*******-*********")
         print(success_url)
