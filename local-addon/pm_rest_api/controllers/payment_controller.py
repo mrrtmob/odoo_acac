@@ -7,6 +7,7 @@ from odoo.addons.openeducat_rest.controllers.main import ObjectEncoder
 from odoo.http import Response
 from odoo.addons.pm_rest_api.controllers.aba_payway import ABAPayWay
 import json
+from user_agents import parse
 
 
 
@@ -53,8 +54,10 @@ class PaymentPortal(CustomerPortal):
         api_url = PayWay.get_api_url()
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id
+        base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        success_url = base_url + '/student/aba/success'
         print("*******-*********")
-        print(type(payment_obj.amount))
+        print(success_url)
 
         val = {
             'hash': hash_data,
@@ -62,6 +65,7 @@ class PaymentPortal(CustomerPortal):
             'amount_display': str(payment_obj.amount)+'$',
             'firstname': student.first_name,
             'lastname': student.last_name,
+            'continue_success_url': success_url,
             'email': student.email,
             'phone': student.mobile,
             'tran_id': payment_obj.id,
@@ -83,7 +87,10 @@ class PaymentPortal(CustomerPortal):
         api_url = PayWay.get_api_url()
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id
-        print(type(payment_obj.amount))
+        base_url = request.env['ir.config_parameter'].get_param('web.base.url')
+        success_url = base_url + '/student/aba/success'
+        print("*******-*********")
+        print(success_url)
 
         val = {
             'hash': hash_data,
@@ -91,6 +98,7 @@ class PaymentPortal(CustomerPortal):
             'amount_display': str(payment_obj.amount)+'$',
             'firstname': student.first_name,
             'lastname': student.last_name,
+            'continue_success_url': success_url,
             'email': student.email,
             'phone': student.mobile,
             'tran_id': payment_obj.id,
@@ -104,13 +112,17 @@ class PaymentPortal(CustomerPortal):
     
 
     @http.route(['/student/aba/success'],
-                type='http', website=True)
+                type='http',auth='public', website=True)
     def student_payment_success(self):
-        print(request)
-        print("*********************")
-        print("I am the success URL !!!!!!!!!!!")
-        val = {}
-        return request.render("pm_rest_api.pm_payment_success_form", val)
+        environ = request.httprequest.headers.environ
+        agent_string = environ.get("HTTP_USER_AGENT")
+        user_agent = parse(agent_string)
+        if user_agent.is_mobile:
+            print("I am from Mobile")
+            return request.redirect('acac://payment')
+        else:
+            print("I am from PC!!")
+            return request.render("pm_rest_api.pm_payment_success_form")
 
     @http.route(['/student/aba/pushback'],
                 type='http', website=True, methods=['POST'], auth='public', csrf=False)
