@@ -120,7 +120,7 @@
             <field name="name">Student Payment Reminder</field>
             <field name="subject">Payment Reminder</field>
             <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-            <field name="email_to"></field>
+            <field name="email_to">${object.student_id.email}</field>
             <field name="model_id" ref="openeducat_fees.model_op_student_fees_details"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">

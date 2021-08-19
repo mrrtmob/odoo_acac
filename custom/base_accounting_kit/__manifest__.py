@@ -86,7 +86,7 @@
         'wizard/partner_ledger.xml',
         'wizard/tax_report.xml',
         'wizard/account_lock_date.xml',
-        'wizard/trial_balance.xml',
+        # 'wizard/trial_balance.xml',
         'wizard/aged_partner.xml',
         'wizard/journal_audit.xml',
         'wizard/cash_flow_report.xml',
