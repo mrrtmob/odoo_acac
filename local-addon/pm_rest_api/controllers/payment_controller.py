@@ -53,10 +53,12 @@ class PaymentPortal(CustomerPortal):
         api_url = PayWay.get_api_url()
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id
+        print("*******-*********")
+        print(type(payment_obj.amount))
 
         val = {
             'hash': hash_data,
-            'amount': payment_obj.amount,
+            'amount': str(payment_obj.amount),
             'amount_display': str(payment_obj.amount)+'$',
             'firstname': student.first_name,
             'lastname': student.last_name,
@@ -67,6 +69,7 @@ class PaymentPortal(CustomerPortal):
             'push_back_url': push_back_url,
             'items': items,
         }
+        print(val)
         return request.render("pm_rest_api.pm_payment_form", val)
 
     @http.route(['/student/payment/generate/<int:payment_id>'],
@@ -80,10 +83,11 @@ class PaymentPortal(CustomerPortal):
         api_url = PayWay.get_api_url()
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id
+        print(type(payment_obj.amount))
 
         val = {
             'hash': hash_data,
-            'amount': payment_obj.amount,
+            'amount': str(payment_obj.amount),
             'amount_display': str(payment_obj.amount)+'$',
             'firstname': student.first_name,
             'lastname': student.last_name,
@@ -125,6 +129,7 @@ class PaymentPortal(CustomerPortal):
         invoice = student_fee.invoice_id
         payment_method = 3
         journal_id = 45
+        
         invoice.action_post()
 
         payment_data = {

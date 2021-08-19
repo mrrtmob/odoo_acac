@@ -106,15 +106,15 @@ class PmRecipe(models.Model):
                 raise ValidationError(
                     _("Yield must be greater than 0."))
 
-    # @api.onchange('number_of_portion')
-    # def _update_ingredient_qty(self):
-    #     print('_update_ingredient_qty')
-    #     for record in self:
-    #         record.cost_per_portion = record.cost / record.number_of_portion
-    #         record.price_per_portion = record.price / record.number_of_portion
-    #         lines = record.ingredients
-    #         for line in lines:
-    #             line.quantity = line.initial_quantity * (record.number_of_portion / 10)
+    @api.onchange('number_of_portion')
+    def _update_ingredient_qty(self):
+        print('_update_ingredient_qty')
+        for record in self:
+            record.cost_per_portion = record.cost / record.number_of_portion
+            record.price_per_portion = record.price / record.number_of_portion
+            lines = record.ingredients
+            for line in lines:
+                line.quantity = line.initial_quantity * (record.number_of_portion / 10)
 
     @api.constrains('price')
     def _check_price(self):
