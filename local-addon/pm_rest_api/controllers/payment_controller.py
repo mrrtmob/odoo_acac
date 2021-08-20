@@ -129,13 +129,13 @@ class PaymentPortal(CustomerPortal):
     def student_payment_push_back(self,  data, tran_id, status,**post):
 
         _logger.info(
-            "data %s "% (data)
+            "**********data %s "% (data)
         )
         _logger.info(
-            "tran_id %s "% (tran_id)
+            "***************tran_id %s "% (tran_id)
         )
         _logger.info(
-            "status %s "% (status)
+            "**************status %s "% (status)
         )
   
         return data
