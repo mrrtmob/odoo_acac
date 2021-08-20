@@ -128,6 +128,8 @@ class PaymentPortal(CustomerPortal):
                 type='http', website=True, methods=['POST'], auth='public', csrf=False)
     def student_payment_push_back(self, **post):
         data = json.loads(request.httprequest.data)
+        print("******************Hit Callback********************")
+        print(data)
 
         if data['status'] != 0:
             return "Unsuccessful Payment"
