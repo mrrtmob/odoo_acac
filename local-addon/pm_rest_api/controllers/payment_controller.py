@@ -130,6 +130,12 @@ class PaymentPortal(CustomerPortal):
         _logger.info(
             "***************tran_id %s "% (post)
         )
+        _logger.info(
+            "***************type %s "% (type(post))
+        )
+        _logger.info(
+            "***************type %s "% (post.get('response'))
+        )
         response = post.get('response')
         tran_id = response.get('tran_id')
         status = response.get('status')
