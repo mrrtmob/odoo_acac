@@ -150,7 +150,7 @@ class PaymentPortal(CustomerPortal):
         student_fee = request.env['op.student.fees.details'].sudo().search([('id', '=', tran_id)])
         invoice = student_fee.invoice_id
         payment_method = 3
-        journal_id = 1
+        journal_id = 7
         invoice.action_post()
         payment_data = {
             'payment_type': 'inbound',
@@ -164,6 +164,7 @@ class PaymentPortal(CustomerPortal):
         }
         account_payment = request.env['account.payment'].sudo().create(payment_data)
         print(account_payment)
+
 
 
 
