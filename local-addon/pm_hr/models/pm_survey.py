@@ -27,52 +27,52 @@ class PmLeave(models.Model):
 
 
 
-    def _check_approval_update(self, state):
-        print("hit me the fake one")
+    # def _check_approval_update(self, state):
+    #     print("hit me the fake one")
 
-        """ Check if target state is achievable. """
-        if self.env.is_superuser():
-            return
+    #     """ Check if target state is achievable. """
+    #     if self.env.is_superuser():
+    #         return
 
-        current_employee = self.env.user.employee_id
-        is_officer = self.env.user.has_group('hr_holidays.group_hr_holidays_user')
-        is_manager = self.env.user.has_group('hr_holidays.group_hr_holidays_manager')
+    #     current_employee = self.env.user.employee_id
+    #     is_officer = self.env.user.has_group('hr_holidays.group_hr_holidays_user')
+    #     is_manager = self.env.user.has_group('hr_holidays.group_hr_holidays_manager')
 
 
-        for holiday in self:
-            val_type = holiday.holiday_status_id.leave_validation_type
-            responsible = holiday.holiday_status_id.responsible_id
-            print(state)
-            print(responsible.name)
-            print(self.env.user.name)
+    #     for holiday in self:
+    #         val_type = holiday.holiday_status_id.leave_validation_type
+    #         responsible = holiday.holiday_status_id.responsible_id
+    #         print(state)
+    #         print(responsible.name)
+    #         print(self.env.user.name)
 
-            if state == 'validate' and val_type == 'both' and self.env.user != responsible:
-                raise UserError(
-                    _('You are not authorized to approve this final leave'))
+    #         if state == 'validate' and val_type == 'both' and self.env.user != responsible:
+    #             raise UserError(
+    #                 _('You are not authorized to approve this final leave'))
 
-            if not is_manager and state != 'confirm':
-                if state == 'draft':
-                    if holiday.state == 'refuse':
-                        raise UserError(_('Only a Leave Manager can reset a refused leave.'))
-                    if holiday.date_from and holiday.date_from.date() <= fields.Date.today():
-                        raise UserError(_('Only a Leave Manager can reset a started leave.'))
-                    if holiday.employee_id != current_employee:
-                        raise UserError(_('Only a Leave Manager can reset other people leaves.'))
-                else:
-                    if val_type == 'no_validation' and current_employee == holiday.employee_id:
-                        continue
-                    # use ir.rule based first access check: department, members, ... (see security.xml)
-                    holiday.check_access_rule('write')
+    #         if not is_manager and state != 'confirm':
+    #             if state == 'draft':
+    #                 if holiday.state == 'refuse':
+    #                     raise UserError(_('Only a Leave Manager can reset a refused leave.'))
+    #                 if holiday.date_from and holiday.date_from.date() <= fields.Date.today():
+    #                     raise UserError(_('Only a Leave Manager can reset a started leave.'))
+    #                 if holiday.employee_id != current_employee:
+    #                     raise UserError(_('Only a Leave Manager can reset other people leaves.'))
+    #             else:
+    #                 if val_type == 'no_validation' and current_employee == holiday.employee_id:
+    #                     continue
+    #                 # use ir.rule based first access check: department, members, ... (see security.xml)
+    #                 holiday.check_access_rule('write')
 
-                    # This handles states validate1 validate and refuse
-                    if holiday.employee_id == current_employee:
-                        raise UserError(_('Only a Leave Manager can approve/refuse its own requests.'))
+    #                 # This handles states validate1 validate and refuse
+    #                 if holiday.employee_id == current_employee:
+    #                     raise UserError(_('Only a Leave Manager can approve/refuse its own requests.'))
 
-                    if (state == 'validate' and val_type == 'manager') and holiday.holiday_type == 'employee':
-                        if not is_officer and self.env.user != holiday.employee_id.leave_manager_id:
-                            raise UserError(
-                                _('You must be either %s\'s manager or Leave manager to approve this leave') % (
-                                    holiday.employee_id.name))
+    #                 if (state == 'validate' and val_type == 'manager') and holiday.holiday_type == 'employee':
+    #                     if not is_officer and self.env.user != holiday.employee_id.leave_manager_id:
+    #                         raise UserError(
+    #                             _('You must be either %s\'s manager or Leave manager to approve this leave') % (
+    #                                 holiday.employee_id.name))
 
 
 
