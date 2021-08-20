@@ -127,11 +127,12 @@ class PaymentPortal(CustomerPortal):
     @http.route(['/student/aba/pushback'],
                 type='http', methods=['POST'], auth='public', csrf=False)
     def student_payment_push_back(self, **post):
-        print("GEEEEEEEEE")
-        print(post)
-        tran_id = post.response.tran_id
-        status = post.response.status
-
+        _logger.info(
+            "***************tran_id %s "% (post)
+        )
+        response = post['response']
+        tran_id = response['tran_id']
+        status = response['status']
         _logger.info(
             "***************tran_id %s "% (tran_id)
         )
