@@ -125,10 +125,12 @@ class PaymentPortal(CustomerPortal):
             return request.render("pm_rest_api.pm_payment_success_form")
 
     @http.route(['/student/aba/pushback'],
-                type='http',data=None, tran_id=None, status=None, website=True, methods=['POST'], auth='public', csrf=False)
-    def student_payment_push_back(self,  data, tran_id, status,**post):
-        tran_id = request.form['tran_id']
-        status = request.form['status']
+                type='http', methods=['POST'], auth='public', csrf=False)
+    def student_payment_push_back(self, **post):
+        print("GEEEEEEEEE")
+        print(post)
+        tran_id = post.response.tran_id
+        status = post.response.status
 
         _logger.info(
             "***************tran_id %s "% (tran_id)
@@ -136,37 +138,29 @@ class PaymentPortal(CustomerPortal):
         _logger.info(
             "**************status %s "% (status)
         )
-        data = json.loads(request.httprequest.data)
-  
-        return data
-
-        # if data['status'] != 0:
-        #     return "Unsuccessful Payment"
-
-        # transaction_obj = request.env['pm.aba.transaction'].sudo()
-        # transaction_obj.create({
-        #     'transaction_number': data['tran_id'],
-        #     'status': data['status']
-        # })
-        # student_fee = request.env['op.student.fees.details'].sudo().search([('id', '=', data['tran_id'])])
-        # invoice = student_fee.invoice_id
-        # payment_method = 3
-        # journal_id = 45
         
-        # invoice.action_post()
-
-        # payment_data = {
-        #     'payment_type': 'inbound',
-        #     'partner_type': 'customer',
-        #     'partner_id': invoice.partner_id.id,
-        #     'amount': invoice.amount_total,
-        #     'payment_date': datetime.today(),
-        #     'payment_method_id': payment_method,
-        #     'journal_id': journal_id,
-        #     'communication': invoice.name
-        # }
-        # account_payment = request.env['account.payment'].sudo().create(payment_data)
-        # print(account_payment)
+        transaction_obj = request.env['pm.aba.transaction'].sudo()
+        transaction_obj.create({
+            'transaction_number': tran_id,
+            'status': status
+        })
+        student_fee = request.env['op.student.fees.details'].sudo().search([('id', '=', tran_id)])
+        invoice = student_fee.invoice_id
+        payment_method = 3
+        journal_id = 1
+        invoice.action_post()
+        payment_data = {
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': invoice.partner_id.id,
+            'amount': invoice.amount_total,
+            'payment_date': datetime.today(),
+            'payment_method_id': payment_method,
+            'journal_id': journal_id,
+            'communication': invoice.name
+        }
+        account_payment = request.env['account.payment'].sudo().create(payment_data)
+        print(account_payment)
 
 
 
