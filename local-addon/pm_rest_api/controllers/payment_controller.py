@@ -157,7 +157,7 @@ class PaymentPortal(CustomerPortal):
             'partner_type': 'customer',
             'partner_id': invoice.partner_id.id,
             'amount': invoice.amount_total,
-            'payment_date': datetime.today(),
+            'created_date': datetime.today(),
             'payment_method_id': payment_method,
             'journal_id': journal_id,
             'communication': invoice.name
