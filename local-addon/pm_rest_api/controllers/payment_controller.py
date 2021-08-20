@@ -125,9 +125,12 @@ class PaymentPortal(CustomerPortal):
             return request.render("pm_rest_api.pm_payment_success_form")
 
     @http.route(['/student/aba/pushback'],
-                type='http', website=True, methods=['POST'], auth='public', csrf=False)
+                type='http',data=none, tran_id=None, status=None, website=True, methods=['POST'], auth='public', csrf=False)
     def student_payment_push_back(self, **post):
         print("******************Hit 1st********************")
+        print(data)
+        print(tran_id)
+        print(status)
         print(request.httprequest)
         print("******************Hit 2nd********************")
         print(request.httprequest.data)
