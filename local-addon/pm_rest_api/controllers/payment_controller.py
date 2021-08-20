@@ -1,6 +1,6 @@
 from odoo.http import request
 from datetime import datetime
-
+import logging
 from odoo import http, _
 from odoo.addons.portal.controllers.portal import CustomerPortal
 from odoo.addons.openeducat_rest.controllers.main import ObjectEncoder
@@ -127,16 +127,16 @@ class PaymentPortal(CustomerPortal):
     @http.route(['/student/aba/pushback'],
                 type='http',data=None, tran_id=None, status=None, website=True, methods=['POST'], auth='public', csrf=False)
     def student_payment_push_back(self,  data, tran_id, status,**post):
+        tran_id = request.form['tran_id']
+        status = request.form['status']
 
-        _logger.info(
-            "**********data %s "% (data)
-        )
         _logger.info(
             "***************tran_id %s "% (tran_id)
         )
         _logger.info(
             "**************status %s "% (status)
         )
+        data = json.loads(request.httprequest.data)
   
         return data
 
