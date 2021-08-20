@@ -160,7 +160,7 @@ class PaymentPortal(CustomerPortal):
             'create_date': datetime.today(),
             'payment_method_id': payment_method,
             'journal_id': journal_id,
-            'communication': invoice.name
+            'payment_reference': invoice.name
         }
         account_payment = request.env['account.payment'].sudo().create(payment_data)
         print(account_payment)
