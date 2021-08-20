@@ -9,7 +9,7 @@ from odoo.addons.pm_rest_api.controllers.aba_payway import ABAPayWay
 import json
 from user_agents import parse
 
-
+_logger = logging.getLogger(__name__)
 
 class PaymentPortal(CustomerPortal):
 
@@ -126,16 +126,19 @@ class PaymentPortal(CustomerPortal):
 
     @http.route(['/student/aba/pushback'],
                 type='http',data=None, tran_id=None, status=None, website=True, methods=['POST'], auth='public', csrf=False)
-    def student_payment_push_back(self, data=None, tran_id=None, status=None,**post):
-        print("******************Hit 1st********************")
-        print(data)
-        print(tran_id)
-        print(status)
-        print(request.httprequest)
-        print("******************Hit 2nd********************")
-        print(request.httprequest.data)
-        data = json.loads(request.httprequest.data)
-        print(data)
+    def student_payment_push_back(self,  data, tran_id, status,**post):
+
+        _logger.info(
+            "data %s "% (data)
+        )
+        _logger.info(
+            "tran_id %s "% (tran_id)
+        )
+        _logger.info(
+            "status %s "% (status)
+        )
+  
+        return data
 
         # if data['status'] != 0:
         #     return "Unsuccessful Payment"
