@@ -23,8 +23,9 @@ class OpPlacementOffer(models.Model):
     p_portfolio = fields.Float('Portfolio Score')
     p_status = fields.Selection( [('in_progress', 'In Progress'), 
         ('passed', 'Passed'),
+        ('i', 'Incomplete'),
         ('failed', 'Failed')],
-        'Status',  compute='_compute_get_student_status', store=True , track_visibility='onchange')
+        'Status', store=True , track_visibility='onchange')
     p_grade = fields.Float("Grade (%)")
     course_id = fields.Many2one('op.course', 'Course', required=True)
     batch_id = fields.Many2one(
