@@ -111,29 +111,11 @@ class PaymentPortal(CustomerPortal):
     @http.route(['/student/aba/pushback'],
                 type='http', website=True, methods=['POST'], auth='public', csrf=False)
     def student_payment_push_back(self, **post):
-<<<<<<< Updated upstream
         data = json.loads(request.httprequest.data)
 
         if data['status'] != 0:
             return "Unsuccessful Payment"
 
-=======
-        # response = post.get('response')
-        # _logger.info("***************tran_id %s "% (post))
-        # _logger.info( "***************type %s "% (type(post)))
-        # data= json.loads(response)
-        # _logger.info("***************type %s "% (data))
-        # _logger.info( "***************type %s "% (type(data)))
-        # _logger.info(
-        #     "***************tran_id %s "% (tran_id)
-        # )
-        # _logger.info(
-        #     "**************status %s "% (status)
-        # )
-        tran_id = 46
-        status = 0
-        
->>>>>>> Stashed changes
         transaction_obj = request.env['pm.aba.transaction'].sudo()
         transaction_obj.create({
             'transaction_number': data['tran_id'],
