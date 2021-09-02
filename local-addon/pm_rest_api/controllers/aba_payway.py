@@ -57,8 +57,14 @@ class ABAPayWay(http.Controller):
         print(payment_obj)
         lines = payment_obj.invoice_id.invoice_line_ids
         items = []
+        raw_items= []
         key = 0
         for line in lines:
+            raw_items.append({
+                'name': line.product_id.name,
+                'quantity': line.quantity,
+                'price': line.price_subtotal,
+            })
             items.append(key)
             items[key] = {}
             items[key]['name'] = line.product_id.name
@@ -69,7 +75,7 @@ class ABAPayWay(http.Controller):
         json_str = json.dumps(items)
         res = base64.b64encode(json_str.encode('utf-8')).decode("utf-8")
 
-        return res
+        return {'items':res, 'raw_items':raw_items}
 
 
 
