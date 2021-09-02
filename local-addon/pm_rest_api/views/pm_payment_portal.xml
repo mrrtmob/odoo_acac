@@ -433,9 +433,10 @@
                                     <input type="hidden" name="phone" t-att-value="phone"/>
                                     <input type="hidden" name="continue_success_url" t-att-value="continue_success_url"/>
                                     <input type="hidden" name="email" t-att-value="email"/>
-                        <input type="hidden" name="items" t-att-value="items"/>
+                                    <input type="hidden" name="items" t-att-value="items"/>
                                     <input type="hidden" name="return_url" t-att-value="push_back_url" id="return_url"/>
                                     <input type="hidden" name="return_params" value="json" id="return_params"/>
+                                    <input type="payment_option" name="cards" value="cards"/>
                                 </form>
                             </div>
                       </div>
