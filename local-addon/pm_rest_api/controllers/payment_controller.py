@@ -49,8 +49,8 @@ class PaymentPortal(CustomerPortal):
         PayWay = ABAPayWay()
         merchant_id = PayWay.get_merchant_id()
         payment_obj = request.env['op.student.fees.details'].sudo().browse(payment_id)
-        items = PayWay.get_transaction_items(payment_obj)
-        hash_data = PayWay.get_hash(str(merchant_id), str(payment_obj.id), str(payment_obj.amount), items)
+        getItems = PayWay.get_transaction_items(payment_obj)
+        hash_data = PayWay.get_hash(str(merchant_id), str(payment_obj.id), str(payment_obj.amount), str(getItems['items']))
         api_url = PayWay.get_api_url()
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id
@@ -71,7 +71,7 @@ class PaymentPortal(CustomerPortal):
             'tran_id': payment_obj.id,
             'url': api_url,
             'push_back_url': push_back_url,
-            'items': items,
+            'items': getItems['items']
         }
         print(val)
         return request.render("pm_rest_api.pm_payment_form_custom", val)
