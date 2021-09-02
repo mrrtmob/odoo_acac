@@ -74,7 +74,7 @@ class PaymentPortal(CustomerPortal):
             'items': items,
         }
         print(val)
-        return request.render("pm_rest_api.pm_payment_form", val)
+        return request.render("pm_rest_api.pm_payment_form_custom", val)
 
     @http.route(['/student/payment/generate/<int:payment_id>'],
                 type='http', auth="user", website=True)
