@@ -14,6 +14,40 @@
 
         </record>
 
+        <record id="custom_hr_employee_tree" model="ir.ui.view" >
+             <field name="name">custom.hr.emplyee.tree.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='work_phone']" position="replace">
+                    <field name="phone"/>
+                </xpath>
+               <xpath expr="//tree" position="attributes">
+                    <attribute name="default_order">first_name</attribute>
+                </xpath>
+               <xpath expr="//field[@name='name']" position="replace">
+                       <field name="employee_number" readonly="1"/>
+                       <field name="first_name" readonly="1"/>
+                       <field name="last_name" readonly="1"/>
+                </xpath>
+
+            </field>
+
+        </record>
+        <record id="custom_hr_employee_search" model="ir.ui.view" >
+             <field name="name">custom.hr.emplyee.search.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+
+               <xpath expr="//field[@name='name']" position="before">
+                       <field name="employee_number" string="Employee Number" />
+                </xpath>
+
+            </field>
+
+        </record>
+
         <!-- Inherit Employee Form View -->
         <record id="custom_employee_form_view" model="ir.ui.view">
             <field name="name">custom.employee.form.view</field>
@@ -27,11 +61,7 @@
                  <xpath expr="//field[@name='active']" position="after">
                     <field name="is_hr_user" invisible="1"/>
                 </xpath>
-
-                 <xpath expr="//header/button[1]" position="attributes">
-                     <attribute name="invisible">1</attribute>
-                </xpath>
-
+                
                  <xpath expr="//header" position="inside">
                     <button name="%(applicant_create_employee_act)d" string="Create User" type="action" attrs="{'invisible': [('user_id', '!=', False)]}"
                         class="oe_highlight" context="{'from_employee': True}"/>

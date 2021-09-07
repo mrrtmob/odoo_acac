@@ -1,7 +1,8 @@
 from odoo import models, fields, api, _
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import UserError
-from datetime import datetime
+import datetime
+from datetime import timedelta
 
 class PmInheritEmployeeFamily(models.Model):
     _inherit = 'hr.employee.family'
@@ -65,8 +66,8 @@ class PmEmployees(models.Model):
     medical_history_ids = fields.One2many('pm.employee.medical',
                                           inverse_name="employee_id")
     vaccination_history_ids = fields.One2many('pm.employee.vaccination', inverse_name='employee_id')
-    first_name = fields.Char(string="First Name", required = True)
-    last_name = fields.Char(string="Last Name", required = True)
+    first_name = fields.Char(string="First Name", required=False)
+    last_name = fields.Char(string="Last Name", required=False)
     fte = fields.Integer("Full-Time Equivalent")
     session_id = fields.Many2one(comodel_name="pm.employee.session", string="Session")
     department_budget_id = fields.Many2one(comodel_name="pm.department.budget", string="Department Budget Allocation")
@@ -106,7 +107,7 @@ class PmEmployees(models.Model):
         'res.country.state', 'States..')
     hca_country_id = fields.Many2one(
         'res.country', 'Country..', )
-    joining_date = fields.Date('Contract Signed Date', required=True, readonly=False)
+    joining_date = fields.Date('Contract Signed Date', required=False, readonly=False)
     leaving_date = fields.Date('Last Day')
     godfather_id = fields.Many2one(comodel_name='res.users', string='Godfather', required=False, copy=False, index=True)
     type_of_visa = fields.Char('Type Of Visa')
@@ -114,13 +115,14 @@ class PmEmployees(models.Model):
     relationship_id = fields.Many2one(comodel_name='hr.employee.relation', string="Relationship")
     emergency_mobile = fields.Char('Emergency Mobile')
     emergency_email = fields.Char('Emergency Email')
+    is_finish_probation = fields.Boolean(compute='_compute_employee_probation', sting="Finished Probation Period", store=True)
     status = fields.Selection([
         ('active', 'Active'),
         ('resigned', 'Resigned'),
         ('terminated', 'Terminated'),
         ('on_leave', 'On Leave')
 
-    ], string='Status', required=True)
+    ], string='Status', required=False)
     status_detail = fields.Char('Status Detail')
 
     # emergency address
@@ -140,58 +142,15 @@ class PmEmployees(models.Model):
     bank_account_no = fields.Char("Bank Account Number")
     passport_expiration_date = fields.Date("Passport Expiration Date")
     ID_expiration_date = fields.Date("ID Expiration Date")
-    def employee_leave(self):
-        start_date = datetime(2021, 3, 1)
-        end_date = datetime(2021, 3, 31)
-        year = start_date.year
 
-        allocation = self.env['hr.leave.allocation'].search([
-                            ('employee_id', '=', self.id),
-                            ('holiday_status_id.name', '=', 'Paid Time Off'),
-                            ('holiday_status_id.active', '=', True),
-                            ('state', '=', 'validate'),
-                        ], limit=1)
-
-        leaves = self.env['hr.leave'].search([
-            ('employee_id', '=', self.id),
-            ('holiday_status_id.name', '=', 'Paid Time Off'),
-            ('request_date_from', '>=', start_date),
-            ('request_date_from', '<=', end_date),
-            ('state', '=', 'validate'),
-        ])
-
-        leaves_this_month = sum(leaves.mapped('number_of_days'))
-        earn_this_month = allocation.number_per_interval
-        remaining = self.remaining_leaves
-
-        public_holidy_obj = self.env['hr.holidays.public']
-        ph_leaves = self.env['hr.leave'].search([
-            ('employee_id', '=', self.id),
-            ('holiday_status_id.name', '=', 'Public Holidays'),
-            ('request_date_from', '>=', start_date),
-            ('request_date_from', '<=', end_date),
-            ('state', '=', 'validate'),
-        ])
-
-        previous_balance = remaining - (earn_this_month - leaves_this_month)
-        ph_leaves_this_month = sum(ph_leaves.mapped('number_of_days'))
-        ph_earned = public_holidy_obj.get_number_of_holidays(start_date, end_date)
-        ph_remaining = self.ph_remaining
-        previous_ph_balance = ph_remaining - (ph_earned - ph_leaves_this_month)
-
-        print("AL Earned This Month", earn_this_month)
-        print("AL Taken This Month", leaves_this_month)
-        print("Remaining Balance", remaining)
-        print("Previous Balance", previous_balance)
-        print("Previous Balance", previous_balance)
-
-        print("PH Earned This Month", ph_earned)
-        print("PH Taken This Month", ph_leaves_this_month)
-        print("PH Balance", ph_remaining)
-        print("Previous PH Balance", previous_ph_balance)
-
-
-    # tem:
+    @api.depends('joining_date', 'contract_id.trial_date_end')
+    def _compute_employee_probation(self):
+        for emp in self:
+            is_finished = False
+            d = datetime.date.today() - timedelta(days=90)
+            if emp.joining_date and emp.joining_date < d:
+                is_finished = True
+            emp.is_finish_probation = is_finished
 
 
     @api.model

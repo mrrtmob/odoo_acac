@@ -161,6 +161,10 @@
                 <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
             </record>
 
+             <record id="hr_gamification.menu_hr_gamification" model="ir.ui.menu">
+                  <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
              <record id="mail.menu_root_discuss" model="ir.ui.menu">
                 <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
             </record>

@@ -26,7 +26,6 @@
         'views/hr_payslip_views.xml',
         'views/hr_employee_views.xml',
         'data/hr_payroll_sequence.xml',
-        'data/hr_payroll_data.xml',
         'views/hr_payroll_report.xml',
         'data/mail_data.xml',
         'wizard/hr_payroll_contribution_register_report_views.xml',

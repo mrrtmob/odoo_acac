@@ -54,7 +54,8 @@
         'views/pm_culinary_menus.xml',
         'views/purchase_menus.xml',
         'views/templates.xml',
-        'data/culinary_portal_menu.xml'
+        'data/culinary_portal_menu.xml',
+        'data/cron.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
