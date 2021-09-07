@@ -229,6 +229,7 @@ class OpBatch(models.Model):
             end_date = term.end_date
             remind_date = term.end_date - d
 
+
             if today == remind_date or today == end_date:
                 print(term.name)
                 ir_model_data = self.env['ir.model.data']
@@ -372,3 +373,7 @@ class OpFeesElementLineCustom(models.Model):
 class GenerateSession(models.TransientModel):
     _inherit = "generate.time.table"
     semester_id = fields.Many2one('pm.semester', 'Semester', required=True)
+
+
+
+

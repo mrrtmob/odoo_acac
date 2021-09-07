@@ -22,16 +22,21 @@ class HrPlanWizard(models.TransientModel):
             responsible = activity_type.get_responsible_id(self.employee_id)
 
             if self.env['hr.employee'].with_user(responsible).check_access_rights('read', raise_exception=False):
-                # date_deadline = self.env['mail.activity']._calculate_date_deadline(activity_type.activity_type_id)
 
-                no_days = activity_type.trg_date_range
-                date_field = activity_type.trg_date_id.name
-                employee_date = self.employee_id[date_field]
-                date_deadline = datetime.now()
+                if not activity_type.on_time:
+                    date_deadline = self.env['mail.activity']._calculate_date_deadline(activity_type.activity_type_id)
+                else:
+                    no_days = activity_type.trg_date_range
+                    date_field = activity_type.trg_date_id.name
+                    employee_date = self.employee_id[date_field]
+                    date_deadline = datetime.now()
 
-                if employee_date:
-                    date_deadline = (employee_date + relativedelta(
-                        days=no_days))
+                    print(employee_date)
+                    print(relativedelta(days=no_days))
+
+                    if employee_date:
+                        date_deadline = (employee_date + relativedelta(days=no_days))
+
                 plan_type = 'on'
                 if self.plan_id.id == 2:
                     plan_type = 'off'
@@ -40,6 +45,7 @@ class HrPlanWizard(models.TransientModel):
                     activity_type_id=activity_type.activity_type_id.id,
                     summary=activity_type.summary,
                     note=activity_type.note,
+                    plan_type=plan_type,
                     user_id=responsible.id,
                     date_deadline=date_deadline
                 )
