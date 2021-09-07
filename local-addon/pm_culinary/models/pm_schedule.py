@@ -106,10 +106,8 @@ class PmSchedule(models.Model):
                         for line in recipe.recipe_line_ids:
                             if line.sub_recipe_id:
                                 for sub_recipe in line.sub_recipe_id.recipe_line_ids:
-                                    ap = menu_line.yield_percentage * sub_recipe.as_purchased / 100
+                                    quantity = menu_line.yield_percentage * sub_recipe.as_purchased / 100
                                     product_id = sub_recipe.product_id.id
-                                    quantity = ap * line.quantity / 100 * weigh
-                                    cost = quantity * sub_recipe.product_id.cost
                                     if product_id not in lines_dicts:
                                         lines_dicts[product_id] = {
                                             'product_id': sub_recipe.product_id.id,
@@ -121,10 +119,8 @@ class PmSchedule(models.Model):
                                     else:
                                         lines_dicts[product_id]['product_qty'] += quantity
                             elif line.product_id:
-                                ap = menu_line.yield_percentage * line.as_purchased / 100
+                                quantity = menu_line.yield_percentage * line.as_purchased / 100
                                 product_id = line.product_id.id
-                                quantity = ap * weigh
-                                cost = line.cost * weigh
                                 if product_id not in lines_dicts:
                                     lines_dicts[product_id] = {
                                             'product_id': line.product_id.id,

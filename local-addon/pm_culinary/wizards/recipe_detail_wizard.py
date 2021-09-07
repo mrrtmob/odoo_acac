@@ -14,6 +14,7 @@ class WizardRecipeDetail(models.TransientModel):
         default='number_of_portion',
         required=True
     )
+    print_with_sub = fields.Boolean('Print with Sub Recipes', default=True)
     number_of_portion = fields.Integer('Yield')
     makes = fields.Float()
     uor = fields.Selection(
@@ -38,13 +39,16 @@ class WizardRecipeDetail(models.TransientModel):
 
     @api.onchange('custom_field')
     def _onchange_custom_field(self):
+        print("yo")
         self.number_of_portion = self.recipe_id.number_of_portion
         self.makes = self.recipe_id.makes
+        self.print_with_sub = self.print_with_sub
 
     def print_report(self):
         res = {
             'recipe_id': self.recipe_id.id,
             'custom_field': self.custom_field,
+            'print_with_sub': self.print_with_sub,
             'number_of_portion': self.number_of_portion,
             'makes': self.makes
         }

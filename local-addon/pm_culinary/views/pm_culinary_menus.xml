@@ -29,6 +29,12 @@
                 sequence="3"
                 action="pm_view_recipe_action"/>
 
+      <menuitem id="menu_sub_recipe"
+                parent="menu_root"
+                groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                sequence="3"
+                action="pm_view_sub_recipe_action"/>
+
       <menuitem id="menu_product_product"
                 parent="menu_root"
                 groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"

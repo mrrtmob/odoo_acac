@@ -81,7 +81,7 @@
               <button name="act_submit" states="draft" string="Submit" type="object" class="oe_highlight"/>
               <button name="act_approve" states="submitted" groups="pm_culinary.group_acac_culinary_head,pm_leads.group_acac_dean" string="Approve" type="object" class="oe_highlight"/>
               <button name="act_reject" states="submitted" groups="pm_culinary.group_acac_culinary_head,pm_leads.group_acac_dean" string="Reject"
-                                type="object" class="btn-danger"/>
+                                type="object"/>
               <button name="act_reset" states="rejected" string="Reset" type="object" />
 
               <field name="state" widget="statusbar"
