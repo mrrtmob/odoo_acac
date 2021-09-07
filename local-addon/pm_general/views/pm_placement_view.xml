@@ -94,19 +94,25 @@
                                 <field name="p_end_date"/>
                                 <field name="offer_package" string="Salary"  widget="monetary"/>
                                 <field name="training_period"/>
-                                <field name="p_accommodation" />
-                                <field name="p_transportation" />
+                                <field name="benefit"/>
+<!--                                <field name="p_accommodation" />-->
+<!--                                <field name="p_transportation" />-->
                                 <field name="currency_id" invisible="1"/>
                             </group>
+
                             <group string="Company Information" name="categorization" col="4" colspan="4"> 
                                 <field name="name" placeholder="Company Name"/>
-                                <field name="p_contact1"/>
-                                <field name="p_contact2"/>  
                                 <field name="p_address"/>
                                 <field name="p_city"/>
                                 <field name="p_zip"/>
                                 <field name="p_state_id"/>
                                 <field name="p_country_id"/>
+                                <field name="p_contact1"/>
+                                <field name="p_contact2"/>
+                                <field name="contact_one_email"/>
+                                <field name="contact_two_email"/>
+                                <field name="contact_one_mobile"/>
+                                <field name="contact_two_mobile"/>
                             </group>
                             <group string="Performance Information" col="4" colspan="4"> 
                                 <field name="p_project1"/>   

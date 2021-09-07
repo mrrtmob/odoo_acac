@@ -55,8 +55,6 @@
                         <button name="start_semester" states="pending" type="object" string="Start Semester" class="oe_highlight"/>
                         <button name="execute_semester_end" states="active" type="object" string="Complete Semester" class="oe_highlight"/>
 
-<!--                        tem: error act_cancel-->
-<!--                        <button name="act_cancel" states="draft" type="object" string="Cancel"/>-->
 
                         <field name="state" widget="statusbar"/>
                     </header>
