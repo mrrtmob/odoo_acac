@@ -86,6 +86,23 @@ class PmRecipe(models.Model):
     color = fields.Integer(string='Color Index')
     is_expired = fields.Boolean(string='Expired', default=False, compute="_compute_expire", store=True)
 
+    def write(self, vals):
+        vals['is_expired'] = False
+        return super().write(vals)
+    
+    def set_recipe_expiration(self):
+        print("YOYOO")
+        today = fields.Date.today()
+        d = timedelta(days=60)
+        expired_date = today - d
+        expired_recipes = self.env['pm.recipe'].search([('write_date', '<', expired_date)])
+        
+        print(expired_recipes)
+
+        if expired_recipes:
+            expired_recipes.write({'is_expired':True})
+
+
     @api.depends('write_date')
     def _compute_expire(self):
         for rec in self:
@@ -113,8 +130,14 @@ class PmRecipe(models.Model):
             record.cost_per_portion = record.cost / record.number_of_portion
             record.price_per_portion = record.price / record.number_of_portion
             lines = record.ingredients
+            sub_recipe_lines = record.sub_recipes
             for line in lines:
                 line.quantity = line.initial_quantity * (record.number_of_portion / 10)
+
+            for sub_recipe in sub_recipe_lines:
+                print("***********")
+                print(sub_recipe.quantity)
+                sub_recipe.quantity = sub_recipe.initial_quantity * (record.number_of_portion / 10)
 
     @api.constrains('price')
     def _check_price(self):
@@ -149,7 +172,6 @@ class PmRecipe(models.Model):
 
     @api.depends('price')
     def _compute_price_per_portion(self):
-        print("_compute_price_per_portion!!")
         for record in self:
             if record.number_of_portion:
                 record.price_per_portion = record.price / record.number_of_portion

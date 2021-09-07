@@ -69,7 +69,7 @@
                       <field name="state" widget="label_selection" options="{'classes': {'draft': 'primary', 'submitted': 'secondary', 'approved': 'success', 'rejected': 'danger'}}"/>
                     </div>
                      <div class="float-right"  t-if="record.is_expired.raw_value">
-                        <span class="fa fa-circle text-warning" role="img" aria-label="This recipe haven't been modified in more than 60 days" title="This recipe haven't been modified in more than 60 days"></span>
+                        <span class="fa fa-circle text-warning" role="img" aria-label="This recipe hasn't been modified in more than 60 days" title="This recipe hasn't been modified in more than 60 days"></span>
                     </div>
                   </div>
                 </t>
@@ -104,7 +104,7 @@
                             <field name="name" required="1"/>
                             <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
                             <field name="category_id" string="Category"/>
-                            <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                            <field name="uor" string="Unit" attrs="{'required': [('is_sub_recipe', '=', True)]}" />
 
                             <label for="cost_in_percentage" />
                             <div>
@@ -116,6 +116,7 @@
 
                             <field name="date_of_test" />
                             <field name="price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                            <field name="price_per_portion" string="Selling/Portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
 
                             <label for="number_of_portion" />
                             <div>
@@ -125,26 +126,25 @@
                               </span>
                             </div>
 
-                            <field name="price_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
-                            <field name="is_sub_recipe" />
-
-                            <newline attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
-
-                            <label for="makes" attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
-                            <div attrs="{'invisible': [('is_sub_recipe', '=', False)]}">
-                              <field name="makes" attrs="{'required': [('is_sub_recipe', '=', True)]}" />
+                            <label for="makes"/>
+                            <div>
+                              <field name="makes"/>
                               <span class="oe_read_only" modifiers="{}">
                                 <field name="uor" readonly="1" />
                               </span>
                             </div>
+                            <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                            <label for="cost_per_uor" string="Cost Per Unit" />
+                            <div>
+                              <field name="cost_per_uor" string = "Cost Per Unit" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                             <span class="oe_read_only" modifiers="{}">
+                                per
+                                 <field name="uor" modifiers="{'readonly':true}"/>
+                              </span>
+                            </div>
 
-                            <newline attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
 
-                            <field name="uor" attrs="{'invisible': [('is_sub_recipe', '=', False)], 'required': [('is_sub_recipe', '=', True)]}" />
-
-                            <newline attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
-
-                            <field name="cost_per_uor" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
+                            <field name="is_sub_recipe" />
                         </group>
                         <group string="Ingredients and Preparation Instructions ">
                             <field name="ingredients" widget="section_and_note_one2many" nolabel="1">
@@ -183,8 +183,7 @@
                                 <tree editable="bottom">
                                     <field name="currency_id" invisible="1" />
                                     <field name="sub_recipe_id" context="{'default_is_sub_recipe': True}" />
-                                    <field name="quantity" string="Qty (%)" />
-                                    <field name="sub_recipe_needed_makes" string="Needed Makes" />
+                                    <field name="quantity" string="Quantity" />
                                     <field name="sub_recipe_uor" string="UoR" />
                                     <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
                                 </tree>
@@ -223,6 +222,13 @@
     <record id="pm_view_recipe_action" model="ir.actions.act_window">
       <field name="name">Recipes</field>
       <field name="res_model">pm.recipe</field>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="pm_view_sub_recipe_action" model="ir.actions.act_window">
+      <field name="name">Sub Recipes</field>
+      <field name="res_model">pm.recipe</field>
+      <field name="domain">[('is_sub_recipe', '=', True)]</field>
       <field name="view_mode">kanban,tree,form</field>
     </record>
   </data>

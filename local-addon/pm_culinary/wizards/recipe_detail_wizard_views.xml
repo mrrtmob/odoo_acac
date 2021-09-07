@@ -11,6 +11,7 @@
                         <field name="is_sub_recipe" invisible="1" />
                         <field name="custom_field" widget="radio" attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
                         <field name="number_of_portion" attrs="{'invisible': [('custom_field', '=', 'makes')]}" />
+                        <field name="print_with_sub"/>
                         <field name="makes" attrs="{'invisible': [('custom_field', '=', 'number_of_portion')]}" />
                         <field name="uor" attrs="{'invisible': [('custom_field', '=', 'number_of_portion')]}" />
                     </group>

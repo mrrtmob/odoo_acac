@@ -59,7 +59,7 @@ class PmRecipeLine(models.Model):
         compute="_compute_line_type",
         store=True
     )
-    sub_recipe_needed_makes = fields.Float('Sub Recipe Needed Makes', compute='_compute_sub_recipe_needed_makes')
+    sub_recipe_needed_makes = fields.Float('Sub Recipe Needed Makes')
     sub_recipe_uor = fields.Selection(
         [('kg', 'kg'),
          ('l', 'l')],
@@ -130,14 +130,19 @@ class PmRecipeLine(models.Model):
                 # record.as_purchased = record.quantity + (record.quantity * record.waste_percentage / 100)
                 record.as_purchased = record.quantity * (100 / (100 - record.waste_percentage))
 
-    @api.depends('product_id.product_tmpl_id.cost', 'product_id.product_tmpl_id.uom_id', 'uom_id', 'quantity', 'as_purchased')
+    @api.depends('product_id.product_tmpl_id.cost', 'product_id.product_tmpl_id.uom_id', 'uom_id','as_purchased')
     def _compute_cost(self):
         for record in self:
             print("_compute_cost recipe line")
             if record.product_id:
                 record.cost = record.product_id.product_tmpl_id.cost * record.as_purchased
             elif record.sub_recipe_id:
-                record.cost = (record.sub_recipe_id.cost * record.quantity) / 100
+                print("yo")
+                print(record.quantity)
+                percentage = record.quantity / record.sub_recipe_id.makes
+                print(percentage)
+                print(record.sub_recipe_id.cost)
+                record.cost = record.sub_recipe_id.cost * percentage
             else:
                 record.cost = 0
 
