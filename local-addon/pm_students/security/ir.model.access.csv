@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_pm_student_progress,pm_students.pm_student_progress,model_pm_student_progress,base.group_user,1,1,1,1
 access_model_student_return_wizard,pm_students.model_student_return_wizard,model_student_return_wizard,base.group_user,1,1,1,1
+access_pm_student_installment,pm_students.model_pm_student_installment,model_pm_student_installment,base.group_user,1,1,1,1
