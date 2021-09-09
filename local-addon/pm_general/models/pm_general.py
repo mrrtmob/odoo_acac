@@ -364,7 +364,7 @@ class OpFeesTermsLine(models.Model):
 
 class OpFeesElementLineCustom(models.Model):
     _inherit = "op.fees.element"
-    price = fields.Float('Price', related='product_id.lst_price')
+    price = fields.Float('Price', related='product_id.lst_price', store=True)
     product_id = fields.Many2one('product.product',
                                  'Product(s)',
                                  domain=[('type', '=', 'service')],

@@ -23,6 +23,11 @@ class OpAdmission(models.Model):
     readonly = fields.Boolean(compute="_compute_read_only")
     class_id = fields.Many2one('op.classroom', 'Class', required=False)
     birth_place = fields.Many2one('res.country.state', 'Birth Place')
+    payment_option = fields.Selection([('normal', 'Normal'),
+                                       ('exempted', 'Exempted'),
+                                       ('haft_scholarship', '50% Scholarship'),
+                                       ('full_scholarship', '100% Scholarship'),
+                                       ('installment', 'Installment')], default='normal')
     fill_application = fields.Boolean('Fill Application')
     marital_status = fields.Selection([('single', 'Single'),
                                        ('married', 'Married')])
@@ -644,6 +649,7 @@ class OpAdmission(models.Model):
                 'is_scholarship': student.is_scholarship,
                 'scholarship_status': student.scholarship_status.id,
                 'motivational_letter': student.motivational_letter,
+                'payment_option': student.payment_option,
                 'special_medical': student.special_medical,
                 'enroll_reason_id': student.enroll_reason_id.id,
                 'high_school_id': student.high_school_id.id,
@@ -682,60 +688,8 @@ class OpAdmission(models.Model):
             print(details)
             return details
 
-class PmStudentFeesDetails(models.Model):
-    _inherit = "op.student.fees.details"
-    date = fields.Date('Payment Date')
-    alert_date = fields.Date('Alert Date')
-    payable = fields.Boolean(default=True)
-
-    def _cron_create_invoice(self):
-        d = timedelta(days=10)
-        date = datetime.today() - d
-        fees_ids = self.env['op.student.fees.details'].search(
-            [('date', '<', date), ('invoice_id', '=', False), ('payable', '=', True)])
-        print(fees_ids)
-        ir_model_data = self.env['ir.model.data']
-        for fees in fees_ids:
-            fees.get_invoice()
-
-    def _cron_payment_reminder(self):
-        today = datetime.today()
-        one_week_before = today - timedelta(days=7)
-        one_week_late = today + timedelta(days=7)
-
-        reminder_fee = self.env['op.student.fees.details'].search(
-            [('date', '=', one_week_before), ('invoice_id', '!=', False),
-             ('invoice_state', '!=', 'posted'), ('payable', '=', True)])
-
-        over_due_fee = self.env['op.student.fees.details'].search(
-            [('date', '=', one_week_late), ('invoice_id', '!=', False),
-             ('invoice_state', '!=', 'posted'), ('payable', '=', True)])
-
-        print(over_due_fee)
-        print(reminder_fee)
-
-        ir_model_data = self.env['ir.model.data']
-
-        for late in over_due_fee:
-            try:
-                template_id = ir_model_data.get_object_reference('pm_admission', 'payment_overdue_template')[1]
-            except ValueError:
-                template_id = False
-            self.env['mail.template'].browse(template_id).send_mail(late.id, force_send=True)
-
-        for remind in reminder_fee:
-            try:
-                template_id = ir_model_data.get_object_reference('pm_admission', 'payment_reminder_template')[1]
-            except ValueError:
-                template_id = False
-            self.env['mail.template'].browse(template_id).send_mail(remind.id, force_send=True)
 
 
-    def get_default_tuition_fee(self):
-        #168168 is manually set
-        product = self.env['product.product'].search(['default_code', '=', '168@168'],
-                                                     order='semester_order asc',
-                                                     limit=1)
-        return product.id
+
 
 

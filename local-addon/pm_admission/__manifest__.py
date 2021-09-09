@@ -23,6 +23,7 @@
     'depends': ['base',
                 'crm',
                 'pm_leads',
+                'pm_students',
                 'pm_general',
                 'openeducat_admission',
                 'utm',
