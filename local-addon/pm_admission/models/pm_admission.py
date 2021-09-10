@@ -601,7 +601,7 @@ class OpAdmission(models.Model):
             details.update({
                 'title': student.title and student.title.id or False,
                 'first_name': student.first_name,
-                'birth_place': student.birth_place,
+                'birth_place': student.birth_place.id,
                 'middle_name': student.middle_name,
                 'khmer_name': student.khmer_name,
                 'last_name': student.last_name,
