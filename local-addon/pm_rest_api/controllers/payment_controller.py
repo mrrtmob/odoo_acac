@@ -43,17 +43,22 @@ class PaymentPortal(CustomerPortal):
 
         return request.render("pm_rest_api.pm_student_portal_apyment_detail", val)
 
-    @http.route(['/student/payment/create/<int:payment_id>'],
+    @http.route(['/student/payment/create/<string:type>/<int:payment_id>'],
                 type='http', auth="user", website=True)
-    def portal_create_payment(self, payment_id):
+    def portal_create_payment(self, payment_id, type):
         PayWay = ABAPayWay()
+
+        object = 'op.student.fees.details'
+        if type == "installment":
+            object = 'pm.student.installment'
+
         merchant_id = PayWay.get_merchant_id()
-        payment_obj = request.env['op.student.fees.details'].sudo().browse(payment_id)
+        payment_obj = request.env[object].sudo().browse(payment_id)
         getItems = PayWay.get_transaction_items(payment_obj)
         hash_data = PayWay.get_hash(str(merchant_id), str(payment_obj.id), str(payment_obj.amount), str(getItems['items']))
         api_url = PayWay.get_api_url()
         push_back_url = PayWay.get_push_back_url()
-        student = payment_obj.student_id
+        student = payment_obj.student_id or payment_obj.fee_id.student_id
         base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
         success_url = base_url + '/student/aba/success'
         print("*******-*********")
@@ -152,6 +157,9 @@ class PaymentPortal(CustomerPortal):
             'status': status
         })
         student_fee = request.env['op.student.fees.details'].sudo().search([('id', '=', tran_id)])
+        if not student_fee:
+            student_fee = request.env['pm.student.installment'].sudo().search([('id', '=', tran_id)])
+
         invoice = student_fee.invoice_id
         payment_method = 3
         journal_id = 7
