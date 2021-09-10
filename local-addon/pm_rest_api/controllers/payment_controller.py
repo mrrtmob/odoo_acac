@@ -159,8 +159,10 @@ class PaymentPortal(CustomerPortal):
             'transaction_number': tran_id,
             'status': status
         })
-        student_fee = request.env['op.student.fees.details'].sudo().search([('id', '=', tran_id)])
-        if not student_fee:
+        fee = request.env['op.student.fees.details'].sudo().search([('id', '=', tran_id)])
+        if fee.payment_option != 'installment':
+            student_fee = fee
+        elif fee.payment_option == 'installment':
             student_fee = request.env['pm.student.installment'].sudo().search([('id', '=', tran_id)])
 
         invoice = student_fee.invoice_id
