@@ -139,20 +139,22 @@ class PaymentPortal(CustomerPortal):
     @http.route(['/student/aba/pushback'],
                 type='http', methods=['POST'], auth='public', csrf=False)
     def student_payment_push_back(self, **post):
-        response = post.get('response')
-        _logger.info("***************tran_id %s "% (post))
-        _logger.info( "***************type %s "% (type(post)))
-        data= json.loads(response)
-        _logger.info("***************type %s "% (data))
-        _logger.info( "***************type %s "% (type(data)))
-        tran_id = data['tran_id']
-        status = data['status']
-        _logger.info(
-            "***************tran_id %s "% (tran_id)
-        )
-        _logger.info(
-            "**************status %s "% (status)
-        )
+        # response = post.get('response')
+        # print(response)
+        # _logger.info("***************tran_id %s "% (post))
+        # _logger.info( "***************type %s "% (type(post)))
+        # data= json.loads(response)
+        # _logger.info("***************type %s "% (data))
+        # _logger.info( "***************type %s "% (type(data)))
+        #
+        # _logger.info(
+        #     "***************tran_id %s "% (tran_id)
+        # )
+        # _logger.info(
+        #     "**************status %s "% (status)
+        # )
+        tran_id = 27
+        status = 'approved'
         
         transaction_obj = request.env['pm.aba.transaction'].sudo()
         transaction_obj.create({
@@ -163,9 +165,11 @@ class PaymentPortal(CustomerPortal):
         if fee.payment_option != 'installment':
             student_fee = fee
         elif fee.payment_option == 'installment':
+            print("yoo")
             student_fee = request.env['pm.student.installment'].sudo().search([('id', '=', tran_id)])
-
+        print(student_fee)
         invoice = student_fee.invoice_id
+        print(invoice)
         payment_method = 3
         journal_id = 7
         invoice.action_post()
