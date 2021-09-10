@@ -81,11 +81,14 @@ class PaymentPortal(CustomerPortal):
         print(val)
         return request.render("pm_rest_api.pm_payment_form_custom", val)
 
-    @http.route(['/student/payment/generate/<int:payment_id>'],
+    @http.route(['/student/payment/generate/<string:type>/<int:payment_id>'],
                 type='http', auth="user", website=True)
-    def portal_generate_payment(self, payment_id):
+    def portal_generate_payment(self, payment_id, type):
         PayWay = ABAPayWay()
         merchant_id = PayWay.get_merchant_id()
+        object = 'op.student.fees.details'
+        if type == "installment":
+            object = 'pm.student.installment'
         payment_obj = request.env['op.student.fees.details'].sudo().browse(payment_id)
         getItems = PayWay.get_transaction_items(payment_obj)
         print(getItems)
