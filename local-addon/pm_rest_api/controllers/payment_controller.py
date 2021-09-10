@@ -89,7 +89,7 @@ class PaymentPortal(CustomerPortal):
         object = 'op.student.fees.details'
         if type == "installment":
             object = 'pm.student.installment'
-        payment_obj = request.env['op.student.fees.details'].sudo().browse(payment_id)
+        payment_obj = request.env[object].sudo().browse(payment_id)
         getItems = PayWay.get_transaction_items(payment_obj)
         print(getItems)
         hash_data = PayWay.get_hash(str(merchant_id), str(payment_obj.id), str(payment_obj.amount), str(getItems['items']))
