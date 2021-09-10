@@ -430,7 +430,7 @@ class Lead(models.Model):
                 'default_mobile': lead.mobile,
                 'default_phone': lead.phone,
                 'default_birth_date': lead.dob,
-                'default_birth_place': lead.birth_place,
+                'default_birth_place': lead.birth_place.id,
                 'default_city': lead.city,
                 'default_zip': lead.zip,
                 'default_current_address': lead.current_address,
