@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record id="view_student_payment_tree" model="ir.ui.view">
+            <field name="name">pm.student.fee.tree</field>
+            <field name="model">pm.student.fee</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Student Payments">
+                    <field name="student_id"/>
+                    <field name="product_id"/>
+                    <field name="total_invoiced" string="Invoiced" sum="Total Invoiced"/>
+                    <field name="total_paid" string="Paid"  sum="Total Paid"/>
+                    <field name="remaining_balance" string="Remaining" sum="Total Remaining"/>
+                    <field name="remarks"/>
+                </tree>
+            </field>
+        </record>
+
+         <record id="view_student_payment_form" model="ir.ui.view">
+            <field name="name">pm.student.fee.form</field>
+            <field name="model">pm.student.fee</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                  <form string="Payment Detail">
+                    <sheet>
+                        <group>
+                            <h1>
+                                <field name="student_id"/>
+                            </h1>
+                        </group>
+                        <group>
+                            <h2>
+                             <field name="product_id"/>
+                            </h2>
+                        </group>
+                        <group colspan="4" col="4">
+                            <field name="total_invoiced"/>
+                            <field name="total_paid"/>
+                            <field name="remaining_balance"/>
+                            <field name="remarks"/>
+                        </group>
+
+                        <group>
+                               <field name="invoiced_fee_line_ids" string="Invoiced" readonly="1">
+                                <tree>
+                                    <field name="student_fee_id" invisible="1"/>
+                                    <field name="invoice_id"/>
+                                    <field name="date"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="month"/>
+                                    <field name="amount" widget="monetary"/>
+                                </tree>
+                            </field>
+
+                           <field name="paid_fee_line_ids" string="Paid" readonly="1">
+                                <tree>
+                                    <field name="student_fee_id" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="invoice_id"/>
+                                    <field name="date"/>
+                                    <field name="month"/>
+                                    <field name="amount" widget="monetary"/>
+                                </tree>
+                            </field>
+
+
+                        </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="act_open_student_payment_report">
+            <field name="name">Student Payment Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.student.fee</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <menuitem id="pm_student_fee_menu"
+            name="Student Payment Reports"
+            parent="openeducat_core.menu_op_student_root"
+            groups="pm_leads.group_acac_admin"
+            action="act_open_student_payment_report"
+            sequence="30"/>
+    </data>
+</odoo>
