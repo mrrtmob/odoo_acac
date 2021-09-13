@@ -3,6 +3,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError, UserError
 from datetime import datetime, timedelta
+import calendar
 
 
 class PMStudentProgression(models.Model):
@@ -340,6 +341,110 @@ class OpStudent(models.Model):
                       help="PIN used to Sign In in Kiosk Mode", copy=False, store=True)
     test = fields.Char('Mobile 2', compute='_on_change_course_id')
     active_class = fields.Many2one('op.classroom', compute='_compute_active_class', store=True)
+
+    def generate_student_payment(self):
+        for student in self:
+            fee_obj = self.env['pm.student.fee']
+            fee_line_obj = self.env['pm.student.fee.line']
+            paid = {}
+            invoiced = {}
+            month = 8
+            month_name = calendar.month_abbr[month]
+            get_month = self.get_months(month)
+            start_month = get_month['start_month']
+            end_month = get_month['end_month']
+            for month_idx in range(1, 13):
+                print(calendar.month_abbr[month_idx])
+                paid[calendar.month_abbr[month_idx]] = []
+                invoiced[calendar.month_abbr[month_idx]] = []
+
+            student_invoices = self.env['account.move'].search([('partner_id', '=', student.partner_id.id)])
+
+            for inv in student_invoices:
+                month = inv.create_date.month
+                created_month = calendar.month_abbr[month]
+                inv_lines = inv.invoice_line_ids
+                state = inv.state
+                for line in inv_lines:
+                    student_fee = fee_obj.search([('student_id', '=', student.id),
+                                                 ('product_id', '=', line.product_id.id)])
+                    if not student_fee:
+                        student_fee = fee_obj.create({
+                            'student_id': student.id,
+                            'product_id': line.product_id.id
+                        })
+
+                    existing_fee_lines = fee_line_obj.search([('student_fee_id', '=', student_fee.id),
+                                                              ('invoice_id', '=', inv.id)])
+                    if existing_fee_lines:
+                        existing_fee_lines.unlink()
+
+                    val = {
+                        'invoice_id': inv.id,
+                        'student_fee_id': student_fee.id,
+                        'amount': line.price_unit,
+                        'date': inv.create_date,
+                        'month': created_month,
+                        'status': 'invoiced'
+                    }
+                    fee_line_obj.create(val)
+                    if state == 'posted':
+                        paid_month = calendar.month_abbr[inv.invoice_date.month]
+                        val = {
+                            'invoice_id': inv.id,
+                            'student_fee_id': student_fee.id,
+                            'amount': line.price_unit,
+                            'date': inv.invoice_date,
+                            'month': paid_month,
+                            'status': 'paid'
+                        }
+                        fee_line_obj.create(val)
+
+            # print('******Invoiced*****')
+            # print(invoiced)
+            # print('******Paid*****')
+            # print(paid)
+            # fee_data = {}
+            # ending_day_of_current_year = datetime.now().date().replace(month=12, day=31)
+            # fees = self.env['op.student.fees.details'].search([('student_id', '=', student.id),
+            #                                                    ('date', '<=', ending_day_of_current_year)])
+
+            # for fee in fees:
+            #     month = fee.date.month
+            #     month_name = calendar.month_abbr[month]
+            #     get_month = self.get_months(month)
+            #     print(get_month)
+            #     start_month = get_month['start_month']
+            #     end_month = get_month['end_month']
+            #     for month_idx in range(start_month, end_month + 1):
+            #         print(calendar.month_abbr[month_idx])
+            #         fee_data[calendar.month_abbr[month_idx]] = []
+            #     fee_line = fee.fees_line_id
+            #     fee_element = fee_line.fees_element_line
+            #     for item in fee_element:
+            #         print(item.product_id.name)
+            #         fee_data[month_name].append({
+            #             'product': item.product_id.name,
+            #             'amount': item.price
+            #         })
+            # print(fee_data)
+
+
+
+
+
+
+    def get_months(self, month):
+        start_month = int
+        end_month = int
+        if 1 <= month <= 6:
+            start_month = 1
+            end_month = 6
+        elif 7 <= month <= 12:
+            start_month = 7
+            end_month = 12
+
+        return {'start_month':start_month, 'end_month':end_month}
 
     def student_reminder_scheduler(self):
         print("Hit Function")

@@ -102,6 +102,10 @@
                           class="btn oe_stat_button" type="action"
                           attrs="{'invisible': [('education_status', '=', 'active')]}"
                           name="%(student_return_wizard)d"/>
+
+                 <button string="Student Payment Monitoring"
+                          class="btn oe_stat_button" type="object"
+                          name="generate_student_payment"/>
              </xpath>
 
             <xpath expr="//page[@name='badge']" position="attributes">
