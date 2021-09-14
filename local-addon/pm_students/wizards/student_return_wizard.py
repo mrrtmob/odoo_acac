@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
 import logging
 from datetime import datetime
@@ -6,8 +7,10 @@ _logger = logging.getLogger(__name__)
 
 
 class StudentReturnWizard(models.TransientModel):
+
     _name = "student.return.wizard"
     _description = "Student Return"
+
     date = fields.Date('Date', required=True, default=lambda self: fields.Date.today())
     course_id = fields.Many2one('op.course', 'Course', required=True)
     batch_id = fields.Many2one(

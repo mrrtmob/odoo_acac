@@ -7,9 +7,9 @@
             <field name="model">pm.student.fee</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <tree string="Student Payments">
+                <tree string="Student Payments" expand="1">
                     <field name="student_id"/>
-                    <field name="product_id"/>
+                    <field name="product_id" string="Nature of school"/>
                     <field name="total_invoiced" string="Invoiced" sum="Total Invoiced"/>
                     <field name="total_paid" string="Paid"  sum="Total Paid"/>
                     <field name="remaining_balance" string="Remaining" sum="Total Remaining"/>
@@ -46,11 +46,12 @@
                                <field name="invoiced_fee_line_ids" string="Invoiced" readonly="1">
                                 <tree>
                                     <field name="student_fee_id" invisible="1"/>
-                                    <field name="invoice_id"/>
-                                    <field name="date"/>
+                                    <field name="invoice_id" invisible="1"/>
+                                    <field name="date" string="Invoice Date"/>
                                     <field name="currency_id" invisible="1"/>
                                     <field name="month"/>
                                     <field name="amount" widget="monetary"/>
+                                    <button string="View Invoice" groups="openeducat_core.group_op_back_office" type="object" name="action_get_invoice"/>
                                 </tree>
                             </field>
 
@@ -58,10 +59,12 @@
                                 <tree>
                                     <field name="student_fee_id" invisible="1"/>
                                     <field name="currency_id" invisible="1"/>
-                                    <field name="invoice_id"/>
-                                    <field name="date"/>
+                                    <field name="invoice_id" invisible="1"/>
+                                    <field name="date"  string="Paid on"/>
                                     <field name="month"/>
                                     <field name="amount" widget="monetary"/>
+                                   <button string="View Invoice" groups="openeducat_core.group_op_back_office" type="object" name="action_get_invoice"/>
+
                                 </tree>
                             </field>
 
@@ -74,13 +77,35 @@
             </field>
         </record>
 
+           <record id="view_pm_student_fee_search" model="ir.ui.view">
+            <field name="name">pm.student.fee.search</field>
+            <field name="model">pm.student.fee</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search>
+                     <field name="student_id"/>
+                     <field name="product_id"/>
+                    <newline/>
+                   <group expand="1" string="Group By">
+                    <filter name="group_by_student" string="Students"
+                            domain="[]" context="{'group_by':'student_id'}"/>
+                    <filter name="group_by_product" string="Nature of School"
+                            domain="[]" context="{'group_by':'product_id'}"/>
+
+                </group>
+                </search>
+            </field>
+        </record>
+
 
         <record model="ir.actions.act_window" id="act_open_student_payment_report">
             <field name="name">Student Payment Reports</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">pm.student.fee</field>
             <field name="binding_view_types">form</field>
+            <field name="search_view_id" ref="view_pm_student_fee_search"/>
             <field name="view_mode">tree,form</field>
+             <field name="context">{"search_default_group_by_student":1}</field>
             <field name="domain">[]</field>
         </record>
 
