@@ -20,7 +20,7 @@ class PMStudentProgression(models.Model):
     education_status = fields.Selection([('active', 'Active'),
                                          ('return', 'Returned'),
                                          ('enrollment', 'Enrollment'),
-                                         ('​retake', '​Retake'),
+                                         ('retake', 'Retake'),
                                          ('postponed', 'Postponed'),
                                          ('withdrawn', 'Withdrawn'),
                                          ('graduated', 'Graduated'),
@@ -363,12 +363,26 @@ class OpStudent(models.Model):
             for inv in student_invoices:
                 month = inv.create_date.month
                 created_month = calendar.month_abbr[month]
-                inv_lines = inv.invoice_line_ids
-                state = inv.state
+                # inv_lines = inv.invoice_line_ids
+                inv_lines = self.env['account.move.line'].search([('move_id', '=', inv.id), ('product_id', '!=', False)])
+                payment_state = inv.payment_state
+                pay_date = False;
+                print("*********name**********'")
+                print(inv.name)
+                print("*********Lines**********'")
+                print(inv_lines)
+                if payment_state == 'paid':
+                    for partial, amount, counterpart_line in inv._get_reconciled_invoices_partials():
+                        pay_date = counterpart_line.date
+                        print(pay_date)
                 for line in inv_lines:
                     student_fee = fee_obj.search([('student_id', '=', student.id),
                                                  ('product_id', '=', line.product_id.id)])
+                    print(inv.name)
                     if not student_fee:
+                        print("***************")
+                        print(line.product_id.name)
+                        print(line.product_id.id)
                         student_fee = fee_obj.create({
                             'student_id': student.id,
                             'product_id': line.product_id.id
@@ -383,18 +397,18 @@ class OpStudent(models.Model):
                         'invoice_id': inv.id,
                         'student_fee_id': student_fee.id,
                         'amount': line.price_unit,
-                        'date': inv.create_date,
+                        'date': inv.invoice_date,
                         'month': created_month,
                         'status': 'invoiced'
                     }
                     fee_line_obj.create(val)
-                    if state == 'posted':
-                        paid_month = calendar.month_abbr[inv.invoice_date.month]
+                    if payment_state == 'paid':
+                        paid_month = calendar.month_abbr[pay_date.month]
                         val = {
                             'invoice_id': inv.id,
                             'student_fee_id': student_fee.id,
                             'amount': line.price_unit,
-                            'date': inv.invoice_date,
+                            'date': pay_date,
                             'month': paid_month,
                             'status': 'paid'
                         }
@@ -765,7 +779,7 @@ class PmStudentFeesDetails(models.Model):
 
     def get_invoice(self):
         """ Create invoice for fee payment process of student """
-        inv_obj = self.env['account.move']
+        inv_obj = self.env['account.move'].with_context(check_move_validity=False)
         partner_id = self.student_id.partner_id
         MoveLine = self.env['account.move.line'].with_context(check_move_validity=False)
         student = self.student_id
@@ -797,8 +811,8 @@ class PmStudentFeesDetails(models.Model):
         if self.payment_option == "installment":
             invoice = inv_obj.create({
                 'move_type': 'out_invoice',
-                'date': self.date,
                 'partner_id': partner_id.id,
+                'invoice_date': self.date,
             })
             tuition_fee = self.env['op.fees.element'].search([
                 ('fees_terms_line_id', '=', self.fees_line_id.id)], order="price desc", limit=1)
@@ -847,14 +861,16 @@ class PmStudentFeesDetails(models.Model):
                         'state': 'invoice'
                     })
                     invoice._compute_invoice_taxes_by_group()
+                    invoice._move_autocomplete_invoice_lines_values()
+
                     first_installment = False
                 else:
                     print("yo")
                     split_invoice = inv_obj.create({
                         'move_type': 'out_invoice',
                         'partner_id': partner_id.id,
-                        'invoice_date_due': installment.due_date,
                         'invoice_date': self.date,
+                        'invoice_date_due': installment.due_date,
                     })
                     line_values = {'name': tuition_fee.product_id.name,
                                    'account_id': tuition_fee.product_id.property_account_income_id.id,
@@ -865,14 +881,16 @@ class PmStudentFeesDetails(models.Model):
                                    'product_id': tuition_fee.product_id.id}
                     MoveLine.create(line_values)
                     installment.write({'invoice_id': split_invoice.id, 'state': 'invoice'})
+                    split_invoice._compute_invoice_taxes_by_group()
+                    split_invoice._move_autocomplete_invoice_lines_values()
             self.state = 'installment'
             return True
 
         elif self.payment_option == "normal":
-            print("normal")
             invoice = inv_obj.create({
                 'move_type': 'out_invoice',
                 'partner_id': partner_id.id,
+                'invoice_date': self.date,
             })
             for records in element_id:
                 print(records.product_id.name, records.price)
@@ -897,6 +915,7 @@ class PmStudentFeesDetails(models.Model):
             print(invoice_lines)
             MoveLine.create(invoice_lines)
             invoice._compute_invoice_taxes_by_group()
+            invoice._move_autocomplete_invoice_lines_values()
             self.state = 'invoice'
             self.invoice_id = invoice.id
             return True

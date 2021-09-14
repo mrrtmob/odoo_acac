@@ -43,6 +43,8 @@ class PMStudentFee(models.Model):
 
 
 
+
+
 class PMStudentFeeLine(models.Model):
     _name = 'pm.student.fee.line'
     student_fee_id = fields.Many2one(comodel_name='pm.student.fee')
@@ -67,5 +69,25 @@ class PMStudentFeeLine(models.Model):
         ('invoiced', 'Invoiced'),
         ('paid', 'Paid'),
     ])
+
+    def action_get_invoice(self):
+        value = True
+        if self.invoice_id:
+            form_view = self.env.ref('account.view_move_form')
+            tree_view = self.env.ref('account.view_invoice_tree')
+            value = {
+                'domain': str([('id', '=', self.invoice_id.id)]),
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'account.move',
+                'view_id': False,
+                'views': [(form_view and form_view.id or False, 'form'),
+                          (tree_view and tree_view.id or False, 'tree')],
+                'type': 'ir.actions.act_window',
+                'res_id': self.invoice_id.id,
+                'target': 'current',
+                'nodestroy': True
+            }
+        return value
 
 

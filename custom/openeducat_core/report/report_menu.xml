@@ -18,6 +18,7 @@
             <field name="header_spacing">5</field>
             <field name="dpi">90</field>
         </record>
+
         <record id="action_report_student_idcard" model="ir.actions.report">
             <field name="name">Student ID Card</field>
             <field name="model">op.student</field>

@@ -43,7 +43,9 @@
         'views/templates.xml',
         'reports/report_menu.xml',
         'reports/student_transcript.xml',
-        'reports/student_id_card.xml'
+        'reports/student_id_card.xml',
+        'reports/student_fee_report.xml',
+        'wizards/student_fee_report_wizzard.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
