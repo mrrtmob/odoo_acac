@@ -72,7 +72,7 @@ class PmRecipe(models.Model):
     sub_recipes_cost = fields.Float('Estimated Sub Recipes Cost', compute='_compute_cost')
     price = fields.Float('Selling Price', compute='_compute_price', tracking=True)
     cost_in_percentage = fields.Float('Cost (%)', required=True, default=30, tracking=True)
-    makes = fields.Float(tracking=True, default=1)
+    makes = fields.Float(tracking=True, compute="_compute_make", store=True)
     uor = fields.Selection(
         [('kg', 'kg'),
          ('l', 'l')],
@@ -93,14 +93,12 @@ class PmRecipe(models.Model):
     def set_recipe_expiration(self):
         print("YOYOO")
         today = fields.Date.today()
-        d = timedelta(days=60)
+        d = timedelta(days=30)
         expired_date = today - d
         expired_recipes = self.env['pm.recipe'].search([('write_date', '<', expired_date)])
         
-        print(expired_recipes)
-
         if expired_recipes:
-            expired_recipes.write({'is_expired':True})
+            expired_recipes.write({'is_expired': True})
 
 
     @api.depends('write_date')
@@ -109,10 +107,6 @@ class PmRecipe(models.Model):
             today = fields.Date.today()
             d = timedelta(days=60)
             expired_date = today - d
-            print("WTF")
-            print(rec.write_date)
-            print("Expire")
-            print(expired_date)
             if rec.write_date.date() < expired_date:
                rec.is_expired = True
 
@@ -161,6 +155,17 @@ class PmRecipe(models.Model):
 
             for main_recipe_line in main_recipe_lines:
                 main_recipe_line._compute_cost()
+
+    @api.depends('ingredients.quantity', 'sub_recipes.quantity')
+    def _compute_make(self):
+        print("_compute_makes")
+        for record in self:
+            sum_ingredients = sum(record.ingredients.mapped('quantity'))
+            sum_recipes = sum(record.sub_recipes.mapped('quantity'))
+            print(sum_recipes)
+            print(sum_ingredients)
+            record.makes = sum_ingredients + sum_recipes
+
 
     @api.depends('cost', 'cost_in_percentage')
     def _compute_price(self):
