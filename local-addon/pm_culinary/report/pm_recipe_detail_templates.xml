@@ -40,56 +40,87 @@
         <hr />
 
         <div class="row">
-           <t t-if="o.category_id">
             <div class="col-3">
               <strong>Category</strong><br/>
-              <span t-field="o.category_id.name" />
+                <t t-if="o.category_id">
+                    <span t-field="o.category_id.name" />
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
             </div>
-          </t>
 
-           <t t-if="o.date_of_test">
-            <div class="col-3">
-              <strong>Date of Test</strong><br/>
-              <span t-field="o.date_of_test" />
-            </div>
-          </t>
+          <div class="col-3">
+            <strong>Date of Test</strong><br/>
+              <t t-if="o.date_of_test">
+                    <span t-field="o.date_of_test" />
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
+          </div>
 
-          <t t-if="o.makes">
           <div class="col-3">
             <strong>Makes</strong><br/>
-            <t t-set="makes" t-value="o.makes * diff" />
-            <span t-esc="makes" /><span t-field="o.uor" />
-          </div>
-          </t>
-           <t t-if="o.number_of_portion">
-            <div class="col-3">
-              <strong>Yield</strong><br/>
-              <t t-set="number_of_portion" t-value="o.number_of_portion * diff" />
-              <span t-esc="number_of_portion" /> Portion(s)
-            </div>
-          </t>
-        </div>
+                <t t-if="o.makes">
+                      <t t-set="makes" t-value="o.makes * diff" />
+                     <span t-esc="makes" /><span t-field="o.uor" />
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
 
+          </div>
+
+          <div class="col-3">
+            <strong>Yield</strong><br/>
+             <t t-if="o.number_of_portion">
+                      <t t-set="number_of_portion" t-value="o.number_of_portion * diff" />
+                      <span t-esc="number_of_portion" /> Portion(s)
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
+          </div>
+           </div>
         <br />
 
         <div class="row">
-          <div class="col-3">
-            <strong>Total Cost</strong><br/>
 
-            <t t-set="cost" t-value="o.cost * diff" />
-            <span t-esc="cost" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
-          </div>
 
-          <div class="col-3">
+          <div class="col-4">
             <strong>Cost (%)</strong><br/>
-            <span t-field="o.cost_in_percentage" />&#37;
+                <t t-if="o.cost_in_percentage">
+                      <span t-field="o.cost_in_percentage" />&#37;
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
           </div>
 
           <div class="col-3">
             <strong>Selling Price</strong><br/>
 
-            <t t-set="price" t-value="o.price * diff" />
-            <span t-esc="price" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+               <t t-if="o.price">
+                 <t t-set="price" t-value="o.price * diff" />
+                    <span t-esc="price" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
+
+
+          </div>
+
+          <div class="col-3">
+            <strong>Cost per Unit</strong><br/>
+             <t t-if="o.cost_per_uor">
+                   <t t-set="price" t-value="o.cost_per_uor * diff" />
+                    <span t-esc="price" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                     </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
           </div>
         </div>
 

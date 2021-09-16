@@ -16,7 +16,7 @@ class PmRecipeLine(models.Model):
         domain="[('product_tmpl_id.is_food','=',True), ('product_tmpl_id.rank', '=', 'a')]"
     )
     quantity = fields.Float('Qty', digits=(12, 3))
-    initial_quantity = fields.Float('Initial Quantity', digits=(12, 3))
+    initial_quantity = fields.Float('Initial Quantity', digits=(12, 3), default=10)
     # NOTE: unused
     uom_id = fields.Many2one('uom.uom', 'Unit',
                              domain="[('measure_type', '!=', 'working_time'),('measure_type', '!=', 'length')]")
