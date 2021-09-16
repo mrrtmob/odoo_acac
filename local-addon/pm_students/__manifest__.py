@@ -29,6 +29,7 @@
                 'openeducat_admission',
                 'openeducat_discipline',
                 'pm_leads',
+                'report_xlsx',
                 'pm_general',
                 ],
 

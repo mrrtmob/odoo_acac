@@ -3,6 +3,12 @@
 import time
 
 from odoo import api, fields, models
+import calendar
+from odoo import http
+from odoo.http import request
+from odoo import api, fields, models, _
+from odoo.tools.misc import xlsxwriter
+import io
 
 
 class StudentPaymentReport(models.TransientModel):
@@ -21,9 +27,7 @@ class StudentPaymentReport(models.TransientModel):
          ('2021', '2021'), ('2022', '2022'), ('2023', '2023'), ('2024', '2024'), ('2025', '2025'), ('2026', '2026')],
         string='Year')
 
-
     def print_report(self):
-        self.ensure_one()
         [data] = self.read()
         data['student'] = self.env.context.get('active_ids', [])
         students = self.env['op.student'].browse(data['student'])
@@ -33,4 +37,17 @@ class StudentPaymentReport(models.TransientModel):
             'form': data
         }
         return self.env.ref('pm_students.action_report_payment_summary').report_action(students, data=datas)
+
+    # def print_report(self):
+    #     self.ensure_one()
+    #     self.excel_template()
+        # [data] = self.read()
+        # data['student'] = self.env.context.get('active_ids', [])
+        # students = self.env['op.student'].browse(data['student'])
+        # datas = {
+        #     'ids': [],
+        #     'model': 'op.student',
+        #     'form': data
+        # }
+        # return self.env.ref('pm_students.action_report_payment_summary').report_action(students, data=datas)
 
