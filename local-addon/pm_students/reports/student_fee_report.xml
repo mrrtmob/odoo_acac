@@ -4,9 +4,11 @@
         <record id="action_report_payment_summary" model="ir.actions.report">
             <field name="name">Payment Summary</field>
             <field name="model">op.student</field>
-            <field name="report_type">qweb-pdf</field>
+            <field name="report_type">xlsx</field>
             <field name="report_name">pm_students.payment_summary_report</field>
             <field name="report_file">pm_students.payment_summary_report</field>
+            <field name="attachment_use">True</field>
+
         </record>
 
         <record id="action_report_payment_summary" model="ir.actions.report">

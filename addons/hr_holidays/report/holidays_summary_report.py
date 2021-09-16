@@ -45,6 +45,8 @@ class HrHolidaySummaryReport(models.AbstractModel):
             month_days = (last_date - start_date).days + 1
             res.append({'month_name': start_date.strftime('%B'), 'days': month_days})
             start_date += relativedelta(day=1, months=+1)
+        print("**********")
+        print(res)
         return res
 
     def _get_leaves_summary(self, start_date, empid, holiday_type):
@@ -81,6 +83,7 @@ class HrHolidaySummaryReport(models.AbstractModel):
 
     def _get_data_from_report(self, data):
         res = []
+        print(res)
         Employee = self.env['hr.employee']
         if 'depts' in data:
             for department in self.env['hr.department'].browse(data['depts']):
@@ -122,3 +125,4 @@ class HrHolidaySummaryReport(models.AbstractModel):
             'get_data_from_report': self._get_data_from_report(data['form']),
             'get_holidays_status': self._get_holidays_status(),
         }
+

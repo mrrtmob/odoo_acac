@@ -794,6 +794,7 @@ class ExportXlsxWriter:
     def close(self):
         self.workbook.close()
         with self.output:
+            print(self.output.getvalue())
             self.value = self.output.getvalue()
 
     def write(self, row, column, cell_value, style=None):
