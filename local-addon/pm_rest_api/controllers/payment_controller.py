@@ -49,13 +49,17 @@ class PaymentPortal(CustomerPortal):
         PayWay = ABAPayWay()
 
         object = 'op.student.fees.details'
+        tran_id = ''
         if type == "installment":
+            tran_id = 'PP-' + str(payment_id)
             object = 'pm.student.installment'
+        elif type == "normal":
+            tran_id = 'FP-' + str(payment_id)
 
         merchant_id = PayWay.get_merchant_id()
         payment_obj = request.env[object].sudo().browse(payment_id)
         getItems = PayWay.get_transaction_items(payment_obj)
-        hash_data = PayWay.get_hash(str(merchant_id), str(payment_obj.id), str(payment_obj.amount), str(getItems['items']))
+        hash_data = PayWay.get_hash(str(merchant_id), str(tran_id), str(payment_obj.amount), str(getItems['items']))
         api_url = PayWay.get_api_url()
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id or payment_obj.fee_id.student_id
@@ -73,7 +77,7 @@ class PaymentPortal(CustomerPortal):
             'continue_success_url': success_url,
             'email': student.email,
             'phone': student.mobile,
-            'tran_id': payment_obj.id,
+            'tran_id': tran_id,
             'url': api_url,
             'push_back_url': push_back_url,
             'items': getItems['items']
@@ -89,14 +93,14 @@ class PaymentPortal(CustomerPortal):
         object = 'op.student.fees.details'
         tran_id = ''
         if type == "installment":
-            tran_id = 'PP-' + payment_id
+            tran_id = 'PP-' + str(payment_id)
             object = 'pm.student.installment'
         elif type == "normal":
-            tran_id = 'FP-' + payment_id
+            tran_id = 'FP-' + str(payment_id)
         payment_obj = request.env[object].sudo().browse(payment_id)
         getItems = PayWay.get_transaction_items(payment_obj)
         print(getItems)
-        hash_data = PayWay.get_hash(str(merchant_id), tran_id, str(payment_obj.amount), str(getItems['items']))
+        hash_data = PayWay.get_hash(str(merchant_id), str(tran_id), str(payment_obj.amount), str(getItems['items']))
         api_url = PayWay.get_api_url()
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id or payment_obj.fee_id.student_id
@@ -114,7 +118,7 @@ class PaymentPortal(CustomerPortal):
             'continue_success_url': success_url,
             'email': student.email,
             'phone': student.mobile,
-            'tran_id': payment_obj.id,
+            'tran_id': tran_id,
             'url': api_url,
             'payment_option': 'abapay_deeplink',
             'push_back_url': push_back_url,

@@ -437,7 +437,6 @@
                                     <input type="hidden" name="return_url" t-att-value="push_back_url" id="return_url"/>
                                     <input type="hidden" name="return_params" value="json" id="return_params"/>
                                     <input type="hidden" name="payment_option" value="cards"/>
-                                    <input type="hidden" name="payment_option" value="abapay_deeplink"/>
                                 </form>
                             </div>
                       </div>
@@ -448,11 +447,11 @@
 
                     <link rel="stylesheet" href="https://payway-staging.ababank.com/checkout-popup.html?file=css"/>
                     <script src="https://payway-staging.ababank.com/checkout-popup.html?file=js&amp;hide-close=1"></script>
-
                      <script>
                         $(document).ready(function () {
                            AbaPayway.checkout();
                         });
+
                     </script>
                 </body>
             </html>
