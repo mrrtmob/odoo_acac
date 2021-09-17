@@ -1,6 +1,7 @@
 from odoo.http import request
 from datetime import datetime
 import logging
+import requests
 from odoo import http, _
 from odoo.addons.portal.controllers.portal import CustomerPortal
 from odoo.addons.openeducat_rest.controllers.main import ObjectEncoder
@@ -132,7 +133,7 @@ class PaymentPortal(CustomerPortal):
     
 
     @http.route(['/student/aba/success'],
-                type='http',auth='public', website=True)
+                type='http', auth='public', website=True)
     def student_payment_success(self):
         environ = request.httprequest.headers.environ
         agent_string = environ.get("HTTP_USER_AGENT")
@@ -143,6 +144,21 @@ class PaymentPortal(CustomerPortal):
         else:
             print("I am from PC!!")
             return request.render("pm_rest_api.pm_payment_success_form")
+
+    @http.route(['/student/aba/check/transaction/<string:id>'],
+                type='http', auth='public', website=True)
+    def check_transaction_status(self, id):
+        PayWay = ABAPayWay()
+        merchant_id = PayWay.get_merchant_id()
+        api_url = PayWay.get_api_url()+'check/transaction/'
+        hash = PayWay.get_hash_check(str(merchant_id), str(id))
+        params = {
+            'tran_id': id,
+            'hash': hash
+        }
+        req = requests.post(api_url, data=params)
+        data = req.json()
+        return Response(req, content_type='application/json;charset=utf-8', status=200)
 
     @http.route(['/student/aba/pushback'],
                 type='http', methods=['POST'], auth='public', csrf=False)
