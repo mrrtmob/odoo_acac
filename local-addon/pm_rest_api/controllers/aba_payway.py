@@ -50,7 +50,14 @@ class ABAPayWay(http.Controller):
         secret = key.encode('utf-8')
         dig = hmac.new(secret, msg=message, digestmod=hashlib.sha512).digest()
         signature = base64.b64encode(dig).decode()
-        print(signature)
+        return signature;
+
+    def get_hash_check(self, merchant_id, transaction_id):
+        message = bytes(merchant_id + transaction_id, 'utf-8')
+        key = self.get_api_key()
+        secret = key.encode('utf-8')
+        dig = hmac.new(secret, msg=message, digestmod=hashlib.sha512).digest()
+        signature = base64.b64encode(dig).decode()
         return signature;
 
     def get_transaction_items(self, payment_obj):
