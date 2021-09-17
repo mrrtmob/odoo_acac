@@ -145,15 +145,15 @@ class PaymentPortal(CustomerPortal):
             print("I am from PC!!")
             return request.render("pm_rest_api.pm_payment_success_form")
 
-    @http.route(['/student/aba/check/transaction/<string:id>'],
-                type='http', auth='public', website=True)
-    def check_transaction_status(self, id):
+    @http.route(['/student/aba/check/transaction/<string:tran_id>'],
+                type='http', auth='user', website=False)
+    def check_transaction_status(self, tran_id):
         PayWay = ABAPayWay()
         merchant_id = PayWay.get_merchant_id()
         api_url = PayWay.get_api_url()+'check/transaction/'
-        hash = PayWay.get_hash_check(str(merchant_id), str(id))
+        hash = PayWay.get_hash_check(str(merchant_id), str(tran_id))
         params = {
-            'tran_id': id,
+            'tran_id': tran_id,
             'hash': hash
         }
         req = requests.post(api_url, data=params)
