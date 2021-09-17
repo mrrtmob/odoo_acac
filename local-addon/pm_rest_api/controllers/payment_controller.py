@@ -87,12 +87,16 @@ class PaymentPortal(CustomerPortal):
         PayWay = ABAPayWay()
         merchant_id = PayWay.get_merchant_id()
         object = 'op.student.fees.details'
+        tran_id = ''
         if type == "installment":
+            tran_id = 'PP-' + payment_id
             object = 'pm.student.installment'
+        elif type == "normal":
+            tran_id = 'FP-' + payment_id
         payment_obj = request.env[object].sudo().browse(payment_id)
         getItems = PayWay.get_transaction_items(payment_obj)
         print(getItems)
-        hash_data = PayWay.get_hash(str(merchant_id), str(payment_obj.id), str(payment_obj.amount), str(getItems['items']))
+        hash_data = PayWay.get_hash(str(merchant_id), tran_id, str(payment_obj.amount), str(getItems['items']))
         api_url = PayWay.get_api_url()
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id or payment_obj.fee_id.student_id
@@ -139,35 +143,38 @@ class PaymentPortal(CustomerPortal):
     @http.route(['/student/aba/pushback'],
                 type='http', methods=['POST'], auth='public', csrf=False)
     def student_payment_push_back(self, **post):
-        # response = post.get('response')
-        # print(response)
-        # _logger.info("***************tran_id %s "% (post))
-        # _logger.info( "***************type %s "% (type(post)))
-        # data= json.loads(response)
-        # _logger.info("***************type %s "% (data))
-        # _logger.info( "***************type %s "% (type(data)))
-        #
-        # _logger.info(
-        #     "***************tran_id %s "% (tran_id)
-        # )
-        # _logger.info(
-        #     "**************status %s "% (status)
-        # )
-        tran_id = 27
-        status = 'approved'
-        
+        response = post.get('response')
+        _logger.info("***************tran_id %s " % (post))
+        _logger.info("***************type %s " % (type(post)))
+        data = json.loads(response)
+        _logger.info("***************type %s " % (data))
+        _logger.info("***************type %s " % (type(data)))
+        tran_id = data['tran_id']
+        status = data['status']
+        _logger.info(
+            "***************tran_id %s " % (tran_id)
+        )
+        _logger.info(
+            "**************status %s " % (status)
+        )
+
+        # tran_id = 'FP-268'
+        tran_split = tran_id.split('-')
+        tran_code = tran_split[0]
+        id = tran_split[1]
+        obj = ''
+        if tran_code == 'PP':
+            obj = 'pm.student.installment'
+        elif tran_code == 'FP':
+            obj = 'op.student.fees.details'
+
         transaction_obj = request.env['pm.aba.transaction'].sudo()
         transaction_obj.create({
             'transaction_number': tran_id,
-            'status': status
+            'status': 'approved'
         })
-        fee = request.env['op.student.fees.details'].sudo().search([('id', '=', tran_id)])
-        if fee.payment_option != 'installment':
-            student_fee = fee
-        elif fee.payment_option == 'installment':
-            print("yoo")
-            student_fee = request.env['pm.student.installment'].sudo().search([('id', '=', tran_id)])
-        print(student_fee)
+        student_fee = request.env[obj].sudo().search([('id', '=', id)])
+
         invoice = student_fee.invoice_id
         print(invoice)
         payment_method = 3
@@ -184,6 +191,7 @@ class PaymentPortal(CustomerPortal):
             'payment_reference': invoice.name
         }
         account_payment = request.env['account.payment'].sudo().create(payment_data)
+        account_payment.action_post()
         print(account_payment)
 
 
