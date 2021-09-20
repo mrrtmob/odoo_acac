@@ -61,7 +61,7 @@
           </div>
 
           <div class="col-3">
-            <strong>Makes</strong><br/>
+            <strong>Unit</strong><br/>
                 <t t-if="o.makes">
                       <t t-set="makes" t-value="o.makes * diff" />
                      <span t-esc="makes" /><span t-field="o.uor" />
@@ -88,7 +88,7 @@
         <div class="row">
 
 
-          <div class="col-4">
+          <div class="col-3">
             <strong>Cost (%)</strong><br/>
                 <t t-if="o.cost_in_percentage">
                       <span t-field="o.cost_in_percentage" />&#37;

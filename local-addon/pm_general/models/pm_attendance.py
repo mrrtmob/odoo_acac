@@ -2,6 +2,13 @@ from odoo.exceptions import ValidationError
 from odoo import models, fields,api
 from datetime import datetime
 
+_DAY = [('0', 'Monday'),
+        ('1', 'Tuesday'),
+        ('2', 'Wednesday '),
+        ('3', 'Thursday'),
+        ('4', 'Friday '),
+        ('5', 'Saturday'),
+        ('6', 'Sunday ')]
 
 class PmSemesterAttendance(models.Model):
     _name = "pm.semester.attendance"
@@ -274,7 +281,6 @@ class OpAttendanceLineCustom(models.Model):
     student_id = fields.Many2one(
         'op.student',
         'Student',
-        domain="[('active_class.id', '=', 'attendance_id.session_id.classroom_id.id')]",
         required=True,
         track_visibility="onchange")
 
@@ -282,6 +288,12 @@ class OpAttendanceLineCustom(models.Model):
         'op.batch', 'Term',
         related='attendance_id.register_id.batch_id', store=True,
         readonly=True)
+
+    classroom_id = fields.Many2one(
+        'op.classroom', 'Term',
+        related='attendance_id.classroom_id', store=True,
+        readonly=True)
+
     semester_id = fields.Many2one('pm.semester', 'Semester', related='attendance_id.register_id.semester_id',
                                   store=True, readonly=True)
     subject_attendance_id = fields.Many2one('pm.subject.attendance', 'Subject Attendance', required=False)
@@ -303,7 +315,7 @@ class OpAttendanceLineCustom(models.Model):
                 print(minutes)
                 if minutes >= 1:
                     val['present'] = False
-                    val['is_late'] = True
+                    val['late'] = True
                     val['late_duration'] = minutes
                 print('I checked at', item['check_in'])
             else:
@@ -331,6 +343,7 @@ class OpSessionCustom(models.Model):
     semester_id = fields.Many2one('pm.semester', 'Semester', required=True)
     day_sequence = fields.Integer()
     meeting_id = fields.Many2one('calendar.event', string='Meeting', copy=False)
+    type = fields.Selection(_DAY, compute='_compute_day', string='Day', store=True)
 
     def lecture_confirm(self):
         print("confirm")
@@ -366,9 +379,7 @@ class OpSessionCustom(models.Model):
     @api.depends('start_datetime')
     def _compute_day(self):
         for record in self:
-            record.type = fields.Datetime.from_string(
-                record.start_datetime).strftime("%A")
-            print(record.start_datetime.weekday())
-            record.day_sequence = record.start_datetime.weekday()
+            record.type = str(record.start_datetime.weekday())
+            # record.day_sequence =
 
 

@@ -65,6 +65,11 @@
           <field name="model">op.student</field>
           <field name="inherit_id" ref="openeducat_core.view_op_student_tree"/>
           <field name="arch" type="xml">
+              <xpath expr="//tree" position="inside">
+                 <header>
+                    <button name="generate_student_payment" type="object" string="Generate Payment Reports"/>
+                 </header>
+            </xpath>
              <xpath expr="//field[@name='title']" position="before">
                 <field name="student_app_id"/>
             </xpath>

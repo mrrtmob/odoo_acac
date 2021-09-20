@@ -6,6 +6,19 @@ from datetime import datetime, timedelta
 
 
 
+class OpStudentInherit(models.Model):
+    _inherit = "op.student"
+    active_class = fields.Many2one('op.classroom', compute='_compute_active_class', store=True)
+
+    @api.depends('course_detail_ids')
+    def _compute_active_class(self):
+        for student in self:
+            student_course = self.env['op.student.course'].search([
+                ('student_id', '=', student.id), ('p_active', '=', 'True')
+            ], limit=1)
+            student.active_class = student_course.class_id.id
+
+
 class OpTermMarksheetRegister(models.Model):
     _name = "pm.term.marksheet.register"
     _order = "id desc"
