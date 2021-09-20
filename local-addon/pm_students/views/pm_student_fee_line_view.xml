@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record id="view_fee_payment_tree" model="ir.ui.view">
+            <field name="name">pm.student.fee.line.tree</field>
+            <field name="model">pm.student.fee.line</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Fee Reports" expand="1">
+                    <field name="status" invisible="1"/>
+                    <field name="product_id" string="Nature of school"/>
+                    <field name="month"/>
+                    <field name="invoiced" string="Invoiced"  sum="Total Invoiced" attrs="{'invisible': [('status', '=', 'paid')]}"/>
+                    <field name="paid" string="Paid"  sum="Total Paid" attrs="{'invisible': [('status', '=', 'invoiced')]}"/>
+                </tree>
+            </field>
+        </record>
+
+
+           <record id="view_pm_student_fee_line_search" model="ir.ui.view">
+            <field name="name">pm.student.fee.line.search</field>
+            <field name="model">pm.student.fee.line</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search>
+                     <field name="product_id"/>
+                     <field name="month"/>
+                    <newline/>
+                   <group expand="1" string="Group By">
+                    <filter name="group_by_months" string="Months"
+                            domain="[]" context="{'group_by':'month'}"/>
+                    <filter name="group_by_product" string="Nature of School"
+                            domain="[]" context="{'group_by':'product_id'}"/>
+
+                </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="act_open_product_payment_report">
+            <field name="name">Monthly Fee Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.student.fee.line</field>
+            <field name="binding_view_types">form</field>
+            <field name="search_view_id" ref="view_pm_student_fee_line_search"/>
+            <field name="view_mode">tree</field>
+            <field name="context">{"search_default_group_by_product":1,"search_default_group_by_months":1}</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <menuitem id="pm_student_fee_line_menu"
+            name="Monthly Fee Reports"
+            parent="openeducat_core.menu_op_student_root"
+            groups="pm_leads.group_acac_admin"
+            action="act_open_product_payment_report"
+            sequence="40"/>
+    </data>
+</odoo>

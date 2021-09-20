@@ -340,10 +340,16 @@ class OpStudent(models.Model):
     pin = fields.Char(string="PIN", compute='_compute_pin',
                       help="PIN used to Sign In in Kiosk Mode", copy=False, store=True)
     test = fields.Char('Mobile 2', compute='_on_change_course_id')
-    active_class = fields.Many2one('op.classroom', compute='_compute_active_class', store=True)
+
+
+    def batch_generate_payment_reports(self):
+        students = self.env['op.student'].search([])
+        for student in students:
+            student.generate_student_payment()
 
     def generate_student_payment(self):
         for student in self:
+            print("YO")
             fee_obj = self.env['pm.student.fee']
             fee_line_obj = self.env['pm.student.fee.line']
             paid = {}
@@ -395,6 +401,7 @@ class OpStudent(models.Model):
 
                     val = {
                         'invoice_id': inv.id,
+                        'invoice_line_id': line.id,
                         'student_fee_id': student_fee.id,
                         'amount': line.price_unit,
                         'date': inv.invoice_date,
@@ -406,6 +413,7 @@ class OpStudent(models.Model):
                         paid_month = calendar.month_abbr[pay_date.month]
                         val = {
                             'invoice_id': inv.id,
+                            'invoice_line_id': line.id,
                             'student_fee_id': student_fee.id,
                             'amount': line.price_unit,
                             'date': pay_date,
@@ -413,38 +421,6 @@ class OpStudent(models.Model):
                             'status': 'paid'
                         }
                         fee_line_obj.create(val)
-
-            # print('******Invoiced*****')
-            # print(invoiced)
-            # print('******Paid*****')
-            # print(paid)
-            # fee_data = {}
-            # ending_day_of_current_year = datetime.now().date().replace(month=12, day=31)
-            # fees = self.env['op.student.fees.details'].search([('student_id', '=', student.id),
-            #                                                    ('date', '<=', ending_day_of_current_year)])
-
-            # for fee in fees:
-            #     month = fee.date.month
-            #     month_name = calendar.month_abbr[month]
-            #     get_month = self.get_months(month)
-            #     print(get_month)
-            #     start_month = get_month['start_month']
-            #     end_month = get_month['end_month']
-            #     for month_idx in range(start_month, end_month + 1):
-            #         print(calendar.month_abbr[month_idx])
-            #         fee_data[calendar.month_abbr[month_idx]] = []
-            #     fee_line = fee.fees_line_id
-            #     fee_element = fee_line.fees_element_line
-            #     for item in fee_element:
-            #         print(item.product_id.name)
-            #         fee_data[month_name].append({
-            #             'product': item.product_id.name,
-            #             'amount': item.price
-            #         })
-            # print(fee_data)
-
-
-
 
 
 
@@ -469,8 +445,6 @@ class OpStudent(models.Model):
 
         today = fields.Date.today()
         print(all_course_search)
-
-
         for course in all_course_search:
             print(today)
             print(course.reminding_date)
@@ -533,13 +507,7 @@ class OpStudent(models.Model):
             for fee in fees:
                 fee.payable = True
 
-    @api.depends('course_detail_ids')
-    def _compute_active_class(self):
-        for student in self:
-            student_course = self.env['op.student.course'].search([
-                ('student_id', '=', student.id), ('p_active', '=', 'True')
-            ], limit=1)
-            student.active_class = student_course.class_id.id
+
 
     @api.depends('course_detail_ids.education_status')
     def _compute_student_status(self):

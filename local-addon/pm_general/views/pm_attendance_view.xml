@@ -12,12 +12,11 @@
                  <xpath expr="//field[@name='attendance_line']" position="replace">
                        <field name="attendance_line" colspan="4" nolabel="1">
                             <tree string="Attendance Line" editable="top">
-<!--                                tem: error class_id-->
-<!--                                <field name="student_id"-->
-<!--                                       domain="[('course_detail_ids.class_id','=',parent.classroom_id)]"/>-->
+                                <field name="classroom_id" invisible="1"/>
+                                <field name="student_id" domain="[('active_class','=', classroom_id)]"/>
                                 <field name="present"/>
                                 <field name="excused"/>
-                                <field name="is_late"/>
+                                <field name="late"/>
                                 <field name="late_duration"/>
                                 <field name="remark"/>
                             </tree>

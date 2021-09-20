@@ -21,7 +21,8 @@
                     <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
                     <filter string="Submitted" name="submitted" domain="[('state', '=', 'submitted')]"/>
                     <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
-                    <filter string="Rejected" name="approved" domain="[('state', '=', 'rejected')]"/>
+                    <filter string="Rejected" name="rejected" domain="[('state', '=', 'rejected')]"/>
+                    <filter string="Expired" name="expired" domain="[('is_expired', '=', True)]"/>
                 </search>
             </field>
         </record>

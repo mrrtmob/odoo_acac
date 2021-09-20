@@ -24,8 +24,6 @@
         'openeducat_discipline',
         'openeducat_exam',
         'pm_approval',
-        # 'pm_admission',
-
     ],
 
     # always loaded

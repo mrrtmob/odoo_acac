@@ -10,7 +10,7 @@ class PMStudentFee(models.Model):
     _rec_name = 'product_id'
     student_id = fields.Many2one('op.student', 'Student Name', required=True)
     product_id = fields.Many2one('product.product',
-                                 'Product(s)',
+                                 'Product',
                                  domain=[('type', '=', 'service')],
                                  required=True)
     date = fields.Date()
@@ -24,6 +24,11 @@ class PMStudentFee(models.Model):
                                             domain=[('status', '=', 'invoiced')])
     paid_fee_line_ids = fields.One2many(string="Paid", comodel_name='pm.student.fee.line', inverse_name="student_fee_id",
                                         domain=[('status', '=', 'paid')])
+
+    def batch_generate_payment_reports(self):
+        students = self.env['op.student'].search([])
+        for student in students:
+            student.generate_student_payment()
 
     @api.depends('paid_fee_line_ids.amount', 'invoiced_fee_line_ids.amount')
     def _compute_total_paid(self):
@@ -47,9 +52,17 @@ class PMStudentFee(models.Model):
 
 class PMStudentFeeLine(models.Model):
     _name = 'pm.student.fee.line'
-    student_fee_id = fields.Many2one(comodel_name='pm.student.fee')
+    student_fee_id = fields.Many2one(comodel_name='pm.student.fee', ondelete='cascade')
     amount = fields.Monetary()
     invoice_id = fields.Many2one('account.move', 'Invoice ID')
+    invoiced = fields.Monetary(compute="_compute_report_amount", store=True)
+    paid = fields.Monetary(compute="_compute_report_amount", store=True)
+    invoice_line_id = fields.Many2one('account.move.line', string="Invoice Line ID")
+    product_id = fields.Many2one('product.product',
+                                 'Product',
+                                 related="student_fee_id.product_id",
+                                 domain=[('type', '=', 'service')],
+                                 store=True)
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company, required=True)
     currency_id = fields.Many2one(string="Currency", related='company_id.currency_id', readonly=True)
     month = fields.Selection([('Jan', 'January'),
@@ -69,6 +82,16 @@ class PMStudentFeeLine(models.Model):
         ('invoiced', 'Invoiced'),
         ('paid', 'Paid'),
     ])
+
+    @api.depends('amount', 'status')
+    def _compute_report_amount(self):
+        for rec in self:
+            if rec.status == 'paid':
+                rec.paid = rec.amount
+                rec.invoiced = False
+            elif rec.status == 'invoiced':
+                rec.invoiced = rec.amount
+                rec.paid = False
 
     def action_get_invoice(self):
         value = True

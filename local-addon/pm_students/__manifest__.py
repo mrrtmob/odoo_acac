@@ -40,6 +40,7 @@
         'views/pm_student_view.xml',
         'views/pm_student_dashboard.xml',
         'views/pm_student_fee_view.xml',
+        'views/pm_student_fee_line_view.xml',
         'views/templates.xml',
         'views/templates.xml',
         'reports/report_menu.xml',
