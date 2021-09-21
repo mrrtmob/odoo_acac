@@ -145,6 +145,10 @@
                 <field name="groups_id" eval="[(4, ref('openeducat_core.group_op_back_office')), (4, ref('openeducat_core.group_op_back_office_admin'))]"/>
             </record>
 
+            <record id="openeducat_timetable.menu_op_timetable_config" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('openeducat_core.group_op_back_office_admin')])]"/>
+            </record>
+
              <record id="openeducat_core.menu_op_student_root" model="ir.ui.menu">
                 <field name="groups_id" eval="[(4,ref('pm_leads.group_see_student_app'))]"/>
             </record>

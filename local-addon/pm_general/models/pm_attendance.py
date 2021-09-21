@@ -307,13 +307,13 @@ class OpAttendanceLineCustom(models.Model):
             item = val
             print(item)
             if 'check_in' in item:
-                start_time = self.env['op.attendance.sheet'].browse(item['attendance_id']).sheet_start_time
+                start_time = self.env['op.attendance.sheet'].browse(item['attendance_id']).session_id.start_datetime
                 print(start_time)
                 late = item['check_in'] - start_time
                 seconds = late.total_seconds()
                 minutes = (seconds % 3600) // 60
                 print(minutes)
-                if minutes >= 1:
+                if minutes >= 5:
                     val['present'] = False
                     val['late'] = True
                     val['late_duration'] = minutes
@@ -323,7 +323,8 @@ class OpAttendanceLineCustom(models.Model):
                     print('I am absent', item['student_id'])
                 else:
                     print('I am Present', item['student_id'])
-
+        print("XDXD")
+        print(val)
         res = super(OpAttendanceLineCustom, self).create(val)
         return res
 

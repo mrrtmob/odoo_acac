@@ -117,15 +117,25 @@ class OpAttendanceSheet(models.Model):
             ['|', ('auto_create_if_session', '=', True),
              ('auto_create', '=', True)])
         session_ids = self.env['op.session'].search([])
+        print("**********")
+        print(register_ids)
+        print(session_ids)
         for register in register_ids:
             if register.auto_create_if_session:
                 for session in session_ids:
                     start_datetime = session.start_datetime.date()
                     end_datetime = session.end_datetime.date()
-                    if register.course_id == session.course_id:
+                    if register.course_id == session.course_id and register.batch_id == session.batch_id\
+                            and register.semester_id.id == session.semester_id.id:
                         current_date = datetime.today().date()
+                        print('********************')
+                        print(session.name)
+                        print(str(start_datetime))
+                        print(str(current_date))
+                        print(str(end_datetime))
                         if str(start_datetime) <= str(current_date) \
                                 <= str(end_datetime):
+                            print("Yo")
                             self.create({
                                 'register_id': register.id,
                                 'course_id': register.course_id.id,
