@@ -147,7 +147,7 @@ class StudentTranscriptReport(models.AbstractModel):
                     'code': pl.subject_id.code,
                     'name': pl.subject_id.name,
                     'credits': pl.subject_id.p_credits,
-                    'grade': grade
+                    'score': grade
                 }
                 lst.append(dic)
             gpa = round(wiegh_average_gpa / total_course_credit, 1)
@@ -184,8 +184,7 @@ class StudentTranscriptReport(models.AbstractModel):
                         'code': pl.subject_id.code,
                         'name': pl.subject_id.name,
                         'credits': pl.subject_id.p_credits,
-                        'grade': grade,
-
+                        'score': grade,
                     }
 
                     lst.append(dic)
