@@ -193,10 +193,8 @@ class StudentTranscriptReport(models.AbstractModel):
                 ex_count = 0
                 sub_count = 0
                 for res in student_results:
-                    semester_average = res.result
-                    print('1', res.semester_id.id)
-                    print('2', data['semester_id'])
                     if res.semester_id.id == data['semester_id']:
+                        semester_average = res.result
                         print('hit coni')
                         gpa = res.gpa
                         for srl in res.semester_res_line:
