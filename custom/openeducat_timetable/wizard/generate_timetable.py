@@ -107,13 +107,14 @@ class GenerateSession(models.TransientModel):
                             'subject_id': line.subject_id.id,
                             'course_id': session.course_id.id,
                             'batch_id': session.batch_id.id,
+                            'semester_id': session.semester_id.id,
                             'timing_id': line.timing_id.id,
                             'classroom_id': line.classroom_id.id,
                             'start_datetime':
                             curr_start_date.strftime("%Y-%m-%d %H:%M:%S"),
                             'end_datetime':
                             curr_end_date.strftime("%Y-%m-%d %H:%M:%S"),
-                            'type': calendar.day_name[int(line.day)],
+                            'type': str(line.day),
                             'state': 'confirm',
                         })
             return {'type': 'ir.actions.act_window_close'}

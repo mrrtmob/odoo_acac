@@ -16,9 +16,9 @@
                                 <field name="student_id" domain="[('active_class','=', classroom_id)]"/>
                                 <field name="present"/>
                                 <field name="excused"/>
+                                <field name="absent"/>
                                 <field name="late"/>
                                 <field name="late_duration"/>
-                                <field name="remark"/>
                             </tree>
                         </field>
                     </xpath>
