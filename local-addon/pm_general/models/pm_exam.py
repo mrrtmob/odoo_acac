@@ -99,7 +99,6 @@ class PmExamSession(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'),
         ('schedule', 'Scheduled'),
-        ('held', 'Held'),
         ('cancel', 'Cancelled'),
         ('submitted', 'Submitted'),
         ('done', 'Done')

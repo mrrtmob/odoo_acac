@@ -38,7 +38,7 @@ class PmExamClassSchedule(models.Model):
     start_time = fields.Datetime('Start Time', required=True)
     end_time = fields.Datetime('End Time', required=True)
     state = fields.Selection(
-        [('draft', 'Draft'), ('schedule', 'Scheduled'), ('held', 'Held'),
+        [('draft', 'Draft'), ('schedule', 'Scheduled'),
          ('submitted', 'Submitted'),
          ('cancel', 'Cancelled'), ('done', 'Done')], 'State',
         readonly=True, default='draft', track_visibility='onchange')
@@ -108,6 +108,12 @@ class OpExamAttendeesCustom(models.Model):
     exam_id = fields.Many2one(
         'op.exam', 'Exam', required=False, ondelete="cascade")
     session_id = fields.Many2one('op.exam.session', related='exam_id.session_id', store=True)
+
+    def set_present(self):
+        self.status = 'present'
+
+    def set_absent(self):
+        self.status = 'absent'
 
     @api.depends('exam_id.exam_type', 'exam_id.session_id.state')
     def _compute_show_student(self):
