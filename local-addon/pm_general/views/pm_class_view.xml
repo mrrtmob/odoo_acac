@@ -30,9 +30,7 @@
                    <header groups="base.group_user">
                          <button name="%(openeducat_exam.act_open_op_room_distribution_view)d" states="draft" type="action"
                             string="Schedule Class Exam" class="oe_highlight"/>
-                        <button name="%(openeducat_exam.act_open_op_held_exam_view)d" states="schedule" type="action"
-                                string="Held" class="oe_highlight"/>
-                        <button name="act_submit" states="held" type="object"
+                        <button name="act_submit" states="scheduled" type="object"
                                 string="Submit" class="oe_highlight"/>
                         <button name="act_done" states="submitted" type="object"
                                 groups="openeducat_core.group_op_back_office"
@@ -40,17 +38,18 @@
                         <button name="act_cancel" states="held" type="object"
                                 string="Cancel"/>
                         <field name="state" widget="statusbar"
-                               statusbar_visible="draft,held,scheduled,submitted,done"/>
+                               statusbar_visible="draft,scheduled,submitted,done"/>
                    </header>
                     <sheet>
                         <field name="active" invisible="1"/>
                         <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
                                 attrs="{'invisible': [('active', '=', True)]}"/>
+                        <h1>
+                             <field name="class_id"/>
+                        </h1>
                         <group col="4" colspan="4">
-                            <field name="name"/>
                             <field name="exam_session_id"/>
                             <field name="exam_id" context="{'exam_session_id': exam_session_id,'get_parent_exam':1}"/>
-                            <field name="class_id"/>
                             <field name="start_time"/>
                             <field name="end_time"/>
                         </group>
@@ -61,7 +60,20 @@
                                     <field name="exam_id" forcesave="1" readonly="1"/>
                                     <field name="marks"/>
                                     <field name="status"/>
-                                    <field name="note"/>
+                                <button
+                                    string="Present"
+                                    type="object"
+                                    class="btn btn-outline-success"
+                                    name="set_present"
+                                    attrs="{'invisible':[('status','=','present')]}"
+                                />
+                                <button
+                                    string="Absent"
+                                    type="object"
+                                    class="btn btn-outline-danger"
+                                    name="set_absent"
+                                    attrs="{'invisible':[('status','=','absent')]}"
+                                />
                                 </tree>
                             </field>
                         </group>
