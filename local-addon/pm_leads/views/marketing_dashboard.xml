@@ -27,9 +27,9 @@
 
     <record id="lost_reason" model="ir.actions.act_window">
         <field name="name">CRM Leads</field>
-        <field name="res_model">crm.lead</field>
+        <field name="res_model">crm.lead.lost</field>
         <field name="view_mode">graph</field>
-        <field name="domain">[('lost_reason','!=',False)]</field>
+        <field name="domain">[('lost_reason_id','!=',False)]</field>
         <field name="view_id" ref="lost_reason_view"/>
     </record>
 

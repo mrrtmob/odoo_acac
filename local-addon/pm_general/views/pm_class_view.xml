@@ -30,7 +30,7 @@
                    <header groups="base.group_user">
                          <button name="%(openeducat_exam.act_open_op_room_distribution_view)d" states="draft" type="action"
                             string="Schedule Class Exam" class="oe_highlight"/>
-                        <button name="act_submit" states="scheduled" type="object"
+                        <button name="act_submit" states="schedule" type="object"
                                 string="Submit" class="oe_highlight"/>
                         <button name="act_done" states="submitted" type="object"
                                 groups="openeducat_core.group_op_back_office"
@@ -38,7 +38,7 @@
                         <button name="act_cancel" states="held" type="object"
                                 string="Cancel"/>
                         <field name="state" widget="statusbar"
-                               statusbar_visible="draft,scheduled,submitted,done"/>
+                               statusbar_visible="draft,schedule,submitted,done"/>
                    </header>
                     <sheet>
                         <field name="active" invisible="1"/>

@@ -24,6 +24,7 @@ class PMStudentFee(models.Model):
                                             domain=[('status', '=', 'invoiced')])
     paid_fee_line_ids = fields.One2many(string="Paid", comodel_name='pm.student.fee.line', inverse_name="student_fee_id",
                                         domain=[('status', '=', 'paid')])
+    remaining_percentage = fields.Integer("Percentage", _compute="_compute_remaining_balance", store=True)
 
     def batch_generate_payment_reports(self):
         students = self.env['op.student'].search([])
@@ -44,6 +45,13 @@ class PMStudentFee(models.Model):
     def _compute_remaining_balance(self):
         for rec in self:
             rec.remaining_balance = rec.total_invoiced - rec.total_paid
+            if rec.total_paid == 0:
+                rec.remaining_percentage = 0
+            else:
+                rec.remaining_percentage = rec.total_paid/rec.total_invoiced * 100.
+
+
+
 
 
 

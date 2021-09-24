@@ -2,6 +2,12 @@
 <odoo>
     <data>
 
+         <template id="assets_frontend_studnets" inherit_id="web.assets_backend">
+            <xpath expr="//link" position="before">
+                <link rel="stylesheet" type="text/css" href="/pm_students/static/src/css/styles.css" />
+            </xpath>
+        </template>
+
          <record id="view_student_payment_tree" model="ir.ui.view">
             <field name="name">pm.student.fee.tree</field>
             <field name="model">pm.student.fee</field>
@@ -13,7 +19,7 @@
                     <field name="total_invoiced" string="Invoiced" sum="Total Invoiced"/>
                     <field name="total_paid" string="Paid"  sum="Total Paid"/>
                     <field name="remaining_balance" string="Remaining" sum="Total Remaining"/>
-                    <field name="remarks"/>
+                    <field name="remaining_percentage" widget="progressbar" string="Progress"/>
                 </tree>
             </field>
         </record>
