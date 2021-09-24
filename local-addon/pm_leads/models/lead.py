@@ -20,6 +20,25 @@ class PmCustomResPartner(models.Model):
                 display = True
             contact.is_displayed = display
 
+class OpCourse(models.Model):
+    _inherit = 'op.course'
+    lead_ids = fields.One2many(comodel_name='crm.lead',
+                               inverse_name='desired_course_id')
+    lead_count = fields.Integer("Leads", compute="_compute_lead_count")
+
+    @api.depends('lead_ids')
+    def _compute_lead_count(self):
+        for course in self:
+            course.lead_count = self.env['crm.lead'].search_count([('desired_course_id', '=', course.id)])
+
+    def get_leads(self):
+        action = self.env.ref("crm.crm_lead_all_leads").read()[0]
+        leads = self.env['crm.lead'].search([('desired_course_id', '=', self.id)])
+        action["domain"] = [("id", "in", leads.ids)]
+        return action
+
+
+
 class NotEnrollReason(models.Model):
     _name = 'pm.not_enroll_reason'
     _description = 'Reason Not to enroll'
@@ -259,7 +278,7 @@ class Lead(models.Model):
     visa_number = fields.Char('Visa Number')
     visa_expiry = fields.Date('Expiry Date')
     intake = fields.Many2one('pm.intake', 'Intake')
-    desired_course = fields.Many2one('pm.desired.course', 'Desired Course')
+    desired_course_id = fields.Many2one('op.course', 'Desired Course')
 
     return_date = fields.Date("Return Date")
     reminding_date = fields.Date(compute="_compute_remind_date", store=True)

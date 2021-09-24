@@ -8,9 +8,7 @@ class Campaign(models.Model):
     _inherit = 'utm.campaign'
 
     cost = fields.Float('Actual Cost')
-    cost_per_lead = fields.Float(String="Cost per lead", compute='_get_cost_per_lead', store=True)
-    lead_ids = fields.One2many('crm.lead', 'campaign_id', 'Leads')
-    leads_count = fields.Integer(compute='_get_leads_count', store=True)
+    cost_per_lead = fields.Float(String="Cost per lead", compute='_get_cost_per_lead', store=True , digits=(12, 2))
     budget = fields.Float('Plan Budget')
     currency_id = fields.Many2one(
         'res.currency', 'Currency',
@@ -29,15 +27,11 @@ class Campaign(models.Model):
             raise ValidationError(
                 _("End Date cannot be set before Start Date."))
 
-    @api.depends('lead_ids.campaign_id')
-    def _get_leads_count(self):
-        for record in self:
-            record.leads_count = len(record.lead_ids)
 
-    @api.depends('cost', 'leads_count')
+
+    @api.depends('cost', 'crm_lead_count')
     def _get_cost_per_lead(self):
-        for r in self:
-            r.cost_per_lead = 0
-
-            if r.leads_count > 0:
-                r.cost_per_lead = r.cost / r.leads_count
+        for rec in self:
+            print("Yo")
+            rec.cost_per_lead = rec.cost / rec.crm_lead_count
+            print(rec.cost_per_lead )
