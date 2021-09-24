@@ -61,7 +61,7 @@
           </div>
 
           <div class="col-3">
-            <strong>Unit</strong><br/>
+            <strong>Total EP</strong><br/>
                 <t t-if="o.makes">
                       <t t-set="makes" t-value="o.makes * diff" />
                      <span t-esc="makes" /><span t-field="o.uor" />
@@ -112,6 +112,17 @@
 
           </div>
 
+            <div class="col-3">
+            <strong>Total AP</strong><br/>
+                <t t-if="o.makes">
+                      <t t-set="makes_ap" t-value="o.makes_ap * diff" />
+                     <span t-esc="makes_ap" /><span t-field="o.uor" />
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
+          </div>
+
           <div class="col-3">
             <strong>Cost per Unit</strong><br/>
              <t t-if="o.cost_per_uor">
@@ -140,7 +151,8 @@
                 <thead>
                   <tr>
                     <th>Ingredient</th>
-                    <th>Qty</th>
+                    <th>EP</th>
+                    <th>AP</th>
                     <th>Cost</th>
                   </tr>
                 </thead>
@@ -164,6 +176,11 @@
                         </td>
 
                         <td>
+                          <t t-set="recipe_line_ingredient_ap" t-value="round(recipe_line_ingredient.as_purchased * diff, 3)" />
+                          <span t-esc="recipe_line_ingredient_ap" /><span t-field="recipe_line_ingredient.uor" />
+                        </td>
+
+                        <td>
                           <t t-set="recipe_line_ingredient_cost" t-value="recipe_line_ingredient.cost * diff" />
                           <span t-esc="recipe_line_ingredient_cost" t-options='{"widget": "monetary", "display_currency": recipe_line_ingredient.currency_id}' />
                         </td>
@@ -176,6 +193,9 @@
                         <tr class="sub-recipe-text">
                             <td t-attf-style="font-style:italic;">
                              <span t-field="sub_recipe.sub_recipe_id.name" t-attf-style="font-style:italic;" />
+                            </td>
+                            <td>
+                              <span t-esc="sub_recipe.quantity"/><span t-field="sub_recipe.sub_recipe_uor" />
                             </td>
                             <td>
                               <span t-esc="sub_recipe.quantity"/><span t-field="sub_recipe.sub_recipe_uor" />
