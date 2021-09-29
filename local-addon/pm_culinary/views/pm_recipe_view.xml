@@ -221,8 +221,9 @@
         </record>
 
     <record id="pm_view_recipe_action" model="ir.actions.act_window">
-      <field name="name">Recipes</field>
+      <field name="name">Master Recipes</field>
       <field name="res_model">pm.recipe</field>
+      <field name="domain">[('is_sub_recipe', '=', False)]</field>
       <field name="view_mode">kanban,tree,form</field>
     </record>
 

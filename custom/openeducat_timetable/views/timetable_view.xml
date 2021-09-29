@@ -139,7 +139,7 @@
             <field name="name">session.kanban</field>
             <field name="model">op.session</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="type" default_order="day_sequence"  class="o_kanban_small_column">
+                <kanban default_group_by="type" default_order="type"  class="o_kanban_small_column">
                     <field name="type"/>
                     <field name="color"/>
                     <templates>

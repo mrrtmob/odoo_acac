@@ -43,13 +43,11 @@ class PMStudentProgression(models.Model):
 
 
 
-
-
-
 class OpStudentCourse(models.Model):
     _inherit = 'op.student.course'
     p_active = fields.Boolean('Active', default=True)
     class_id = fields.Many2one('op.classroom', 'Class')
+    class_ids = fields.Many2many('op.classroom')
     education_status = fields.Selection([('active', 'Active'),
                                          ('postponed', 'Postponed'),
                                          ('withdrawn', 'Withdrawn'),
@@ -345,7 +343,9 @@ class OpStudent(models.Model):
     def batch_generate_payment_reports(self):
         students = self.env['op.student'].search([])
         for student in students:
-            student.generate_student_payment()
+            student_invoices = self.env['account.move'].search([('partner_id', '=', student.partner_id.id)])
+            if student_invoices:
+                student.generate_student_payment()
 
     def generate_student_payment(self):
         for student in self:
