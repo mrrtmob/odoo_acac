@@ -76,9 +76,12 @@ class OpRoomDistribution(models.TransientModel):
         reg_ids = self.env['op.student.course'].search(
             [('course_id', '=', session.course_id.id),
              ('batch_id', '=', session.batch_id.id),
-             ('class_id', '=', class_exam.class_id.id)])
+             ('class_ids', '=', class_exam.class_id.id)])
         student_ids = []
         for reg in reg_ids:
+            print("****************")
+            print(reg.student_id.name)
+            print(reg.class_ids)
             exepmted_subject = reg.p_e_subject_ids.mapped('id')
             if subject_id not in exepmted_subject:
                 student_ids.append(reg.student_id.id)

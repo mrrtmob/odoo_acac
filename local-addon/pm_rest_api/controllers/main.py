@@ -778,9 +778,13 @@ class PathmazingApi(RESTController):
                 check_date = datetime.strptime(check_date, '%Y-%m-%d').date()
                 monday = check_date + timedelta(days=-check_date.weekday())
                 sunday = monday + timedelta(days=6)
-            domain = [('batch_id', '=', int(student.batch_id)), ('classroom_id', '=', int(student.class_id)),
+                print(monday)
+                print(sunday)
+            domain = [('batch_id', '=', int(student.batch_id)), ('classroom_id', 'in', student.course_detail_ids.class_ids.ids),
                       ('start_datetime', '>=', monday), ('start_datetime', '<=', sunday)]
+            print(domain)
             sessions = request.env['op.session'].sudo().search(domain, order='start_datetime')
+            print(sessions)
             display_date = monday.strftime('%d, %b %Y') + ' - ' + sunday.strftime('%d, %b %Y')
             response = {
                 'display_date': display_date,
@@ -812,19 +816,19 @@ class PathmazingApi(RESTController):
                         'time': str(start_time) + ' - ' + str(end_time),
                         'duration': duration
                     }
-                    if day_name == 'Monday':
+                    if day_name == '0':
                         session_in_monday.append(val)
-                    if day_name == 'Tuesday':
+                    if day_name == '1':
                         session_in_tuesday.append(val)
-                    if day_name == 'Wednesday':
+                    if day_name == '2':
                         session_in_wednesday.append(val)
-                    if day_name == 'Thursday':
+                    if day_name == '3':
                         session_in_thursday.append(val)
-                    if day_name == 'Friday':
+                    if day_name == '4':
                         session_in_friday.append(val)
-                    if day_name == 'Saturday':
+                    if day_name == '5':
                         session_in_saturday.append(val)
-                    if day_name == 'Sunday':
+                    if day_name == '6':
                         session_in_sunday.append(val)
                 response = {
                     'display_date': display_date,
