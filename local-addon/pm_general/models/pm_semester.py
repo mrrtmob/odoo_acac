@@ -229,9 +229,14 @@ class PmSemesterDetail(models.Model):
         for rec in self:
 
             if rec.state == 'ongoing':
-                rec.color = 4 #Light Blue
+                rec.color = 10
+                # Green
             elif rec.state == 'complete':
-                rec.color = 10 #Green
+                rec.color = 7
+                # Blue
+            elif rec.state == 'retake' or rec.state == 'fail':
+                rec.color = 9
+                # Red
             else:
                 rec.color = 0
 

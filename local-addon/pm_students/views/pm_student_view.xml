@@ -88,10 +88,11 @@
             <xpath expr="//field[@name='blood_group']" position="attributes">
                <attribute name="invisible">1</attribute>
             </xpath>
-            <xpath expr="//field[@name='emergency_contact']" position="attributes">
-               <attribute name="invisible">1</attribute>
-            </xpath>
             <xpath expr="//field[@name='library_card_id']" position="replace">
+               <field name="active_semester" string="Current Semester"/>
+               <field name="active_class" string="Class" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//field[@name='emergency_contact']" position="replace">
                <field name="student_semester_detail" string="Semester Details" widget="many2many_tags" options="{'color_field': 'color'}"/>
             </xpath>
           </field>
@@ -635,6 +636,10 @@
                 <filter string="Dismissed" name="education_status" domain="[('education_status', '=', 'dismissed')]"/>
                  <filter name="scholarship_student" string="Scholarship Students" domain="[('is_scholarship','=',True)]"/>
                 <group expand="0" string="Group By...">
+                    <filter name="active_semester" string="Semester"
+                            domain="[]" context="{'group_by':'active_semester'}"/>
+                    <filter name="gender" string="Gender"
+                            domain="[]" context="{'group_by':'gender'}"/>
                     <filter name="gender" string="Gender"
                             domain="[]" context="{'group_by':'gender'}"/>
                     <filter name="nationality" string="Nationality"

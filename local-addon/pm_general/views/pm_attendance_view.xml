@@ -7,13 +7,12 @@
             <field name="inherit_id" ref="openeducat_attendance.view_op_attendance_sheet_form"/>
              <field name="arch" type="xml">
                  <xpath expr="//field[@name='attendance_date']" position="after">
-                     <field name="classroom_id" />
+                       <field name="class_ids" string="Class (s)" widget="many2many_tags"/>
                  </xpath>
                  <xpath expr="//field[@name='attendance_line']" position="replace">
                        <field name="attendance_line" colspan="4" nolabel="1">
                             <tree string="Attendance Line" editable="top">
-                                <field name="classroom_id" invisible="1"/>
-                                <field name="student_id" domain="[('active_class','=', classroom_id)]"/>
+                                <field name="student_id"/>
                                 <field name="present"/>
                                 <field name="excused"/>
                                 <field name="absent"/>
@@ -30,8 +29,8 @@
             <field name="inherit_id" ref="openeducat_timetable.view_op_session_form"/>
              <field name="arch" type="xml">
 
-                 <xpath expr="//field[@name='classroom_id']" position="attributes">
-                     <attribute name="string">Class</attribute>
+                 <xpath expr="//field[@name='classroom_id']" position="replace">
+                      <field name="class_ids" string="Class (s)" widget="many2many_tags"/>
                 </xpath>
 
 

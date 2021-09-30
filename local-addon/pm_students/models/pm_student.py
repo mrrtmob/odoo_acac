@@ -178,7 +178,7 @@ class OpStudent(models.Model):
                                           inverse_name="student_id")
     student_semester_detail = fields.One2many('pm.student.semester.detail',
                                               inverse_name='student_id',
-                                              string='Detail(s)')
+                                              string='Semester Details')
     class_id = fields.Many2one('op.classroom', 'Class', related="course_detail_ids.class_id", store=True)
     student_app_id = fields.Char('Student ID', readonly=False, tracking=True, track_visibility='onchange')
     primary_language = fields.Many2one('pm.student.language', string='Native Language')
@@ -338,6 +338,26 @@ class OpStudent(models.Model):
     pin = fields.Char(string="PIN", compute='_compute_pin',
                       help="PIN used to Sign In in Kiosk Mode", copy=False, store=True)
     test = fields.Char('Mobile 2', compute='_on_change_course_id')
+
+    active_class = fields.Many2many('op.classroom', string="class", compute='_compute_active_class', store=True)
+    active_semester = fields.Many2one('pm.semester', string="Current Semester", compute='_compute_active_semester',
+                                      store=True)
+
+    @api.depends('course_detail_ids')
+    def _compute_active_class(self):
+        for student in self:
+            student_course = self.env['op.student.course'].search([
+                ('student_id', '=', student.id), ('p_active', '=', 'True')
+            ], limit=1)
+            student.active_class = student_course.class_ids.ids
+
+    @api.depends('student_semester_detail')
+    def _compute_active_semester(self):
+        for student in self:
+            details = student.student_semester_detail
+            for detail in details:
+                if detail.state == 'ongoing':
+                    student.active_semester = detail.semester_id.id
 
 
     def batch_generate_payment_reports(self):
