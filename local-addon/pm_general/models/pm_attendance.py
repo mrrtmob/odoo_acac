@@ -213,6 +213,7 @@ class OpAttendanceRegister(models.Model):
 
 class OpAttendanceSheetCustom(models.Model):
     _inherit = "op.attendance.sheet"
+    class_ids = fields.Many2many('op.classroom', store=True)
     classroom_id = fields.Many2one('op.classroom', related='session_id.classroom_id', store=True)
     sheet_start_time = fields.Datetime('Session Start Time')
     faculty_id = fields.Many2one('op.faculty', 'Faculty', related='session_id.faculty_id', store=True)
@@ -343,6 +344,7 @@ class OpSessionCustom(models.Model):
     _inherit = "op.session"
     semester_id = fields.Many2one('pm.semester', 'Semester', required=True)
     day_sequence = fields.Integer()
+    class_ids = fields.Many2many('op.classroom')
     meeting_id = fields.Many2one('calendar.event', string='Meeting', copy=False)
     type = fields.Selection(_DAY, compute='_compute_day', string='Day', store=True)
 

@@ -32,7 +32,17 @@
                 </xpath>
 
             </field>
+         </record>
 
+        <record id="custom_hr_employee_kanban" model="ir.ui.view" >
+            <field name="name">custom.hr.emplyee.kanban.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+            <field name="arch" type="xml">
+               <xpath expr="//ul/li[3]" position="replace">
+                     <li t-if="record.phone.raw_value" class="o_force_ltr"><field name="phone"/></li>
+                </xpath>
+            </field>
         </record>
         <record id="custom_hr_employee_search" model="ir.ui.view" >
              <field name="name">custom.hr.emplyee.search.view</field>
