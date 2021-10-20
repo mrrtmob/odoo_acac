@@ -89,6 +89,19 @@
                                             <span class="badge badge-secondary badge-pill" t-esc="exam_count"/>
                                         </div>
                                     </t>
+
+                                    <t t-if="'Payments' in menu.name">
+                                        <div class="col-lg-12 text-right">
+                                            <span class="badge badge-secondary badge-pill" t-esc="fee_count"/>
+                                        </div>
+                                    </t>
+
+                                    <t t-if="'Culinary' in menu.name">
+                                        <div class="col-lg-12 text-right">
+                                            <span class="badge badge-secondary badge-pill" t-esc="recipe_count"/>
+                                        </div>
+                                    </t>
+
                                     <t t-if="'Timetable' in menu.name">
                                         <div class="col-lg-12 text-right">
                                             <span class="badge badge-secondary badge-pill" t-esc="timetable_count"/>

@@ -275,6 +275,8 @@ class OpBatch(models.Model):
     pending_semester_count = fields.Integer(compute="_compute_batch_report_data", string='Pending')
     finish_semester_count = fields.Integer(compute="_compute_batch_report_data", string='Finished')
     inactive_count = fields.Integer(compute="_compute_batch_report_data", string='Inactive')
+    male_count = fields.Integer(compute="_compute_batch_report_data", string='Male')
+    female_count = fields.Integer(compute="_compute_batch_report_data", string='Female')
 
     def action_draft(self):
         self.write({'state': 'pending'})
@@ -285,6 +287,11 @@ class OpBatch(models.Model):
             studnet_list = self.env['op.student'].search(
                 [('course_detail_ids.batch_id', 'in', [batch.id]),
                  ('course_detail_ids.p_active', 'in', [True])])
+
+            #Count student genders by batch
+            genders = studnet_list.mapped('gender')
+            batch.male_count = genders.count('m')
+            batch.female_count = genders.count('f')
 
             semesters = batch.semester_ids
             semester_state = semesters.mapped('state')

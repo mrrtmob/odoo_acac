@@ -166,6 +166,27 @@ class PmJobPosition(models.Model):
     how2apply = fields.Html(default=_get_how2apply_default)
 
     @api.model
+    def default_get(self, fields):
+        vals = super(PmJobPosition, self).default_get(fields)
+        interview_question = self.env['pm.interview.question']
+        questions = interview_question.search([('type', '!=', 'technical')])
+        personality_val = []
+        basic_val = []
+        motivation_val = []
+        for question in questions:
+            if question.type == 'basic':
+                basic_val.append((0, 0, {'question_weight': 0, 'interview_question_id': question.id}))
+            elif question.type == 'personality':
+                personality_val.append((0, 0, {'question_weight': 0, 'interview_question_id': question.id}))
+            elif question.type == 'motivation':
+                motivation_val.append((0, 0, {'question_weight': 0, 'interview_question_id': question.id}))
+        vals.update({'personality_question_ids': personality_val})
+        vals.update({'basic_question_ids': basic_val})
+        vals.update({'motivation_question_ids': motivation_val})
+
+        return vals
+
+    @api.model
     def create(self, vals):
         # Generate Sequence Code
         vals['is_saved'] = True

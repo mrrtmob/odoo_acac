@@ -56,5 +56,12 @@
             groups="pm_leads.group_acac_admin"
             action="act_open_product_payment_report"
             sequence="40"/>
+
+        <menuitem id="pm_account_fee_line_menu"
+            name="Monthly Fee Reports"
+            parent="account.account_reports_management_menu"
+            groups="pm_leads.group_acac_admin"
+            action="act_open_product_payment_report"
+            sequence="40"/>
     </data>
 </odoo>

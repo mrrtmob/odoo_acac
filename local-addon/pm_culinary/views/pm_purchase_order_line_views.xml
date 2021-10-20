@@ -1,5 +1,10 @@
 <odoo>
   <data>
+
+     <record id="purchase.portal_my_home_purchase" model="ir.ui.view">
+      <field name="active">0</field>
+    </record>
+
     <record id="purchase_order_line_view_graph" model="ir.ui.view">
       <field name="name">purchase.order.line.view.graph</field>
       <field name="model">purchase.order.line</field>
