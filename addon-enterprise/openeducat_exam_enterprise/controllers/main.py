@@ -99,24 +99,21 @@ class ExamPortal(CustomerPortal):
         return values
 
     def _prepare_portal_layout_values(self):
-
-        # values = super(ExamPortal, self)._prepare_portal_layout_values()
-        # user = request.env.user
-        # student_id = request.env["op.student"].sudo().search(
-        #     [('user_id', '=', user.id)])
-        # exam_count = request.env['op.marksheet.line'].sudo().search_count(
-        #     [('student_id', '=', student_id.id)])
-        # values['exam_count'] = exam_count
-        # return values
         values = super(ExamPortal, self)._prepare_portal_layout_values()
         user = request.env.user
         student_id = request.env["op.student"].sudo().search(
             [('user_id', '=', user.id)])
         exam_count = request.env['op.exam.attendees'].sudo().search_count(
             [('student_id', '=', student_id.id), ('exam_id.exam_type', '!=', 'final_exam')])
+        fee_count = request.env['op.student.fees.details'].sudo().search_count(
+            [('student_id', '=', student_id.id)])
+
+        recipe_count = request.env['pm.recipe'].sudo().search_count([])
+
         values['exam_count'] = exam_count
-        print('exam_count')
-        print(exam_count)
+        values['fee_count'] = fee_count
+        values['recipe_count'] = recipe_count
+
         return values
 
     def get_search_domain_exam(self, search, attrib_values):

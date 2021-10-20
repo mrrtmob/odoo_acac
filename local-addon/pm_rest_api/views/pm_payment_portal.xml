@@ -446,11 +446,13 @@
                   </div>
 
                     <link rel="stylesheet" href="https://payway-staging.ababank.com/checkout-popup.html?file=css"/>
-                    <script src="https://payway-staging.ababank.com/checkout-popup.html?file=js&amp;hide-close=1"></script>
+                    <script src="https://payway-staging.ababank.com/checkout-popup.html?file=js"></script>
                      <script>
-                        $(document).ready(function () {
-                           AbaPayway.checkout();
+                       $(document).ready(function () {
+                        $('#checkout_button').click(function () {
+                            AbaPayway.checkout();
                         });
+                    });
 
                     </script>
                 </body>

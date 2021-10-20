@@ -121,5 +121,12 @@
             groups="pm_leads.group_acac_admin"
             action="act_open_student_payment_report"
             sequence="30"/>
+
+        <menuitem id="pm_accounting_fee_menu"
+            name="Student Payment Reports"
+            parent="account.account_reports_management_menu"
+            groups="pm_leads.group_acac_admin"
+            action="act_open_student_payment_report"
+            sequence="30"/>
     </data>
 </odoo>

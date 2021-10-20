@@ -24,7 +24,7 @@ class PmExamClassSchedule(models.Model):
     _name = 'pm.class.exam'
     _inherit = "mail.thread"
     _description = "Class Exam"
-    name = fields.Char('Name', size=256, required=True)
+    name = fields.Char('Name', size=256, required=False)
     class_id = fields.Many2one('op.classroom', 'Class')
     exam_session_id = fields.Many2one("op.exam.session", 'Exam Schedule')
     exam_id = fields.Many2one('op.exam', 'Exam',

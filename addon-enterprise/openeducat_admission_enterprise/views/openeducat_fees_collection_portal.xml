@@ -55,7 +55,7 @@
                                           t-options="{'widget': 'monetary', 'display_currency': fees_detail.currency_id}"/>
                                 </td>
                                 <td>
-                                    <span t-esc="{False: False, 'draft': 'Draft',
+                                    <span t-esc="{False: False, 'draft': 'Draft', 'installment': 'Installments',
                                                 'invoice': 'Invoice Created', 'cancel': 'Cancel'}
                                                 [fees_detail.state]"/>
                                 </td>

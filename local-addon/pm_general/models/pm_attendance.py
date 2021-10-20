@@ -108,13 +108,14 @@ class PmSemesterAttendance(models.Model):
 
 class PmSubjectTotalAbsence(models.Model):
     _name = "pm.subject.total.absence"
+    _rec_name = "student_id"
     _description = "Subject Total Absense"
     subject_attendance_ids = fields.One2many(
         'pm.subject.attendance', 'subject_total_absent_id', 'Subject Absence(s)')
     student_id = fields.Many2one('op.student', 'Student')
     subject_id = fields.Many2one('op.subject', 'Subject')
     total_absent_percent = fields.Float('Absence Percentage', compute='_compute_total_percent', store=True, readonly=True, default=0)
-    total_absent_hour = fields.Float('Absence Hours', compute='_compute_total_hour', store=True, readonly=True, default=0)
+    total_absent_hour = fields.Float('Absence Hours', compute='_compute_total_hour', store=True, readonly=False, default=0)
     semester_attendance_id = fields.Many2one('pm.semester.attendance', 'Semester Absence')
     state = fields.Selection(
         [('default', 'Default Absence'),
@@ -125,13 +126,27 @@ class PmSubjectTotalAbsence(models.Model):
     no_permission_absencse = fields.Integer('Absence Without Permission', compute='_compute_no_permission_absencse',
                                             store=True)
 
+    @api.model
+    def create(self, vals):
+
+        semester_order = self.env['op.subject'].browse(vals['subject_id']).semester
+        domain = [('student_id', '=', vals['student_id']), ('semester_id.semester_order', '=', semester_order)]
+        semester_attendance = self.env['pm.semester.attendance'].search(domain)
+        vals['semester_attendance_id'] = semester_attendance.id
+        res = super(PmSubjectTotalAbsence, self).create(vals)
+
+        print(":D")
+        print(vals)
+        return res
+
+
     @api.depends('subject_attendance_ids.missing_hours')
     def _compute_no_permission_absencse(self):
         print('hit gogo')
         for record in self:
             count = 0
             for line in record.subject_attendance_ids.attendance_line:
-                if not line.present and not line.excused and not line.remark:
+                if line.absent:
                     count += 1
             record.no_permission_absencse = count
 
@@ -152,35 +167,19 @@ class PmSubjectTotalAbsence(models.Model):
             subject_type = record.subject_id.type
             absent_percentage = total_absent_hours / total_subject_hours * 100
             record.total_absent_percent = absent_percentage
-
             if subject_type == 'practical':
                 first_warning = 5
                 dismissed = 10
             else:
                 first_warning = 15
                 dismissed = 25
-
             if absent_percentage > 0 and absent_percentage < first_warning:
                 record.state = 'okay'
 
             if absent_percentage >= first_warning:
-                template_id = 46
-                print('sending first warning....')
                 record.state = 'first_warning'
-                # self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
-
-            if absent_percentage >= first_warning:
-                template_id = 46
-                print('sending first warning....')
-                record.state = 'first_warning'
-                # self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
-
             elif absent_percentage >= dismissed:
-                template_id = 46
-                print('sending dismissed letter....')
                 record.state = 'dismissed'
-                record.student_id.education_status = 'dismissed'
-                # self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
 
 class PmSubjectAttendance(models.Model):
     _name = "pm.subject.attendance"
