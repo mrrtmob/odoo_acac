@@ -216,6 +216,9 @@
                 <xpath expr="//field[@name='joining_date']" position="after">
                     <field name="leaving_date" />
                 </xpath>
+                <xpath expr="//field[@name='joining_date']" position="attributes">
+                    <attribute name="string">Starting Date</attribute>
+                </xpath>
 
                 <xpath expr="//field[@name='mobile_phone']" position="before">
                     <field name="khmer_name" attrs="{'readonly': [('is_hr_user', '=', False)]}"/>

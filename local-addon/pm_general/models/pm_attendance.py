@@ -212,10 +212,18 @@ class OpAttendanceRegister(models.Model):
 
 class OpAttendanceSheetCustom(models.Model):
     _inherit = "op.attendance.sheet"
-    class_ids = fields.Many2many('op.classroom', store=True)
-    classroom_id = fields.Many2one('op.classroom', related='session_id.classroom_id', store=True)
+    class_ids = fields.Many2many('op.classroom', store=True, compute='on_change_session')
     sheet_start_time = fields.Datetime('Session Start Time')
     faculty_id = fields.Many2one('op.faculty', 'Faculty', related='session_id.faculty_id', store=True)
+
+    @api.depends('session_id')
+    def on_change_session(self):
+        print("Woff")
+        self.write({
+            'class_ids': [[6, 0, self.session_id.class_ids.ids]]
+        })
+
+
 
     def attendance_start(self):
         self.sheet_start_time = datetime.now()
@@ -289,10 +297,7 @@ class OpAttendanceLineCustom(models.Model):
         related='attendance_id.register_id.batch_id', store=True,
         readonly=True)
 
-    classroom_id = fields.Many2one(
-        'op.classroom', 'Term',
-        related='attendance_id.classroom_id', store=True,
-        readonly=True)
+    class_ids = fields.Many2many('op.classroom', store=True)
 
     semester_id = fields.Many2one('pm.semester', 'Semester', related='attendance_id.register_id.semester_id',
                                   store=True, readonly=True)

@@ -23,4 +23,6 @@ access_pm_final_result_template,access_pm_final_result_template,model_pm_final_r
 
 access_student_transcript,access_student_transcript,model_student_transcript,base.group_user,1,1,1,1
 
+access_op_all_student,access_op_all_student,model_op_all_student,base.group_user,1,1,1,1
+
 
