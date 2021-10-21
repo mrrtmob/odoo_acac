@@ -16,7 +16,7 @@
         (4, ref('group_see_student_app')),
         (4, ref('sales_team.group_sale_manager')),
         (4, ref('survey.group_survey_user')),
-        (4, ref('event.group_event_manager')),]"/>
+        (4, ref('event.group_event_manager'))]"/>
     </record>
 
        <record id="group_acac_marketing" model="res.groups">
