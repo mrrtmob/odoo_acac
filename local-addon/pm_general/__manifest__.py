@@ -70,6 +70,7 @@
         'reports/payslip_header.xml',
 
         'wizards/student_transcript_wizard_view.xml',
+        'wizards/attendance_import_view.xml',
         'data/mail_data.xml'
     ]
 }

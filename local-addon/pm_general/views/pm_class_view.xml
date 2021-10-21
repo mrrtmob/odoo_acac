@@ -56,7 +56,7 @@
                         <group string="Attendees">
                             <field name="attendees_line" colspan="4"  nolabel="1">
                                 <tree string="Attendee" editable="top">
-                                    <field name="student_id"/>
+                                    <field name="student_id" domain= "[('course_detail_ids.class_ids', 'in', class_ids)]"/>
                                     <field name="exam_id" forcesave="1" readonly="1"/>
                                     <field name="marks"/>
                                     <field name="status"/>
