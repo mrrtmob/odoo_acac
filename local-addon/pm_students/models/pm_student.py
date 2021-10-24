@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-import qrcode
-import base64
-from io import BytesIO
 from odoo.exceptions import ValidationError, UserError
 from datetime import datetime, timedelta
 import calendar
@@ -30,7 +27,7 @@ class PMStudentProgression(models.Model):
                                          ], 'Status', default='active')
 
     def store_progression(self, student_id=False, course_id=False,
-                                batch_id=False, status=False, remarks=False):
+                                batch_id=False, class_id=False, status=False, remarks=False):
         progress_obj = self.env['pm.student.progress'].sudo()
         val = {
             'student_id': student_id,
@@ -39,9 +36,8 @@ class PMStudentProgression(models.Model):
             'education_status': status,
             'course_id': course_id,
             'batch_id': batch_id,
-
+            'class_id': class_id,
         }
-        print(val)
         progress_obj.create(val)
 
 
@@ -51,7 +47,6 @@ class OpStudentCourse(models.Model):
     p_active = fields.Boolean('Active', default=True)
     class_id = fields.Many2one('op.classroom', 'Class')
     class_ids = fields.Many2many('op.classroom')
-    custom_subject_ids = fields.One2many('pm.student.course.subject', inverse_name='op_student_course_id', string="Subjects")
     education_status = fields.Selection([('active', 'Active'),
                                          ('postponed', 'Postponed'),
                                          ('withdrawn', 'Withdrawn'),
@@ -68,24 +63,6 @@ class OpStudentCourse(models.Model):
     reminding_date = fields.Date(compute="_compute_remind_date", store=True)
     is_reminded = fields.Boolean()
     starting_semester_id = fields.Many2one('pm.semester', 'Starting Semester')
-
-    def compute_custom_subject(self):
-        print("hit")
-        courses = self.env['op.student.course'].search([])
-        for course in courses:
-            if course.subject_ids:
-                data = []
-                print(course.subject_ids)
-                for subject in course.subject_ids:
-                    val = {
-                        'op_student_course_id': course.id,
-                        'op_subject_id': subject.id,
-                        'is_completed': False
-                       }
-                    data.append(val)
-                print(val)
-                self.env['pm.student.course.subject'].create(data)
-
 
     def student_reminder_scheduler(self):
         print("Hit Function")
@@ -113,20 +90,16 @@ class OpStudentCourse(models.Model):
                     print('TODAY!!')
                     course.is_reminded = True
 
-    # @api.onchange('p_e_subject_ids')
-    # def onChangeExemptedSubjects(self):
-    #     print("Shiba")
-    #     e_subjects = self.p_e_subject_ids.ids
-    #     sub_array = []
-    #     print(e_subjects)
-    #     print(self.custom_subject_ids)
-    #     for sub in self.custom_subject_ids:
-    #         if sub.op_subject_id.id in e_subjects:
-    #             record = self.env['pm.student.course.subject'].browse(sub._origin.id)
-    #             print(record)
-    #             record.unlink()
-
-
+    @api.onchange('p_e_subject_ids')
+    def onChangeExemptedSubjects(self):
+        e_subjects = self.p_e_subject_ids
+        sub_array = []
+        for sub in self.subject_ids:
+            if sub not in e_subjects:
+                sub_array.append(sub._origin.id)
+        self.write({
+            'subject_ids': [[6, 0, list(set(sub_array))]]
+        })
 
     @api.depends('p_e_subject_ids')
     def onDepend(selfs):
@@ -165,22 +138,6 @@ class OpStudentCourse(models.Model):
 #     _rec_name = "student_card_id"
 #     student_card_id = fields.Char(related='student_id.student_app_id', store=True)
 
-class StudentCourseSubject(models.Model):
-    _name = 'pm.student.course.subject'
-    _rec_name = 'op_subject_id'
-    op_student_course_id = fields.Many2one('op.student.course')
-    op_subject_id = fields.Many2one('op.subject')
-    color = fields.Integer('Color Index', compute='_compute_color')
-    is_completed = fields.Boolean('Completed')
-    transcript_mark = fields.Boolean('Mark as Incomplete in Transcript')
-
-    @api.depends('is_completed')
-    def _compute_color(self):
-        for subject in self:
-            if subject.is_completed:
-                subject.color = 7  # green
-            else:
-                subject.color = 9
 
 class StudentPaymentInstallment(models.Model):
     _name = 'pm.student.installment'
@@ -232,8 +189,6 @@ class StudentPaymentInstallment(models.Model):
 
 class OpStudent(models.Model):
     _inherit = 'op.student'
-
-
     fill_application = fields.Boolean('Fill Application')
     marital_status = fields.Selection([('single', 'Single'),
                                        ('married', 'Married')])
@@ -408,63 +363,13 @@ class OpStudent(models.Model):
     active_semester = fields.Many2one('pm.semester', string="Current Semester", compute='_compute_active_semester',
                                       store=True)
 
-    qr_code = fields.Binary("QR Code", attachment=True, store=True, compute="generate_qr_code")
-    vcard_string = fields.Char("V Card Text")
-
-    def generateCardInfo(self, first_name, last_name, phone, email, company_name, title, work_address):
-        value = """BEGIN:VCARD
-N:%s;%s;
-TEL;TYPE=work,VOICE:%s
-EMAIL:%s
-ORG:%s
-TITLE:%s
-ADR;TYPE=MOBILE,PREF:%s
-URL: https://acac.edu.kh/
-VERSION:3.0
-END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_address)
-        return value
-
-    @api.depends('name', 'mobile', 'email')
-    def generate_qr_code(self):
-        qr = qrcode.QRCode(
-            version=1,
-            error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=10,
-            border=4,
-        )
-        address = str(self.street) + ', ' + str(self.street2) + ', ' + str(self.city) + ', ' + str(self.state_id.name) + ', ' + \
-                  str(self.country_id.name)
-        vcard_string = self.generateCardInfo(self.first_name, self.last_name, self.mobile, self.email,
-                                             self.company_id.name, self.title.name, address)
-        print(vcard_string)
-        qr.add_data(vcard_string)
-        qr.make(fit=True)
-        img = qr.make_image()
-        temp = BytesIO()
-        img.save(temp, format="PNG")
-        qr_image = base64.b64encode(temp.getvalue())
-        self.qr_code = qr_image
-        self.vcard_string = vcard_string
-
-    def bulkGenerateQRCode(self):
-        print("Yes!")
-        students = self.env['op.student'].search([])
-        for student in students:
-            if not student.qr_code:
-                student.generate_qr_code()
-
     @api.depends('course_detail_ids')
     def _compute_active_class(self):
         for student in self:
             student_course = self.env['op.student.course'].search([
                 ('student_id', '=', student.id), ('p_active', '=', 'True')
             ], limit=1)
-            print("WOFF")
-            print(student_course.class_ids)
-            print(student_course.class_ids.ids)
-            print(student_course.class_ids.id)
             student.active_class = student_course.class_ids.ids
-
 
     @api.depends('student_semester_detail')
     def _compute_active_semester(self):
@@ -705,13 +610,13 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
             for fee in fees:
                 fee.payable = True
 
-    # @api.depends('course_detail_ids')
-    # def _compute_active_class(self):
-    #     for student in self:
-    #         student_course = self.env['op.student.course'].search([
-    #             ('student_id', '=', student.id), ('p_active', '=', 'True')
-    #         ], limit=1)
-    #         student.active_class = student_course.class_id.id
+    @api.depends('course_detail_ids')
+    def _compute_active_class(self):
+        for student in self:
+            student_course = self.env['op.student.course'].search([
+                ('student_id', '=', student.id), ('p_active', '=', 'True')
+            ], limit=1)
+            student.active_class = student_course.class_id.id
 
     @api.depends('course_detail_ids.education_status')
     def _compute_student_status(self):
@@ -828,11 +733,11 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
         if "course_detail_ids" in val:
             batch_id = val['course_detail_ids'][0][2]['batch_id']
             course_id = val['course_detail_ids'][0][2]['course_id']
-            class_id = val['course_detail_ids'][0][2]['class_ids']
+            class_id = val['course_detail_ids'][0][2]['class_id']
         elif "batch_id" in val:
             batch_id = val['batch_id']
             course_id = val['course_id']
-            class_id = val['class_ids']
+            class_id = val['class_id']
         if course_id or batch_id:
             is_scholarship = val.get('is_scholarship')
             status = val.get('scholarship_status')
@@ -850,12 +755,11 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
                 student_app_id = self.get_student_id(course_id, batch_id, False)
             val['student_app_id'] = student_app_id
             val['batch_id'] = batch_id
-            print(val)
             res = super(OpStudent, self).create(val)
 
             # Store Student Progression detail in this case, the student have been enrolled
             progress_obj = self.env['pm.student.progress'].sudo()
-            progress_obj.store_progression(res.id, course_id, batch_id , 'active')
+            progress_obj.store_progression(res.id, course_id, batch_id, class_id, 'active')
 
             print('res', res)
             print('res.id', res.id)
@@ -877,11 +781,11 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
                     status = student_course.education_status
                     batch_id = student_course.batch_id.id
                     course_id = student_course.course_id.id
-
+                    class_id = student_course.class_id.id
 
                     # Store Student Progression detail in this case, the student status must have been changed
                     progress_obj = self.env['pm.student.progress'].sudo()
-                    progress_obj.store_progression(student_id, course_id, batch_id, status, remarks)
+                    progress_obj.store_progression(student_id, course_id, batch_id, class_id, status, remarks)
 
         return res
 

@@ -71,8 +71,9 @@
         <record id="student_follow_up_reminder" model="mail.template">
             <field name="name">Student Follow Up Reminder</field>
             <field name="subject">Reminder for Postponed Student</field>
-            <field name="email_from">"${object.company_id.student_id.name | safe}" &lt;${(object.company_id.student_id.email or user.email) | safe}&gt;</field>
-            <field name="model_id" ref="openeducat_core.model_op_student_course"/>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to"></field>
+            <field name="model_id" ref="openeducat_core.model_op_student"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
                 <table border="0" cellpadding="0" cellspacing="0"
@@ -113,9 +114,9 @@
                                                             <br/>
                                                             <br/>
                                                             <p>
-                                                                This is a reminder to follow up <strong>${object.student_id.first_name} ${object.student_id.last_name}</strong>, a student that has been postponed on <strong>${object.cancel_date.strftime('%d-%b-%Y')}</strong>.
+                                                                This is a reminder to follow up <strong>${object.first_name} ${object.last_name}</strong>, a student that has been postponed on <strong>${object.cancel_date.strftime('%d-%b-%Y')}</strong>.
                                                                 <br/>
-                                                               <strong>${object.student_id.first_name}</strong>  is intended to back on <strong>${object.return_date.strftime('%d-%b-%Y')}</strong>.
+                                                                ${object.first_name} is intended to back on <strong>${object.return_date.strftime('%d-%b-%Y')}</strong>.
                                                             </p>
                                                         </div>
                                                     </td>
