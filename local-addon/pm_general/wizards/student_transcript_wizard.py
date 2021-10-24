@@ -12,11 +12,26 @@ class StudentTranscript(models.TransientModel):
         'From Date', required=True, default=lambda self: fields.Date.today())
     to_date = fields.Date(
         'To Date', required=True, default=lambda self: fields.Date.today())
-    course_id = fields.Many2one('op.course', 'Course', required=True)
+    course_id = fields.Many2one('op.course', 'Course', required=True, default=lambda self: self._get_default_course())
     batch_id = fields.Many2one(
-        'op.batch', 'Term', required=True, track_visibility='onchange')
+        'op.batch', 'Term', required=True, default=lambda self: self._get_default_batch())
     semester_id = fields.Many2one('pm.semester', 'Semester')
     final = fields.Boolean('Final Transcript')
+
+
+    def _get_default_batch(self):
+        student_id = self.env.context.get('active_id', False)
+        student_course = self.env['op.student.course'].search([('student_id', '=', student_id),
+                                                               ('p_active', '=', True)], limit=1)
+        return student_course.batch_id.id
+
+    def _get_default_course(self):
+        student_id = self.env.context.get('active_id', False)
+        student_course = self.env['op.student.course'].search([('student_id', '=', student_id),
+                                                               ('p_active', '=', True)], limit=1)
+        return student_course.course_id.id
+
+
 
     def print_report(self):
         student_id = self.env.context.get('active_id', False)

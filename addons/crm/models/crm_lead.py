@@ -1511,9 +1511,9 @@ class Lead(models.Model):
             if not partner_info.get('partner_id') and (self.partner_name or self.contact_name):
                 emails = email_re.findall(partner_info['full_name'] or '')
                 email = emails and emails[0] or ''
-                if email and self.email_from and email.lower() == self.email_from.lower():
-                    partner_info['full_name'] = tools.formataddr((self.contact_name or self.partner_name, email))
-                    break
+                # if email and self.email_from and email.lower() == self.email_from.lower():
+                #     partner_info['full_name'] = tools.formataddr((self.contact_name or self.partner_name, email))
+                #     break
         return result
 
     def _phone_get_number_fields(self):

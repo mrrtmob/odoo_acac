@@ -33,7 +33,7 @@
         'views/assets.xml',
         'menu/progress_menu.xml',
     ],
-    'demo': ['demo/student_progression_demo.xml'],
+    # 'demo': ['demo/student_progression_demo.xml'],
     'css': [],
     'qweb': [],
     'js': [],

@@ -21,4 +21,8 @@ access_pm_term_marksheet_register,access_pm_term_marksheet_register,model_pm_ter
 access_pm_term_result_associate,access_pm_term_result_associate,model_pm_term_result_associate,base.group_user,1,1,1,1
 access_pm_final_result_template,access_pm_final_result_template,model_pm_final_result_template,base.group_user,1,1,1,1
 
+access_student_transcript,access_student_transcript,model_student_transcript,base.group_user,1,1,1,1
+
+access_op_all_student,access_op_all_student,model_op_all_student,base.group_user,1,1,1,1
+
 

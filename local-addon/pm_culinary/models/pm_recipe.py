@@ -3,6 +3,7 @@
 from odoo import models, fields, api, _
 from odoo.http import request
 from odoo.exceptions import ValidationError
+from datetime import datetime, timedelta
 
 _TYPE = [
     ('cold_appetizer', 'Cold Appetizers'),
@@ -23,7 +24,6 @@ class PmRecipeCategory(models.Model):
     code = fields.Char()
     category_image = fields.Binary('Image')
     recipe_count = fields.Integer("Recipes", compute="_compute_count_recipe")
-    color = fields.Integer()
 
     @api.depends('name')
     def _compute_count_recipe(self):
@@ -37,7 +37,6 @@ class PmRecipe(models.Model):
     _name = "pm.recipe"
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Recipe"
-    color = fields.Integer()
     name = fields.Char("Recipe Name", track_visibility='onchange')
     state = fields.Selection(
         [('draft', 'Draft'),
@@ -63,7 +62,7 @@ class PmRecipe(models.Model):
     record_url = fields.Char('Link', compute='_compute_record_url', store=True)
     approver = fields.Many2one('res.users', 'Approve By', readonly=True)
     date_of_test = fields.Date(track_visibility='onchange')
-    number_of_portion = fields.Integer('Yield', required=True, default=1, tracking=True)
+    number_of_portion = fields.Integer('Yield', required=True, default=10, tracking=True)
     cost = fields.Float('Total Cost', compute='_compute_cost', store=True, track_visibility='onchange')
     price_per_portion = fields.Float('Selling Price per Portion', compute='_compute_price_per_portion', track_visibility='onchange')
     ingredients = fields.One2many('pm.recipe.line', 'recipe_id', 'Ingredients & Preparation Instructions',
@@ -73,7 +72,8 @@ class PmRecipe(models.Model):
     sub_recipes_cost = fields.Float('Estimated Sub Recipes Cost', compute='_compute_cost')
     price = fields.Float('Selling Price', compute='_compute_price', tracking=True)
     cost_in_percentage = fields.Float('Cost (%)', required=True, default=30, tracking=True)
-    makes = fields.Float(tracking=True)
+    makes = fields.Float(tracking=True, compute="_compute_make", store=True)
+    makes_ap = fields.Float(tracking=True, compute="_compute_make", store=True)
     uor = fields.Selection(
         [('kg', 'kg'),
          ('l', 'l')],
@@ -84,6 +84,32 @@ class PmRecipe(models.Model):
 
     nutrition = fields.Html('Nutritional Information')
     allergic = fields.Html('Allergic')
+    color = fields.Integer(string='Color Index')
+    is_expired = fields.Boolean(string='Expired', default=False, compute="_compute_expire", store=True)
+
+    def write(self, vals):
+        vals['is_expired'] = False
+        return super().write(vals)
+    
+    def set_recipe_expiration(self):
+        print("YOYOO")
+        today = fields.Date.today()
+        d = timedelta(days=30)
+        expired_date = today - d
+        expired_recipes = self.env['pm.recipe'].search([('write_date', '<', expired_date)])
+        
+        if expired_recipes:
+            expired_recipes.write({'is_expired': True})
+
+
+    @api.depends('write_date')
+    def _compute_expire(self):
+        for rec in self:
+            today = fields.Date.today()
+            d = timedelta(days=60)
+            expired_date = today - d
+            if rec.write_date.date() < expired_date:
+               rec.is_expired = True
 
     @api.constrains('number_of_portion')
     def _check_number_of_portion(self):
@@ -92,6 +118,22 @@ class PmRecipe(models.Model):
                 raise ValidationError(
                     _("Yield must be greater than 0."))
 
+    @api.onchange('number_of_portion')
+    def _update_ingredient_qty(self):
+        print('_update_ingredient_qty')
+        for record in self:
+            record.cost_per_portion = record.cost / record.number_of_portion
+            record.price_per_portion = record.price / record.number_of_portion
+            lines = record.ingredients
+            sub_recipe_lines = record.sub_recipes
+            for line in lines:
+                line.quantity = line.initial_quantity * (record.number_of_portion / 10)
+
+            for sub_recipe in sub_recipe_lines:
+                print("***********")
+                print(sub_recipe.quantity)
+                sub_recipe.quantity = sub_recipe.initial_quantity * (record.number_of_portion / 10)
+
     @api.constrains('price')
     def _check_price(self):
         for record in self:
@@ -99,31 +141,42 @@ class PmRecipe(models.Model):
                 raise ValidationError(
                     _("Price must be greater than 0."))
 
-    @api.depends('ingredients.cost', 'sub_recipes.cost', 'number_of_portion')
+    @api.depends('ingredients.cost', 'sub_recipes.cost')
     def _compute_cost(self):
+        print("_compute_cost!!")
         for record in self:
             record.ingredients_cost = sum(record.ingredients.mapped('cost'))
             record.sub_recipes_cost = sum(record.sub_recipes.mapped('cost'))
 
             record.cost = record.ingredients_cost + record.sub_recipes_cost
 
-            if record.number_of_portion:
-                record.cost_per_portion = record.cost / record.number_of_portion
-            else:
-                record.cost_per_portion = 0
-
             # NOTE: update the recipe lines which use this recipe
             main_recipe_lines = self.env['pm.recipe.line'].search([('sub_recipe_id', '=', record.id)])
+            record.cost_per_portion = record.cost / record.number_of_portion
 
             for main_recipe_line in main_recipe_lines:
                 main_recipe_line._compute_cost()
+
+    @api.depends('ingredients.quantity', 'sub_recipes.quantity')
+    def _compute_make(self):
+        print("_compute_makes")
+        for record in self:
+            sum_ingredients = sum(record.ingredients.mapped('quantity'))
+            sum_ap = sum(record.ingredients.mapped('as_purchased'))
+            sum_recipes = sum(record.sub_recipes.mapped('quantity'))
+            record.makes = sum_ingredients + sum_recipes
+            record.makes_ap = sum_ap + sum_recipes
+
 
     @api.depends('cost', 'cost_in_percentage')
     def _compute_price(self):
         for record in self:
             record.price = (record.cost / record.cost_in_percentage) * 100
 
-    @api.depends('price', 'number_of_portion')
+
+
+
+    @api.depends('price')
     def _compute_price_per_portion(self):
         for record in self:
             if record.number_of_portion:
@@ -181,10 +234,13 @@ class PmRecipe(models.Model):
     def act_reset(self):
         self.state = 'draft'
 
-    def write(self, val):
-        if self.state == "approved":
-            head_of_culinary = self.env.user.has_group('pm_culinary.group_acac_culinary_head')
-            if not head_of_culinary:
-                raise ValidationError("Recipe record has already been approved, Please contact the administration")
-        res = super(PmRecipe, self).write(val)
-        return res
+
+    # This function is disable as an adjustment for Culinary to create recipe
+
+    # def write(self, val):
+    #     if self.state == "approved":
+    #         head_of_culinary = self.env.user.has_group('pm_culinary.group_acac_culinary_head')
+    #         if not head_of_culinary:
+    #             raise ValidationError("Recipe record has already been approved, Please contact the administration")
+    #     res = super(PmRecipe, self).write(val)
+    #     return res

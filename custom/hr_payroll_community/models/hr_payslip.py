@@ -102,9 +102,8 @@ class HrPayslip(models.Model):
         print("GOKKKKKKKKKKKKKKK")
 
         if (not self.employee_id) or (not self.date_from) or (not self.date_to):
-            print("False")
+            print("end 1")
             return
-        print('True Hz Jah')
 
         employee = self.employee_id
         date_from = self.date_from
@@ -120,16 +119,19 @@ class HrPayslip(models.Model):
         if not self.env.context.get('contract') or not self.contract_id:
             contract_ids = self.get_contract(employee, date_from, date_to)
             if not contract_ids:
+                print("end 2")
                 return
             self.contract_id = self.env['hr.contract'].browse(contract_ids[0])
 
         if not self.contract_id.struct_id:
+            print("end 3")
             return
         self.struct_id = self.contract_id.struct_id
         if self.contract_id:
             contract_ids = self.contract_id.ids
         # computation of the salary input
         contracts = self.env['hr.contract'].browse(contract_ids)
+        print("GEGE", date_from, date_to)
         worked_days_line_ids = self.get_worked_day_lines(contracts, date_from, date_to)
         worked_days_lines = self.worked_days_line_ids.browse([])
         for r in worked_days_line_ids:
@@ -137,10 +139,14 @@ class HrPayslip(models.Model):
         self.worked_days_line_ids = worked_days_lines
 
         input_line_ids = self.get_inputs(contracts, date_from, date_to)
+       
+        print(input_line_ids)
         input_lines = self.input_line_ids.browse([])
         for r in input_line_ids:
             input_lines += input_lines.new(r)
         self.input_line_ids = input_lines
+        print("GEGEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+        print(input_lines)
         return
 
     def _compute_details_by_salary_rule_category(self):
@@ -318,6 +324,7 @@ class HrPayslip(models.Model):
 
             res.append(attendances)
             res.extend(leaves.values())
+            print("Hi am am res", res)
         return res
 
     @api.model
@@ -328,16 +335,21 @@ class HrPayslip(models.Model):
         rule_ids = self.env['hr.payroll.structure'].browse(structure_ids).get_all_rules()
         sorted_rule_ids = [id for id, sequence in sorted(rule_ids, key=lambda x: x[1])]
         inputs = self.env['hr.salary.rule'].browse(sorted_rule_ids).mapped('input_ids')
-
+        print(inputs)
+        
         for contract in contracts:
+            print("contract-------", contract)
             for input in inputs:
+                print("input-------", input)
                 input_data = {
                     'salary_rule_id': input.id,
                     'name': input.name,
                     'code': input.code,
                     'contract_id': contract.id,
                 }
+                print(input_data)
                 res += [input_data]
+        print("get input", res)
         return res
 
     @api.model
@@ -545,6 +557,8 @@ class HrPayslip(models.Model):
         })
         # computation of the salary input
         contracts = self.env['hr.contract'].browse(contract_ids)
+        print("YOOOO")
+        print(date_to)
         worked_days_line_ids = self.get_worked_day_lines(contracts, date_from, date_to)
         input_line_ids = self.get_inputs(contracts, date_from, date_to)
         res['value'].update({
@@ -555,12 +569,12 @@ class HrPayslip(models.Model):
 
 
 
-    # @api.onchange('contract_id')
-    # def onchange_contract(self):
-    #     if not self.contract_id:
-    #         self.struct_id = False
-    #     self.with_context(contract=True).onchange_employee()
-    #     return
+    @api.onchange('contract_id')
+    def onchange_contract(self):
+        if not self.contract_id:
+            self.struct_id = False
+        self.with_context(contract=True).onchange_employee()
+        return
 
     def get_salary_line_total(self, code):
         self.ensure_one()

@@ -204,7 +204,7 @@
                         <group>
                             <separator string="Product lines" attrs="{'invisible': [('expense_type','!=', 'culinary')]}"/>
                             <field name="line_ids" nolabel="1" attrs="{'invisible': [('expense_type','!=', 'culinary')]}">
-                                <tree decoration-danger="is_danger==True" decoration-muted="cancelled==True">
+                                <tree editable="bottom" decoration-danger="is_danger==True" decoration-muted="cancelled==True">
                                     <field name="product_id" />
                                     <field name="product_uom" attrs="{'column_invisible': [('parent.is_automated','=', True)]}" />
                                     <field name="qty_uor_name" attrs="{'column_invisible': [('parent.is_automated','=', False)]}" />
@@ -446,6 +446,7 @@
     </record>
      <record id="purchase.menu_purchase_rfq" model="ir.ui.menu">
         <field name="name">Requests for Purchase Order</field>
+        <field name="sequence">25</field>
     </record>
 
 

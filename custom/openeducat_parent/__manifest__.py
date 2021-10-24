@@ -38,12 +38,12 @@
         'views/parent_relationship_view.xml',
         'menus/op_menu.xml',
     ],
-    'demo': [
-        'demo/res_partner_demo.xml',
-        'demo/res_users_demo.xml',
-        'demo/parent_relationship_demo.xml',
-        'demo/parent_demo.xml',
-    ],
+    # 'demo': [
+    #     'demo/res_partner_demo.xml',
+    #     'demo/res_users_demo.xml',
+    #     'demo/parent_relationship_demo.xml',
+    #     'demo/parent_demo.xml',
+    # ],
     'images': [
         'static/description/openeducat_parent_banner.jpg',
     ],

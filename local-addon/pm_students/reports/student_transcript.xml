@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="d-block">
                                     <label>Place &amp; date of Birth:</label>
-                                    <label><span t-esc="get_birth_place"/>, <span t-esc="time" /> </label>
+                                    <label><span t-esc="get_birth_place"/> , <span t-esc="get_student_bod" /> </label>
                                 </div>
                             </div>
                             <div class="col-5">
@@ -89,31 +89,13 @@
                                         <td class="w150 text-center"> <span t-esc="sub['code']"/> </td>
                                         <td><span t-esc="sub['name']"/></td>
                                         <td class="text-center w100"><span t-esc="sub['credits']"/></td>
-                                        <td class="text-center"><span t-esc="sub['grade']"/></td>
+                                        <td class="text-center"><span t-esc="sub['score']"/></td>
                                       </tr>
                                     </t>
                                   </tbody>
                                 </table>
                                 <div class="credit-score table-header p-2 mb-1">
                                     <div class="row">
-                                        <div class="col-6">
-                                            <div class="absence">
-                                                <label class="m-0 font-weight-bold d-inline" style="padding-right: 103px;">Absences</label>
-                                                <p class="d-inline text-right">
-                                                   <t t-foreach="get_data" t-as="obj">
-                                                      <span t-esc="obj['absence']"/>
-                                                  </t>
-                                                </p>
-                                            </div>
-                                            <div class="discipline">
-                                                <label class="m-0 font-weight-bold d-inline"  style="padding-right: 50px;">Discipline Point</label>
-                                                <p class="d-inline text-right">
-                                                   <t t-foreach="get_data" t-as="obj">
-                                                      <span t-esc="obj['discipline_points']"/>
-                                                  </t>
-                                                </p>
-                                      </div>
-                                        </div>
                                         <div class="col-6">
                                             <div class="credit d-inline">
                                                 <label class="m-0 font-weight-bold d-inline" style="padding-right: 63px;">Semester Credit</label>
@@ -124,15 +106,30 @@
                                                 </p>
                                             </div>
                                             <t t-foreach="get_data" t-as="obj">
-                                                  <t t-if="obj['gpa']">
+                                                  <t t-if="obj['semester_average']">
                                                        <div  class="average">
-                                                        <label class="m-0 font-weight-bold" style="padding-right: 50px;">GPA</label>
+                                                        <label class="m-0 font-weight-bold" style="padding-right: 50px;">Semester Average</label>
                                                         <p class="d-inline text-right">
-                                                            <span t-esc="obj['gpa']"/>
+                                                            <span t-esc="obj['semester_average']"/>
                                                         </p>
                                                     </div>
                                                  </t>
                                             </t>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="absence">
+                                                <label class="m-0 font-weight-bold d-inline" style="padding-right: 73px;">Accumulative Credits</label>
+                                                <p class="d-inline text-right">
+                                                   <t t-foreach="get_data" t-as="obj">
+                                                        72
+                                                  </t>
+                                                </p>
+                                            </div>
+                                            <div class="discipline">
+                                                <label class="m-0 font-weight-bold d-inline"  style="padding-right: 50px;">Accumulative Average</label>
+                                                <p class="d-inline text-right">
+                                                </p>
+                                      </div>
                                         </div>
                                     </div>
                                 </div>
@@ -222,6 +219,11 @@
                                               <td class="text-center w150">P</td>
                                               <td class="text-center w150"></td>
                                               <td class="text-center w150">Passed</td>
+                                            </tr>
+                                            <tr>
+                                              <td class="text-center w150">I</td>
+                                              <td class="text-center w150"></td>
+                                              <td class="text-center w150">Incomplete</td>
                                             </tr>
                                           </tbody>
                                         </table>

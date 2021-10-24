@@ -50,15 +50,28 @@ class ABAPayWay(http.Controller):
         secret = key.encode('utf-8')
         dig = hmac.new(secret, msg=message, digestmod=hashlib.sha512).digest()
         signature = base64.b64encode(dig).decode()
-        print(signature)
+        return signature;
+
+    def get_hash_check(self, merchant_id, transaction_id):
+        message = bytes(merchant_id + transaction_id, 'utf-8')
+        key = self.get_api_key()
+        secret = key.encode('utf-8')
+        dig = hmac.new(secret, msg=message, digestmod=hashlib.sha512).digest()
+        signature = base64.b64encode(dig).decode()
         return signature;
 
     def get_transaction_items(self, payment_obj):
         print(payment_obj)
         lines = payment_obj.invoice_id.invoice_line_ids
         items = []
+        raw_items= []
         key = 0
         for line in lines:
+            raw_items.append({
+                'name': line.product_id.name,
+                'quantity': line.quantity,
+                'price': line.price_subtotal,
+            })
             items.append(key)
             items[key] = {}
             items[key]['name'] = line.product_id.name
@@ -69,7 +82,7 @@ class ABAPayWay(http.Controller):
         json_str = json.dumps(items)
         res = base64.b64encode(json_str.encode('utf-8')).decode("utf-8")
 
-        return res
+        return {'items':res, 'raw_items':raw_items}
 
 
 

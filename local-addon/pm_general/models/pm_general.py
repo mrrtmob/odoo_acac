@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 
 
 
+
+
 class OpTermMarksheetRegister(models.Model):
     _name = "pm.term.marksheet.register"
     _order = "id desc"
@@ -80,7 +82,6 @@ class PmTermSemesterResult(models.Model):
         for rec in self:
             if rec.status == 'pass':
                 rec.color = 10
-
             elif rec.status == 'fail':
                 rec.color = 9
 
@@ -210,7 +211,6 @@ class OpBatch(models.Model):
 
     year_term = fields.Many2one('pm.term.order', string='Term Order')
     semester_ids = fields.One2many('pm.semester', 'batch_id', 'Semester(s)')
-    class_ids = fields.One2many('op.classroom', 'batch_id', 'Class Room (s)')
     record_url = fields.Char('Link', compute="_compute_record_url", store=True)
 
     @api.depends('name')
@@ -229,6 +229,7 @@ class OpBatch(models.Model):
             d = timedelta(days=14)
             end_date = term.end_date
             remind_date = term.end_date - d
+
 
             if today == remind_date or today == end_date:
                 print(term.name)
@@ -274,6 +275,8 @@ class OpBatch(models.Model):
     pending_semester_count = fields.Integer(compute="_compute_batch_report_data", string='Pending')
     finish_semester_count = fields.Integer(compute="_compute_batch_report_data", string='Finished')
     inactive_count = fields.Integer(compute="_compute_batch_report_data", string='Inactive')
+    male_count = fields.Integer(compute="_compute_batch_report_data", string='Male')
+    female_count = fields.Integer(compute="_compute_batch_report_data", string='Female')
 
     def action_draft(self):
         self.write({'state': 'pending'})
@@ -284,6 +287,11 @@ class OpBatch(models.Model):
             studnet_list = self.env['op.student'].search(
                 [('course_detail_ids.batch_id', 'in', [batch.id]),
                  ('course_detail_ids.p_active', 'in', [True])])
+
+            #Count student genders by batch
+            genders = studnet_list.mapped('gender')
+            batch.male_count = genders.count('m')
+            batch.female_count = genders.count('f')
 
             semesters = batch.semester_ids
             semester_state = semesters.mapped('state')
@@ -364,7 +372,7 @@ class OpFeesTermsLine(models.Model):
 
 class OpFeesElementLineCustom(models.Model):
     _inherit = "op.fees.element"
-    price = fields.Float('Price', related='product_id.lst_price')
+    price = fields.Float('Price', related='product_id.lst_price', store=True)
     product_id = fields.Many2one('product.product',
                                  'Product(s)',
                                  domain=[('type', '=', 'service')],
@@ -373,3 +381,7 @@ class OpFeesElementLineCustom(models.Model):
 class GenerateSession(models.TransientModel):
     _inherit = "generate.time.table"
     semester_id = fields.Many2one('pm.semester', 'Semester', required=True)
+
+
+
+

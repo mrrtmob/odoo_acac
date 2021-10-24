@@ -55,52 +55,24 @@
                                                 <span t-esc="'%s' %  a['name'] if  a['name']  else ''"/>
                                             </td>
                                             <td class="text-left">
-                                                <span t-esc="a['line'].get('0',{'course':''})['course']"/>
-                                                <br></br>
-                                                <span t-esc="a['line'].get('0',{'batch':''})['batch']"/>
-                                                <br></br>
                                                 <span t-esc="a['line'].get('0',{'subject':''})['subject']"/>
                                             </td>
                                             <td class="text-left">
-                                                <span t-esc="a['line'].get('1',{'course':''})['course']"/>
-                                                <br></br>
-                                                <span t-esc="a['line'].get('1',{'batch':''})['batch']"/>
-                                                <br></br>
                                                 <span t-esc="a['line'].get('1',{'subject':''})['subject']"/>
                                             </td>
                                             <td class="text-left">
-                                                <span t-esc="a['line'].get('2',{'course':''})['course']"/>
-                                                <br></br>
-                                                <span t-esc="a['line'].get('2',{'batch':''})['batch']"/>
-                                                <br></br>
                                                 <span t-esc="a['line'].get('2',{'subject':''})['subject']"/>
                                             </td>
                                             <td class="text-left">
-                                                <span t-esc="a['line'].get('3',{'course':''})['course']"/>
-                                                <br></br>
-                                                <span t-esc="a['line'].get('3',{'batch':''})['batch']"/>
-                                                <br></br>
                                                 <span t-esc="a['line'].get('3',{'subject':''})['subject']"/>
                                             </td>
                                             <td class="text-left">
-                                                <span t-esc="a['line'].get('4',{'course':''})['course']"/>
-                                                <br></br>
-                                                <span t-esc="a['line'].get('4',{'batch':''})['batch']"/>
-                                                <br></br>
                                                 <span t-esc="a['line'].get('4',{'subject':''})['subject']"/>
                                             </td>
                                             <td class="text-left">
-                                                <span t-esc="a['line'].get('5',{'course':''})['course']"/>
-                                                <br></br>
-                                                <span t-esc="a['line'].get('5',{'batch':''})['batch']"/>
-                                                <br></br>
                                                 <span t-esc="a['line'].get('5',{'subject':''})['subject']"/>
                                             </td>
                                             <td class="text-left">
-                                                <span t-esc="a['line'].get('6',{'course':''})['course']"/>
-                                                <br></br>
-                                                <span t-esc="a['line'].get('6',{'batch':''})['batch']"/>
-                                                <br></br>
                                                 <span t-esc="a['line'].get('6',{'subject':''})['subject']"/>
                                             </td>
                                         </tr>

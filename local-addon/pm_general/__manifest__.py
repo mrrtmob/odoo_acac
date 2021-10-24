@@ -24,14 +24,14 @@
         'openeducat_discipline',
         'openeducat_exam',
         'pm_approval',
-        # 'pm_admission',
-
     ],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
         'security/security.xml',
+        'wizards/student_transcript_wizard_view.xml',
+        'wizards/attendance_import_view.xml',
         'views/pm_subject_view.xml',
         'views/pm_placement_view.xml',
         'views/pm_misbehaviour_category_view.xml',
@@ -70,8 +70,6 @@
         'reports/semester_absence_dismissal.xml',
         'reports/payslipdetail.xml',
         'reports/payslip_header.xml',
-
-        'wizards/student_transcript_wizard_view.xml',
         'data/mail_data.xml'
     ]
 }

@@ -374,6 +374,7 @@
                             <input type="hidden" name="firstname" t-att-value="firstname"/>
                             <input type="hidden" name="lastname" t-att-value="lastname"/>
                             <input type="hidden" name="phone" t-att-value="phone"/>
+                            <input type="hidden" name="continue_success_url" t-att-value="continue_success_url"/>
                             <input type="hidden" name="email" t-att-value="email"/>
     						<input type="hidden" name="items" t-att-value="items"/>
                             <input type="hidden" name="return_url" t-att-value="push_back_url" id="return_url"/>
@@ -404,6 +405,60 @@
 
     </template>
 
+
+     <template id="pm_payment_form_custom">
+
+          <html lang="en">
+                <head>
+                    <title>PayWay Checkout Sample</title>
+                    <meta charset="utf-8"/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+                    <meta name="author" content="PayWay"/>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+                     <style>
+              
+                    </style>
+
+                </head>
+                <body>
+
+                  <div id="aba_main_modal" class="aba-modal">
+                    <div class="aba-modal-content">
+                                    <form method="POST" target="aba_webservice" t-att-action="url" id="aba_merchant_request">
+                                    <input type="hidden" name="hash" t-att-value="hash" id="hash"/>
+                                    <input type="hidden" name="tran_id" t-att-value="tran_id" id="tran_id"/>
+                                    <input type="hidden" name="amount" t-att-value="amount" id="amount"/>
+                                    <input type="hidden" name="firstname" t-att-value="firstname"/>
+                                    <input type="hidden" name="lastname" t-att-value="lastname"/>
+                                    <input type="hidden" name="phone" t-att-value="phone"/>
+                                    <input type="hidden" name="continue_success_url" t-att-value="continue_success_url"/>
+                                    <input type="hidden" name="email" t-att-value="email"/>
+                                    <input type="hidden" name="items" t-att-value="items"/>
+                                    <input type="hidden" name="return_url" t-att-value="push_back_url" id="return_url"/>
+                                    <input type="hidden" name="return_params" value="json" id="return_params"/>
+                                    <input type="hidden" name="payment_option" value="cards"/>
+                                </form>
+                            </div>
+                      </div>
+                  <div class="container" style="margin-top: 75px;margin: 0 auto;">
+                    <div style="width: 200px;margin: 0 auto;">
+                    </div>
+                  </div>
+
+                    <link rel="stylesheet" href="https://payway-staging.ababank.com/checkout-popup.html?file=css"/>
+                    <script src="https://payway-staging.ababank.com/checkout-popup.html?file=js"></script>
+                     <script>
+                       $(document).ready(function () {
+                        $('#checkout_button').click(function () {
+                            AbaPayway.checkout();
+                        });
+                    });
+
+                    </script>
+                </body>
+            </html>
+
+    </template>
 
 
         <template id="pm_payment_success_form">

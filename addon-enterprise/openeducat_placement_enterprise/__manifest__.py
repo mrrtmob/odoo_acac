@@ -27,10 +27,10 @@
         'views/openeducat_placement_portal.xml',
         'menus/op_menu.xml',
     ],
-    'demo': [
-        'demo/placement_offer_demo.xml',
-        'demo/placement_cell_view_demo.xml',
-    ],
+    # 'demo': [
+    #     'demo/placement_offer_demo.xml',
+    #     'demo/placement_cell_view_demo.xml',
+    # ],
     'images': [
         'static/description/openeducat_placement_enterprise_banner.jpg',
     ],

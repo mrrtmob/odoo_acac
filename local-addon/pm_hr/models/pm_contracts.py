@@ -10,7 +10,7 @@ class PmInheritContracts(models.Model):
     def _get_default_code(self):
         return self.env["ir.sequence"].next_by_code("hr.contract")
 
-    education_allowance = fields.Char('Education Allowance')
+    education_allowance = fields.Monetary('Education Allowance')
     annual_leave = fields.Integer('Annual Leave')
     public_holiday = fields.Integer('Public Holiday')
     tax_deduction = fields.Float("Tax Deduction($)", compute="_compute_tax_rate", store=True)

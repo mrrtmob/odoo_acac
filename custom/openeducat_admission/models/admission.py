@@ -193,16 +193,16 @@ class OpAdmission(models.Model):
             term_id = self.course_id.fees_term_id.id
         self.fees_term_id = term_id
 
-    @api.constrains('register_id', 'application_date')
-    def _check_admission_register(self):
-        for rec in self:
-            start_date = fields.Date.from_string(rec.register_id.start_date)
-            end_date = fields.Date.from_string(rec.register_id.end_date)
-            application_date = fields.Date.from_string(rec.application_date)
-            if application_date < start_date or application_date > end_date:
-                raise ValidationError(_(
-                    "Application Date should be between Start Date & \
-                    End Date of Admission Register."))
+    # @api.constrains('register_id', 'application_date')
+    # def _check_admission_register(self):
+    #     for rec in self:
+    #         start_date = fields.Date.from_string(rec.register_id.start_date)
+    #         end_date = fields.Date.from_string(rec.register_id.end_date)
+    #         application_date = fields.Date.from_string(rec.application_date)
+    #         if application_date < start_date or application_date > end_date:
+    #             raise ValidationError(_(
+    #                 "Application Date should be between Start Date & \
+    #                 End Date of Admission Register."))
 
     @api.constrains('birth_date')
     def _check_birthdate(self):

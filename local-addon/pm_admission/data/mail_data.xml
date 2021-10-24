@@ -61,7 +61,7 @@
                                                                 Payment Date: ${object.date}
                                                                 <br/>
                                                                 <br/>
-                                                                Amount: ${object.amount}
+                                                                Amount: ${object.amount}$
                                                                 <br/>
                                                                 <br/>
                                                                 Regards,
@@ -120,7 +120,7 @@
             <field name="name">Student Payment Reminder</field>
             <field name="subject">Payment Reminder</field>
             <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-            <field name="email_to"></field>
+            <field name="email_to">${object.student_id.email}</field>
             <field name="model_id" ref="openeducat_fees.model_op_student_fees_details"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
@@ -163,11 +163,11 @@
                                                 <tr>
                                                     <td valign="top" style="font-size: 13px;">
                                                         <div>
-                                                            Dear ${object.title_id.name or ''}. ${object.partner_name or ''},
+                                                            Dear ${object.student_id.name or ''},
                                                             <br/>
                                                             <br/>
                                                            <p>
-                                                                Our records show that we haven’t yet received payment of <strong>${object.amount}</strong> which is overdue by one week.
+                                                                Our records show that we haven’t yet received payment of <strong>${object.amount}$</strong> which will be overdue by one week.
                                                            </p>
                                                                     <br/>
                                                              <p>
@@ -270,12 +270,12 @@
                                                 <tr>
                                                     <td valign="top" style="font-size: 13px;">
                                                         <div>
-                                                            Dear ${object.title_id.name or ''}. ${object.partner_name or ''},
+                                                            Dear ${object.student_id.name or ''},
                                                             <br/>
                                                             <br/>
 
                                                                 <p>
-                                                                Our records show that we haven’t yet received payment of <strong>${object.amount}</strong> which will be overdue by one week.
+                                                                Our records show that we haven’t yet received payment of <strong>${object.amount}$</strong> which is overdue by one week.
                                                                 </p>
                                                              <br/>
                                                                 <p>

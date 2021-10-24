@@ -237,6 +237,7 @@ class PmSemester(models.Model):
 class PmSemesterDetail(models.Model):
     _name = "pm.student.semester.detail"
     _order = "id asc"
+    _rec_name = "semester_id"
     semester_id = fields.Many2one(
         'pm.semester', 'Semester',
         required=True, track_visibility='onchange')
@@ -251,6 +252,29 @@ class PmSemesterDetail(models.Model):
                                 ('retake', 'Retake'),
                                 ('fail', 'Fail')], string='Status', required=True, track_visibility='onchange')
     remark = fields.Text('Remarks')
+
+    color = fields.Integer(string='Color Index', default=0, compute="_compute_result_color", store=True)
+
+    @api.depends('state')
+    def _compute_result_color(self):
+        for rec in self:
+
+            if rec.state == 'ongoing':
+                rec.color = 10
+                # Green
+            elif rec.state == 'complete':
+                rec.color = 7
+                # Blue
+            elif rec.state == 'retake' or rec.state == 'fail':
+                rec.color = 9
+                # Red
+            else:
+                rec.color = 0
+
+            # elif rec.state == 'incomplete' or rec.state == 'pending':
+            #     rec.color = 3 #Yellow
+            # elif rec.state == 'fail' or rec.state == 'retake':
+            #     rec.color = 9 #red
 
 
 

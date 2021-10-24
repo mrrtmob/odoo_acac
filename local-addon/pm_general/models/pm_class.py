@@ -7,6 +7,7 @@ class OpClassroomCustom(models.Model):
     _inherit = "op.classroom"
     name = fields.Char('Name', size=255, required=True)
     batch_id = fields.Many2one('op.batch', 'Term')
+    student_course_ids = fields.Many2many('op.student.course')
 
     @api.model
     def name_search(self, name, args=None, operator='ilike', limit=100):
@@ -23,7 +24,7 @@ class PmExamClassSchedule(models.Model):
     _name = 'pm.class.exam'
     _inherit = "mail.thread"
     _description = "Class Exam"
-    name = fields.Char('Name', size=256, required=True)
+    name = fields.Char('Name', size=256, required=False)
     class_id = fields.Many2one('op.classroom', 'Class')
     exam_session_id = fields.Many2one("op.exam.session", 'Exam Schedule')
     exam_id = fields.Many2one('op.exam', 'Exam',
@@ -38,7 +39,7 @@ class PmExamClassSchedule(models.Model):
     start_time = fields.Datetime('Start Time', required=True)
     end_time = fields.Datetime('End Time', required=True)
     state = fields.Selection(
-        [('draft', 'Draft'), ('schedule', 'Scheduled'), ('held', 'Held'),
+        [('draft', 'Draft'), ('schedule', 'Scheduled'),
          ('submitted', 'Submitted'),
          ('cancel', 'Cancelled'), ('done', 'Done')], 'State',
         readonly=True, default='draft', track_visibility='onchange')
@@ -108,6 +109,12 @@ class OpExamAttendeesCustom(models.Model):
     exam_id = fields.Many2one(
         'op.exam', 'Exam', required=False, ondelete="cascade")
     session_id = fields.Many2one('op.exam.session', related='exam_id.session_id', store=True)
+
+    def set_present(self):
+        self.status = 'present'
+
+    def set_absent(self):
+        self.status = 'absent'
 
     @api.depends('exam_id.exam_type', 'exam_id.session_id.state')
     def _compute_show_student(self):

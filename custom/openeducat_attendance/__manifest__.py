@@ -44,11 +44,11 @@
         'report/report_menu.xml',
         'menus/op_menu.xml'
     ],
-    'demo': [
-        'demo/attendance_register_demo.xml',
-        'demo/attendance_sheet_demo.xml',
-        'demo/attendance_line_demo.xml',
-    ],
+    # 'demo': [
+    #     'demo/attendance_register_demo.xml',
+    #     'demo/attendance_sheet_demo.xml',
+    #     'demo/attendance_line_demo.xml',
+    # ],
     'images': [
         'static/description/openeducat_attendance_banner.jpg',
     ],

@@ -73,11 +73,10 @@
 
                    <div class="oe_edit_only">
                         <field name="read_only" invisible="1"/>
-                        <field name="is_hr_user" invisible="1"/>
                         <label for="type" class="oe_inline" />
                     </div>
                     <h2>
-                       <field name="type" attrs="{'readonly': [('read_only', '=', True)]}" />
+                       <field name="type" />
                     </h2>
 
                     <group>

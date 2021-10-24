@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_pm_student_summary_payment" model="ir.ui.view">
+            <field name="name">pm.student.payment.summary</field>
+            <field name="model">pm.student.payment.summary</field>
+            <field name="arch" type="xml">
+                <form string="Time Off Summary">
+                    <group col="4" colspan="6">
+                         <field name="month" required='1'/>
+                         <field name="year" required='1'/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pm_payment_summary" model="ir.actions.act_window">
+            <field name="name">Payment Summary</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.student.payment.summary</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="openeducat_core.model_op_student" />
+            <field name="binding_type">report</field>
+        </record>
+
+</odoo>

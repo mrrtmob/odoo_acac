@@ -182,20 +182,18 @@
             <field name="arch" type="xml">
                 <xpath expr="//form//header" position="replace">
                    <header groups="base.group_user">
-                        <button name="act_draft" states="held,schedule,cancel" type="object"
+                        <button name="act_draft" states="schedule,cancel" type="object"
                                 string="Draft" class="oe_highlight"/>
                         <button name="act_schedule" states="draft" type="object"
                                 string="Schedule" class="oe_highlight"/>
-                        <button name="act_held" states="schedule" type="object"
-                                string="Held" class="oe_highlight"/>
-                        <button name="act_submitted" states="held" type="object"
+                        <button name="act_submitted" states="schedule" type="object"
                                 string="Submitted" class="oe_highlight"/>
                         <button name="act_done" states="submitted" type="object"
                                 string="Done" class="oe_highlight"/>
-                        <button name="act_cancel" states="schedule,held" type="object"
+                        <button name="act_cancel" states="schedule" type="object"
                                 string="Cancel"/>
                         <field name="state" widget="statusbar"
-                               statusbar_visible="draft,held,scheduled,submitted,done"/>
+                               statusbar_visible="draft,scheduled,submitted,done"/>
                     </header>
                 </xpath>
 

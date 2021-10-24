@@ -30,28 +30,29 @@ class StudentMigrate(models.TransientModel):
 
     date = fields.Date('Date', required=True, default=fields.Date.today())
     course_from_id = fields.Many2one('op.course', 'From Course', required=True)
+    batch_from_id = fields.Many2one('op.batch', 'From Term')
     course_to_id = fields.Many2one('op.course', 'To Course', required=True)
-    batch_id = fields.Many2one('op.batch', 'To Term')
+    batch_to_id = fields.Many2one('op.batch', 'To Term')
     optional_sub = fields.Boolean("Optional Subjects")
     student_ids = fields.Many2many(
         'op.student', string='Student(s)', required=True)
 
-    @api.constrains('course_from_id', 'course_to_id')
-    def _check_admission_register(self):
-        for record in self:
-            if record.course_from_id == record.course_to_id:
-                raise ValidationError(
-                    _("From Course must not be same as To Course!"))
-
-            if record.course_from_id.parent_id:
-                if record.course_from_id.parent_id != \
-                        record.course_to_id.parent_id:
-                    raise ValidationError(_(
-                        "Can't migrate, As selected courses don't \
-                        share same parent course!"))
-            else:
-                raise ValidationError(
-                    _("Can't migrate, Proceed for new admission"))
+    # @api.constrains('course_from_id', 'course_to_id')
+    # def _check_admission_register(self):
+    #     for record in self:
+    #         if record.course_from_id == record.course_to_id:
+    #             raise ValidationError(
+    #                 _("From Course must not be same as To Course!"))
+    #
+    #         if record.course_from_id.parent_id:
+    #             if record.course_from_id.parent_id != \
+    #                     record.course_to_id.parent_id:
+    #                 raise ValidationError(_(
+    #                     "Can't migrate, As selected courses don't \
+    #                     share same parent course!"))
+    #         else:
+    #             raise ValidationError(
+    #                 _("Can't migrate, Proceed for new admission"))
 
     @api.onchange('course_from_id')
     def onchange_course_id(self):
@@ -75,10 +76,10 @@ class StudentMigrate(models.TransientModel):
                      ('course_id', '=', record.course_from_id.id)])
                 student_course.write({
                     'course_id': record.course_to_id.id,
-                    'batch_id': record.batch_id.id})
+                    'batch_id': record.batch_to_id.id})
                 reg_id = self.env['op.subject.registration'].create({
                     'student_id': student.id,
-                    'batch_id': record.batch_id.id,
+                    'batch_id': record.batch_to_id.id,
                     'course_id': record.course_to_id.id,
                     'min_unit_load': record.course_to_id.min_unit_load or 0.0,
                     'max_unit_load': record.course_to_id.max_unit_load or 0.0,

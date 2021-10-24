@@ -118,7 +118,7 @@
                             </field>
                           <br/>
                           <separator string="Characteristic / Personality Questions"/>
-                            <field name="personality_question_ids"  attrs="{'readonly': [('is_saved', '=', False)]}"  nolabel="1">
+                            <field name="personality_question_ids"  nolabel="1">
                                 <tree editable="top">
                                   <field name="interview_question_id"
                                          domain="[('type', '=', 'personality')]" string="Question"/>
@@ -129,7 +129,7 @@
                             </field>
                                  <br/>
                           <separator string="Motivations / Working Relationships"/>
-                            <field name="motivation_question_ids"  attrs="{'readonly': [('is_saved', '=', False)]}"  nolabel="1">
+                            <field name="motivation_question_ids"  nolabel="1">
                                 <tree editable="top">
                                     <field  name="interview_question_id" domain="[('type', '=', 'motivation')]" />
                                     <field name="expected_answer"/>
@@ -139,7 +139,7 @@
                             </field>
                              <br/>
                           <separator string="Basic / Administrative"/>
-                            <field name="basic_question_ids"  attrs="{'readonly': [('is_saved', '=', False)]}"  nolabel="1">
+                            <field name="basic_question_ids"  nolabel="1">
                                 <tree editable="top">
                                     <field name="interview_question_id"  domain="[('type', '=', 'basic')]" string="Question"/>
                                     <field name="expected_answer"/>

@@ -43,10 +43,6 @@
         'wizard/admission_analysis_wizard_view.xml',
         'menus/op_menu.xml',
     ],
-    'demo': [
-        'demo/admission_register_demo.xml',
-        'demo/admission_demo.xml',
-    ],
     'test': [],
     'images': [
         'static/description/openeducat_admission_banner.jpg',

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 
 class PmRecipeLine(models.Model):
@@ -16,6 +16,7 @@ class PmRecipeLine(models.Model):
         domain="[('product_tmpl_id.is_food','=',True), ('product_tmpl_id.rank', '=', 'a')]"
     )
     quantity = fields.Float('Qty', digits=(12, 3))
+    initial_quantity = fields.Float('Initial Quantity', digits=(12, 3), default=10)
     # NOTE: unused
     uom_id = fields.Many2one('uom.uom', 'Unit',
                              domain="[('measure_type', '!=', 'working_time'),('measure_type', '!=', 'length')]")
@@ -58,7 +59,7 @@ class PmRecipeLine(models.Model):
         compute="_compute_line_type",
         store=True
     )
-    sub_recipe_needed_makes = fields.Float('Sub Recipe Needed Makes', compute='_compute_sub_recipe_needed_makes')
+    sub_recipe_needed_makes = fields.Float('Sub Recipe Needed Makes')
     sub_recipe_uor = fields.Selection(
         [('kg', 'kg'),
          ('l', 'l')],
@@ -106,6 +107,9 @@ class PmRecipeLine(models.Model):
                 else:
                     if not record.product_id:
                         raise ValidationError(_("Ingredient or Sub Recipe cannot be blank."))
+    @api.depends('recipe_id.number_of_portion')
+    def onChnageRecipeYeild(self):
+        print("Yosh")
 
     @api.constrains('name')
     def _check_name(self):
@@ -126,13 +130,19 @@ class PmRecipeLine(models.Model):
                 # record.as_purchased = record.quantity + (record.quantity * record.waste_percentage / 100)
                 record.as_purchased = record.quantity * (100 / (100 - record.waste_percentage))
 
-    @api.depends('product_id.product_tmpl_id.cost', 'product_id.product_tmpl_id.uom_id', 'uom_id', 'quantity', 'as_purchased')
+    @api.depends('product_id.product_tmpl_id.cost', 'product_id.product_tmpl_id.uom_id', 'uom_id','as_purchased')
     def _compute_cost(self):
         for record in self:
+            print("_compute_cost recipe line")
             if record.product_id:
                 record.cost = record.product_id.product_tmpl_id.cost * record.as_purchased
             elif record.sub_recipe_id:
-                record.cost = (record.sub_recipe_id.cost * record.quantity) / 100
+                print("yo")
+                print(record.quantity)
+                percentage = record.quantity / record.sub_recipe_id.makes
+                print(percentage)
+                print(record.sub_recipe_id.cost)
+                record.cost = record.sub_recipe_id.cost * percentage
             else:
                 record.cost = 0
 
@@ -154,8 +164,12 @@ class PmRecipeLine(models.Model):
 
     @api.model
     def create(self, values):
+        print("Hit Create Line")
+        print(values['quantity'])
         if values.get('display_type', self.default_get(['display_type'])['display_type']):
             values.update(product_id=False, sub_recipe_id=False)
+
+        values['initial_quantity'] = values['quantity']
 
         line = super(PmRecipeLine, self).create(values)
 

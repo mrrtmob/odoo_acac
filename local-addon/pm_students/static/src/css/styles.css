@@ -1,0 +1,8 @@
+.o_progressbar_complete {
+    background-color: #4F0147 !important;
+}
+
+.o_progressbar .o_progress {
+    border: 1px solid #6c757d !important;
+    border-radius: 10px;
+}

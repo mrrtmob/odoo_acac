@@ -29,6 +29,7 @@
                 'openeducat_admission',
                 'openeducat_discipline',
                 'pm_leads',
+                'report_xlsx',
                 'pm_general',
                 ],
 
@@ -38,11 +39,15 @@
         'wizards/student_return_wizard_view.xml',
         'views/pm_student_view.xml',
         'views/pm_student_dashboard.xml',
+        'views/pm_student_fee_view.xml',
+        'views/pm_student_fee_line_view.xml',
         'views/templates.xml',
         'views/templates.xml',
         'reports/report_menu.xml',
         'reports/student_transcript.xml',
-        'reports/student_id_card.xml'
+        'reports/student_id_card.xml',
+        'reports/student_fee_report.xml',
+        'wizards/student_fee_report_wizzard.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

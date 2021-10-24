@@ -65,41 +65,6 @@ class PathmazingApi(RESTController):
         image_url_1920 = base_url + '/web/image?' + 'model=op.student&id=' + str(student_id) + '&field=image_1920'
         return image_url_1920
 
-
-
-
-    @http.route(['/api/v1/aba/payment'],
-                auth="none", type='http', token=None, methods=['POST'], csrf=False)
-    def aba_payment(self, tran_id, amount, firstname, lastname, phone, email, **kw):
-        PayWay = ABAPayWay()
-
-        key = ABAPayWay.get_api_key(self)
-        merchant_id = 'ec000627'
-        hash = PayWay.get_hash(str(merchant_id), str(tran_id), str(amount))
-        form = PayWay.render_checkout_form(merchant_id, tran_id, amount, firstname, lastname, phone, email)
-
-        print(form)
-
-        # params = {
-        #     'tran_id': tran_id,
-        #     'amount': amount,
-        #     'firstname': firstname,
-        #     'lastname': lastname,
-        #     'phone': phone,
-        #     'email': email
-        # }
-        #
-        # hash = self.get_hash(str(merchant_id), str(tran_id), str(amount))
-        # params['hash'] = hash
-        #
-        #
-        # print(params)
-        #
-        # response = requests.post('https://sandbox.payway.com.kh/sandbox/api/627/', data=params)
-        # print(response.status_code, response.reason)
-
-        return Response('123', status=200)
-
     @http.route('/api/v1/student',
                 auth="user", type='http', token=None,  methods=['GET'], csrf=False)
     def get_student_profile(self, token=None, **kw):
@@ -813,9 +778,13 @@ class PathmazingApi(RESTController):
                 check_date = datetime.strptime(check_date, '%Y-%m-%d').date()
                 monday = check_date + timedelta(days=-check_date.weekday())
                 sunday = monday + timedelta(days=6)
-            domain = [('batch_id', '=', int(student.batch_id)), ('classroom_id', '=', int(student.class_id)),
+                print(monday)
+                print(sunday)
+            domain = [('batch_id', '=', int(student.batch_id)), ('classroom_id', 'in', student.course_detail_ids.class_ids.ids),
                       ('start_datetime', '>=', monday), ('start_datetime', '<=', sunday)]
+            print(domain)
             sessions = request.env['op.session'].sudo().search(domain, order='start_datetime')
+            print(sessions)
             display_date = monday.strftime('%d, %b %Y') + ' - ' + sunday.strftime('%d, %b %Y')
             response = {
                 'display_date': display_date,
@@ -847,19 +816,19 @@ class PathmazingApi(RESTController):
                         'time': str(start_time) + ' - ' + str(end_time),
                         'duration': duration
                     }
-                    if day_name == 'Monday':
+                    if day_name == '0':
                         session_in_monday.append(val)
-                    if day_name == 'Tuesday':
+                    if day_name == '1':
                         session_in_tuesday.append(val)
-                    if day_name == 'Wednesday':
+                    if day_name == '2':
                         session_in_wednesday.append(val)
-                    if day_name == 'Thursday':
+                    if day_name == '3':
                         session_in_thursday.append(val)
-                    if day_name == 'Friday':
+                    if day_name == '4':
                         session_in_friday.append(val)
-                    if day_name == 'Saturday':
+                    if day_name == '5':
                         session_in_saturday.append(val)
-                    if day_name == 'Sunday':
+                    if day_name == '6':
                         session_in_sunday.append(val)
                 response = {
                     'display_date': display_date,
@@ -887,42 +856,65 @@ class PathmazingApi(RESTController):
             today = datetime.today().date()
             payment_data = []
             payments = request.env['op.student.fees.details'].sudo().search(domain, order='date')
+            print(payments)
             if payments:
                 for payment in payments:
-                    payment_id = payment.id
-                    payment_date = payment.date
-                    expired = (payment_date - today).days
-                    amount = payment.amount
-                    state = payment.state
-                    invoice_id = payment.invoice_id.id
                     invoice_state = payment.invoice_id.state
-                    reminding = ''
-                    if expired <= 7:
-                        if expired > 0:
-                            if expired == 1:
-                                reminding = 'expired in ' + str(expired) + ' day'
+                    payment_option = payment.payment_option
+                    if payment.state in ['invoice', 'installment'] and invoice_state != 'posted':
+                        if payment_option == 'installment':
+                            for installment in payment.installments:
+                                payment_id = payment.id
+                                payment_date = installment.due_date
+                                amount = installment.amount
+                                state = installment.state
+                                expired = (payment_date - today).days
+                                reminding = ''
+                                if expired > 0:
+                                    reminding = 'due in ' + str(expired) + ' days'
+                                elif expired == 0:
+                                    reminding = 'today'
+                                else:
+                                    reminding = 'late ' + str(abs(expired)) + ' days'
+                                val = {
+                                    'id': installment.id,
+                                    'payment_date': payment_date,
+                                    'amount': amount,
+                                    'state': state,
+                                    'invoice_state': installment.invoice_state,
+                                    'reminding': reminding,
+                                    'type': payment_option
+                                }
+                                payment_data.append(val)
+                        elif payment_option == 'normal':
+                            payment_id = payment.id
+                            payment_date = payment.date
+                            expired = (payment_date - today).days
+                            amount = payment.amount
+                            state = payment.state
+                            invoice_id = payment.invoice_id.id
+
+                            print(expired)
+                            reminding = ''
+                            if expired > 0:
+                                reminding = 'due in ' + str(expired) + ' days'
+                            elif expired == 0:
+                                reminding = 'today'
                             else:
-                                reminding = 'expired in ' + str(expired) + ' days'
-                        elif expired == 0:
-                            reminding = 'expired today'
-                        else:
-                            if abs(expired) == 1:
-                                reminding = 'late ' + str(abs(expired)) + ' day'
-                            elif abs(expired) > 1:
                                 reminding = 'late ' + str(abs(expired)) + ' days'
-                    val = {
-                        'id': payment_id,
-                        'payment_date': payment_date,
-                        'amount': amount,
-                        'state': state,
-                        'invoice_state': invoice_state,
-                        'reminding': reminding,
+                            val = {
+                                'id': payment_id,
+                                'payment_date': payment_date,
+                                'amount': amount,
+                                'state': state,
+                                'invoice_state': invoice_state,
+                                'reminding': reminding,
+                                'type': payment_option
+                            }
+                            payment_data.append(val)
+                    response = {
+                        'data': payment_data,
                     }
-                    if invoice_id is False or invoice_state != 'posted' and invoice_state != 'cancel':
-                        payment_data.append(val)
-                response = {
-                    'data': payment_data,
-                }
         return Response(json.dumps(response, indent=4, cls=ObjectEncoder),
                         content_type='application/json;charset=utf-8', status=200)
 

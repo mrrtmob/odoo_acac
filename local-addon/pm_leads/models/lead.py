@@ -6,6 +6,38 @@ import datetime
 import simplejson
 from odoo.exceptions import ValidationError, UserError
 
+class PmCustomResPartner(models.Model):
+    _inherit = 'res.partner'
+    is_displayed = fields.Boolean(compute="_compute_display_contact", store=True)
+
+    @api.depends('name', 'display_name', 'phone', 'email')
+    def _compute_display_contact(self):
+        print("here")
+        for contact in self:
+            display = False
+            if contact.name and contact.display_name and contact.phone or contact.email:
+                print("true")
+                display = True
+            contact.is_displayed = display
+
+class OpCourse(models.Model):
+    _inherit = 'op.course'
+    lead_ids = fields.One2many(comodel_name='crm.lead',
+                               inverse_name='desired_course_id')
+    lead_count = fields.Integer("Leads", compute="_compute_lead_count")
+
+    @api.depends('lead_ids')
+    def _compute_lead_count(self):
+        for course in self:
+            course.lead_count = self.env['crm.lead'].search_count([('desired_course_id', '=', course.id)])
+
+    def get_leads(self):
+        action = self.env.ref("crm.crm_lead_all_leads").read()[0]
+        leads = self.env['crm.lead'].search([('desired_course_id', '=', self.id)])
+        action["domain"] = [("id", "in", leads.ids)]
+        return action
+
+
 
 class NotEnrollReason(models.Model):
     _name = 'pm.not_enroll_reason'
@@ -127,6 +159,7 @@ class Lead(models.Model):
         ('o', 'Other')
     ], 'Gender', required=False)
     dob = fields.Date('Date of Birth')
+    birth_place = fields.Many2one('res.country.state', 'Birth Place')
     type = fields.Selection(selection_add=[('admission', 'Admission')], ondelete={'admission': 'cascade'})
     rank = fields.Selection([('first_contact', 'First Contact'),
                              ('potential', 'Potential'),
@@ -245,7 +278,7 @@ class Lead(models.Model):
     visa_number = fields.Char('Visa Number')
     visa_expiry = fields.Date('Expiry Date')
     intake = fields.Many2one('pm.intake', 'Intake')
-    desired_course = fields.Many2one('pm.desired.course', 'Desired Course')
+    desired_course_id = fields.Many2one('op.course', 'Desired Course')
 
     return_date = fields.Date("Return Date")
     reminding_date = fields.Date(compute="_compute_remind_date", store=True)
@@ -416,6 +449,7 @@ class Lead(models.Model):
                 'default_mobile': lead.mobile,
                 'default_phone': lead.phone,
                 'default_birth_date': lead.dob,
+                'default_birth_place': lead.birth_place.id,
                 'default_city': lead.city,
                 'default_zip': lead.zip,
                 'default_current_address': lead.current_address,

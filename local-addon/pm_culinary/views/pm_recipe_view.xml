@@ -21,7 +21,8 @@
                     <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
                     <filter string="Submitted" name="submitted" domain="[('state', '=', 'submitted')]"/>
                     <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
-                    <filter string="Rejected" name="approved" domain="[('state', '=', 'rejected')]"/>
+                    <filter string="Rejected" name="rejected" domain="[('state', '=', 'rejected')]"/>
+                    <filter string="Expired" name="expired" domain="[('is_expired', '=', True)]"/>
                 </search>
             </field>
         </record>
@@ -48,12 +49,14 @@
             <kanban class="o_res_partner_kanban">
               <field name="id" />
               <field name="name" />
+              <field name="is_expired" />
               <field name="recipe_image" />
               <field name="currency_id" />
 
               <templates>
                 <t t-name="kanban-box">
-                  <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
+                <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
+                  <!-- <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban #{kanban_color(record.color.raw_value)} "> -->
                     <t t-set="placeholder" t-value="'/pm_culinary/static/img/nologo.png'"/>
                     <div class="o_kanban_image_fill_left o_kanban_image_full" t-attf-style="background-image: url(#{kanban_image('pm.recipe', 'recipe_image', record.id.raw_value, placeholder)})" role="img"/>
                     <div class="oe_kanban_details">
@@ -65,6 +68,9 @@
                       </ul>
 
                       <field name="state" widget="label_selection" options="{'classes': {'draft': 'primary', 'submitted': 'secondary', 'approved': 'success', 'rejected': 'danger'}}"/>
+                    </div>
+                     <div class="float-right"  t-if="record.is_expired.raw_value">
+                        <span class="fa fa-circle text-warning" role="img" aria-label="This recipe hasn't been modified in more than 60 days" title="This recipe hasn't been modified in more than 60 days"></span>
                     </div>
                   </div>
                 </t>
@@ -82,9 +88,9 @@
                   <header groups="base.group_user">
                         <button name="act_submit" states="draft" string="Submit" type="object"
                                 class="oe_highlight"/>
-                        <button name="act_approve" states="submitted" groups="pm_culinary.group_acac_culinary_head,pm_leads.group_acac_dean" string="Approve"
+                        <button name="act_approve" states="submitted"  string="Approve"
                                 type="object" class="oe_highlight"/>
-                        <button name="act_reject" states="submitted" groups="pm_culinary.group_acac_culinary_head,pm_leads.group_acac_dean" string="Reject"
+                        <button name="act_reject" states="submitted"  string="Reject"
                                 type="object"/>
                         <button name="act_reset" states="rejected" string="Reset" type="object" />
 
@@ -99,7 +105,7 @@
                             <field name="name" required="1"/>
                             <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
                             <field name="category_id" string="Category"/>
-                            <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                            <field name="uor" string="Unit" attrs="{'required': [('is_sub_recipe', '=', True)]}" />
 
                             <label for="cost_in_percentage" />
                             <div>
@@ -111,6 +117,7 @@
 
                             <field name="date_of_test" />
                             <field name="price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                            <field name="price_per_portion" string="Selling/Portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
 
                             <label for="number_of_portion" />
                             <div>
@@ -120,26 +127,25 @@
                               </span>
                             </div>
 
-                            <field name="price_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
-                            <field name="is_sub_recipe" />
-
-                            <newline attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
-
-                            <label for="makes" attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
-                            <div attrs="{'invisible': [('is_sub_recipe', '=', False)]}">
-                              <field name="makes" attrs="{'required': [('is_sub_recipe', '=', True)]}" />
+                            <label for="makes"/>
+                            <div>
+                              <field name="makes"/>
                               <span class="oe_read_only" modifiers="{}">
                                 <field name="uor" readonly="1" />
                               </span>
                             </div>
+                            <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                            <label for="cost_per_uor" string="Cost Per Unit" />
+                            <div>
+                              <field name="cost_per_uor" string = "Cost Per Unit" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                             <span class="oe_read_only" modifiers="{}">
+                                per
+                                 <field name="uor" modifiers="{'readonly':true}"/>
+                              </span>
+                            </div>
 
-                            <newline attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
 
-                            <field name="uor" attrs="{'invisible': [('is_sub_recipe', '=', False)], 'required': [('is_sub_recipe', '=', True)]}" />
-
-                            <newline attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
-
-                            <field name="cost_per_uor" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': [('is_sub_recipe', '=', False)]}" />
+                            <field name="is_sub_recipe" />
                         </group>
                         <group string="Ingredients and Preparation Instructions ">
                             <field name="ingredients" widget="section_and_note_one2many" nolabel="1">
@@ -178,8 +184,7 @@
                                 <tree editable="bottom">
                                     <field name="currency_id" invisible="1" />
                                     <field name="sub_recipe_id" context="{'default_is_sub_recipe': True}" />
-                                    <field name="quantity" string="Qty (%)" />
-                                    <field name="sub_recipe_needed_makes" string="Needed Makes" />
+                                    <field name="quantity" string="Quantity" />
                                     <field name="sub_recipe_uor" string="UoR" />
                                     <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
                                 </tree>
@@ -216,8 +221,16 @@
         </record>
 
     <record id="pm_view_recipe_action" model="ir.actions.act_window">
-      <field name="name">Recipes</field>
+      <field name="name">Master Recipes</field>
       <field name="res_model">pm.recipe</field>
+      <field name="domain">[('is_sub_recipe', '=', False)]</field>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="pm_view_sub_recipe_action" model="ir.actions.act_window">
+      <field name="name">Sub Recipes</field>
+      <field name="res_model">pm.recipe</field>
+      <field name="domain">[('is_sub_recipe', '=', True)]</field>
       <field name="view_mode">kanban,tree,form</field>
     </record>
   </data>

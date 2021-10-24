@@ -43,11 +43,11 @@
         'data/action_rule_data.xml',
         'menus/op_menu.xml',
     ],
-    'demo': [
-        'demo/assignment_type_demo.xml',
-        'demo/assignment_demo.xml',
-        'demo/assignment_sub_line_demo.xml'
-    ],
+    # 'demo': [
+    #     'demo/assignment_type_demo.xml',
+    #     'demo/assignment_demo.xml',
+    #     'demo/assignment_sub_line_demo.xml'
+    # ],
     'images': [
         'static/description/openeducat_assignment_banner.jpg',
     ],

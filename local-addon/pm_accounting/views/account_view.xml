@@ -1,15 +1,9 @@
 <odoo>
   <data>
-    <record id="view_partner_bank_form" model="ir.ui.view">
-      <field name="name">view.partner.bank.form.inherited.pm_accounting</field>
-      <field name="model">res.partner.bank</field>
-      <field name="inherit_id" ref="base.view_partner_bank_form"/>
-      <field name="arch" type="xml">
-        <xpath expr="//field[@name='partner_id']" position="attributes">
-          <attribute name="domain">[('partner_type', '=', 'account_holder')]</attribute>
-          <attribute name="context">{'default_partner_type': 'account_holder'}</attribute>
-        </xpath>
-      </field>
+
+    <record id="account.portal_my_home_invoice" model="ir.ui.view">
+      <field name="active">0</field>
     </record>
+
   </data>
 </odoo>

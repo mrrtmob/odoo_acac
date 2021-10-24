@@ -11,8 +11,10 @@ class ReportRecipeDetail(models.AbstractModel):
         custom_data = {
             'custom_field': data['custom_field'],
             'custom_number_of_portion': data['number_of_portion'],
-            'custom_makes': data['makes']
+            'custom_makes': data['makes'],
+            'print_with_sub': data['print_with_sub']
         }
+        print(custom_data)
 
         return {
             'doc_ids': docids,

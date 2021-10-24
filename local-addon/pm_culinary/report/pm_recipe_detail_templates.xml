@@ -2,17 +2,25 @@
 <odoo>
   <template id="report_recipe_detail_template_document">
     <t t-call="web.external_layout">
-      <style>
-        .o_report_layout_background {
-          background: none !important;
-        }
-      </style>
+
 
       <t t-if="custom_data['custom_field'] == 'number_of_portion'" t-set="diff" t-value="custom_data['custom_number_of_portion'] / o.number_of_portion" />
       <t t-elif="custom_data['custom_field'] == 'makes'" t-set="diff" t-value="custom_data['custom_makes'] / o.makes" />
       <t t-else="" t-set="diff" t-value="1" />
 
       <div class="page">
+           <style>
+          .o_report_layout_background {
+            background: none !important;
+          }
+          .sub-recipe-text span {
+             text-decoration: underline;
+             font-style: italic;
+             color:#AE4040;
+          }
+
+
+      </style>
         <div class="oe_structure" />
 
         <div class="row">
@@ -32,64 +40,98 @@
         <hr />
 
         <div class="row">
-          <t t-if="o.is_sub_recipe">
             <div class="col-3">
-              <strong>Makes</strong><br/>
-
-              <t t-set="makes" t-value="o.makes * diff" />
-              <span t-esc="makes" /><span t-field="o.uor" />
+              <strong>Category</strong><br/>
+                <t t-if="o.category_id">
+                    <span t-field="o.category_id.name" />
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
             </div>
-          </t>
 
-          <t t-if="o.type">
-            <div class="col-3">
-              <strong>Type</strong><br/>
-              <span t-field="o.type" />
-            </div>
-          </t>
+          <div class="col-3">
+            <strong>Date of Test</strong><br/>
+              <t t-if="o.date_of_test">
+                    <span t-field="o.date_of_test" />
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
+          </div>
 
-          <t t-if="o.cuisine">
-            <div class="col-3">
-              <strong>Cuisine</strong><br/>
-              <span t-field="o.cuisine" />
-            </div>
-          </t>
+          <div class="col-3">
+            <strong>Total EP</strong><br/>
+                <t t-if="o.makes">
+                      <t t-set="makes" t-value="o.makes * diff" />
+                     <span t-esc="makes" /><span t-field="o.uor" />
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
 
-          <t t-if="o.date_of_test">
-            <div class="col-3">
-              <strong>Date of Test</strong><br/>
-              <span t-field="o.date_of_test" />
-            </div>
-          </t>
-        </div>
+          </div>
 
+          <div class="col-3">
+            <strong>Yield</strong><br/>
+             <t t-if="o.number_of_portion">
+                      <t t-set="number_of_portion" t-value="o.number_of_portion * diff" />
+                      <span t-esc="number_of_portion" /> Portion(s)
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
+          </div>
+           </div>
         <br />
 
         <div class="row">
-          <div class="col-3">
-            <strong>Yield</strong><br/>
 
-            <t t-set="number_of_portion" t-value="o.number_of_portion * diff" />
-            <span t-esc="number_of_portion" /> Portion(s)
-          </div>
-
-          <div class="col-3">
-            <strong>Total Cost</strong><br/>
-
-            <t t-set="cost" t-value="o.cost * diff" />
-            <span t-esc="cost" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
-          </div>
 
           <div class="col-3">
             <strong>Cost (%)</strong><br/>
-            <span t-field="o.cost_in_percentage" />&#37;
+                <t t-if="o.cost_in_percentage">
+                      <span t-field="o.cost_in_percentage" />&#37;
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
           </div>
 
           <div class="col-3">
             <strong>Selling Price</strong><br/>
 
-            <t t-set="price" t-value="o.price * diff" />
-            <span t-esc="price" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+               <t t-if="o.price">
+                 <t t-set="price" t-value="o.price * diff" />
+                    <span t-esc="price" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
+
+
+          </div>
+
+            <div class="col-3">
+            <strong>Total AP</strong><br/>
+                <t t-if="o.makes">
+                      <t t-set="makes_ap" t-value="o.makes_ap * diff" />
+                     <span t-esc="makes_ap" /><span t-field="o.uor" />
+                </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
+          </div>
+
+          <div class="col-3">
+            <strong>Cost per Unit</strong><br/>
+             <t t-if="o.cost_per_uor">
+                   <t t-set="price" t-value="o.cost_per_uor * diff" />
+                    <span t-esc="price" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                     </t>
+              <t t-else="">
+                <span>N/A</span>
+               </t>
           </div>
         </div>
 
@@ -102,14 +144,15 @@
               <h4>Ingredients and Preparation Instructions</h4>
             </div>
           </div>
-
+          <br/>
           <div class="row">
             <div class="col-12">
               <table class="table table-sm table-bordered">
                 <thead>
                   <tr>
                     <th>Ingredient</th>
-                    <th>Qty</th>
+                    <th>EP</th>
+                    <th>AP</th>
                     <th>Cost</th>
                   </tr>
                 </thead>
@@ -133,102 +176,39 @@
                         </td>
 
                         <td>
+                          <t t-set="recipe_line_ingredient_ap" t-value="round(recipe_line_ingredient.as_purchased * diff, 3)" />
+                          <span t-esc="recipe_line_ingredient_ap" /><span t-field="recipe_line_ingredient.uor" />
+                        </td>
+
+                        <td>
                           <t t-set="recipe_line_ingredient_cost" t-value="recipe_line_ingredient.cost * diff" />
                           <span t-esc="recipe_line_ingredient_cost" t-options='{"widget": "monetary", "display_currency": recipe_line_ingredient.currency_id}' />
                         </td>
                       </t>
                     </tr>
                   </t>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </t>
-
-        <t t-if="o.sub_recipes">
-          <hr />
-
-          <div class="row">
-            <div class="col-12">
-              <h4>Sub-Recipes</h4>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-12">
-              <t t-foreach="o.sub_recipes" t-as="recipe_line_sub_recipe">
-                <div class="row">
-                  <div class="col-3">
-                    <strong>Name</strong><br/>
-                    <span t-field="recipe_line_sub_recipe.sub_recipe_id" />
-                  </div>
-
-                  <div class="col-3">
-                    <strong>Qty</strong><br/>
-
-                    <t t-set="recipe_line_sub_recipe_quantity" t-value="recipe_line_sub_recipe.quantity * diff" />
-                    <span t-esc="recipe_line_sub_recipe_quantity" />&#37;
-                  </div>
-
-                  <div class="col-3">
-                    <strong>Needed Makes</strong><br/>
-
-                    <t t-set="recipe_line_sub_recipe_sub_recipe_needed_makes" t-value="recipe_line_sub_recipe.sub_recipe_needed_makes * diff" />
-                    <span t-esc="recipe_line_sub_recipe_sub_recipe_needed_makes" /><span t-field="recipe_line_sub_recipe.sub_recipe_uor" />
-                  </div>
-
-                  <div class="col-3">
-                    <strong>Cost</strong><br/>
-
-                    <t t-set="recipe_line_sub_recipe_cost" t-value="recipe_line_sub_recipe.cost * diff" />
-                    <span t-esc="recipe_line_sub_recipe_cost" t-options='{"widget": "monetary", "display_currency": recipe_line_sub_recipe.currency_id}' />
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-12">
-                    <table class="table table-sm table-bordered">
-                      <thead>
-                        <tr>
-                          <th>Ingredient</th>
-                          <th>Category</th>
-                          <th>Qty</th>
-                          <th>Cost</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <t t-foreach="recipe_line_sub_recipe.sub_recipe_ingredients" t-as="sub_recipe_ingredient">
-                          <tr>
-                            <t t-if="sub_recipe_ingredient.display_type">
-                              <td colspan="4">
-                                <b t-field="sub_recipe_ingredient.name" />
-                              </td>
-                            </t>
-
-                            <t t-else="">
-                              <t t-set="sub_recipe_ingredient_qty" t-value="(sub_recipe_ingredient.quantity * recipe_line_sub_recipe.quantity / 100) * diff" />
-                              <t t-set="sub_recipe_ingredient_cost" t-value="(sub_recipe_ingredient.cost * recipe_line_sub_recipe.quantity / 100) * diff" />
-
-                              <td>
-                                <span t-field="sub_recipe_ingredient.product_id" />
-                              </td>
-                              <td>
-                                <span t-field="sub_recipe_ingredient.ingredient_categ_id" />
-                              </td>
-                              <td>
-                                <span t-esc="sub_recipe_ingredient_qty" /><span t-field="sub_recipe_ingredient.uor" />
-                              </td>
-                              <td>
-                                <span t-esc="sub_recipe_ingredient_cost" t-options='{"widget": "monetary", "display_currency": sub_recipe_ingredient.currency_id}' />
-                              </td>
-                            </t>
+                  <t t-if="custom_data['print_with_sub']">
+                   <t t-if="o.sub_recipes">
+                    <t t-foreach="o.sub_recipes" t-as="sub_recipe">
+                        <tr class="sub-recipe-text">
+                            <td t-attf-style="font-style:italic;">
+                             <span t-field="sub_recipe.sub_recipe_id.name" t-attf-style="font-style:italic;" />
+                            </td>
+                            <td>
+                              <span t-esc="sub_recipe.quantity"/><span t-field="sub_recipe.sub_recipe_uor" />
+                            </td>
+                            <td>
+                              <span t-esc="sub_recipe.quantity"/><span t-field="sub_recipe.sub_recipe_uor" />
+                            </td>
+                            <td>
+                              <span t-esc="sub_recipe.cost" t-options='{"widget": "monetary", "display_currency": sub_recipe.currency_id}'/>
+                            </td>
                           </tr>
                         </t>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </t>
+                    </t>
+                  </t>
+                </tbody>
+              </table>
             </div>
           </div>
         </t>
@@ -255,12 +235,39 @@
           </div>
         </t>
 
+        <t t-if="o.nutrition and o.nutrition != '&lt;p&gt;&lt;br&gt;&lt;/p&gt;'">
+          <hr />
+
+          <div class="row">
+            <div class="col-12">
+              <h4>Nutrition</h4>
+              <p t-field="o.nutrition" />
+            </div>
+          </div>
+        </t>
+
+        <t t-if="o.allergic and o.allergic != '&lt;p&gt;&lt;br&gt;&lt;/p&gt;'">
+          <hr />
+
+          <div class="row">
+            <div class="col-12">
+              <h4>Allergic</h4>
+              <p t-field="o.allergic" />
+            </div>
+          </div>
+        </t>
+
         <div class="oe_structure"/>
       </div>
     </t>
   </template>
 
   <template id="report_recipe_detail_template">
+    <style>
+        .sub-recipe-text td span {
+          font-style:italic;
+        }
+      </style>
     <t t-call="web.html_container">
       <t t-foreach="docs" t-as="o">
         <t t-call="pm_culinary.report_recipe_detail_template_document" />

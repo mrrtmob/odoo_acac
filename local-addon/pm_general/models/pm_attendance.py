@@ -2,6 +2,13 @@ from odoo.exceptions import ValidationError
 from odoo import models, fields,api
 from datetime import datetime
 
+_DAY = [('0', 'Monday'),
+        ('1', 'Tuesday'),
+        ('2', 'Wednesday '),
+        ('3', 'Thursday'),
+        ('4', 'Friday '),
+        ('5', 'Saturday'),
+        ('6', 'Sunday ')]
 
 class PmSemesterAttendance(models.Model):
     _name = "pm.semester.attendance"
@@ -101,13 +108,14 @@ class PmSemesterAttendance(models.Model):
 
 class PmSubjectTotalAbsence(models.Model):
     _name = "pm.subject.total.absence"
+    _rec_name = "student_id"
     _description = "Subject Total Absense"
     subject_attendance_ids = fields.One2many(
         'pm.subject.attendance', 'subject_total_absent_id', 'Subject Absence(s)')
     student_id = fields.Many2one('op.student', 'Student')
     subject_id = fields.Many2one('op.subject', 'Subject')
     total_absent_percent = fields.Float('Absence Percentage', compute='_compute_total_percent', store=True, readonly=True, default=0)
-    total_absent_hour = fields.Float('Absence Hours', compute='_compute_total_hour', store=True, readonly=True, default=0)
+    total_absent_hour = fields.Float('Absence Hours', compute='_compute_total_hour', store=True, readonly=False, default=0)
     semester_attendance_id = fields.Many2one('pm.semester.attendance', 'Semester Absence')
     state = fields.Selection(
         [('default', 'Default Absence'),
@@ -118,13 +126,27 @@ class PmSubjectTotalAbsence(models.Model):
     no_permission_absencse = fields.Integer('Absence Without Permission', compute='_compute_no_permission_absencse',
                                             store=True)
 
+    @api.model
+    def create(self, vals):
+
+        semester_order = self.env['op.subject'].browse(vals['subject_id']).semester
+        domain = [('student_id', '=', vals['student_id']), ('semester_id.semester_order', '=', semester_order)]
+        semester_attendance = self.env['pm.semester.attendance'].search(domain)
+        vals['semester_attendance_id'] = semester_attendance.id
+        res = super(PmSubjectTotalAbsence, self).create(vals)
+
+        print(":D")
+        print(vals)
+        return res
+
+
     @api.depends('subject_attendance_ids.missing_hours')
     def _compute_no_permission_absencse(self):
         print('hit gogo')
         for record in self:
             count = 0
             for line in record.subject_attendance_ids.attendance_line:
-                if not line.present and not line.excused and not line.remark:
+                if line.absent:
                     count += 1
             record.no_permission_absencse = count
 
@@ -145,35 +167,19 @@ class PmSubjectTotalAbsence(models.Model):
             subject_type = record.subject_id.type
             absent_percentage = total_absent_hours / total_subject_hours * 100
             record.total_absent_percent = absent_percentage
-
             if subject_type == 'practical':
                 first_warning = 5
                 dismissed = 10
             else:
                 first_warning = 15
                 dismissed = 25
-
             if absent_percentage > 0 and absent_percentage < first_warning:
                 record.state = 'okay'
 
             if absent_percentage >= first_warning:
-                template_id = 46
-                print('sending first warning....')
                 record.state = 'first_warning'
-                # self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
-
-            if absent_percentage >= first_warning:
-                template_id = 46
-                print('sending first warning....')
-                record.state = 'first_warning'
-                # self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
-
             elif absent_percentage >= dismissed:
-                template_id = 46
-                print('sending dismissed letter....')
                 record.state = 'dismissed'
-                record.student_id.education_status = 'dismissed'
-                # self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
 
 class PmSubjectAttendance(models.Model):
     _name = "pm.subject.attendance"
@@ -206,9 +212,18 @@ class OpAttendanceRegister(models.Model):
 
 class OpAttendanceSheetCustom(models.Model):
     _inherit = "op.attendance.sheet"
-    classroom_id = fields.Many2one('op.classroom', related='session_id.classroom_id', store=True)
+    class_ids = fields.Many2many('op.classroom', store=True, compute='on_change_session')
     sheet_start_time = fields.Datetime('Session Start Time')
     faculty_id = fields.Many2one('op.faculty', 'Faculty', related='session_id.faculty_id', store=True)
+
+    @api.depends('session_id')
+    def on_change_session(self):
+        print("Woff")
+        self.write({
+            'class_ids': [[6, 0, self.session_id.class_ids.ids]]
+        })
+
+
 
     def attendance_start(self):
         self.sheet_start_time = datetime.now()
@@ -274,7 +289,6 @@ class OpAttendanceLineCustom(models.Model):
     student_id = fields.Many2one(
         'op.student',
         'Student',
-        domain="[('active_class.id', '=', 'attendance_id.session_id.classroom_id.id')]",
         required=True,
         track_visibility="onchange")
 
@@ -282,6 +296,9 @@ class OpAttendanceLineCustom(models.Model):
         'op.batch', 'Term',
         related='attendance_id.register_id.batch_id', store=True,
         readonly=True)
+
+    class_ids = fields.Many2many('op.classroom', store=True)
+
     semester_id = fields.Many2one('pm.semester', 'Semester', related='attendance_id.register_id.semester_id',
                                   store=True, readonly=True)
     subject_attendance_id = fields.Many2one('pm.subject.attendance', 'Subject Attendance', required=False)
@@ -295,15 +312,15 @@ class OpAttendanceLineCustom(models.Model):
             item = val
             print(item)
             if 'check_in' in item:
-                start_time = self.env['op.attendance.sheet'].browse(item['attendance_id']).sheet_start_time
+                start_time = self.env['op.attendance.sheet'].browse(item['attendance_id']).session_id.start_datetime
                 print(start_time)
                 late = item['check_in'] - start_time
                 seconds = late.total_seconds()
                 minutes = (seconds % 3600) // 60
                 print(minutes)
-                if minutes >= 1:
+                if minutes >= 5:
                     val['present'] = False
-                    val['is_late'] = True
+                    val['late'] = True
                     val['late_duration'] = minutes
                 print('I checked at', item['check_in'])
             else:
@@ -311,7 +328,8 @@ class OpAttendanceLineCustom(models.Model):
                     print('I am absent', item['student_id'])
                 else:
                     print('I am Present', item['student_id'])
-
+        print("XDXD")
+        print(val)
         res = super(OpAttendanceLineCustom, self).create(val)
         return res
 
@@ -330,7 +348,9 @@ class OpSessionCustom(models.Model):
     _inherit = "op.session"
     semester_id = fields.Many2one('pm.semester', 'Semester', required=True)
     day_sequence = fields.Integer()
+    class_ids = fields.Many2many('op.classroom')
     meeting_id = fields.Many2one('calendar.event', string='Meeting', copy=False)
+    type = fields.Selection(_DAY, compute='_compute_day', string='Day', store=True)
 
     def lecture_confirm(self):
         print("confirm")
@@ -366,9 +386,7 @@ class OpSessionCustom(models.Model):
     @api.depends('start_datetime')
     def _compute_day(self):
         for record in self:
-            record.type = fields.Datetime.from_string(
-                record.start_datetime).strftime("%A")
-            print(record.start_datetime.weekday())
-            record.day_sequence = record.start_datetime.weekday()
+            record.type = str(record.start_datetime.weekday())
+            # record.day_sequence =
 
 

@@ -2,7 +2,7 @@
 ###############################################################################
 #
 #    Tech-Receptives Solutions Pvt. Ltd.
-#    Copyright (C) 2009-TODAY Tech-Receptives(<http://www.techreceptives.com>).
+#    Copyright (C) 2009-TODAY Tech-Receptives(<http://www.techreceptives.com>).get_birth_place
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Lesser General Public License as
@@ -46,7 +46,7 @@ class StudentTranscriptReport(models.AbstractModel):
     def get_student_bod(self, data): 
         student = self.env['op.student'].browse(data['student_id'])
         if student:
-            return student.birth_date.strftime('%d/%m/%Y')
+            return student.birth_date.strftime('%d/%b/%Y')
 
     def get_birth_place(self, data):
         student = self.env['op.student'].browse(data['student_id']) 
@@ -69,6 +69,7 @@ class StudentTranscriptReport(models.AbstractModel):
         lst = []
         gpa = 0
         absence = 0
+        semester_average =0
         # get student course
 
         student_courses = self.env['op.student.course'].search([('course_id', '=', data['course_id']),
@@ -86,10 +87,9 @@ class StudentTranscriptReport(models.AbstractModel):
         for sc in student_courses:
             ex_subjects.append(sc.p_e_subject_ids)
 
-        print(ex_subjects)
+        semesters = self.env['pm.semester'].search([('batch_id', '=', data['batch_id'])])
+        total_course_credit = sum(x.total_credit for x in semesters)
         if data['is_final']:
-            semesters = self.env['pm.semester'].search([('batch_id', '=', data['batch_id'])])
-            total_course_credit = sum(x.total_credit for x in semesters)
             wiegh_average_gpa = 0
             ex_count = 0
             gpa = 0
@@ -111,20 +111,24 @@ class StudentTranscriptReport(models.AbstractModel):
                 semester_credit = res.semester_id.total_credit
                 wiegh_average_gpa += res.gpa * semester_credit
                 for srl in res.semester_res_line:
+                    result = srl.total_score
                     if srl.exam_state != 'covered':
                         subject = srl.subject_id
                         grade = ''
                         if subject in ex_subjects:
                             grade = 'E'
+                            result = 'E'
                             ex_count += 1
                         else:
                             grade = srl.grade
+                            result = srl.total_score
                         sub_count += 1
                         dic = {
                             'code': subject.code,
                             'name': subject.name,
                             'credits': subject.p_credits,
-                            'grade': grade
+                            'grade': grade,
+                            'score': result
                         }
                         lst.append(dic)
 
@@ -143,10 +147,11 @@ class StudentTranscriptReport(models.AbstractModel):
                     'code': pl.subject_id.code,
                     'name': pl.subject_id.name,
                     'credits': pl.subject_id.p_credits,
-                    'grade': grade
+                    'score': grade
                 }
                 lst.append(dic)
             gpa = round(wiegh_average_gpa / total_course_credit, 1)
+
 
         # Transcript for one semester
         else:
@@ -179,7 +184,7 @@ class StudentTranscriptReport(models.AbstractModel):
                         'code': pl.subject_id.code,
                         'name': pl.subject_id.name,
                         'credits': pl.subject_id.p_credits,
-                        'grade': grade
+                        'score': grade,
                     }
 
                     lst.append(dic)
@@ -188,26 +193,29 @@ class StudentTranscriptReport(models.AbstractModel):
                 ex_count = 0
                 sub_count = 0
                 for res in student_results:
-                    print('1', res.semester_id.id)
-                    print('2', data['semester_id'])
                     if res.semester_id.id == data['semester_id']:
+                        semester_average = res.result
                         print('hit coni')
                         gpa = res.gpa
                         for srl in res.semester_res_line:
+                            result = srl.total_score
                             if srl.exam_state != 'covered':
                                 subject = srl.subject_id
                                 grade = ''
                                 if subject in ex_subjects:
                                     grade = 'E'
+                                    result = 'E'
                                     ex_count += 1
                                 else:
                                     grade = srl.grade
+                                    result = srl.total_score
                                 sub_count += 1
                                 dic = {
                                     'code': subject.code,
                                     'name': subject.name,
                                     'credits': subject.p_credits,
-                                    'grade': grade
+                                    'grade': grade,
+                                    'score': result
                                 }
                                 lst.append(dic)
                             else:
@@ -216,6 +224,8 @@ class StudentTranscriptReport(models.AbstractModel):
         return [{'subjects': lst,
                  'absence': absence,
                 'gpa': gpa,
+                'semester_average': semester_average,
+                'total_course_credit': total_course_credit,
                 'discipline_points': discipline_points,
                 'total_credit': total_course_credit}]
        

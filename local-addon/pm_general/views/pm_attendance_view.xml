@@ -6,20 +6,24 @@
             <field name="model">op.attendance.sheet</field>
             <field name="inherit_id" ref="openeducat_attendance.view_op_attendance_sheet_form"/>
              <field name="arch" type="xml">
+
+                 <xpath expr="//header" position="inside">
+                       <button type="action" name="%(act_open_op_attendance_import_view)d"
+                                string="Attendance Sheet Import" class="oe_highlight"/>
+                </xpath>
+
                  <xpath expr="//field[@name='attendance_date']" position="after">
-                     <field name="classroom_id" />
+                       <field name="class_ids" string="Class (s)" widget="many2many_tags"/>
                  </xpath>
                  <xpath expr="//field[@name='attendance_line']" position="replace">
                        <field name="attendance_line" colspan="4" nolabel="1">
                             <tree string="Attendance Line" editable="top">
-<!--                                tem: error class_id-->
-<!--                                <field name="student_id"-->
-<!--                                       domain="[('course_detail_ids.class_id','=',parent.classroom_id)]"/>-->
+                                <field name="student_id" domain= "[('course_detail_ids.class_ids', 'in', class_ids)]"/>
                                 <field name="present"/>
                                 <field name="excused"/>
-                                <field name="is_late"/>
+                                <field name="absent"/>
+                                <field name="late"/>
                                 <field name="late_duration"/>
-                                <field name="remark"/>
                             </tree>
                         </field>
                     </xpath>
@@ -31,9 +35,13 @@
             <field name="inherit_id" ref="openeducat_timetable.view_op_session_form"/>
              <field name="arch" type="xml">
 
-                 <xpath expr="//field[@name='classroom_id']" position="attributes">
-                     <attribute name="string">Class</attribute>
+
+                 <xpath expr="//field[@name='classroom_id']" position="replace">
+                      <field name="class_ids" string="Class (s)" widget="many2many_tags"/>
                 </xpath>
+
+
+
 
 
                  <xpath expr="//field[@name='batch_id']" position="after">
@@ -41,6 +49,17 @@
                 </xpath>
                  <xpath expr="//field[@name='subject_id']" position="replace">
                       <field name="subject_id"  context="{'semester_id': semester_id,'get_parent_subject':1}"/>
+                </xpath>
+             </field>
+        </record>
+
+         <record id="view_op_attendance_session_tree_custom" model="ir.ui.view">
+            <field name="name">op.session.tree.custom</field>
+            <field name="model">op.session</field>
+            <field name="inherit_id" ref="openeducat_timetable.view_op_session_tree"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//field[@name='classroom_id']" position="replace">
+                      <field name="class_ids" string="Class (s)" widget="many2many_tags"/>
                 </xpath>
              </field>
         </record>
@@ -114,6 +133,8 @@
                 </field>
             </record>
 
+
+
          <record id="op_student_attendance_tree" model="ir.ui.view">
             <field name="name">pm.student.attendance.tree</field>
             <field name="model">pm.semester.attendance</field>
@@ -128,6 +149,55 @@
                 </tree>
             </field>
         </record>
+
+          <record id="view_pm_student_attendance_search" model="ir.ui.view">
+             <field name="name">pm.subject.total.absence.search</field>
+            <field name="model">pm.subject.total.absence</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search>
+                   <group expand="1" string="Group By">
+                    <filter name="group_by_subject" string="Subjects"
+                            domain="[]" context="{'group_by':'subject_id'}"/>
+                    <filter name="group_by_student" string="Students"
+                            domain="[]" context="{'group_by':'student_id'}"/>
+
+                </group>
+                </search>
+            </field>
+        </record>
+
+         <record id="student_subject_attendance_tree" model="ir.ui.view">
+            <field name="name">pm.subject.total.absence.tree</field>
+            <field name="model">pm.subject.total.absence</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Subject Attendance" multi_edit="1"  decoration-danger="state=='dismissed'" decoration-primary="state=='first_warning'" decoration-warning="state=='second'">
+                    <field name="student_id"/>
+                    <field name="subject_id"/>
+                    <field name="total_absent_hour"/>
+                    <field name="total_absent_percent" widget="progressbar"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="act_open_student_attendance">
+            <field name="name">Subject Attendances</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.subject.total.absence</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+           <field name="search_view_id" ref="view_pm_student_attendance_search"/>
+            <field name="context">{"search_default_group_by_student":1}</field>
+            <field name="domain">[]</field>
+        </record>
+
+          <menuitem id="pm_student_attendance_menu"
+            name="Subject Attendance"
+            parent="openeducat_attendance_enterprise.menu_op_attendance_analysis_reporting"
+            action="act_open_student_attendance"
+            sequence="5"/>
 
     </data>
 </odoo>

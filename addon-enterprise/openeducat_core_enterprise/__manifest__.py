@@ -45,10 +45,6 @@
         'views/subject_registration_analysis.xml',
         'menu/course_menu.xml'
     ],
-    'demo': [
-        'demo/student_badge_demo.xml',
-        'demo/course_subject_demo.xml',
-    ],
     'css': [],
     'qweb': [
         'static/src/xml/custom.xml'

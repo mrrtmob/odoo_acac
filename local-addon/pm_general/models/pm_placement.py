@@ -6,6 +6,7 @@ class OpPlacementOffer(models.Model):
     p_address = fields.Text('Address')
     p_city = fields.Char('City', size=64)
     p_zip = fields.Char('Zip', size=8)
+    training_period = fields.Char(default=None)
     p_state_id = fields.Many2one(
         'res.country.state', 'States')
     p_country_id = fields.Many2one(
@@ -23,8 +24,9 @@ class OpPlacementOffer(models.Model):
     p_portfolio = fields.Float('Portfolio Score')
     p_status = fields.Selection( [('in_progress', 'In Progress'), 
         ('passed', 'Passed'),
+        ('i', 'Incomplete'),
         ('failed', 'Failed')],
-        'Status',  compute='_compute_get_student_status', store=True , track_visibility='onchange')
+        'Status', store=True , track_visibility='onchange')
     p_grade = fields.Float("Grade (%)")
     course_id = fields.Many2one('op.course', 'Course', required=True)
     batch_id = fields.Many2one(
@@ -33,6 +35,11 @@ class OpPlacementOffer(models.Model):
     subject_id = fields.Many2one('op.subject', 'Subject', required=True)
     gpa = fields.Float('GPA', readonly=True, digits=(12, 1), compute='_compute_gpa', store=True)
     color = fields.Integer(string='Color Index', default=0, compute="_compute_result_color")
+    benefit = fields.Text("Benefits")
+    contact_one_email = fields.Char(related="p_contact1.email")
+    contact_one_mobile = fields.Char(related="p_contact1.mobile")
+    contact_two_email = fields.Char(related="p_contact2.email")
+    contact_two_mobile = fields.Char(related="p_contact2.mobile")
 
     @api.depends('p_status')
     def _compute_result_color(self):

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="poratl_menu_culinary" model="openeducat.portal.menu">
+        <field name="name">Culinary</field>
+        <field name="active">0</field>
+        <field name="link">/student/culinary/</field>
+        <field name="active">True</field>
+        <field name="sequence" type="int">30</field>
+        <field name="background_color">#08448c</field>
+        <field name="icon_image" type="base64"
+               file="pm_culinary/static/img/icon.jpg"/>
+    </record>
+</odoo>

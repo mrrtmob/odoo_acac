@@ -19,6 +19,23 @@
         </xpath>
     </template>
 
+
+    <record id="crm_custom_course_form" model="ir.ui.view">
+        <field name="name">view_op_course_form_inherit</field>
+        <field name="model">op.course</field>
+        <field name="inherit_id" ref="openeducat_core.view_op_course_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']/button[@name='348']" position="after">
+                    <button class="btn oe_stat_button" type="object" name="get_leads" style="border-right: 1px solid;" icon="fa-users">
+                        <field string="Leads" name="lead_count" widget="statinfo"/>
+                    </button>
+            </xpath>
+
+        </field>
+    </record>
+
+
     <record id="crm_lead_view_form" model="ir.ui.view">
         <field name="name">crm.lead.view.form.inherit.pm.lead</field>
         <field name="model">crm.lead</field>
@@ -113,6 +130,7 @@
                     <field name="last_name" string="Family Name"/>
                     <field name="khmer_name"/>
                     <field name="dob"/>
+                    <field name="birth_place"/>
                     <field name="gender"/>
 <!--                    <field name="user_id" placeholder="User" readonly="1"/>-->
                 </xpath>
@@ -192,8 +210,8 @@
                         <field name="schooling_year" />
                         <field name="high_school_id" />
                         <field name="highest_education"/>
+                        <field name="desired_course_id"/>
                         <field name="intake"/>
-                        <field name="desired_course"/>
                         <field name="lead_educational_achievement">
                             <tree class="exp_tree" editable="top">
                                 <field name="name" />
@@ -348,10 +366,10 @@
 
     <record id="lost_reason_view" model="ir.ui.view">
         <field name="name">lead.reason.view</field>
-        <field name="model">crm.lead</field>
+        <field name="model">crm.lead.lost</field>
         <field name="arch" type="xml">
-            <graph string="Lost Reason" type="bar">
-                <field name="lost_reason"/>
+            <graph string="Lost Reasons" type="bar">
+                <field name="lost_reason_id"/>
             </graph>
         </field>
     </record>
@@ -397,7 +415,7 @@
         <field name="name">crm.opportunity.report.graph.lead</field>
         <field name="model">crm.lead</field>
         <field name="arch" type="xml">
-            <graph string="Leads Analysis" stacked="true">
+            <graph string="Leads Analysis" type="line">
                 <field name="create_date" interval="month" type="col" />
             </graph>
         </field>
@@ -443,6 +461,20 @@
         </tree>
       </field>
     </record>
+
+  <menuitem
+      name="Courses"
+      id="pm_menu_lead_course"
+      action="openeducat_core.act_open_op_course_view"
+      parent="crm.crm_menu_config"
+      sequence="4"/>
+
+
+
+    <record id="sale.portal_my_home_sale" model="ir.ui.view">
+      <field name="active">0</field>
+    </record>
+
 
 
 </data></odoo>
