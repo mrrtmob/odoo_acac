@@ -83,37 +83,6 @@ class PmSemester(models.Model):
     def action_draft(self):
         self.write({'state': 'pending'})
 
-    def student_reminder_scheduler(self):
-        print("Hit Function")
-        all_course_search = self.env['op.student.course'].sudo().search(
-            [('education_status', '=', 'postponed'),
-             ('is_reminded', '=', False),
-             ('return_date', '!=', None)])
-
-        today = fields.Date.today()
-        print(all_course_search)
-
-        for course in all_course_search:
-            print(today)
-            print(course.reminding_date)
-            if today == course.return_date or today == course.reminding_date:
-                student = course.student_id
-
-                print("Student", student.name)
-                ir_model_data = self.env['ir.model.data']
-                try:
-                    template_id = ir_model_data.get_object_reference('pm_leads', 'student_follow_up_reminder')[1]
-                except ValueError:
-                    template_id = False
-                self.env['mail.template'].browse(template_id).send_mail(student.id, force_send=True)
-                if today == course.return_date:
-                    print('TODAY!!')
-                    course.is_reminded = True
-
-
-
-
-
 
     def _compute_semester_dashboard_data(self):
         for semester in self:
