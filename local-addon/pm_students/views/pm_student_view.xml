@@ -22,7 +22,7 @@
 
        <record id="ir_cron_student_reminder_action" model="ir.cron">
             <field name="name">Student Postponed Reminder</field>
-            <field name="model_id" ref="model_op_student"/>
+            <field name="model_id" ref="model_op_student_course"/>
             <field name="state">code</field>
             <field name="code">model.student_reminder_scheduler()</field>
             <field name="user_id" ref="base.user_root"/>

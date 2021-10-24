@@ -20,7 +20,6 @@ class PMStudentProgression(models.Model):
     education_status = fields.Selection([('active', 'Active'),
                                          ('return', 'Returned'),
                                          ('enrollment', 'Enrollment'),
-                                         ('retake', 'Retake'),
                                          ('postponed', 'Postponed'),
                                          ('withdrawn', 'Withdrawn'),
                                          ('graduated', 'Graduated'),
@@ -64,6 +63,32 @@ class OpStudentCourse(models.Model):
     reminding_date = fields.Date(compute="_compute_remind_date", store=True)
     is_reminded = fields.Boolean()
     starting_semester_id = fields.Many2one('pm.semester', 'Starting Semester')
+
+    def student_reminder_scheduler(self):
+        print("Hit Function")
+        all_course_search = self.env['op.student.course'].sudo().search(
+            [('education_status', '=', 'postponed'),
+             ('is_reminded', '!=', True),
+             ('return_date', '!=', None)])
+
+        today = fields.Date.today()
+        print(all_course_search)
+        for course in all_course_search:
+            print(today)
+            print(course.reminding_date)
+            if today == course.return_date or today == course.reminding_date:
+                student = course.student_id
+
+                print("Student", student.name)
+                ir_model_data = self.env['ir.model.data']
+                try:
+                    template_id = ir_model_data.get_object_reference('pm_leads', 'student_follow_up_reminder')[1]
+                except ValueError:
+                    template_id = False
+                self.env['mail.template'].browse(template_id).send_mail(course.id, force_send=True)
+                if today == course.return_date:
+                    print('TODAY!!')
+                    course.is_reminded = True
 
     @api.onchange('p_e_subject_ids')
     def onChangeExemptedSubjects(self):
@@ -165,11 +190,6 @@ class StudentPaymentInstallment(models.Model):
 class OpStudent(models.Model):
     _inherit = 'op.student'
     fill_application = fields.Boolean('Fill Application')
-    installment_ids = fields.One2many(comodel_name='pm.student.installment',
-                                       string="Installments",
-                                       inverse_name="student_id")
-    payment_option = fields.Selection([('normal', 'Normal'),
-                                        ('installment', 'Installment')], default='normal')
     marital_status = fields.Selection([('single', 'Single'),
                                        ('married', 'Married')])
     constrains = fields.Text('Special Wishes')
@@ -456,31 +476,94 @@ class OpStudent(models.Model):
 
         return {'start_month':start_month, 'end_month':end_month}
 
-    def student_reminder_scheduler(self):
-        print("Hit Function")
-        all_course_search = self.env['op.student.course'].sudo().search(
-            [('education_status', '=', 'postponed'),
-             ('is_reminded', '=', False),
-             ('return_date', '!=', None)])
+    def generate_student_payment(self):
+        for student in self:
+            print("YO")
+            fee_obj = self.env['pm.student.fee']
+            fee_line_obj = self.env['pm.student.fee.line']
+            paid = {}
+            invoiced = {}
+            month = 8
+            month_name = calendar.month_abbr[month]
+            get_month = self.get_months(month)
+            start_month = get_month['start_month']
+            end_month = get_month['end_month']
+            for month_idx in range(1, 13):
+                print(calendar.month_abbr[month_idx])
+                paid[calendar.month_abbr[month_idx]] = []
+                invoiced[calendar.month_abbr[month_idx]] = []
 
-        today = fields.Date.today()
-        print(all_course_search)
-        for course in all_course_search:
-            print(today)
-            print(course.reminding_date)
-            if today == course.return_date or today == course.reminding_date:
-                student = course.student_id
+            student_invoices = self.env['account.move'].search([('partner_id', '=', student.partner_id.id)])
 
-                print("Student", student.name)
-                ir_model_data = self.env['ir.model.data']
-                try:
-                    template_id = ir_model_data.get_object_reference('pm_leads', 'student_follow_up_reminder')[1]
-                except ValueError:
-                    template_id = False
-                self.env['mail.template'].browse(template_id).send_mail(student.id, force_send=True)
-                if today == course.return_date:
-                    print('TODAY!!')
-                    course.is_reminded = True
+            for inv in student_invoices:
+                month = inv.create_date.month
+                created_month = calendar.month_abbr[month]
+                # inv_lines = inv.invoice_line_ids
+                inv_lines = self.env['account.move.line'].search([('move_id', '=', inv.id), ('product_id', '!=', False)])
+                payment_state = inv.payment_state
+                pay_date = False;
+                print("*********name**********'")
+                print(inv.name)
+                print("*********Lines**********'")
+                print(inv_lines)
+                if payment_state == 'paid':
+                    for partial, amount, counterpart_line in inv._get_reconciled_invoices_partials():
+                        pay_date = counterpart_line.date
+                        print(pay_date)
+                for line in inv_lines:
+                    student_fee = fee_obj.search([('student_id', '=', student.id),
+                                                 ('product_id', '=', line.product_id.id)])
+                    print(inv.name)
+                    if not student_fee:
+                        print("***************")
+                        print(line.product_id.name)
+                        print(line.product_id.id)
+                        student_fee = fee_obj.create({
+                            'student_id': student.id,
+                            'product_id': line.product_id.id
+                        })
+
+                    existing_fee_lines = fee_line_obj.search([('student_fee_id', '=', student_fee.id),
+                                                              ('invoice_id', '=', inv.id)])
+                    if existing_fee_lines:
+                        existing_fee_lines.unlink()
+
+                    val = {
+                        'invoice_id': inv.id,
+                        'invoice_line_id': line.id,
+                        'student_fee_id': student_fee.id,
+                        'amount': line.price_unit,
+                        'date': inv.invoice_date,
+                        'month': created_month,
+                        'status': 'invoiced'
+                    }
+                    fee_line_obj.create(val)
+                    if payment_state == 'paid':
+                        paid_month = calendar.month_abbr[pay_date.month]
+                        val = {
+                            'invoice_id': inv.id,
+                            'invoice_line_id': line.id,
+                            'student_fee_id': student_fee.id,
+                            'amount': line.price_unit,
+                            'date': pay_date,
+                            'month': paid_month,
+                            'status': 'paid'
+                        }
+                        fee_line_obj.create(val)
+
+
+
+    def get_months(self, month):
+        start_month = int
+        end_month = int
+        if 1 <= month <= 6:
+            start_month = 1
+            end_month = 6
+        elif 7 <= month <= 12:
+            start_month = 7
+            end_month = 12
+
+        return {'start_month':start_month, 'end_month':end_month}
 
 
     def get_result(self):
@@ -527,7 +610,13 @@ class OpStudent(models.Model):
             for fee in fees:
                 fee.payable = True
 
-
+    @api.depends('course_detail_ids')
+    def _compute_active_class(self):
+        for student in self:
+            student_course = self.env['op.student.course'].search([
+                ('student_id', '=', student.id), ('p_active', '=', 'True')
+            ], limit=1)
+            student.active_class = student_course.class_id.id
 
     @api.depends('course_detail_ids.education_status')
     def _compute_student_status(self):
