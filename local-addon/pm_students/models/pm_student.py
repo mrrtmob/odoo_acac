@@ -190,6 +190,7 @@ class StudentPaymentInstallment(models.Model):
 class OpStudent(models.Model):
     _inherit = 'op.student'
     fill_application = fields.Boolean('Fill Application')
+    return_date = fields.Date('Return Date', related='course_detail_ids.return_date', store=True)
     marital_status = fields.Selection([('single', 'Single'),
                                        ('married', 'Married')])
     constrains = fields.Text('Special Wishes')
