@@ -59,25 +59,35 @@ class PmSemester(models.Model):
     discipline_second_count = fields.Integer(
         compute="_compute_semester_dashboard_data", string='Student')
 
-    def semester_scheduler(self):
-        all_semesters = self.env['pm.semester'].sudo().search(
-            [('state', '=', 'active'),
-             ('end_date', '!=', False)])
-        print(all_semesters)
-        today = fields.Date.today()
-        for sem in all_semesters:
-            d = timedelta(days=7)
-            end_date = sem.end_date
-            remind_date = sem.end_date - d
+    # def semester_scheduler(self):
+    #     all_semesters = self.env['pm.semester'].sudo().search(
+    #         [('state', '=', 'active'),
+    #          ('end_date', '!=', False)])
+    #     print(all_semesters)
+    #     today = fields.Date.today()
+    #     for sem in all_semesters:
+    #         d = timedelta(days=14)
+    #         end_date = sem.end_date
+    #         remind_date = sem.end_date - d
+    #
+    #         if today == remind_date or today == end_date:
+    #             ir_model_data = self.env['ir.model.data']
+    #             try:
+    #                 template_id = ir_model_data.get_object_reference('pm_general', 'semester_ending_reminder')[1]
+    #                 print(template_id)
+    #             except ValueError:
+    #                 template_id = False
+    #             self.env['mail.template'].browse(template_id).send_mail(sem.id, force_send=True)
 
-            if today == remind_date or today == end_date:
-                ir_model_data = self.env['ir.model.data']
-                try:
-                    template_id = ir_model_data.get_object_reference('pm_general', 'semester_ending_reminder')[1]
-                    print(template_id)
-                except ValueError:
-                    template_id = False
-                self.env['mail.template'].browse(template_id).send_mail(sem.id, force_send=True)
+    def semester_scheduler(self):
+        obj = self.env['pm.student.course.subject'].search([])
+        print(obj)
+        for x in range(50):
+            print("write")
+            obj.write({
+                'id': x
+            })
+        # self.env.cr.execute(query)
 
 
     def action_draft(self):
