@@ -47,6 +47,7 @@ class OpStudentCourse(models.Model):
     p_active = fields.Boolean('Active', default=True)
     class_id = fields.Many2one('op.classroom', 'Class')
     class_ids = fields.Many2many('op.classroom')
+    custom_subject_ids = fields.One2many('pm.student.course.subject', inverse_name='op_student_course_id', string="Subjects")
     education_status = fields.Selection([('active', 'Active'),
                                          ('postponed', 'Postponed'),
                                          ('withdrawn', 'Withdrawn'),
@@ -137,7 +138,21 @@ class OpStudentCourse(models.Model):
 #     _inherit = "op.library.card"
 #     _rec_name = "student_card_id"
 #     student_card_id = fields.Char(related='student_id.student_app_id', store=True)
+class StudentCourseSubject(models.Model):
+    _name = 'pm.student.course.subject'
+    _table = 'op_student_course_op_subject_rel'
+    op_student_course_id = fields.Many2one('op.student.course')
+    op_subject_id = fields.Many2one('op.subject')
+    color = fields.Integer('Color Index', compute='_compute_color')
+    is_completed = fields.Boolean('Completed')
 
+    @api.depends('is_completed')
+    def _compute_color(self):
+        for subject in self:
+            if subject.is_completed:
+                subject.color = 7  # green
+            else:
+                subject.color = 9
 
 class StudentPaymentInstallment(models.Model):
     _name = 'pm.student.installment'

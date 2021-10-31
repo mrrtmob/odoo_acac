@@ -67,10 +67,6 @@
                     </h5>
                 </xpath>
 
-                <xpath expr="//kanban" position="attributes">
-                     <attribute name="default_order">name asc</attribute>
-                </xpath>
-
               <xpath expr="//field[@name='phone']" position="attributes">
                      <attribute name="invisible">1</attribute>
                 </xpath>
@@ -133,11 +129,6 @@
              <xpath expr="//page[5]" position="attributes">
                  <attribute name="string">Payment Schedule</attribute>
              </xpath>
-
-             <xpath expr="//field[@name='image_1920']" position="after">
-                 <field name="qr_code" widget='image' class="profile_qr_code"/>
-             </xpath>
-
 
 
 
@@ -729,12 +720,8 @@
         <field name="model">op.student.course</field>
         <field name="inherit_id" ref="openeducat_core.view_op_student_course_form"/>
         <field name="arch" type="xml">
-
             <xpath expr='//form' position='replace'>
                 <form string="Student Course Detail">
-                    <header>
-                        <button name="compute_custom_subject" type="object" string="Generate Custom Subject"/>
-                    </header>
                     <sheet>
                         <group col="4" colspan="4">
                             <field name="student_id"/>
@@ -746,19 +733,11 @@
                         <group col="4" string="Exempted Subjects">
                             <field name="p_e_subject_ids"  colspan="4" nolabel="1"/>
                         </group>
-<!--                        <group col="4" string="Subjects">-->
-<!--                            <field name="subject_ids" colspan="4" nolabel="1"/>-->
-<!--                        </group>-->
                         <group col="4" string="Subjects">
-
-                            <field name="custom_subject_ids" nolabel="1">
-                                <tree>
-                                    <field name="op_subject_id"/>
-                                    <field name="transcript_mark"/>
-                                    <field name="is_completed" widget="boolean_toggle"/>
-                                </tree>
-
-                            </field>
+                            <field name="subject_ids" colspan="4" nolabel="1"/>
+                        </group>
+                        <group col="4" string="Subjects">
+                            <field name="custom_subject_ids" colspan="4" nolabel="1"/>
                         </group>
 
                     </sheet>
