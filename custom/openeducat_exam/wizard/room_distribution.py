@@ -60,7 +60,7 @@ class OpRoomDistribution(models.TransientModel):
     room_capacity = fields.Integer(
         "Room Capacity", compute="_compute_get_room_capacity")
     room_ids = fields.Many2many("op.exam.room", string="Exam Rooms")
-    class_id = fields.Many2one('op.classroom', 'Class')
+    class_ids = fields.Many2many('op.classroom', store=True)
     class_exam_id = fields.Many2one('pm.class.exam', 'Class Exam')
     student_ids = fields.Many2many("op.student", String='Student')
 
@@ -76,7 +76,7 @@ class OpRoomDistribution(models.TransientModel):
         reg_ids = self.env['op.student.course'].search(
             [('course_id', '=', session.course_id.id),
              ('batch_id', '=', session.batch_id.id),
-             ('class_ids', '=', class_exam.class_id.id)])
+             ('class_ids', 'in', class_exam.class_ids)])
         student_ids = []
         for reg in reg_ids:
             print("****************")

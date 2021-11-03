@@ -164,14 +164,15 @@ class PmRecipeLine(models.Model):
 
     @api.model
     def create(self, values):
-        print("Hit Create Line")
         print(values['quantity'])
         if values.get('display_type', self.default_get(['display_type'])['display_type']):
             values.update(product_id=False, sub_recipe_id=False)
 
         values['initial_quantity'] = values['quantity']
 
+
         line = super(PmRecipeLine, self).create(values)
+        line.product_id._compute_search_rank()
 
         return line
 

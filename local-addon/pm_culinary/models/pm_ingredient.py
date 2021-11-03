@@ -91,6 +91,28 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     ingredient_nutrition_ids = fields.One2many('pm.ingredient.nutrition', 'product_id')
+    search_rank = fields.Integer('Search Rank', compute="_compute_search_rank", store=True)
+
+    @api.depends('name')
+    def _compute_search_rank(self):
+        print("***********")
+        for product in self:
+            count = self.env['pm.recipe.line'].search_count([('product_id', '=', product.id)])
+            print(count)
+            product.search_rank = self.env['pm.recipe.line'].search_count([('product_id', '=', product.id)])
+
+    @api.model
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+        print("Hit Search Function")
+        args = args or []
+        domain = []
+        if name:
+            domain = [('keyword', 'ilike', name)]
+        print(domain + args)
+        return self._search(domain + args, limit=limit, order="search_rank desc", access_rights_uid=name_get_uid)
+
+
+
 
     def act_show_order_history(self):
         return {

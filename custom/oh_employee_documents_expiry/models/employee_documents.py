@@ -94,13 +94,13 @@ class HrEmployeeDocument(models.Model):
                         }
                         self.env['mail.mail'].create(main_content).send()
 
-    @api.constrains('expiry_date')
-    def check_expr_date(self):
-        for each in self:
-            if each.expiry_date:
-                exp_date = fields.Date.from_string(each.expiry_date)
-                if exp_date < date.today():
-                    raise Warning('Your Document Is Expired.')
+    # @api.constrains('expiry_date')
+    # def check_expr_date(self):
+    #     for each in self:
+    #         if each.expiry_date:
+    #             exp_date = fields.Date.from_string(each.expiry_date)
+    #             if exp_date < date.today():
+    #                 raise Warning('Your Document Is Expired.')
 
     name = fields.Char(string='Document Number', required=True, copy=False, help='You can give your'
                                                                                  'Document number.')
