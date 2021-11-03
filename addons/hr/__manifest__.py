@@ -22,7 +22,7 @@
         'web',
     ],
     'data': [
-        # 'security/hr_security.xml',
+        'security/hr_security.xml',
         'security/ir.model.access.csv',
         'wizard/hr_plan_wizard_views.xml',
         'wizard/hr_departure_wizard_views.xml',
