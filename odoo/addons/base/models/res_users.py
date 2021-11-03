@@ -1060,6 +1060,7 @@ class GroupsImplied(models.Model):
                            JOIN group_imply i ON (r.gid = i.hid)
                           WHERE i.gid = %(gid)s
                 """, dict(gid=group.id))
+            print(values.get('users'))
             self._check_one_user_type()
         return res
 
