@@ -14,10 +14,7 @@
                             <field name="class_ids" string="Class (s)" widget="many2many_tags"/>
                         </group>
                         <group colspan="4" string="Add Absent Student(s)">
-                            <field name="student_ids" string="Add Absent Student(s)"
-                                   nolabel="1"
-                                   domain= "[('course_detail_ids.class_ids', 'in', class_ids)]"
-                                   />
+                        <field name="student_ids" string="Add Absent Student(s)" nolabel="1" domain= "[('course_detail_ids.class_ids', 'in', class_ids)]"/>
                         </group>
                     </sheet>
                     <footer groups="base.group_user">
