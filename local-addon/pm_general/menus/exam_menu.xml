@@ -169,6 +169,14 @@
                 <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
             </record>
 
+             <record id="openeducat_parent.menu_op_parent_root" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="openeducat_library.menu_op_library_root" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
              <record id="sale.sale_menu_root" model="ir.ui.menu">
                 <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
             </record>

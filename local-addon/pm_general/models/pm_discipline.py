@@ -108,7 +108,7 @@ class OpDiscipline(models.Model):
     def send_first_warning(self):
         ir_model_data = self.env['ir.model.data']
         try:
-            template_id = ir_model_data.get_object_reference('pm_general', 'disciplinary_1st_warning')[1]
+            template_id = ir_model_data.get_object_reference('pm_general', 'pm_disciplinary_1st_warning')[1]
         except ValueError:
             template_id = False
         self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
@@ -116,7 +116,7 @@ class OpDiscipline(models.Model):
     def send_second_warning(self):
         ir_model_data = self.env['ir.model.data']
         try:
-            template_id = ir_model_data.get_object_reference('pm_general', 'disciplinary_2nd_warning')[1]
+            template_id = ir_model_data.get_object_reference('pm_general', 'pm_disciplinary_2nd_warning')[1]
         except ValueError:
             template_id = False
         self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)

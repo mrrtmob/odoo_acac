@@ -8,7 +8,6 @@
         <field name="name">Term Ending Soon</field>
         <field name="subject">Term Ending Soon</field>
         <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-        <field name="email_to"></field>
         <field name="model_id" ref="openeducat_core.model_op_batch"/>
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
@@ -113,7 +112,7 @@
                 </tr>
             </table>
         </field>
-    </record>
+        </record>
 
     <!--SEMESTER ALERT-->
 
@@ -121,7 +120,6 @@
             <field name="name">Semester Ending Soon</field>
             <field name="subject">Semester Ending Soon</field>
             <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-            <field name="email_to"></field>
             <field name="model_id" ref="pm_general.model_pm_semester"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
@@ -232,7 +230,6 @@
             <field name="name">Semester Havent Been Closed</field>
             <field name="subject">Semester have not been closed</field>
             <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-            <field name="email_to"></field>
             <field name="model_id" ref="pm_general.model_pm_semester"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
@@ -337,18 +334,18 @@
                 </tr>
             </table>
         </field>
-    </record>
+         </record>
 
 
 
 
 
         <!--- DISCIPLINARY !-->
-        <record id="disciplinary_1st_warning" model="mail.template">
+        <record id="pm_disciplinary_1st_warning" model="mail.template">
             <field name="name">Disciplinary 1st Warning Email</field>
             <field name="subject">Disciplinary 1st Warning</field>
             <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-            <field name="email_to"></field>
+            <field name="email_to">${object.student_id.email}</field>
             <field name="model_id" ref="openeducat_discipline.model_op_discipline"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
@@ -465,11 +462,11 @@
                 </table>
             </field>
         </record>
-        <record id="disciplinary_2nd_warning" model="mail.template">
+        <record id="pm_disciplinary_2nd_warning" model="mail.template">
             <field name="name">Disciplinary2nd Warning Email</field>
             <field name="subject">Disciplinary 2nd Warning</field>
             <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-            <field name="email_to"></field>
+            <field name="email_to">${object.student_id.email}</field>
             <field name="model_id" ref="openeducat_discipline.model_op_discipline"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
@@ -588,7 +585,7 @@
             <field name="name">Disciplinary Dismiss Email</field>
             <field name="subject">Disciplinary suspension from the current Semester</field>
             <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-            <field name="email_to"></field>
+            <field name="email_to">${object.student_id.email}</field>
             <field name="model_id" ref="openeducat_discipline.model_op_discipline"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
@@ -716,7 +713,7 @@
             <field name="name">Semester Absent 1st warning Email</field>
             <field name="subject">Absence Notification Letter</field>
             <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-            <field name="email_to"></field>
+            <field name="email_to">${object.student_id.email}</field>
             <field name="model_id" ref="pm_general.model_pm_semester_attendance"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
@@ -834,7 +831,7 @@
             <field name="name">Semester Absent 2nd warning Email</field>
             <field name="subject">Absence Notification Letter</field>
             <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-            <field name="email_to"></field>
+            <field name="email_to">${object.student_id.email | safe}</field>
             <field name="model_id" ref="pm_general.model_pm_semester_attendance"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
@@ -949,7 +946,7 @@
             <field name="name">Semester Absent Dismiss Email</field>
             <field name="subject">Absence Notification Letter</field>
             <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-            <field name="email_to"></field>
+            <field name="email_to">${object.student_id.email}</field>
             <field name="model_id" ref="pm_general.model_pm_semester_attendance"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">

@@ -363,7 +363,6 @@
             <field name="name">Contract: Prohibition Period Reminder</field>
             <field name="subject">Probationary Periods for ${object.title} ${object.employee_id.name}</field>
             <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-            <field name="email_to"></field>
             <field name="model_id" ref="hr_contract.model_hr_contract"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">
