@@ -2,7 +2,6 @@
  <odoo>
     <record id="group_acac_department_manager" model="res.groups">
         <field name="name">Department Manager</field>
-        <field name="category_id" ref="pm_leads.module_category_acac"/>
         <field name="users" eval="[(4, ref('base.group_user'))]"/>
         <field name="implied_ids" eval="[
         (4, ref('base.group_user')),
@@ -12,7 +11,6 @@
 
       <record id="group_human_resource_manager" model="res.groups">
         <field name="name">HR Manager</field>
-        <field name="category_id" ref="pm_leads.module_category_acac"/>
         <field name="users" eval="[(4, ref('base.group_user'))]"/>
         <field name="implied_ids" eval="[
         (4, ref('base.group_erp_manager')),
