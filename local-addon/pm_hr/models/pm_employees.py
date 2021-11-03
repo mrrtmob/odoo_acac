@@ -153,22 +153,22 @@ class PmEmployees(models.Model):
             emp.is_finish_probation = is_finished
 
 
-    # @api.model
-    # def _get_next_employee_number(self):
-    #     next = ''
-    #     sequence = self.env['ir.sequence'].search([('code', '=', 'hr.employee')])
-    #     if sequence:
-    #         next = sequence.get_next_char(sequence.number_next_actual)
-    #     return next
+    @api.model
+    def _get_next_employee_number(self):
+        next = ''
+        sequence = self.env['ir.sequence'].search([('code', '=', 'hr.employee')])
+        if sequence:
+            next = sequence.get_next_char(sequence.number_next_actual)
+        return next
 
-    # employee_number = fields.Char(
-    #     string="Employee Number",
-    #     required=True,
-    #     readonly=True,
-    #     default=_get_next_employee_number,
-    #     track_visibility="onchange",
-    # )
-    employee_number = fields.Char(string="Employee ID")
+    employee_number = fields.Char(
+        string="Employee Number",
+        required=True,
+        readonly=True,
+        default=_get_next_employee_number,
+        track_visibility="onchange",
+    )
+
     @api.onchange('parent_id')
     def on_change_employee(self):
         self.coach_id = self.parent_id.id

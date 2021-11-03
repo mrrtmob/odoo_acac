@@ -59,60 +59,39 @@ class PmSemester(models.Model):
     discipline_second_count = fields.Integer(
         compute="_compute_semester_dashboard_data", string='Student')
 
-    def semester_scheduler(self):
-        all_semesters = self.env['pm.semester'].sudo().search(
-            [('state', '=', 'active'),
-             ('end_date', '!=', False)])
-        print(all_semesters)
-        today = fields.Date.today()
-        for sem in all_semesters:
-            d = timedelta(days=7)
-            end_date = sem.end_date
-            remind_date = sem.end_date - d
+    # def semester_scheduler(self):
+    #     all_semesters = self.env['pm.semester'].sudo().search(
+    #         [('state', '=', 'active'),
+    #          ('end_date', '!=', False)])
+    #     print(all_semesters)
+    #     today = fields.Date.today()
+    #     for sem in all_semesters:
+    #         d = timedelta(days=14)
+    #         end_date = sem.end_date
+    #         remind_date = sem.end_date - d
+    #
+    #         if today == remind_date or today == end_date:
+    #             ir_model_data = self.env['ir.model.data']
+    #             try:
+    #                 template_id = ir_model_data.get_object_reference('pm_general', 'semester_ending_reminder')[1]
+    #                 print(template_id)
+    #             except ValueError:
+    #                 template_id = False
+    #             self.env['mail.template'].browse(template_id).send_mail(sem.id, force_send=True)
 
-            if today == remind_date or today == end_date:
-                ir_model_data = self.env['ir.model.data']
-                try:
-                    template_id = ir_model_data.get_object_reference('pm_general', 'semester_ending_reminder')[1]
-                    print(template_id)
-                except ValueError:
-                    template_id = False
-                self.env['mail.template'].browse(template_id).send_mail(sem.id, force_send=True)
+    def semester_scheduler(self):
+        obj = self.env['pm.student.course.subject'].search([])
+        print(obj)
+        for x in range(50):
+            print("write")
+            obj.write({
+                'id': x
+            })
+        # self.env.cr.execute(query)
 
 
     def action_draft(self):
         self.write({'state': 'pending'})
-
-    def student_reminder_scheduler(self):
-        print("Hit Function")
-        all_course_search = self.env['op.student.course'].sudo().search(
-            [('education_status', '=', 'postponed'),
-             ('is_reminded', '=', False),
-             ('return_date', '!=', None)])
-
-        today = fields.Date.today()
-        print(all_course_search)
-
-        for course in all_course_search:
-            print(today)
-            print(course.reminding_date)
-            if today == course.return_date or today == course.reminding_date:
-                student = course.student_id
-
-                print("Student", student.name)
-                ir_model_data = self.env['ir.model.data']
-                try:
-                    template_id = ir_model_data.get_object_reference('pm_leads', 'student_follow_up_reminder')[1]
-                except ValueError:
-                    template_id = False
-                self.env['mail.template'].browse(template_id).send_mail(student.id, force_send=True)
-                if today == course.return_date:
-                    print('TODAY!!')
-                    course.is_reminded = True
-
-
-
-
 
 
     def _compute_semester_dashboard_data(self):
@@ -413,23 +392,44 @@ class OpSemesterMarksheetRegister(models.Model):
             failed_student = []
             semester = record.semester_id
             student_semester_result = semester.student_semester_detail
-
+            student_course = self.env['op.student.course'].search([
+                ('batch_id', '=', self.batch_id.id),
+                ('course_id', '=', self.course_id.id)
+            ])
+            subject_data = {}
+            for course in student_course:
+                student_id = course.student_id.id
+                if student_id not in subject_data:
+                    subject_data[student_id] = course.custom_subject_ids
+            print(subject_data)
             for res in record.semester_result_ids:
                 if res.status == 'pass':
                     passed_student.append(res.student_id.id)
                 elif res.status == 'fail':
                     failed_student.append(res.student_id.id)
 
+                # Set Notification badge in mobile app
                 notification_obj = self.env['pm.menu.notification']
                 notification_obj.update_notification('grade', res.student_id.id)
 
+                # Update student subject completion in Student Course Details
+                for sub_res in res.semester_res_line:
+                    student_id = sub_res.student_id.id
+                    subject_id = sub_res.subject_id.id
+                    subject_result = sub_res.status
+                    if student_id in subject_data:
+                        for student_res in subject_data[student_id]:
+                            if subject_id == student_res.op_subject_id.id and subject_result == 'pass':
+                                student_res.is_completed = True
+
+            # Update student semester results
             for sr in student_semester_result:
                 if sr.student_id.id in passed_student:
                     sr.state = 'complete'
                 elif sr.student_id.id in failed_student:
                     sr.state = 'fail'
-                else:
-                    print('ort deng tver ey te')
+
+
 
 
 

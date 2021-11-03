@@ -325,7 +325,7 @@ class Lead(models.Model):
         for lead in self:
             if lead.return_date:
                 return_date = lead.return_date
-                d = datetime.timedelta(days=3)
+                d = datetime.timedelta(days=42)
                 date = return_date - d
                 print(return_date)
                 print(date)

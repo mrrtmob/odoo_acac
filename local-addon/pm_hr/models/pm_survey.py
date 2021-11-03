@@ -7,6 +7,7 @@ from odoo.exceptions import UserError, ValidationError
 class PmLeave(models.Model):
     _inherit = 'hr.leave'
     is_special_leave = fields.Boolean("Special Leave")
+    employee_remaining_paid_leave = fields.Float(related="employee_id.remaining_leaves")
 
     def send_email_to_reviewer(self):
         print("*******************")
