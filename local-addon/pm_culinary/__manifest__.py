@@ -30,7 +30,7 @@
         'report/pm_recipe_reports.xml',
         'report/pm_recipe_detail_templates.xml',
         'report/pm_recipe_schedule_templates.xml',
-        'security/culinary_security.xml',
+        # 'security/culinary_security.xml',
         'security/ir.model.access.csv',
         'views/pm_brand_views.xml',
         'views/pm_ingredient_category_views.xml',
