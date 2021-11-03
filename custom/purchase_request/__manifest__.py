@@ -11,7 +11,7 @@
     "category": "Purchase Management",
     "depends": ["purchase", "product", "purchase_stock", 'pm_culinary'],
     "data": [
-        "security/purchase_request.xml",
+        # "security/purchase_request.xml",
         "security/ir.model.access.csv",
         "data/purchase_request_sequence.xml",
         "data/purchase_request_data.xml",
