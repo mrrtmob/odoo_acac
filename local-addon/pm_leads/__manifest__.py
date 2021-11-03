@@ -31,7 +31,7 @@
 
     # always loaded
     'data': [
-        # 'security/marketing_security.xml',
+        'security/marketing_security.xml',
         'security/ir.model.access.csv',
         'views/pm_lead.xml',
         'views/pm_campaign.xml',
