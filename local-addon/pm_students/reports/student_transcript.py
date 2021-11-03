@@ -73,9 +73,14 @@ class StudentTranscriptReport(models.AbstractModel):
         # get student course
 
         student_courses = self.env['op.student.course'].search([('course_id', '=', data['course_id']),
+                                                                ('batch_id', '=', data['batch_id']),
                                                                 ('student_id', '=', data['student_id'])])
         # get student Exempted Subjects 
         ex_subjects = []
+        incomplete_subject = self.env['pm.student.course.subject'].search([
+            ('op_student_course_id', '=', student_courses.id),
+            ('transcript_mark', '=', True)
+        ])
         # get student discipline points 
 
         student = self.env['op.student'].browse(data['student_id'])
@@ -131,6 +136,17 @@ class StudentTranscriptReport(models.AbstractModel):
                             'score': result
                         }
                         lst.append(dic)
+
+            for in_sub in incomplete_subject:
+                subject = in_sub.op_subject_id
+                dic = {
+                    'code': subject.code,
+                    'name': subject.name,
+                    'credits': subject.p_credits,
+                    'grade': 'I',
+                    'score': 'I'
+                }
+                lst.append(dic)
 
             placement = self.env['op.placement.offer'].search(
                 [('student_id', '=', data['student_id']), ('batch_id', '=', data['batch_id']),
@@ -192,6 +208,7 @@ class StudentTranscriptReport(models.AbstractModel):
                 total_course_credit = semester.total_credit
                 ex_count = 0
                 sub_count = 0
+
                 for res in student_results:
                     if res.semester_id.id == data['semester_id']:
                         semester_average = res.result
@@ -220,6 +237,17 @@ class StudentTranscriptReport(models.AbstractModel):
                                 lst.append(dic)
                             else:
                                 continue
+
+                for in_sub in incomplete_subject:
+                    subject = in_sub.op_subject_id
+                    dic = {
+                        'code': subject.code,
+                        'name': subject.name,
+                        'credits': subject.p_credits,
+                        'grade': 'I',
+                        'score': 'I'
+                    }
+                    lst.append(dic)
 
         return [{'subjects': lst,
                  'absence': absence,

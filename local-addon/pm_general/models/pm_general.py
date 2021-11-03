@@ -4,7 +4,9 @@ from odoo.http import request
 from datetime import datetime, timedelta
 
 
-
+class OpStudentCourse(models.Model):
+    _inherit = 'op.student.course'
+    class_ids = fields.Many2many('op.classroom')
 
 
 
@@ -35,8 +37,6 @@ class OpTermMarksheetRegister(models.Model):
     name = fields.Char('Marksheet Register', size=256, required=True,
                        track_visibility='onchange')
 
-
-
     def _compute_total_pass_fail(self):
         print("FF")
         for record in self:
@@ -49,7 +49,6 @@ class OpTermMarksheetRegister(models.Model):
                     failed += 1
             record.total_pass = passed
             record.total_failed = failed
-
 
     def action_validate(self):
         for res in self.term_result_ids:
@@ -195,6 +194,35 @@ class OpSubjectRegistrationCustom(models.Model):
     _inherit = "op.subject.registration"
     batch_id = fields.Many2one('op.batch', 'Term', required=True,
                                track_visibility='onchange')
+
+    def action_approve(self):
+        for record in self:
+            subject_ids = []
+            data = []
+
+            for sub in record.elective_subject_ids:
+                subject_ids.append(sub.id)
+            course_id = self.env['op.student.course'].search([
+                ('student_id', '=', record.student_id.id),
+                ('batch_id', '=', record.batch_id.id),
+                ('course_id', '=', record.course_id.id)
+            ], limit=1)
+            for sub in record.compulsory_subject_ids:
+                val = {
+                    'op_student_course_id': course_id.id,
+                    'op_subject_id': sub.id,
+                    'is_completed': False
+                }
+                data.append(val)
+            if course_id:
+                course_id.write({
+                    'subject_ids': [[6, 0, list(set(subject_ids))]]
+                })
+                self.env['pm.student.course.subject'].create(data)
+                record.state = 'approved'
+            else:
+                raise ValidationError(
+                    _("Course not found on student's admission!"))
 
 class PmTermOrder(models.Model):
     _description = 'Terms Order'

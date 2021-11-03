@@ -24,8 +24,10 @@ class PmExamClassSchedule(models.Model):
     _name = 'pm.class.exam'
     _inherit = "mail.thread"
     _description = "Class Exam"
+    _rec_name = 'exam_id'
     name = fields.Char('Name', size=256, required=False)
     class_id = fields.Many2one('op.classroom', 'Class')
+    class_ids = fields.Many2many('op.classroom')
     exam_session_id = fields.Many2one("op.exam.session", 'Exam Schedule')
     exam_id = fields.Many2one('op.exam', 'Exam',
                                  domain=[('state', 'not in',
@@ -102,7 +104,7 @@ class PmExamClassSchedule(models.Model):
 class OpExamAttendeesCustom(models.Model):
     _inherit = "op.exam.attendees"
     semester_id = fields.Many2one("pm.semester", "Semester")
-    class_id = fields.Many2one('op.classroom', 'Class')
+    class_ids = fields.Many2many('op.classroom', 'Class')
     class_exam_id = fields.Many2one('pm.class.exam', 'Class Exam',  ondelete="cascade")
     show_student = fields.Boolean(compute='_compute_show_student', store=True, default=True)
     # exam_id = fields.Many2one('op.exam', 'Exam', required=False, related='class_exam_id.exam_id', store=True)

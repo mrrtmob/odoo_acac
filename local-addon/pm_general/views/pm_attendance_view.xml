@@ -18,7 +18,7 @@
                  <xpath expr="//field[@name='attendance_line']" position="replace">
                        <field name="attendance_line" colspan="4" nolabel="1">
                             <tree string="Attendance Line" editable="top">
-                                <field name="student_id" domain= "[('course_detail_ids.class_ids', 'in', class_ids)]"/>
+                                <field name="student_id" domain= "[('course_detail_ids.class_ids', 'in', parent.class_ids)]"/>
                                 <field name="present"/>
                                 <field name="excused"/>
                                 <field name="absent"/>

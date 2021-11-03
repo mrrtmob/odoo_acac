@@ -242,7 +242,7 @@
             </record>
 
             <record id="openeducat_placement_enterprise.menu_op_placement_offer" model="ir.ui.menu">
-                  <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+                  <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
                 <field name="name">Internships</field>
             </record>
     </data>

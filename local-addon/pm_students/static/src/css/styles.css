@@ -6,3 +6,11 @@
     border: 1px solid #6c757d !important;
     border-radius: 10px;
 }
+.profile_qr_code {
+    height: 60px;
+    width: 150px;
+    position: absolute;
+    float: right;
+    bottom: 90px;
+    left: 30px;
+}

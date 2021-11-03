@@ -22,6 +22,7 @@ class OpAdmission(models.Model):
         'Name', size=128, required=False, translate=False)
     readonly = fields.Boolean(compute="_compute_read_only")
     class_id = fields.Many2one('op.classroom', 'Class', required=False)
+
     birth_place = fields.Many2one('res.country.state', 'Birth Place')
     payment_option = fields.Selection([('normal', 'Normal'),
                                        ('exempted', 'Exempted'),
@@ -618,9 +619,9 @@ class OpAdmission(models.Model):
                         student.course_id and student.course_id.id or False,
                     'batch_id':
                         student.batch_id and student.batch_id.id or False,
-                    'class_id':
-                        student.class_id and student.class_id.id or False
-                }]],
+                    'class_ids': [[6, 0, [student.class_id.id]]],
+
+                 }]],
                 'user_id': student_user.id,
                 'partner_id': student_user.partner_id.id,
                 'batch_id':
@@ -649,7 +650,6 @@ class OpAdmission(models.Model):
                 'is_scholarship': student.is_scholarship,
                 'scholarship_status': student.scholarship_status.id,
                 'motivational_letter': student.motivational_letter,
-                'payment_option': student.payment_option,
                 'special_medical': student.special_medical,
                 'enroll_reason_id': student.enroll_reason_id.id,
                 'high_school_id': student.high_school_id.id,
