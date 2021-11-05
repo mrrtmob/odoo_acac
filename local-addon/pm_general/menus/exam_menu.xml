@@ -241,6 +241,45 @@
                   <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
             </record>
 
+
+             <record id="openeducat_assignment.menu_op_assignment_root" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="openeducat_core_enterprise.menu_op_course_sub_1" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+             <record id="event.event_main_menu" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="openeducat_placement_enterprise.menu_placement_main" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="stock.menu_stock_root" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="openeducat_discipline.menu_op_school_config_offence" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="openeducat_core.menu_op_school_config_general" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="openeducat_core.menu_op_school_config_activity" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+             <record id="openeducat_core.menu_op_general_main" model="ir.ui.menu">
+                <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
+            </record>
+
+
+
+
             <record id="openeducat_placement_enterprise.menu_op_placement_offer" model="ir.ui.menu">
                   <field name="groups_id" eval="[(6,0,[ref('pm_leads.group_nobody')])]"/>
                 <field name="name">Internships</field>
