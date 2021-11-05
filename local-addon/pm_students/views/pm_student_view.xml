@@ -134,9 +134,9 @@
                  <attribute name="string">Payment Schedule</attribute>
              </xpath>
 
-             <xpath expr="//field[@name='image_1920']" position="after">
-                 <field name="qr_code" widget='image' class="profile_qr_code"/>
-             </xpath>
+<!--             <xpath expr="//field[@name='image_1920']" position="after">-->
+<!--                 <field name="qr_code" widget='image' class="profile_qr_code"/>-->
+<!--             </xpath>-->
 
 
 
@@ -437,7 +437,7 @@
                                              <field name="course_id" force_save="1" attrs="{'readonly': [('is_saved', '!=', False)]}"/>
                                              <field name="batch_id" force_save="1" context="{'course_id': course_id,'get_parent_batch':1}" attrs="{'readonly': [('is_saved', '!=', False)]}"/>
                                              <field name="class_ids" widget="many2many_tags"  force_save="1"/>
-
+                                             <field name="p_e_subject_ids" readonly="1" widget="many2many_tags"/>
                                             </group>
                                             <group>
                                                  <field name="education_status"/>
@@ -450,8 +450,14 @@
                                               <field name="remarks"/>
                                         </group>
                                         <group>
-                                            <field name="p_e_subject_ids" readonly="1" widget="many2many_tags"/>
-                                            <field name="subject_ids"/>
+
+                                           <field name="custom_subject_ids" nolabel="1">
+                                                <tree>
+                                                    <field name="op_subject_id"/>
+                                                    <field name="transcript_mark"/>
+                                                    <field name="is_completed" widget="boolean_toggle"/>
+                                                </tree>
+                                            </field>
                                         </group>
                                     </sheet>
 

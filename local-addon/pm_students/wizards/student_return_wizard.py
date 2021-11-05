@@ -17,6 +17,7 @@ class StudentReturnWizard(models.TransientModel):
         'op.batch', 'Term', required=True, track_visibility='onchange')
     class_id = fields.Many2one('op.classroom', 'Class')
     starting_semester_id = fields.Many2one('pm.semester', 'Starting Semester', required=True)
+    class_ids = fields.Many2many('op.classroom')
     remarks = fields.Text()
 
     def confirm_return_student(self):
@@ -26,8 +27,9 @@ class StudentReturnWizard(models.TransientModel):
         student.enable_student_payment()
         course_id = self.course_id
         batch_id = self.batch_id
-        class_id = self.class_id
+        class_ids = [[6, False, self.class_ids.ids]]
         semester_id = self.starting_semester_id
+
         student.course_detail_ids.p_active = False
         student.write({
             'course_detail_ids': [[0, False, {
@@ -38,6 +40,7 @@ class StudentReturnWizard(models.TransientModel):
                 'starting_semester_id':
                     semester_id and semester_id.id or False,
                 'p_active': True,
+                'class_ids' : class_ids
             }]],
         })
 
@@ -45,7 +48,7 @@ class StudentReturnWizard(models.TransientModel):
 
         # Store Student Progression detail in this case, the student return to new term
         progress_obj = self.env['pm.student.progress'].sudo()
-        progress_obj.store_progression(student.id, course_id.id, batch_id.id, class_id.id, 'active', self.remarks)
+        progress_obj.store_progression(student.id, course_id.id, batch_id.id, 'active', self.remarks)
 
         order = semester_id.semester_order
         semester_ids = batch_id.semester_ids
