@@ -459,10 +459,6 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
             student_course = self.env['op.student.course'].search([
                 ('student_id', '=', student.id), ('p_active', '=', 'True')
             ], limit=1)
-            print("WOFF")
-            print(student_course.class_ids)
-            print(student_course.class_ids.ids)
-            print(student_course.class_ids.id)
             student.active_class = student_course.class_ids.ids
 
 
