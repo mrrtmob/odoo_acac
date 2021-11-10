@@ -107,7 +107,7 @@ class PmEmployees(models.Model):
         'res.country.state', 'States..')
     hca_country_id = fields.Many2one(
         'res.country', 'Country..', )
-    joining_date = fields.Date('Contract Signed Date', required=False, readonly=False)
+    joining_date = fields.Date('Starting Date', required=False, readonly=False)
     leaving_date = fields.Date('Last Day')
     godfather_id = fields.Many2one(comodel_name='res.users', string='Godfather', required=False, copy=False, index=True)
     type_of_visa = fields.Char('Type Of Visa')

@@ -753,15 +753,15 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
     def get_student_id(self,course_id, batch_id, code):
         course = self.env['op.course'].browse(course_id)
         batch = self.env['op.batch'].browse(batch_id)
-        count = self.env['op.student'].search_count(
-            [('course_detail_ids.batch_id', 'in', [batch.id]),
-             '|', ('active', '=' ,True),  ('active', '=', False)])
-        #count need add 1 to avoid student start from 0
-        count += 1
         course_code = course.code
         year = batch.start_date.year
         short_year = str(year)[-2:]
         year_term = batch.year_term.name
+        batch_code = str(short_year) + str(year_term) + str(course_code)
+        count = self.env['op.student'].search_count([('student_app_id', 'like', batch_code),
+                                                         '|', ('active', '=', True), ('active', '=', False)])
+        count += 1
+        # #count need add 1 to avoid student start from 0
         app_number = str(count).zfill(3)
         if code:
             app_number = str(code) + str(count).zfill(2)
