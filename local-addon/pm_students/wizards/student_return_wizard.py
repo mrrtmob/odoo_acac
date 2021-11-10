@@ -76,3 +76,17 @@ class StudentReturnWizard(models.TransientModel):
             for sem_attendance in semester_attendance:
                 if sem_attendance.semester_id.semester_order == new_sem.semester_order:
                     sem_attendance.semester_id = new_sem.id
+
+        student._compute_active_semester()
+
+        # notification = {
+        #     'type': 'ir.actions.client',
+        #     'tag': 'display_notification',
+        #     'params': {
+        #         'title': 'Student Migration',
+        #         'message': 'Student has been transferred successfully',
+        #         'type': 'success',  # types: success,warning,danger,info
+        #         'sticky': False,  # True/False will display for few seconds if false
+        #     },
+        # }
+        # return notification
