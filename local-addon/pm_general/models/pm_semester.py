@@ -149,6 +149,10 @@ class PmSemester(models.Model):
         no_pass = ['retake', 'fail']
         fail_students = []
         semester_detail = self.student_semester_detail
+
+        # find related child ids
+        # set status to pass if student status = pass
+
         for sd in semester_detail:
             print('name:', sd.student_id.name)
             print('Status:', sd.student_id.education_status)
@@ -176,8 +180,7 @@ class PmSemester(models.Model):
             else:
                 continue
 
-        #find related child ids
-        #set status to pass if student status = pass
+
 
         #find new related child ids of next semester
         # set active to pass if student status = pass
@@ -234,9 +237,25 @@ class PmSemesterDetail(models.Model):
 
     color = fields.Integer(string='Color Index', default=0, compute="_compute_result_color", store=True)
 
+    def reset_student_color(self):
+        result = self.env['pm.student.semester.detail'].search([])
+        for rec in result:
+            if rec.state == 'ongoing':
+                rec.color = 10
+                # Green
+            elif rec.state == 'complete':
+                rec.color = 7
+                # Blue
+            elif rec.state == 'retake' or rec.state == 'fail':
+                rec.color = 9
+                # Red
+            else:
+                rec.color = 0
+
     @api.depends('state')
     def _compute_result_color(self):
         for rec in self:
+            print("Yes")
 
             if rec.state == 'ongoing':
                 rec.color = 10
