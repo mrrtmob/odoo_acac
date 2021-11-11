@@ -44,7 +44,7 @@
                   parent="openeducat_exam.menu_op_school_exam_result"
                   sequence="25"
                   action="act_open_pm_class_exam"
-                  groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+                  groups="openeducat_core.group_op_faculty"/>
 
           <menuitem id="menu_pm_semester_result_template"
                   name="Generate Result for a Semester"

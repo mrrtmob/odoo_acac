@@ -221,8 +221,8 @@
                          <group string="Exam(s)">
                             <field name="exam_ids" colspan="4"  nolabel="1">
                                 <tree string="Exam" editable="top">
-                                    <field name="name"/>
                                     <field name="exam_type"/>
+                                    <field name="name" readonly="1" force_save="1"/>
                                     <field name="grade_weightage"/>
                                     <field name="total_marks"/>
                                     <field name="min_marks"/>
@@ -708,26 +708,20 @@
                                 <div t-attf-class="o_kanban_card_header">
                                     <div class="o_kanban_card_header_title">
                                         <div class="o_primary">
-                                            <a type="edit" class="mr-auto">
-                                                <field name="name"/>
+                                           <h3><a type="edit" class="mr-auto">
+                                                <field name="exam_id"/>
                                             </a>
+                                            </h3>
                                         </div>
                                         <div class="o_secondary">
                                             <a>
                                                 <field name="class_id"/>
                                             </a>
-                                               <field name="state" string="Status" widget="label_selection"
-                                             options="{'classes': {'draft': 'primary',
-                                             'done': 'warning', 'cancel': 'danger',
-                                             'schedule': 'info', 'held': 'success',
-                                             }}"/>
                                         </div>
                                     </div>
 
                                 </div>
                                 <div class="container o_kanban_card_content">
-                                        <h3>Attendance Info</h3>
-
                                         <br/>
                                     <div class="row col-md-12" style="padding-right:0px;">
 
@@ -739,9 +733,18 @@
                                             <span><field name="present_count"/> Present</span>
 
                                          </div>
+                                           <span>
+                                               <field name="state" string="Status" widget="label_selection"
+                                                 options="{'classes': {'draft': 'primary',
+                                                 'done': 'success', 'cancel': 'danger',
+                                                 'schedule': 'info',
+                                                 }}"/>
+                                           </span>
                                 </div>
                             </div>
+
                             </div>
+
                         </t>
                     </templates>
                 </kanban>

@@ -426,7 +426,6 @@ VERSION:3.0
 END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_address)
         return value
 
-    @api.depends('name', 'mobile', 'email')
     def generate_qr_code(self):
         qr = qrcode.QRCode(
             version=1,

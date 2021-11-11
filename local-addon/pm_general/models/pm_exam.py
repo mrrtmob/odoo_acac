@@ -21,16 +21,25 @@ class PmExam(models.Model):
     session_id = fields.Many2one('op.exam.session', 'Exam Schedule',
                                  domain=[('state', 'not in',
                                           ['cancel', 'done'])])
-    subject_id = fields.Many2one('op.subject', 'Subject', readonly=True)
+    subject_id = fields.Many2one('op.subject', string='Subject', readonly=True)
     result_line = fields.One2many(
         'op.result.line', 'exam_id', 'Result Line', readonly=True)
     class_exam_ids = fields.One2many(
         'pm.class.exam', 'exam_id', 'Class Exam(s)', readonly=True)
-    batch_id = fields.Many2one(
-        'op.batch', 'Term', related='session_id.batch_id', store=True,
-        readonly=True)
+    batch_id = fields.Many2one('op.batch', 'Term', store=True, readonly=True)
     faculty_id = fields.Many2one('op.faculty', 'Faculty', related='session_id.faculty_id', store=True)
     class_exam_count = fields.Integer(compute="_compute_exam_count")
+    name = fields.Char(required=False, string="Name")
+
+    @api.onchange('exam_type', 'session_id.batch_id', 'session_id.subject_id')
+    def _compute_exam_name(self):
+        type = self._fields['exam_type'].selection
+        code_dict = dict(type)
+        type_name = code_dict.get(self.exam_type)
+
+        if self.session_id.subject_id.name and type_name and self.session_id.batch_id:
+            self.name = self.session_id.subject_id.name + ': ' + type_name + ': ' + self.session_id.batch_id.name
+
 
     def _compute_exam_count(self):
         for rec in self:
@@ -80,7 +89,7 @@ class PmExamSession(models.Model):
         if (self.user_has_groups('openeducat_core.group_op_faculty') and
                 not self.user_has_groups('openeducat_core.group_op_back_office_admin') and
                 not self.user_has_groups('openeducat_core.group_op_back_office')):
-            return self.env['op.faculty'].search([('user_id', '=', self.env.user.id)])
+            return self.env['op.faculty'].search([('emp_id.user_id.id', '=', self.env.user.id)])
 
         return None
 

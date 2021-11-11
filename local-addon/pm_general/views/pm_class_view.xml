@@ -7,8 +7,7 @@
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <tree string="Exam">
-                    <field name="name"/>
-                    <field name="class_ids"/>
+                    <field name="class_ids" string="Class (s)" widget="many2many_tags"/>
                     <field name="exam_id"/>
                     <field name="subject_id"/>
                     <field name="exam_session_id"/>
@@ -35,6 +34,9 @@
                         <button name="act_done" states="submitted" type="object"
                                 groups="openeducat_core.group_op_back_office"
                                 string="Done" class="oe_highlight"/>
+                        <button name="act_revert" states="submitted" type="object"
+                                groups="openeducat_core.group_op_back_office"
+                                string="Revert Back to Scheduled"/>
                         <button name="act_cancel" states="held" type="object"
                                 string="Cancel"/>
                         <field name="state" widget="statusbar"
@@ -44,12 +46,9 @@
                         <field name="active" invisible="1"/>
                         <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
                                 attrs="{'invisible': [('active', '=', True)]}"/>
-                        <h1>
-                             <field name="class_ids" string="Class (s)" widget="many2many_tags"/>
-                        </h1>
                         <group col="4" colspan="4">
-                            <field name="exam_session_id"/>
-                            <field name="exam_id" context="{'exam_session_id': exam_session_id,'get_parent_exam':1}"/>
+                            <field name="exam_id"/>
+                            <field name="class_ids" string="Class (s)" widget="many2many_tags"/>
                             <field name="start_time"/>
                             <field name="end_time"/>
                         </group>
@@ -61,14 +60,14 @@
                                     <field name="marks"/>
                                     <field name="status"/>
                                 <button
-                                    string="Present"
+                                    string="Mark as Present"
                                     type="object"
                                     class="btn btn-outline-success"
                                     name="set_present"
                                     attrs="{'invisible':[('status','=','present')]}"
                                 />
                                 <button
-                                    string="Absent"
+                                    string="Mark as Absent"
                                     type="object"
                                     class="btn btn-outline-danger"
                                     name="set_absent"
@@ -104,8 +103,6 @@
                                 domain="[]" context="{'group_by':'state'}"/>
                         <filter string="Exam" name="group_by_exam"
                                 domain="[]" context="{'group_by':'exam_id'}"/>
-                        <filter string="Exam Schedule" name="group_by_exam_session"
-                                domain="[]" context="{'group_by':'exam_session_id'}"/>
                          <filter string="Subject" name="group_by_subject"
                                 domain="[]" context="{'group_by':'subject_id'}"/>
                         <filter string="Semester" name="group_by_semester"
