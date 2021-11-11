@@ -9,6 +9,7 @@
             <xpath expr="//field[@name='line_ids']" position="replace">
                 <field name="line_ids">
                     <tree>
+                        <field name="semester"/>
                         <field name="due_days" required="1"/>
                         <field name="total" readonly="1"/>
                         <field name="fees_element_line">
@@ -18,6 +19,7 @@
                     </tree>
                     <form string="Fees Term Line">
                         <group colspan="4">
+                            <field name="semester"/>
                             <field name="due_days" required="1"/>
                             <field name="fees_element_line">
                                 <tree string="Information" editable="top">

@@ -389,6 +389,12 @@ class OpFeesTermsLine(models.Model):
                                  domain=[('type', '=', 'service')],
                                  required=True)
     total = fields.Float("Total", compute="_compute_fee_line_total")
+    semester = fields.Selection([("basic", "Basic"),
+                                 ("internship1", "Internship 1"),
+                                 ("advance", "Advance"),
+                                 ("internship2", "Internship 2"),
+                                 ("basic_intern", "Basic + Internship 1"),
+                                 ("advance_intern", "Advance + Internship 2")])
 
     @api.depends('fees_element_line')
     def _compute_fee_line_total(self):

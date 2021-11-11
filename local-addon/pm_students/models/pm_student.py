@@ -190,7 +190,9 @@ class StudentPaymentInstallment(models.Model):
     semester = fields.Selection([("basic", "Basic"),
                                  ("internship1", "Internship 1"),
                                  ("advance", "Advance"),
-                                 ("internship2", "Internship 2")])
+                                 ("internship2", "Internship 2"),
+                                 ("basic_intern", "Basic + Internship 1"),
+                                 ("advance_intern", "Advance + Internship 2")])
     fee_id = fields.Many2one('op.student.fees.details', store=True)
     invoice_id = fields.Many2one('account.move', 'Invoice ID')
     date = fields.Date(realted='fee_id.date', string="Generated Date")
@@ -889,7 +891,9 @@ class PmStudentFeesDetails(models.Model):
     semester = fields.Selection([("basic", "Basic"),
                                  ("internship1", "Internship 1"),
                                  ("advance", "Advance"),
-                                 ("internship2", "Internship 2")])
+                                 ("internship2", "Internship 2"),
+                                 ("basic_intern", "Basic + Internship 1"),
+                                 ("advance_intern", "Advance + Internship 2")])
     alert_date = fields.Date('Alert Date')
     payable = fields.Boolean(default=True)
     installments = fields.One2many(comodel_name='pm.student.installment', inverse_name="fee_id")
