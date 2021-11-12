@@ -5,6 +5,7 @@ import requests
 from odoo import http, _
 from odoo.addons.portal.controllers.portal import CustomerPortal
 from odoo.addons.openeducat_rest.controllers.main import ObjectEncoder
+import calendar
 from odoo.http import Response
 from odoo.addons.pm_rest_api.controllers.aba_payway import ABAPayWay
 import json
@@ -48,7 +49,9 @@ class PaymentPortal(CustomerPortal):
                 type='http', auth="user", website=True)
     def portal_create_payment(self, payment_id, type):
         PayWay = ABAPayWay()
-
+        current_datetime = datetime.utcnow()
+        current_timetuple = current_datetime.utctimetuple()
+        req_time = calendar.timegm(current_timetuple)
         object = 'op.student.fees.details'
         tran_id = ''
         if type == "installment":
@@ -60,28 +63,45 @@ class PaymentPortal(CustomerPortal):
         merchant_id = PayWay.get_merchant_id()
         payment_obj = request.env[object].sudo().browse(payment_id)
         getItems = PayWay.get_transaction_items(payment_obj)
-        hash_data = PayWay.get_hash(str(merchant_id), str(tran_id), str(payment_obj.amount), str(getItems['items']))
         api_url = PayWay.get_api_url()
+        payment_option = 'cards'
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id or payment_obj.fee_id.student_id
         base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
         success_url = base_url + '/student/aba/success'
-        print("*******-*********")
-        print(success_url)
+
+        hash_params = [str(req_time),
+                       str(merchant_id),
+                       str(tran_id),
+                       str(payment_obj.amount),
+                       str(getItems['items']),
+                       str(student.first_name),
+                       str(student.last_name),
+                       str(student.email),
+                       str(student.mobile),
+                       str(payment_option),
+                       str(push_back_url),
+                       str(success_url),
+                       ]
+        hash_data = PayWay.get_hash(hash_params)
 
         val = {
             'hash': hash_data,
+            'req_time': req_time,
+            'merchant_id': merchant_id,
             'amount': str(payment_obj.amount),
-            'amount_display': str(payment_obj.amount)+'$',
+            'amount_display': str(payment_obj.amount) + '$',
             'firstname': student.first_name,
             'lastname': student.last_name,
             'continue_success_url': success_url,
             'email': student.email,
             'phone': student.mobile,
             'tran_id': tran_id,
-            'url': api_url,
+            'url': 'https://checkout-uat.payway.com.kh/api/payment-gateway/v1/payments/purchase',
+            'payment_option': payment_option,
             'push_back_url': push_back_url,
-            'items': getItems['items']
+            'items': getItems['items'],
+            'display_items': getItems['raw_items'],
         }
         print(val)
         return request.render("pm_rest_api.pm_payment_form_custom", val)
@@ -90,6 +110,10 @@ class PaymentPortal(CustomerPortal):
                 type='http', auth="user", website=True)
     def portal_generate_payment(self, payment_id, type):
         PayWay = ABAPayWay()
+        current_datetime = datetime.utcnow()
+        current_timetuple = current_datetime.utctimetuple()
+        req_time = calendar.timegm(current_timetuple)
+        payment_option = 'abapay_deeplink'
         merchant_id = PayWay.get_merchant_id()
         object = 'op.student.fees.details'
         tran_id = ''
@@ -100,18 +124,31 @@ class PaymentPortal(CustomerPortal):
             tran_id = 'FP-' + str(payment_id)
         payment_obj = request.env[object].sudo().browse(payment_id)
         getItems = PayWay.get_transaction_items(payment_obj)
-        print(getItems)
-        hash_data = PayWay.get_hash(str(merchant_id), str(tran_id), str(payment_obj.amount), str(getItems['items']))
+
         api_url = PayWay.get_api_url()
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id or payment_obj.fee_id.student_id
         base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
         success_url = base_url + '/student/aba/success'
-        print("*******-*********")
-        print(success_url)
+
+        hash_params = [str(req_time),
+                       str(merchant_id),
+                       str(tran_id),
+                       str(payment_obj.amount),
+                       str(getItems['items']),
+                       str(student.first_name),
+                       str(student.last_name),
+                       str(student.email),
+                       str(student.mobile),
+                       str(payment_option),
+                       str(push_back_url),
+                       str(success_url),
+                       ]
+        hash_data = PayWay.get_hash(hash_params)
 
         val = {
             'hash': hash_data,
+            'req_time': req_time,
             'amount': str(payment_obj.amount),
             'amount_display': str(payment_obj.amount)+'$',
             'firstname': student.first_name,
@@ -126,7 +163,7 @@ class PaymentPortal(CustomerPortal):
             'items': getItems['items'],
             'display_items': getItems['raw_items'],
         }
-        print(val)
+
         return Response(json.dumps(val, indent=4, cls=ObjectEncoder),
                         content_type='application/json;charset=utf-8', status=200)
 

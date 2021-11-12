@@ -445,6 +445,7 @@ class Lead(models.Model):
             ctx = {
                 'default_street': lead.street,
                 'default_image': lead.image,
+                'default_partner_id': lead.partner_id.id,
                 'default_street2': lead.street2,
                 'default_mobile': lead.mobile,
                 'default_phone': lead.phone,
@@ -518,34 +519,30 @@ class Lead(models.Model):
                 'default_p_country_id': lead.p_country_id.id,
 
             }
-
-            print(ctx)
-
         messages = ''
         if not ctx['default_birth_date']:
-            messages += 'Date of Birth <br/>'
+            messages += 'Date of Birth | '
         if not ctx['default_email']:
-            messages += 'Email <br/>'
+            messages += 'Email | '
         if not ctx['default_special_medical'] and not ctx['default_medical_checkup']:
             messages += 'Medical Check up or Special Medical Condition <br/>'
         if not ctx['default_application_form']:
-            messages += 'Application Form <br/>'
+            messages += 'Application Form | '
         if not ctx['default_application_fee']:
-            messages += 'Application Fee <br/>'
+            messages += 'Application Fee | '
         if not ctx['default_primary_language']:
-            messages += 'Native Language</br>'
-
+            messages += 'Native Language | '
         if not ctx['default_gender']:
-            messages += 'Gender</br>'
-
+            messages += 'Gender'
+        print(messages)
         notification = {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': 'The following fields are invalid:',
-                'message': _(messages),
+                'title': 'Please fill in the following fields:',
+                'message': messages,
                 'type': 'danger',  # types: success,warning,danger,info
-                'sticky': False,  # True/False will display for few seconds if false
+                'sticky': True,  # True/False will display for few seconds if false
             },
         }
 

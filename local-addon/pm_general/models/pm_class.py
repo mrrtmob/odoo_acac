@@ -28,7 +28,7 @@ class PmExamClassSchedule(models.Model):
     name = fields.Char('Name', size=256, required=False)
     class_id = fields.Many2one('op.classroom', 'Class')
     class_ids = fields.Many2many('op.classroom')
-    exam_session_id = fields.Many2one("op.exam.session", 'Exam Schedule')
+    exam_session_id = fields.Many2one("op.exam.session", 'Exam Schedule', related='exam_id.session_id')
     exam_id = fields.Many2one('op.exam', 'Exam',
                                  domain=[('state', 'not in',
                                           ['cancel', 'done'])])
@@ -97,6 +97,9 @@ class PmExamClassSchedule(models.Model):
 
     def act_draft(self):
         self.state = 'draft'
+
+    def act_revert(self):
+        self.state = 'schedule'
 
     def act_cancel(self):
         self.state = 'cancel'

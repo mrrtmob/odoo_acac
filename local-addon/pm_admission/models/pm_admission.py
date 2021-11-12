@@ -97,7 +97,7 @@ class OpAdmission(models.Model):
     application_date = fields.Datetime(
         'Application Date', required=True, copy=False,
         default=lambda self: fields.Datetime.now())
-    application_fee = fields.Boolean('Application Fee', required=True)
+    application_fee = fields.Boolean('Application Fee', required=True, default=True)
     scholarship_status = fields.Many2one('pm.scholarship.status', string='Scholarship Status')
     status = fields.Selection([('1st_follow_up', '1st follow-up'),
                                ('2nd_follow_up', '2nd follow-up'),
@@ -413,28 +413,6 @@ class OpAdmission(models.Model):
 
     @api.model
     def create(self, val):
-        # messages = ''
-        # if not val['application_form']:
-        #     messages += 'Application Form <br/>'
-        # if not val['application_fee']:
-        #     val += 'Application Fee <br/>'
-        #
-        # notification = {
-        #     'type': 'ir.actions.client',
-        #     'tag': 'display_notification',
-        #     'params': {
-        #         'title': 'The following fields are invalid:',
-        #         'message': _(messages),
-        #         'type': 'danger',  # types: success,warning,danger,info
-        #         'sticky': False,  # True/False will display for few seconds if false
-        #     },
-        # }
-        # if messages:
-        #     return notification
-
-
-
-
 
         print('=====batch=====')
         print(val['batch_id'])
@@ -452,43 +430,33 @@ class OpAdmission(models.Model):
             lead_ref = self.env['crm.lead'].browse(lead_id)
             lead_ref.type = "admission"
 
-        print('****]]]')
-        print(val)
-
         res = super(OpAdmission, self).create(val)
-
         attachment = self.env['ir.attachment'].search([('res_model', '=', 'crm.lead'), ('res_id', '=', lead_id)])
+
         if attachment:
             for att in attachment:
                 att.write({
                     'res_model': 'op.admission',
                     'res_id': res.id
                 })
-                print("TRUETRUE")
-
-        print('******')
-        print(attachment)
-
         return res
 
     def enroll_student(self):
         for record in self:
             messages = ''
             if not record.class_id:
-                messages += 'Class is required <br>'
+                messages += 'Class | '
             if not record.contact_name:
-                messages += 'Emergency Contact <br>'
-            print('*************')
-            print(messages)
+                messages += 'Emergency Contact | '
             if len(messages):
                 notification = {
                     'type': 'ir.actions.client',
                     'tag': 'display_notification',
                     'params': {
-                        'title': 'The following fields are invalid:',
+                        'title': 'Please fill in the following fields:',
                         'message': _(messages),
                         'type': 'danger',  # types: success,warning,danger,info
-                        'sticky': False,  # True/False will display for few seconds if false
+                        'sticky': True,  # True/False will display for few seconds if false
                     },
                 }
                 return notification
@@ -550,6 +518,7 @@ class OpAdmission(models.Model):
                     alert_date = (datetime.today() + relativedelta(
                         days=no_alert_days)).date()
                     dict_val = {
+                        'semester': line.semester,
                         'fees_line_id': line.id,
                         'amount': amount,
                         'date': date,

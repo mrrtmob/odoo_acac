@@ -76,7 +76,7 @@ class OpRoomDistribution(models.TransientModel):
         reg_ids = self.env['op.student.course'].search(
             [('course_id', '=', session.course_id.id),
              ('batch_id', '=', session.batch_id.id),
-             ('class_ids', 'in', class_exam.class_ids)])
+             ('class_ids', 'in', class_exam.class_ids.ids)])
         student_ids = []
         for reg in reg_ids:
             print("****************")

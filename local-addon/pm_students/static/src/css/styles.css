@@ -14,3 +14,7 @@
     bottom: 90px;
     left: 30px;
 }
+.avatar-student {
+    width: 125px;
+    height: fit-content;
+}

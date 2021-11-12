@@ -10,7 +10,7 @@
            <field eval="1" name="perm_write"/>
            <field eval="1" name="perm_read"/>
            <field eval="1" name="perm_create"/>
-           <field name="domain_force">[('faculty_id.user_id','=', user.id)]</field>
+           <field name="domain_force">[('faculty_id.emp_id.user_id','=', user.id)]</field>
          </record>
 
          <record model="ir.rule" id="pm_exam_session_rule_back_admin">
@@ -42,7 +42,7 @@
            <field eval="1" name="perm_write"/>
            <field eval="1" name="perm_read"/>
            <field eval="1" name="perm_create"/>
-           <field name="domain_force">[('faculty_id.user_id','=', user.id)]</field>
+           <field name="domain_force">[('faculty_id.emp_id.user_id','=', user.id)]</field>
          </record>
         <record model="ir.rule" id="pm_exam_rule_back_admin">
            <field name="name">See All Exams Back Office Admin</field>
@@ -73,7 +73,7 @@
            <field eval="1" name="perm_write"/>
            <field eval="1" name="perm_read"/>
            <field eval="1" name="perm_create"/>
-           <field name="domain_force">[('faculty_id.user_id','=', user.id)]</field>
+           <field name="domain_force">[('faculty_id.emp_id.user_id','=', user.id)]</field>
          </record>
 
          <record model="ir.rule" id="pm_exam_class_rule_back_admin">
@@ -106,7 +106,7 @@
            <field eval="1" name="perm_write"/>
            <field eval="1" name="perm_read"/>
            <field eval="1" name="perm_create"/>
-           <field name="domain_force">[('exam_id.faculty_id.user_id','=',user.id)]</field>
+           <field name="domain_force">[('exam_id.faculty_id.emp_id.user_id','=',user.id)]</field>
          </record>
 
         <record model="ir.rule" id="pm_class_exam_attendee_see_all_rule">
@@ -139,7 +139,7 @@
            <field eval="1" name="perm_write"/>
            <field eval="1" name="perm_read"/>
            <field eval="1" name="perm_create"/>
-           <field name="domain_force">[('faculty_id.user_id','=',user.id)]</field>
+           <field name="domain_force">[('faculty_id.emp_id.user_id','=',user.id)]</field>
          </record>
 
         <record model="ir.rule" id="op_attendance_sheet_admin_see_all_rule">

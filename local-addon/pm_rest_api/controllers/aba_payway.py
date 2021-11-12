@@ -41,11 +41,12 @@ class ABAPayWay(http.Controller):
         return urlSafeEncodedStr
 
 
-
-    def get_hash(self, merchant_id, transaction_id, amount, items):
-        # gege = items.decode("utf-8")
-
-        message = bytes(merchant_id + transaction_id + amount + items, 'utf-8')
+    def get_hash(self, payloads):
+        string_payload = ''
+        for item in payloads:
+            string_payload += item
+        print(string_payload)
+        message = bytes(string_payload, 'utf-8')
         key = self.get_api_key()
         secret = key.encode('utf-8')
         dig = hmac.new(secret, msg=message, digestmod=hashlib.sha512).digest()
@@ -61,28 +62,18 @@ class ABAPayWay(http.Controller):
         return signature;
 
     def get_transaction_items(self, payment_obj):
-        print(payment_obj)
         lines = payment_obj.invoice_id.invoice_line_ids
-        items = []
-        raw_items= []
-        key = 0
+        raw_items = []
         for line in lines:
             raw_items.append({
                 'name': line.product_id.name,
                 'quantity': line.quantity,
                 'price': line.price_subtotal,
             })
-            items.append(key)
-            items[key] = {}
-            items[key]['name'] = line.product_id.name
-            items[key]['quantity'] = line.quantity
-            items[key]['price'] = line.price_subtotal
-            key += 1
-
-        json_str = json.dumps(items)
+        json_str = json.dumps(raw_items)
         res = base64.b64encode(json_str.encode('utf-8')).decode("utf-8")
 
-        return {'items':res, 'raw_items':raw_items}
+        return {'items': res, 'raw_items': raw_items}
 
 
 
