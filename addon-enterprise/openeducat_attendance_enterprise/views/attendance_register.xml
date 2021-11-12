@@ -31,16 +31,12 @@
                            'required':[('auto_create','=',True)]}"/>
                     <field name="company_id" groups="base.group_multi_company" optional="show"/>
                 </xpath>
-                <xpath expr="//field[@name='batch_id']" position="after">
-                    <field name="subject_id"/>
-                </xpath>
+
                 <xpath expr="//field[@name='course_id']" position="before">
                     <field name="section_id"
                            groups="openeducat_core_enterprise.group_op_section"/>
                 </xpath>
-                <xpath expr="//field[@name='code']" position="after">
-                    <field name="subject_id"/>
-                </xpath>
+
             </field>
         </record>
         <record id="view_op_attendance_register_inherited_tree_view" model="ir.ui.view">
