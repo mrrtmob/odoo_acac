@@ -15,6 +15,11 @@ class PmMenu(models.Model):
     menu_line_ids = fields.One2many('pm.menu.line', 'menu_id', 'Recipes')
     record_url = fields.Char('Link', compute='_compute_record_url', store=True)
     approver = fields.Many2one('res.users', 'Approve By', readonly=True)
+    total_cost = fields.Float('Total Cost', compute='_compute_total_cost', store=True,
+                                    track_visibility='onchange')
+
+    selling_price = fields.Float('Selling Price', compute='_compute_total_cost', store=True,
+                                    track_visibility='onchange')
 
     state = fields.Selection(
         [('draft', 'Draft'),
@@ -25,13 +30,13 @@ class PmMenu(models.Model):
         default='draft',
         track_visibility='onchange'
     )
-    cost_per_portion = fields.Float('Cost Per Portion', compute='_compute_cost_per_portion', store=True,
+    cost_per_portion = fields.Float('Cost Per Portion',  store=True,
                                     track_visibility='onchange')
     currency_id = fields.Many2one(
         'res.currency', 'Currency',
         default=lambda self: self.env.company.currency_id.id,
         required=True)
-    price_per_portion = fields.Float('Selling Price per Portion', compute='_compute_price_per_portion', store=True,
+    price_per_portion = fields.Float('Selling Price per Portion',
                                      track_visibility='onchange')
     cold_appetizers = fields.One2many('pm.menu.line', 'menu_id', 'Cold Appetizers', domain=[('line_type', '=', 'cold_appetizer')])
     soups = fields.One2many('pm.menu.line', 'menu_id', 'Soups', domain=[('line_type', '=', 'soup')])
@@ -42,15 +47,19 @@ class PmMenu(models.Model):
     entremets = fields.One2many('pm.menu.line', 'menu_id', 'Entremets', domain=[('line_type', '=', 'entremet')])
     desserts = fields.One2many('pm.menu.line', 'menu_id', 'Desserts', domain=[('line_type', '=', 'dessert')])
 
-    @api.depends('menu_line_ids.cost_per_portion')
-    def _compute_cost_per_portion(self):
+    @api.depends('menu_line_ids.cost_per_portion', 'price_per_portion')
+    def _compute_total_cost(self):
         for record in self:
-            record.cost_per_portion = sum(record.menu_line_ids.mapped('cost_per_portion'))
+            cost = []
+            sell = []
+            for line in record.menu_line_ids:
+                num = line.number_of_portion * line.cost_per_portion
+                selling = line.number_of_portion * line.price_per_portion
+                cost.append(num)
+                sell.append(selling)
 
-    @api.depends('menu_line_ids.price_per_portion')
-    def _compute_price_per_portion(self):
-        for record in self:
-            record.price_per_portion = sum(record.menu_line_ids.mapped('price_per_portion'))
+            record.total_cost = sum(cost)
+            record.selling_price = sum(sell)
 
     @api.depends('name')
     def _compute_record_url(self):

@@ -36,6 +36,32 @@ class PmSchedule(models.Model):
     price = fields.Float('Selling Price', compute='_compute_cost_and_price', store=True)
     account_number = fields.Char()
 
+    def button_done(self):
+        # Cut Stock From Used Ingredients in Schedule
+            for record in self:
+                for menu_line in record.schedule_menu_ids:
+                    for menu in menu_line.menu_id:
+                        for recipe in menu.menu_line_ids.recipe_id:
+                            for line in recipe.recipe_line_ids:
+                                if line.sub_recipe_id:
+                                    print('***********Sub Recipe***************')
+                                    for sub_recipe in line.sub_recipe_id.recipe_line_ids:
+                                        quantity = sub_recipe.quantity
+                                        qty = sub_recipe.product_id.product_tmpl_id.qty_on_hand - quantity
+                                        if qty > 0:
+                                            sub_recipe.product_id.product_tmpl_id.qty_on_hand = qty
+                                        else:
+                                            sub_recipe.product_id.product_tmpl_id.qty_on_hand = 0
+                                        print('Product:', sub_recipe.product_id.name)
+                                        print('Quantity:', quantity)
+
+                                else:
+                                    print('***********Product***************')
+                                    line.product_id.product_tmpl_id.qty_on_hand = line.product_id.product_tmpl_id.qty_on_hand - line.quantity
+                                    print('Product:', line.product_id.name)
+                                    print('Quantity:', line.quantity)
+
+
     @api.depends('name')
     def _compute_record_url(self):
         for record in self:
@@ -60,19 +86,11 @@ class PmSchedule(models.Model):
                 raise ValidationError(
                     _("Number of Portion must be greater than 0."))
 
-    @api.depends('schedule_menu_ids', 'number_of_portion')
+    @api.depends('schedule_menu_ids')
     def _compute_cost_and_price(self):
         for record in self:
-            total_cost_per_portion = sum(record.schedule_menu_ids.mapped('cost_per_portion'))
-            total_price_per_portion = sum(record.schedule_menu_ids.mapped('price_per_portion'))
-
-            record.cost = total_cost_per_portion * record.number_of_portion
-            record.price = total_price_per_portion * record.number_of_portion
-
-    # def send_mail(self):
-    #     template_id = 67
-    #     print('sending.... schedule mail')
-    #     self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
+            record.cost = sum(record.schedule_menu_ids.mapped('cost_per_portion'))
+            record.price = sum(record.schedule_menu_ids.mapped('price_per_portion'))
 
     def act_submit(self):
         print('submit!!')
@@ -100,14 +118,19 @@ class PmSchedule(models.Model):
             lines_dicts = {}
             schedule_yield = self.number_of_portion
             for menu_line in record.schedule_menu_ids:
+                qty = menu_line.quantity
                 for menu in menu_line.menu_id:
-                    for recipe in menu.menu_line_ids.recipe_id:
-                        weigh = schedule_yield / recipe.number_of_portion
+                    for menu_recipe in menu.menu_line_ids:
+                        recipe = menu_recipe.recipe_id
+                        weigh = qty * (menu_recipe.number_of_portion / recipe.number_of_portion)
                         for line in recipe.recipe_line_ids:
                             if line.sub_recipe_id:
                                 for sub_recipe in line.sub_recipe_id.recipe_line_ids:
-                                    quantity = menu_line.yield_percentage * sub_recipe.as_purchased / 100
+                                    quantity = weigh * line.quantity
                                     product_id = sub_recipe.product_id.id
+                                    print(sub_recipe.product_id.name)
+                                    print("quantity")
+                                    print(quantity)
                                     if product_id not in lines_dicts:
                                         lines_dicts[product_id] = {
                                             'product_id': sub_recipe.product_id.id,
@@ -119,7 +142,7 @@ class PmSchedule(models.Model):
                                     else:
                                         lines_dicts[product_id]['product_qty'] += quantity
                             elif line.product_id:
-                                quantity = menu_line.yield_percentage * line.as_purchased / 100
+                                quantity = weigh * line.as_purchased
                                 product_id = line.product_id.id
                                 if product_id not in lines_dicts:
                                     lines_dicts[product_id] = {
@@ -131,7 +154,7 @@ class PmSchedule(models.Model):
                                         }
                                 else:
                                     lines_dicts[product_id]['product_qty'] += quantity
-        # Convert Dictionary to List
+        # # Convert Dictionary to List
         data = [value for value in lines_dicts.values()]
         pr_line = self.env['purchase.request.line'].create(data)
         if pr_line:
@@ -141,10 +164,6 @@ class PmSchedule(models.Model):
         if approval:
             approval.state = 'approved'
         self.state = 'approved'
-
-        # template_id = 70
-        # print('sending.... Schedule mail')
-        # self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
 
     def act_reject(self):
         approval = self.env['pm.approval'].search(

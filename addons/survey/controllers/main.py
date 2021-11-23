@@ -234,6 +234,7 @@ class Survey(http.Controller):
         return request.redirect('/survey/%s/%s' % (survey_sudo.access_token, answer_sudo.access_token))
 
     def _prepare_survey_data(self, survey_sudo, answer_sudo, **post):
+        print("Yosh Prepare Survey")
         """ This method prepares all the data needed for template rendering, in function of the survey user input state.
             :param post:
                 - previous_page_id : come from the breadcrumb or the back button and force the next questions to load
@@ -354,6 +355,7 @@ class Survey(http.Controller):
 
     @http.route('/survey/<string:survey_token>/<string:answer_token>', type='http', auth='public', website=True)
     def survey_display_page(self, survey_token, answer_token, **post):
+        print("Not Here")
         access_data = self._get_access_data(survey_token, answer_token, ensure_token=True)
         if access_data['validity_code'] is not True:
             return self._redirect_with_error(access_data, access_data['validity_code'])

@@ -95,10 +95,9 @@
               <field name="name" />
               <field name="event_date" />
               <field name="purpose" />
-              <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
-              <field name="number_of_portion" />
-              <field name="price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
               <field name="account_number" />
+              <field name="cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+              <field name="price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
             </group>
 
             <group string="Description">
@@ -119,7 +118,7 @@
                   <field name="sequence" widget="handle"/>
                   <field name="menu_id" attrs="{'required': [('display_type', '=', False)]}" />
                   <field name="name" widget="section_and_note_text" attrs="{'invisible': [('menu_id', '!=', False)]}" />
-                  <field name="yield_percentage" />
+                  <field name="quantity" />
                   <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" readonly="1" force_save="1" />
                   <field name="price_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" readonly="1" force_save="1" />
                 </tree>

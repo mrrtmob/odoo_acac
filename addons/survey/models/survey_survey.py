@@ -259,6 +259,7 @@ class Survey(models.Model):
 
     @api.depends('session_code')
     def _compute_session_link(self):
+        print("I'm Parent")
         for survey in self:
             if survey.session_code:
                 survey.session_link = werkzeug.urls.url_join(
@@ -331,6 +332,7 @@ class Survey(models.Model):
     # ------------------------------------------------------------
 
     def _create_answer(self, user=False, partner=False, email=False, test_entry=False, check_attempts=True, **additional_vals):
+        print("August")
         """ Main entry point to get a token back or create a new one. This method
         does check for current user access in order to explicitely validate
         security.

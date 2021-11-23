@@ -13,12 +13,12 @@ class PmScheduleMenu(models.Model):
     schedule_id = fields.Many2one('pm.schedule', 'Schedule', index=True, required=True, ondelete='cascade')
     menu_id = fields.Many2one('pm.menu', 'Menu', index=True, domain=[('state', '=', 'approved')])
     sequence = fields.Integer(string='Sequence', default=10)
-    cost_per_portion = fields.Float('Cost per Portion')
+    cost_per_portion = fields.Float('Cost')
     currency_id = fields.Many2one(
         'res.currency', 'Currency',
         default=lambda self: self.env.company.currency_id.id,
         required=True)
-    price_per_portion = fields.Float('Selling Price per Portion')
+    price_per_portion = fields.Float('Selling Price')
     display_type = fields.Selection(
         [('line_section', "Section"),
          ('line_note', "Note")],
@@ -26,6 +26,7 @@ class PmScheduleMenu(models.Model):
         help="Technical field for UX purpose."
     )
     yield_percentage = fields.Float('Yield (%)', default=0)
+    quantity = fields.Float('Quantity', default=1)
 
     @api.constrains('schedule_id', 'menu_id')
     def _check_menu_id(self):
@@ -43,19 +44,19 @@ class PmScheduleMenu(models.Model):
                 else:
                     raise ValidationError(_("Menu cannot be blank."))
 
-    @api.constrains('yield_percentage')
-    def _check_yield_percentage(self):
-        for record in self:
-            if not record.display_type:
-                if record.yield_percentage <= 0:
-                    raise ValidationError(_("Yield (%) must be greater than 0%"))
-                elif record.yield_percentage > 100:
-                    raise ValidationError(_("Yield (%) must not be greater than 100%"))
+    # @api.constrains('yield_percentage')
+    # def _check_yield_percentage(self):
+    #     for record in self:
+    #         if not record.display_type:
+    #             if record.yield_percentage <= 0:
+    #                 raise ValidationError(_("Yield (%) must be greater than 0%"))
+    #             elif record.yield_percentage > 100:
+    #                 raise ValidationError(_("Yield (%) must not be greater than 100%"))
 
-    @api.onchange('menu_id', 'yield_percentage')
+    @api.onchange('menu_id', 'quantity')
     def _onchange_menu_id_and_yield_percentage(self):
-        self.cost_per_portion = self.menu_id.cost_per_portion * self.yield_percentage / 100
-        self.price_per_portion = self.menu_id.price_per_portion * self.yield_percentage / 100
+        self.cost_per_portion = self.menu_id.total_cost * self.quantity
+        self.price_per_portion = self.menu_id.selling_price * self.quantity
 
     @api.model
     def create(self, values):

@@ -126,6 +126,10 @@
                                         <label><span class="kh-OS">លេខអត្តសញ្ញាណកម្ម អតប</span>/<span class="georgia">VAT Tin</span>:</label>
                                         <span></span>
                                     </div>
+                                   <div>
+                                        <label><span class="kh-OS">លេខអត្តសញ្ញាណប័ណ្ណ</span>/<span class="georgia">Identification Number</span>:</label>
+                                         <span t-esc="doc.identification_number"/>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -249,7 +253,7 @@
                           </tbody>
                         </table>
 
-                                      <!-- signature -->
+                      <!-- signature -->
 
                         <t t-foreach="get_invoice_data" t-as="obj">
                             <t t-if="len(obj['item_lines']) == 10 or len(obj['item_lines']) == 11 ">

@@ -250,9 +250,9 @@
 
                              <group string="Student Results">
                             <field name="semester_result_ids" colspan="4" readonly="1" nolabel="1">
-                                <tree string="Exam" default_order='gpa desc' decoration-danger="status=='fail'">
+                                <tree string="Exam" default_order='result desc' decoration-danger="status=='fail'">
                                     <field name="student_id"/>
-                                    <field name="gpa"/>
+                                    <field name="result"/>
                                     <field name="grade"/>
                                     <field name="status"/>
                                     <field name="fail_reasons" widget="many2many_tags"/>

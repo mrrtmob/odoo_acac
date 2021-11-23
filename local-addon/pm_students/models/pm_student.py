@@ -364,6 +364,8 @@ class OpStudent(models.Model):
         ('xl', 'Xl'),
         ('xxl', 'XXL'),
     ], 'Uniform Size')
+    shoe_size_id = fields.Many2one('pm.shoe.size')
+    uniform_size_id = fields.Many2one('pm.uniform.size')
     rank = fields.Selection([('first_contact', 'First Contact'),
                              ('potential', 'Potential'),
                              ('high_potential', 'High Potential')])

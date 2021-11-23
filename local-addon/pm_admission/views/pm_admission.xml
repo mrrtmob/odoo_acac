@@ -230,8 +230,10 @@
                         <field name="pictures"  attrs="{'readonly': [('state','=', 'done')]}" />
                     </group>
                     <group>
-                        <field name="uniform_size" attrs="{'readonly': [('state','=', 'done')]}" />
-                        <field name="shoe_size" attrs="{'readonly': [('state','=', 'done')]}"/>
+<!--                        <field name="uniform_size" attrs="{'readonly': [('state','=', 'done')]}" />-->
+<!--                        <field name="shoe_size" attrs="{'readonly': [('state','=', 'done')]}"/>-->
+                        <field name="uniform_size_id" attrs="{'readonly': [('state','=', 'done')]}" />
+                        <field name="shoe_size_id" attrs="{'readonly': [('state','=', 'done')]}"/>
                         <field name="english_score" attrs="{'readonly': [('state','=', 'done')]}" />
                     </group>
                     <group string="Scholarship">

@@ -22,4 +22,15 @@
         </div>
     </template>
 
+    <template id="track_pr_line_template_delete">
+        <div>
+            <strong>A Purchase Line has been deleted.</strong>
+            <ul>
+                <li><t t-esc="line.product_id.display_name"/>:</li>
+                Quantity: <t t-esc="line.qty_to_order" /> -&gt; <t t-esc="line.qty_uom_name"/><br/>
+                Cost <t t-esc="line.estimated_cost"/> -&gt; <t t-esc="float(estimated_cost)"/><br/>
+            </ul>
+        </div>
+    </template>
+
 </odoo>

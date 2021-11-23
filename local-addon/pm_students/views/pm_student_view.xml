@@ -338,13 +338,14 @@
 <!--                            <field name="hobby"/>-->
 <!--                        </group>-->
 
-<!--                        <group string="Student Material">-->
-<!--                            <group colspan="4">-->
-<!--                             <field name="chef_uniform"/>-->
-<!--                             <field name="shoes"/>-->
-<!--                             <field name="knife"/>-->
-<!--                             <field name="study_material"/>-->
-<!--                            </group>-->
+                        <group string="Student Material">
+                             <field name="chef_uniform"/>
+                             <field name="shoes"/>
+                             <field name="knife"/>
+                             <field name="study_material"/>
+                             <field name="shoe_size_id"/>
+                             <field name="uniform_size_id"/>
+                        </group>
 <!--                            <group colspan="10">-->
 <!--                                <group>-->
 <!--                                    <field name="n_locker_key_s1" />-->

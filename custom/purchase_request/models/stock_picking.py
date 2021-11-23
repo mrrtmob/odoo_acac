@@ -3,16 +3,25 @@
 
 from odoo import _, api, models
 from datetime import date,datetime
+from odoo.exceptions import ValidationError
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    def action_done(self):
-        res = super(StockPicking, self).action_done()
+
+    def _action_done(self):
+        res = super(StockPicking, self)._action_done()
         for lines in self.move_lines:
             uor_qty = lines.quantity_done * lines.product_id.supplier_qty_in_uor #Convert UOM to UOR first
             lines.product_id.qty_on_hand = lines.product_id.qty_on_hand + uor_qty
+
+            print("Existing")
+            print(lines.product_id.qty_on_hand)
+            print("******On Hand URL ********")
+            print(uor_qty)
+
+        # raise ValidationError("Test SEn!!")
         journal_id = 2
         bill_obj = self.env['account.move'].with_context(default_journal_id=journal_id)
         move_line = self.move_ids_without_package

@@ -31,6 +31,9 @@ class SurveyUserInput(models.Model):
     @api.model
     def create(self, vals):
         ctx = self.env.context
+        print(ctx.get('active_id'))
+        print('pff')
+        print(vals)
         if ctx.get('active_id') and ctx.get('active_model') == 'hr.appraisal':
             vals['appraisal_id'] = ctx.get('active_id')
         return super(SurveyUserInput, self).create(vals)

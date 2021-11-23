@@ -129,6 +129,11 @@
                                         <label><span class="kh-OS">លេខអត្តសញ្ញាណកម្ម អតប</span>/<span class="georgia">VAT Tin</span>:</label>
                                         <span></span>
                                     </div>
+                                    <div class="w-100">
+
+                                        <label><span class="kh-OS">លេខអត្តសញ្ញាណប័ណ្ណ</span>/<span class="georgia">Identification Number</span>:</label>
+                                         <span t-esc="doc.identification_number"/>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-6">

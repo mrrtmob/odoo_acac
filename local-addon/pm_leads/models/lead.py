@@ -142,9 +142,21 @@ class WorkingExperience(models.Model):
     applicant_id = fields.Many2one('hr.applicant')
     employee_id = fields.Many2one('hr.employee')
 
+class PmShoeSize(models.Model):
+    _name = 'pm.shoe.size'
+    _description = 'Shoe Size'
+    name = fields.Char('Size', required=True)
+
+class PmUniformSize(models.Model):
+    _name = 'pm.uniform.size'
+    _description = 'Uniform Size'
+    name = fields.Char('Size', required=True)
+
 
 class Lead(models.Model):
     _inherit = 'crm.lead'
+    shoe_size_id = fields.Many2one('pm.shoe.size')
+    uniform_size_id = fields.Many2one('pm.uniform.size')
     image = fields.Image('image')
     hobby = fields.Char('Hobby')
     family_size = fields.Integer('Family Size')
@@ -413,6 +425,40 @@ class Lead(models.Model):
         return res
 
     @api.model
+    def clone_size_data(self):
+        all_leads = self.env['crm.lead'].search(['|', ('shoe_size', '!=', False), ('uniform_size', '!=', False)])
+        all_student = self.env['op.admission'].search(['|', ('shoe_size', '!=', False), ('uniform_size', '!=', False)])
+        all_admission = self.env['op.student'].search(['|', ('shoe_size', '!=', False), ('uniform_size', '!=', False)])
+        for lead in all_leads:
+            shoe_size = dict(lead._fields['shoe_size'].selection).get(lead.shoe_size)
+            uniform_size = dict(lead._fields['uniform_size'].selection).get(lead.uniform_size)
+            shoe_size_id = self.env['pm.shoe.size'].search([('name', '=', shoe_size)]).id
+            uniform_size_id = self.env['pm.uniform.size'].search([('name', '=', uniform_size)]).id
+            lead.shoe_size_id = shoe_size_id
+            lead.uniform_size_id = uniform_size_id
+
+        for student in all_student:
+            shoe_size = dict(student._fields['shoe_size'].selection).get(student.shoe_size)
+            uniform_size = dict(student._fields['uniform_size'].selection).get(student.uniform_size)
+            shoe_size_id = self.env['pm.shoe.size'].search([('name', '=', shoe_size)]).id
+            uniform_size_id = self.env['pm.uniform.size'].search([('name', '=', uniform_size)]).id
+            student.shoe_size_id = shoe_size_id
+            student.uniform_size_id = uniform_size_id
+
+        for admission in all_admission:
+            shoe_size = dict(admission._fields['shoe_size'].selection).get(admission.shoe_size)
+            uniform_size = dict(admission._fields['uniform_size'].selection).get(admission.uniform_size)
+            shoe_size_id = self.env['pm.shoe.size'].search([('name', '=', shoe_size)]).id
+            uniform_size_id = self.env['pm.uniform.size'].search([('name', '=', uniform_size)]).id
+            admission.shoe_size_id = shoe_size_id
+            admission.uniform_size_id = uniform_size_id
+
+
+
+
+
+
+    @api.model
     def admission_form(self, arg):
         view_id = self.env.ref('openeducat_admission.pm_admission_form').id
 
@@ -467,9 +513,11 @@ class Lead(models.Model):
                 'default_marital_status': lead.marital_status,
                 'default_nationality': lead.nationality.id,
                 'default_shoe_size': lead.shoe_size,
+                'default_shoe_size_id': lead.shoe_size_id.id,
                 'default_campaign_id': lead.campaign_id.id,
                 'default_source_id': lead.source_id.id,
                 'default_uniform_size': lead.uniform_size,
+                'default_uniform_size_id': lead.uniform_size_id.id,
                 'default_working_experience': lead.working_experience,
                 'default_job_position': lead.job_position,
                 'default_hobby': lead.hobby,

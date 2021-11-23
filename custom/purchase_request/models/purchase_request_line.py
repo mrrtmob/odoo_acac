@@ -266,19 +266,14 @@ class PurchaseRequestLine(models.Model):
         for record in self:
             record.estimated_cost = record.qty_to_order * record.unit_price
 
+
     @api.onchange('qty_to_order')
     def _compute_is_danger(self):
         for record in self:
-            print('qtyorder', record.qty_to_order)
-            print('minimun order', record.minimum_order)
-            print('needed', record.qty_needed_uom)
             if record.qty_to_order < record.minimum_order:
                 record.is_danger = True
             else:
                 record.is_danger = False
-
-            if record.qty_to_order != record.qty_needed_uom and record.request_id.is_automated:
-                record.is_danger = True
 
 
     @api.depends('qty_on_hand_uom', 'product_qty_uom')
@@ -515,24 +510,31 @@ class PurchaseRequestLine(models.Model):
                     )
                 )
             else:
-                msg = _("Remove line with %s ") % (line.product_id.display_name,)
-                self.request_id.message_post(body=msg)
+
+                line.request_id.message_post_with_view('purchase_request.track_pr_line_template_delete',
+                                                       values={'line': line, 'qty_uom_name': line.qty_uom_name,
+                                                               'estimated_cost': line.estimated_cost},
+                                                       subtype_id=self.env.ref('mail.mt_note').id)
+
+
+
+
         return super(PurchaseRequestLine, self).unlink()
 
-    @api.model
-    def create(self, val):
-        line = super(PurchaseRequestLine, self).create(val)
-        msg = _("Extra line with %s ") % (line.product_id.display_name,)
-        line.request_id.message_post(body=msg)
-        return line
+    # @api.model
+    # def create(self, val):
+    #     line = super(PurchaseRequestLine, self).create(val)
+    #     msg = _("Extra line with %s ") % (line.product_id.display_name,)
+    #     line.request_id.message_post(body=msg)
+    #     return line
 
     def write(self, val):
 
         print('after:', self.estimated_cost)
-        if 'product_qty' in val:
+        if 'qty_to_order' in val:
             for line in self:
                 line.request_id.message_post_with_view('purchase_request.track_pr_line_template',
-                                                    values={'line': line, 'product_qty': val['product_qty']},
+                                                    values={'line': line, 'product_qty': val['qty_to_order']},
                                                     subtype_id=self.env.ref('mail.mt_note').id)
             for line in self:
                 cost = line.unit_price * val['qty_to_order']

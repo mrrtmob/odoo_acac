@@ -26,7 +26,7 @@
 
     # always loaded
     'data': [
-        # 'views/pm_accounting.xml',
+        'views/pm_accounting_views.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/account_view.xml',

@@ -9,7 +9,6 @@ odoo.define('app_odoo_customize.UserMenu', function (require) {
      * editing its preferences, accessing the documentation, logging out...
      */
 
-    const session = require('web.session');
     var UserMenu = require('web.UserMenu');
     //避免错误，要再定义
     var documentation_url = 'https://www.sunpop.cn';
@@ -24,8 +23,6 @@ odoo.define('app_odoo_customize.UserMenu', function (require) {
             var self = this;
             var session = this.getSession();
             var lang_list = '';
-            self.is_manager = false;
-            self.show_debug = false;
 
             self._rpc({
                 model: 'res.lang',
@@ -74,8 +71,10 @@ odoo.define('app_odoo_customize.UserMenu', function (require) {
                         $('switch-lang').hide();
                     }
                     //注意， odoo12，主用户id=2, 加了个 __system__
-                    if (val.key == 'app_show_debug' && val.value == "True") {
-                        self.show_debug = true;
+                    if (session.user_context.uid > 2 || (val.key == 'app_show_debug' && val.value == "False")) {
+                        $('[data-menu="debug"]').hide();
+                        $('[data-menu="debugassets"]').hide();
+                        $('[data-menu="quitdebug"]').hide();
                     }
                     if (val.key == 'app_show_documentation' && val.value == "False") {
                         $('[data-menu="documentation"]').hide();
@@ -96,26 +95,12 @@ odoo.define('app_odoo_customize.UserMenu', function (require) {
                         $('.o_sub_menu_footer').hide();
                     }
                 });
-                if (!self.show_debug || !session.is_admin) {
-                    $('[data-menu="debug"]').hide();
-                    $('[data-menu="debugassets"]').hide();
-                    $('[data-menu="quitdebug"]').hide();
-                }
             })
         },
         /**
          * @override
          * 由于odoo11 没传ev到事件，所以要重载
          */
-        async willStart() {
-            await this._super(...arguments);
-            var self = this;
-            try {
-                self.is_manager = await session.user_has_group('base.group_erp_manager');
-            } catch {
-                self.is_manager = false;
-            }
-        },
         start: function () {
             var self = this;
             return this._super.apply(this, arguments).then(function () {
@@ -125,37 +110,18 @@ odoo.define('app_odoo_customize.UserMenu', function (require) {
                     var f = self['_onMenuLang']
                     f.call(self, $(this));
                 });
-                if (!self.show_debug || !self.is_manager) {
-                    setTimeout(function () {
-                        $('[data-menu="debug"]').hide();
-                        $('[data-menu="debugassets"]').hide();
-                        $('[data-menu="quitdebug"]').hide();
-                    }, 500)
-                }
-                // if (self.is_manager) {
-                //     //控制debug显示
-                //     var mMode = 'normal';
-                //     if (window.location.href.indexOf('debug=1') != -1)
-                //         mMode = 'debug';
-                //     if (window.location.href.indexOf('debug=assets') != -1)
-                //         mMode = 'assets';
-                //
-                //     if (mMode == 'normal')  {
-                //         $('[data-menu="debug"]').show();
-                //         $('[data-menu="debugassets"]').show();
-                //         $('[data-menu="quitdebug"]').hide();
-                //     }
-                //     if (mMode == 'debug'){
-                //         $('[data-menu="debug"]').hide();
-                //         $('[data-menu="debugassets"]').show();
-                //         $('[data-menu="quitdebug"]').show();
-                //     }
-                //     if (mMode == 'assets')  {
-                //         $('[data-menu="debug"]').show();
-                //         $('[data-menu="debugassets"]').hide();
-                //         $('[data-menu="quitdebug"]').show();
-                //     }
-                // }
+                //控制debug显示
+                var mMode = 'normal';
+                if (window.location.href.indexOf('debug=1') != -1)
+                    mMode = 'debug';
+                if (window.location.href.indexOf('debug=assets') != -1)
+                    mMode = 'assets';
+                if (mMode == 'normal')
+                    $('[data-menu="quitdebug"]').hide();
+                if (mMode == 'debug')
+                    $('[data-menu="debug"]').hide();
+                if (mMode == 'assets')
+                    $('[data-menu="debugassets"]').hide();
             });
         },
         _onMenuAccount: function () {

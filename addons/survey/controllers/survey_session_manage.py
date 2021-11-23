@@ -42,6 +42,7 @@ class UserInputSession(http.Controller):
 
     @http.route('/survey/session/manage/<string:survey_token>', type='http', auth='user', website=True)
     def survey_session_manage(self, survey_token, **kwargs):
+        print("Yo 2")
         """ Main route used by the host to 'manager' the session.
         - If the state of the session is 'ready'
           We render a template allowing the host to showcase the different options of the session
@@ -176,6 +177,8 @@ class UserInputSession(http.Controller):
 
     @http.route('/survey/check_session_code/<string:session_code>', type='json', auth='public', website=True)
     def survey_check_session_code(self, session_code):
+        print("YYIYI")
+        print(session_code)
         """ Checks if the given code is matching a survey session_code.
         If yes, redirect to /s/code route.
         If not, return error. The user is invited to type again the code. """

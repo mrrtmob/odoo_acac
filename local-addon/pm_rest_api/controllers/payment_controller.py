@@ -69,12 +69,14 @@ class PaymentPortal(CustomerPortal):
         student = payment_obj.student_id or payment_obj.fee_id.student_id
         base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
         success_url = base_url + '/student/aba/success'
+        shipping = 0
 
         hash_params = [str(req_time),
                        str(merchant_id),
                        str(tran_id),
                        str(payment_obj.amount),
                        str(getItems['items']),
+                       # str(shipping),
                        str(student.first_name),
                        str(student.last_name),
                        str(student.email),
@@ -101,6 +103,7 @@ class PaymentPortal(CustomerPortal):
             'payment_option': payment_option,
             'push_back_url': push_back_url,
             'items': getItems['items'],
+            'shipping': shipping,
             'display_items': getItems['raw_items'],
         }
         print(val)

@@ -238,15 +238,8 @@ class PurchaseRequest(models.Model):
         self.is_assignee = False
         if self.state == 'request_approved' and self.env.user == self.requested_by:
             self.is_assignee = True
-            print('I am dean')
-            print(self.is_assignee)
-            print(self.state)
-            print(self.is_automated)
         elif self.env.user == self.assigned_to:
             self.is_assignee = True
-            print('I am approver')
-            print(self.state)
-            print(self.is_automated)
         else:
             print('I am not approver')
             self.is_assignee = False
@@ -625,39 +618,9 @@ class PurchaseRequest(models.Model):
         if self.approval_record_id:
             self.approval_record_id.state = 'rejected'
 
-        print(state)
         return self.write({"state": state})
 
     def button_done(self):
-
-        schedule_dish = self.schedule_dish_id;
-        # Cut Stock From Used Ingredients in Schedule
-        if schedule_dish:
-            for record in schedule_dish:
-                for menu_line in record.schedule_menu_ids:
-                    for menu in menu_line.menu_id:
-                        for recipe in menu.menu_line_ids.recipe_id:
-                            for line in recipe.recipe_line_ids:
-                                if line.sub_recipe_id:
-                                    print('***********Sub Recipe***************')
-                                    for sub_recipe in line.sub_recipe_id.recipe_line_ids:
-                                        quantity = sub_recipe.quantity
-                                        qty = sub_recipe.product_id.product_tmpl_id.qty_on_hand - quantity
-                                        if qty > 0:
-                                            sub_recipe.product_id.product_tmpl_id.qty_on_hand = qty
-                                        else:
-                                            sub_recipe.product_id.product_tmpl_id.qty_on_hand = 0
-                                        print('Product:', sub_recipe.product_id.name)
-                                        print('Quantity:', quantity)
-
-                                else:
-                                    print('***********Product***************')
-                                    line.product_id.product_tmpl_id.qty_on_hand = line.product_id.product_tmpl_id.qty_on_hand - line.quantity
-                                    print('Product:', line.product_id.name)
-                                    print('Quantity:', line.quantity)
-
-        #Create new stock from product line!!
-
         return self.write({"state": "done"})
 
     def check_auto_reject(self):

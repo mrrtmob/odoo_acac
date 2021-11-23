@@ -66,6 +66,17 @@ access_account_analytic_line,name_account_analytic_line,account.model_account_an
 
 "access_hr_employee_reward_registrar","hr.employee.reward.registrar","hr_reward_warning.model_hr_announcement","group_acac_registrar",1,1,1,1
 
+access_op_activity_type_marketing,name_op_activity_type_marketing,openeducat_activity.model_op_activity_type,group_acac_marketing_user,1,1,1,1
+
+
+
+access_pm_uniform_size_marketing,access_pm_uniform_size_marketing,model_pm_uniform_size,group_acac_marketing_user,1,1,1,1
+access_pm_uniform_size,name_op_activity_type_marketing,model_pm_uniform_size,base.group_user,1,0,0,0
+
+access_pm_shoe_size_marketing,access_pm_shoe_size_marketing,model_pm_shoe_size,group_acac_marketing_user,1,1,1,1
+access_pm_shoe_size,name_op_activity_type_marketing,model_pm_shoe_size,base.group_user,1,0,0,0
+
+
 
 
 

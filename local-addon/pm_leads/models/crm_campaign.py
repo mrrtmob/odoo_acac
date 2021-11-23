@@ -32,6 +32,7 @@ class Campaign(models.Model):
     @api.depends('cost', 'crm_lead_count')
     def _get_cost_per_lead(self):
         for rec in self:
-            print("Yo")
-            rec.cost_per_lead = rec.cost / rec.crm_lead_count
-            print(rec.cost_per_lead )
+            if not rec.crm_lead_count:
+                rec.cost_per_lead = 0
+            else:
+                rec.cost_per_lead = rec.cost / rec.crm_lead_count

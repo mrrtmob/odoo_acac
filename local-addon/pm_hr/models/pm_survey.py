@@ -1,5 +1,6 @@
 from odoo import models, fields, _, api, SUPERUSER_ID
 from datetime import datetime
+import werkzeug
 from odoo.exceptions import UserError, ValidationError
 
 
@@ -86,6 +87,17 @@ class PmSurvey(models.Model):
     # category = fields.Selection(selection_add=[('appraisal', "Appraisal")])
     department_id = fields.Many2one('hr.department', 'Department')
     job_id = fields.Many2one('hr.job')
+
+
+    @api.depends('session_code')
+    def _compute_session_link(self):
+        print("I'm Child")
+        for survey in self:
+            survey.session_link = werkzeug.urls.url_join(
+                survey.get_base_url(),
+                survey.get_start_url())
+
+
 
 class PmSurveyUserInputInherit(models.Model):
     _inherit = 'survey.user_input'

@@ -33,6 +33,8 @@ class OpAdmission(models.Model):
     marital_status = fields.Selection([('single', 'Single'),
                                        ('married', 'Married')])
     constrains = fields.Text('Special Wishes')
+    shoe_size_id = fields.Many2one('pm.shoe.size')
+    uniform_size_id = fields.Many2one('pm.uniform.size')
     shoe_size = fields.Selection([
         ('xxs', 'XXS'),
         ('xs', 'XS'),
@@ -599,7 +601,9 @@ class OpAdmission(models.Model):
                 'marital_status': student.marital_status,
                 'constrains': student.constrains,
                 'shoe_size': student.shoe_size,
+                'shoe_size_id': student.shoe_size_id.id,
                 'uniform_size': student.uniform_size,
+                'uniform_size_id': student.uniform_size_id.id,
                 'primary_language': student.primary_language.id,
                 'other_language': langs,
                 'english_score': student.english_score,

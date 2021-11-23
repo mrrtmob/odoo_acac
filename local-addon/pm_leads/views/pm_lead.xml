@@ -186,6 +186,8 @@
                         <field name="pictures" />
                     </group>
                     <group>
+                        <field name="uniform_size_id" />
+                        <field name="shoe_size_id" />
                         <field name="uniform_size" />
                         <field name="shoe_size" />
                         <field name="english_score" />

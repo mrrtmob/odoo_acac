@@ -5,6 +5,7 @@ class AccountMove(models.Model):
     rate = fields.Integer('Exchange Rate', compute="_compute_rate", store=True)
     currency_name = fields.Char(related='currency_id.name')
     purchase_order_id = fields.Many2one('purchase.order')
+    identification_number = fields.Char("Identification Number")
 
     @api.depends('invoice_date')
     def _compute_rate(self):

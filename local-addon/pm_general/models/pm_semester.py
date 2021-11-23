@@ -554,7 +554,7 @@ class PmSemesterResult(models.Model):
     def act_draft(self):
         self.state = 'draft'
 
-    @api.depends('semester_res_line.total_score','semester_res_line.status')
+    @api.depends('semester_res_line.total_score', 'semester_res_line.status')
     def _compute_result(self):
         for record in self:
             marks = {}

@@ -20,6 +20,7 @@ class PmMenuLine(models.Model):
         default=False,
         help="Technical field for UX purpose."
     )
+    number_of_portion = fields.Integer('Yield', required=True, default=10)
     cost_per_portion = fields.Float('Cost per Portion', compute='_compute_cost_per_portion', store=True)
     currency_id = fields.Many2one(
         'res.currency', 'Currency',

@@ -23,8 +23,8 @@
           <field name="name" />
           <field name="state" widget="label_selection" options="{'classes': {'draft': 'primary', 'submitted': 'secondary', 'approved': 'success', 'rejected': 'danger'}}"/>
           <field name="currency_id" invisible="1" />
-          <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
-          <field name="price_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+          <field name="total_cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+          <field name="selling_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
         </tree>
       </field>
     </record>
@@ -67,7 +67,7 @@
           <header groups="base.group_user">
             <button name="act_submit" states="draft" string="Submit" type="object" class="oe_highlight"/>
             <button name="act_approve" states="submitted" groups="pm_culinary.group_acac_culinary_head,pm_leads.group_acac_dean" string="Approve" type="object" class="oe_highlight"/>
-            <button name="act_reject" states="submitted" groups="pm_culinary.group_acac_culinary_head,pm_leads.group_acac_dean" string="Reject" type="object" class="btn-danger oe_highlight"/>
+            <button name="act_reject" states="submitted" groups="pm_culinary.group_acac_culinary_head,pm_leads.group_acac_dean" string="Reject" type="object"/>
             <button name="act_reset" states="rejected" string="Reset" type="object" />
 
             <field name="state" widget="statusbar"
@@ -80,8 +80,8 @@
             <group col="4">
               <field name="name" />
               <newline />
-              <field name="cost_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
-              <field name="price_per_portion" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+              <field name="total_cost" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+              <field name="selling_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
             </group>
 
             <group string="Cold Appetizers">

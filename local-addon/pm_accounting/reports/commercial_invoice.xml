@@ -128,7 +128,11 @@
                                     </div>
                                     <div>
                                         <label><span class="kh-OS">លេខអត្តសញ្ញាណកម្ម អតប</span>/<span class="georgia">VAT Tin</span>:</label>
-                                        <span></span>
+                                        <span>K004-901803390</span>
+                                    </div>
+                                    <div>
+                                        <label><span class="kh-OS">លេខអត្តសញ្ញាណប័ណ្ណ</span>/<span class="georgia">Identification Number</span>:</label>
+                                         <span t-esc="doc.identification_number"/>
                                     </div>
                                 </div>
                             </div>
@@ -156,11 +160,11 @@
                                 <div class="form-group">
                                     <div>
                                         <label class="kh-OS">ថ្ងៃផុតកំណត់:</label>
-                                        <span></span>
+                                        <span t-esc="doc.invoice_date_due"/>
                                     </div>
                                     <div>
                                         <label class="georgia">Due Date:</label>
-                                        <span></span>
+                                        <span t-esc="doc.invoice_date_due"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
