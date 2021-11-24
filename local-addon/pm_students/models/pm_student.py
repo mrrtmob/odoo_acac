@@ -148,6 +148,14 @@ class OpStudentCourse(models.Model):
 
     @api.model
     def create(self, val):
+        # Store Student Progression detail in this case, the student status must have been changed
+        print(val)
+        progress_obj = self.env['pm.student.progress'].sudo()
+        progress_obj.store_progression(val['student_id'],
+                                       val['course_id'],
+                                       val['batch_id'],
+                                       val['education_status'],
+                                       val['remarks'])
         val['is_saved'] = True
         res = super(OpStudentCourse, self).create(val)
         return res
@@ -860,27 +868,27 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
             self.get_student_starting_data(course_id, batch_id, res.id)
 
         return res
-    def write(self, val):
-        print("here")
-        print(val)
-        res = super(OpStudent, self).write(val)
-        if "course_detail_ids" in val:
-            for course_detail_id in val['course_detail_ids']:
-                course_id = course_detail_id[1]
-                if course_id:
-                    student_course = self.env['op.student.course'].browse(course_id)
-                    student_id = student_course.student_id.id
-                    remarks = student_course.remarks
-                    status = student_course.education_status
-                    batch_id = student_course.batch_id.id
-                    course_id = student_course.course_id.id
-
-
-                    # Store Student Progression detail in this case, the student status must have been changed
-                    progress_obj = self.env['pm.student.progress'].sudo()
-                    progress_obj.store_progression(student_id, course_id, batch_id, status, remarks)
-
-        return res
+    # def write(self, val):
+    #     print("here")
+    #     print(val)
+    #     res = super(OpStudent, self).write(val)
+    #     if "course_detail_ids" in val:
+    #         for course_detail_id in val['course_detail_ids']:
+    #             course_id = course_detail_id[1]
+    #             if course_id:
+    #                 student_course = self.env['op.student.course'].browse(course_id)
+    #                 student_id = student_course.student_id.id
+    #                 remarks = student_course.remarks
+    #                 status = student_course.education_status
+    #                 batch_id = student_course.batch_id.id
+    #                 course_id = student_course.course_id.id
+    #
+    #
+    #                 # Store Student Progression detail in this case, the student status must have been changed
+    #                 progress_obj = self.env['pm.student.progress'].sudo()
+    #                 progress_obj.store_progression(student_id, course_id, batch_id, status, remarks)
+    #
+    #     return res
 
 class PmStudentFeesDetails(models.Model):
     _inherit = "op.student.fees.details"

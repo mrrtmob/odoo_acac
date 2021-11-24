@@ -318,6 +318,58 @@ class OpSemesterMarksheetRegister(models.Model):
     rank_middle = fields.Float('Rank 60-80 (%):', compute='_compute_middle')
     rank_top = fields.Float('Rank Above 80 (%):', compute='_compute_top')
 
+    def compute_score_batch(self):
+        sheets = self.env['pm.semester.marksheet.register'].search([])
+        for sheet in sheets:
+            print('Batch Woho')
+            semester_result = sheet.semester_result_ids
+            for sm in semester_result:
+                total = sum(x.total_score for x in sm.semester_res_line)
+                subject_count = len(sm.semester_res_line)
+                if total and subject_count:
+                    sm.result = total / subject_count
+
+                total_credit = sm.semester_id.total_credit
+                print('========= total credit==============')
+                print(total_credit)
+                print('========= total grade point==============')
+                total_grade_point = sum(x.weigh_grade_point for x in sm.semester_res_line)
+                print(total_grade_point)
+                if total_credit and total_grade_point:
+                    print('total grade point', sm.total_grade_point)
+                    gpa = total_grade_point / total_credit
+                    res = sm.scale_gpa(gpa)
+                    print("========= RES========= ")
+                    print(res)
+                    sm.gpa = res
+
+    def compute_score(self):
+        for sheet in self:
+            print('Wuho')
+            semester_result = sheet.semester_result_ids
+            for sm in semester_result:
+                total = sum(x.total_score for x in sm.semester_res_line)
+                subject_count = len(sm.semester_res_line)
+                if total and subject_count:
+                    sm.result = total / subject_count
+
+                total_credit = sm.semester_id.total_credit
+                print('========= total credit==============')
+                print(total_credit)
+                print('========= total grade point==============')
+                total_grade_point = sum(x.weigh_grade_point for x in sm.semester_res_line)
+                print(total_grade_point)
+                if total_credit and total_grade_point:
+                    print('total grade point', sm.total_grade_point)
+                    gpa = total_grade_point / total_credit
+                    res = sm.scale_gpa(gpa)
+                    print("========= RES========= ")
+                    print(res)
+                    sm.gpa = res
+
+
+
+
 
 
     def testing(self):
@@ -499,14 +551,10 @@ class PmSemesterResult(models.Model):
 
 
 
-    @api.depends('semester_res_line.wiegh_grade_point')
+    @api.depends('semester_res_line.weigh_grade_point')
     def _compute_total_grade_point(self):
         for record in self:
-            total_grade_point = 0
-            for line in record.semester_res_line:
-                total_grade_point += line.wiegh_grade_point
-            print(total_grade_point)
-            record.total_grade_point = total_grade_point
+            record.total_grade_point = sum(x.weigh_grade_point for x in record.semester_res_line)
 
     @api.depends('total_grade_point',
                  'semester_id.total_credit')
@@ -557,6 +605,7 @@ class PmSemesterResult(models.Model):
     @api.depends('semester_res_line.total_score','semester_res_line.status')
     def _compute_result(self):
         for record in self:
+            print("hehe")
             marks = {}
             sessions = {}
             for line in record.semester_res_line:
@@ -576,10 +625,15 @@ class PmSemesterResult(models.Model):
                     else:
                         line.exam_state = 'fail_resit'
 
-            print(sessions)
+            print("***************")
             total = sum(marks.values())
+            print(total)
             subject_count = len(marks)
             if total and subject_count:
+                print("***************")
+                print("here")
+                print(total)
+                print(subject_count)
                 record.result = round(total / subject_count)
 
     @api.depends('gpa')
@@ -641,7 +695,8 @@ class PmSemesterResultLine(models.Model):
     session_id = fields.Many2one('op.exam.session', 'Exam Schedule')
     subject_id = fields.Many2one('op.subject', 'Subject', store=True)
     grade = fields.Char('Grade', readonly=True, compute='_compute_grade', store=True)
-    wiegh_grade_point = fields.Float('Grade Weight Point')
+    weigh_grade_point = fields.Float('Grade Weight Point', compute="_compute_weigh_grade_point", store=True)
+    grade_point = fields.Float('Grade Point', compute="_compute_grade", store=True)
     total_score = fields.Integer("Result")
     generated_date = fields.Date(
         'Generated Date', required=True,
@@ -656,6 +711,12 @@ class PmSemesterResultLine(models.Model):
         ('resit', 'Pass Resit Exam'),
         ('fail_resit', 'Fail Resit Exam'),
     ])
+
+    @api.depends('grade')
+    def _compute_weigh_grade_point(self):
+        for record in self:
+            record.weigh_grade_point = record.grade_point * record.subject_id.p_credits
+
 
     @api.depends('total_score')
     def _compute_status(self):
@@ -673,6 +734,7 @@ class PmSemesterResultLine(models.Model):
             for grade in grades:
                 if grade.min_per <= record.total_score and grade.max_per >= record.total_score:
                     record.grade = grade.result
+                    record.grade_point = grade.grade_point
 
 class PmSemesterResultTemplate(models.Model):
     _name = "pm.semester.result.template"
@@ -747,11 +809,11 @@ class PmSemesterResultTemplate(models.Model):
                         subject_result = line.result
                         student_id = line.student_id.id
                         subject_id = line.marksheet_reg_id.exam_session_id.subject_id
-                        wiegh_grade_point = line.grade_point * subject_id.p_credits
+                        weigh_grade_point = line.grade_point * subject_id.p_credits
                         if student_id not in result_dict:
-                            result_dict[student_id] = [{'score': subject_result, 'session_id': session_id, 'wiegh_grade_point': wiegh_grade_point, 'subject_id': subject_id.id}]
+                            result_dict[student_id] = [{'score': subject_result, 'session_id': session_id, 'weigh_grade_point': weigh_grade_point, 'subject_id': subject_id.id}]
                         else:
-                            result_dict[student_id].append({'score': subject_result, 'session_id': session_id, 'wiegh_grade_point': wiegh_grade_point, 'subject_id': subject_id.id})
+                            result_dict[student_id].append({'score': subject_result, 'session_id': session_id, 'weigh_grade_point': weigh_grade_point, 'subject_id': subject_id.id})
             print(result_dict)
             for student_id in result_dict.keys():
                 print(student_id)
@@ -771,7 +833,7 @@ class PmSemesterResultTemplate(models.Model):
                         'session_id': result['session_id'],
                         'total_score': result['score'],
                         'subject_id': result['subject_id'],
-                        'wiegh_grade_point': result['wiegh_grade_point']
+                        'weigh_grade_point': result['weigh_grade_point']
                     })
         record.state = 'result_generated'
 
