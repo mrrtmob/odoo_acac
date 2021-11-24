@@ -77,15 +77,17 @@
              <xpath expr="//field[@name='fees_term_id']" position="before">
                    <field name="product_id" required="1"/>
              </xpath>
+
+              <xpath expr="//button[@name='confirm_cancel']" position="replace">
+                  <button  name="%(admission_cancel_wizzard)d" states="draft,submit,pending,reject,confirm,confirm_pending" string="Cancel Admission" type="action"/>
+             </xpath>
 <!--tem:-->
 <!--             <xpath expr="//button[@name='confirm_in_progress']" position="replace">-->
 <!--                  <button  name="confirm_in_progress" states="submit,pending"-->
 <!--                           groups = "pm_accounting.group_acac_accountant" string="Confirm Payment" type="object" class="oe_highlight"/>-->
 <!--             </xpath>-->
 
-             <xpath expr="//button[@name='confirm_cancel']" position="replace">
-                  <button  name="%(admission_cancel_wizzard)d" states="submit,pending,reject,confirm,confirm_pending" string="Cancel" type="action"/>
-             </xpath>
+
 
              <xpath expr="//button[@name='admission_confirm']" position="replace">
                    <button string="Admission Confirm" class="oe_highlight" states="confirm" type="object"

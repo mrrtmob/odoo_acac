@@ -214,15 +214,16 @@ class OpSubjectRegistrationCustom(models.Model):
                     'is_completed': False
                 }
                 data.append(val)
+            print(course_id)
             if course_id:
                 course_id.write({
                     'subject_ids': [[6, 0, list(set(subject_ids))]]
                 })
                 self.env['pm.student.course.subject'].create(data)
                 record.state = 'approved'
-            else:
-                raise ValidationError(
-                    _("Course not found on student's admission!"))
+
+
+
 
 class PmTermOrder(models.Model):
     _description = 'Terms Order'
