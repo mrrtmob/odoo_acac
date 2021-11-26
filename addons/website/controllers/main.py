@@ -153,6 +153,7 @@ class Website(Home):
         if lang == 'default':
             lang = request.website.default_lang_id.url_code
             r = '/%s%s' % (lang, r or '/')
+
         redirect = werkzeug.utils.redirect(r or ('/%s' % lang), 303)
         lang_code = request.env['res.lang']._lang_get_code(lang)
         redirect.set_cookie('frontend_lang', lang_code)

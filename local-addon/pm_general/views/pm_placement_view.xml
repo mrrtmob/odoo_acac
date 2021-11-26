@@ -5,6 +5,7 @@
             <field name="model">op.student</field>
             <field name="inherit_id" ref="openeducat_placement_enterprise.placement_smart_button"/>
             <field name="arch" type="xml">
+
                 <xpath expr="//button[@name='get_placement']" position="replace">
                     <button class="btn oe_stat_button" type="object"
                             name="get_placement"
@@ -23,21 +24,29 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='join_date']" position="after">
                     <field name="p_end_date"/>
+
                 </xpath>
                 <xpath expr="//field[@name='training_period']" position="after">
-                    <field name="p_completed"/>
                     <field name="p_country_id"/>
+                </xpath>
+
+                 <xpath expr="//field[@name='state']" position="replace">
+                     <field name="p_completed"/>
+                    <field name="p_status"/>
                 </xpath>
             </field>
         </record>
 
-        <record id="custom_view_op_placement_offer_tree" model="ir.ui.view">
+        <record id="custom_view_op_placement_offer_tree_search" model="ir.ui.view">
             <field name="name">op.placement.offer.search.custom</field>
             <field name="model">op.placement.offer</field>
             <field name="inherit_id" ref="openeducat_placement_enterprise.view_op_placement_offer_search"/>
             <field name="arch" type="xml">
                 <xpath expr="//search" position="inside">
 
+                    <filter string="Passed" name="completed" domain="[('p_status', '=', 'passed')]"/>
+                    <filter string="In Progress" name="completed" domain="[('p_status', '=', 'in_progress')]"/>
+                    <filter string="Incomplete" name="completed" domain="[('p_status', '=', 'i')]"/>
                     <filter string="Completed" name="completed" domain="[('p_completed', '=', True)]"/>
 
 
@@ -54,19 +63,10 @@
 
 
         <record id="custom_view_op_placement_offer_form" model="ir.ui.view">
-            <field name="name">op.placement.offer.tree</field>
+            <field name="name">op.placement.offer.form</field>
             <field name="model">op.placement.offer</field>
             <field name="inherit_id" ref="openeducat_placement_enterprise.view_op_placement_offer_form"/>
             <field name="arch" type="xml">
-                <!-- <xpath expr="//field[@name='join_date']" position="after">
-                   
-                </xpath>
-                <xpath expr="//field[@name='training_period']" position="after">
-                    
-                   
-                    
-                </xpath> 
-                <xpath expr="//group[@name='training_period']" position="after"> -->
                 <xpath expr="//form" position="replace">
                     <form string="Internship">
                         <header groups="openeducat_core.group_op_back_office_admin,openeducat_core.group_op_back_office">
@@ -95,8 +95,6 @@
                                 <field name="offer_package" string="Salary"  widget="monetary"/>
                                 <field name="training_period"/>
                                 <field name="benefit"/>
-<!--                                <field name="p_accommodation" />-->
-<!--                                <field name="p_transportation" />-->
                                 <field name="currency_id" invisible="1"/>
                             </group>
 
@@ -123,7 +121,7 @@
                                 <field name="p_absences"/>   
                                 <field name="p_completed"/>
                                 <field name="p_grade"/>   
-                                <field name="p_status"/> 
+                                <field name="p_status"/>
                             </group>
                         </sheet>
                         <div class="oe_chatter">

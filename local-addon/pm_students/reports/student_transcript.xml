@@ -19,7 +19,8 @@
 <!--                background-color: red;-->
 <!--            }-->
         </style>
-        <t t-call="web.html_container">
+
+         <t t-call="web.html_container">
 <!--            <t t-set="data_report_dpi" t-value="110"/>-->
             <t t-call="web.internal_layout">
                 <div class="page pt-4" style="font-family: 'Georgia'; font-size: 15px;">
@@ -42,15 +43,15 @@
                                 </div>
                                 <div class="d-block">
                                     <label>Place &amp; date of Birth:</label>
-                                    <label><span t-esc="get_birth_place"/> , <span t-esc="get_student_bod" /> </label>
+                                    <label><span t-esc="get_birth_place"/> , <span t-esc="get_student_bod"/> </label>
                                 </div>
                             </div>
                             <div class="col-5">
                                 <div class="d-block">
                                     <label>Nationality:</label>
                                     <span t-esc="get_student_nationality"/>
-                                   
-                                   
+
+
                                 </div>
                                 <div class="d-block">
                                     <label>Degree:</label>
@@ -83,7 +84,7 @@
                                       <th scope="col" class="w100 text-center">Grade</th>
                                     </tr>
                                   </thead>
-                                  <tbody> 
+                                  <tbody>
                                     <t t-foreach="get_data" t-as="obj">
                                       <tr t-foreach="obj['subjects']" t-as="sub">
                                         <td class="w150 text-center"> <span t-esc="sub['code']"/> </td>
@@ -94,45 +95,114 @@
                                     </t>
                                   </tbody>
                                 </table>
-                                <div class="credit-score table-header p-2 mb-1">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="credit d-inline">
-                                                <label class="m-0 font-weight-bold d-inline" style="padding-right: 63px;">Semester Credit</label>
-                                                <p class="d-inline text-right">
-                                                   <t t-foreach="get_data" t-as="obj">
-                                                      <span t-esc="obj['total_credit']"/>
-                                                  </t>
-                                                </p>
-                                            </div>
-                                            <t t-foreach="get_data" t-as="obj">
-                                                  <t t-if="obj['semester_average']">
-                                                       <div  class="average">
-                                                        <label class="m-0 font-weight-bold" style="padding-right: 50px;">Semester Average</label>
-                                                        <p class="d-inline text-right">
-                                                            <span t-esc="obj['semester_average']"/>
-                                                        </p>
-                                                    </div>
-                                                 </t>
-                                            </t>
+                                 <t t-if="not is_final">
+
+                                  <t t-if="semester_order == '3' ">
+                                   <div class="credit-score table-header p-2 mb-1">
+                                      <div class="row">
+                                          <div class="col-6">
+                                              <div class="credit d-inline">
+                                                  <label class="m-0 font-weight-bold d-inline" style="padding-right: 73px;">Semester Credit</label>
+                                                  <p class="d-inline text-right">
+                                                     <t t-foreach="get_data" t-as="obj">
+                                                        <span t-esc="obj['total_credit']"/>
+                                                    </t>
+                                                  </p>
+                                              </div>
+                                              <t t-foreach="get_data" t-as="obj">
+                                                    <t t-if="obj['semester_average']">
+                                                         <div class="average">
+                                                          <label class="m-0 font-weight-bold" style="padding-right: 60px;">Semester Average</label>
+                                                          <p class="d-inline text-right">
+                                                              <span t-esc="obj['semester_average']"/>
+                                                          </p>
+                                                      </div>
+                                                   </t>
+                                              </t>
+                                          </div>
+                                          <div class="col-6">
+                                              <div class="absence">
+                                                  <label class="m-0 font-weight-bold d-inline" style="padding-right: 60px;">Accumulative Credits</label>
+                                                  <p class="d-inline text-right">
+                                                     <t t-foreach="get_data" t-as="obj">
+                                                          <span t-esc="obj['accumulative_credit']"/>
+                                                    </t>
+                                                  </p>
+                                              </div>
+                                              <div class="discipline">
+                                                  <label class="m-0 font-weight-bold d-inline" style="padding-right: 55px;">Accumulative Average</label>
+                                                  <p class="d-inline text-right">
+                                                      <t t-foreach="get_data" t-as="obj">
+                                                          <span t-esc="obj['accumulative_average']"/>
+                                                    </t>
+                                                  </p>
                                         </div>
-                                        <div class="col-6">
-                                            <div class="absence">
-                                                <label class="m-0 font-weight-bold d-inline" style="padding-right: 73px;">Accumulative Credits</label>
-                                                <p class="d-inline text-right">
-                                                   <t t-foreach="get_data" t-as="obj">
-                                                        72
-                                                  </t>
-                                                </p>
-                                            </div>
-                                            <div class="discipline">
-                                                <label class="m-0 font-weight-bold d-inline"  style="padding-right: 50px;">Accumulative Average</label>
-                                                <p class="d-inline text-right">
-                                                </p>
+                                          </div>
                                       </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                  </div>
+                                  </t>
+                                   <t t-if="semester_order == '1' ">
+                                    <div class="credit-score table-header p-2 mb-1">
+
+                                          <div class="col-12">
+                                              <div class="credit d-inline">
+                                                  <label class="m-0 font-weight-bold d-inline" style="padding-right: 513px;">Semester Credit</label>
+                                                  <p class="d-inline text-right">
+                                                     <t t-foreach="get_data" t-as="obj">
+                                                        <span t-esc="obj['total_credit']"/>
+                                                    </t>
+                                                  </p>
+                                              </div>
+
+                                          </div>
+
+
+                                            <div class="col-12">
+                                              <div class="absence">
+                                                  <t t-foreach="get_data" t-as="obj">
+                                                    <t t-if="obj['semester_average']">
+                                                         <div class="average">
+                                                          <label class="m-0 font-weight-bold" style="padding-right: 500px;">Semester Average</label>
+                                                          <p class="d-inline text-right">The Job Position is not yet approved
+                                                              <span t-esc="obj['semester_average']"/>
+                                                          </p>
+                                                      </div>
+                                                   </t>
+                                              </t>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                    </t>
+
+                                </t>
+                                <t t-if="is_final">
+                                     <div class="credit-score table-header p-2 mb-1">
+
+                                          <div class="col-12">
+                                            <div class="absence">
+                                                  <label class="m-0 font-weight-bold d-inline" style="padding-right: 490px;">Accumulative Credits</label>
+                                                  <p class="d-inline text-right">
+                                                     <t t-foreach="get_data" t-as="obj">
+                                                          <span t-esc="obj['accumulative_credit']"/>
+                                                    </t>
+                                                  </p>
+                                              </div>
+
+                                          </div>
+                                          <div class="col-12">
+                                            <div class="discipline">
+                                                <label class="m-0 font-weight-bold d-inline" style="padding-right: 485px;">Accumulative Average</label>
+                                                <p class="d-inline text-right">
+                                                    <t t-foreach="get_data" t-as="obj">
+                                                        <span t-esc="obj['accumulative_average']"/>
+                                                  </t>
+                                                </p>
+                                            </div>
+                                          </div>
+
+                                      </div>
+                                </t>
                                 <p class="pt-2">55% is the achievement standard for passing the semester</p>
 
                                 <div class="row">
@@ -212,17 +282,17 @@
                                             </tr>
                                             <tr>
                                               <td class="text-center w150">E</td>
-                                              <td class="text-center w150"></td>
+                                              <td class="text-center w150"/>
                                               <td class="text-center w150">Exempted</td>
                                             </tr>
                                             <tr>
                                               <td class="text-center w150">P</td>
-                                              <td class="text-center w150"></td>
+                                              <td class="text-center w150"/>
                                               <td class="text-center w150">Passed</td>
                                             </tr>
                                             <tr>
                                               <td class="text-center w150">I</td>
-                                              <td class="text-center w150"></td>
+                                              <td class="text-center w150"/>
                                               <td class="text-center w150">Incomplete</td>
                                             </tr>
                                           </tbody>

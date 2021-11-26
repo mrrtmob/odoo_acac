@@ -69,6 +69,7 @@ class StudentTranscript(models.TransientModel):
 
             mark_sheets_count = self.env['pm.semester.marksheet.register'].search_count(
                 [('batch_id', '=', self.batch_id.id),
+                 ('semester_id.is_internship', '=', False),
                  ('state', '=', 'validated')])
 
             _logger.info("---------------*****************************---------------")
@@ -77,9 +78,9 @@ class StudentTranscript(models.TransientModel):
             _logger.info('student_internship_count %s', student_internship_count)
             _logger.info('mark_sheets_count %s', mark_sheets_count)
 
-            if internship_semester_count != student_internship_count:
-                raise ValidationError(
-                    "Internship hasn't finished yet. Please completed before generating transcript")
+            # if internship_semester_count != student_internship_count:
+            #     raise ValidationError(
+            #         "Internship hasn't finished yet. Please completed before generating transcript")
 
             if normal_semester_count != mark_sheets_count:
                 raise ValidationError("Please validate semester result before generating transcript")

@@ -10,6 +10,7 @@ class PmSemester(models.Model):
     name = fields.Char("Semester Name", required=True)
     semester_code = fields.Char('Semester Code', size=16, required=True)
     color = fields.Integer(string='Color Index', default=0)
+    accumulative_credit = fields.Integer('Accumulative Credits', compute="_compute_accumulative_credit", store=True)
     company_id = fields.Many2one(
         'res.company', string='Company',
         default=lambda self: self.env.user.company_id)
@@ -39,6 +40,54 @@ class PmSemester(models.Model):
          'unique(semester_code)', 'Code should be unique per Semester!')]
 
     record_url = fields.Char('Link', compute="_compute_record_url", store=True)
+
+    def compute_accumulative_credit(self):
+        semesters = self.env['pm.semester'].search([])
+        for semester in semesters:
+            accumulative_credit = 0
+            batch = semester.batch_id
+            print("******************")
+            print(batch.semester_ids)
+            for sem in batch.semester_ids:
+                if semester.semester_order >= sem.semester_order:
+                    accumulative_credit += sem.total_credit
+            semester.accumulative_credit = accumulative_credit
+
+    def compute_semester_credit(self):
+        semesters = self.env['pm.semester'].search([])
+        for semester in semesters:
+            subjects = semester.get_semester_subject()
+            print(subjects)
+            total_credit = sum(subjects.mapped('p_credits'))
+            print(total_credit)
+            semester.total_credit = total_credit
+
+
+    def calculate_total_semester_credit(self):
+        subjects = self.get_semester_subject()
+        print(subjects)
+        total_credit = sum(subjects.mapped('p_credits'))
+        print(total_credit)
+        self.total_credit = total_credit
+
+
+    @api.depends('semester_order', 'total_credit')
+    def _compute_accumulative_credit(self):
+        for record in self:
+            accumulative_credit = 0
+            batch = record.batch_id
+            for sem in batch.semester_ids:
+                if record.semester_order >= sem.semester_order:
+                    accumulative_credit += sem.total_credit
+            record.accumulative_credit = accumulative_credit
+
+
+
+
+
+
+
+
     @api.depends('name')
     def _compute_record_url(self):
         for record in self:
@@ -124,12 +173,7 @@ class PmSemester(models.Model):
                 raise ValidationError(_('Multiple semesters can not be active simultaneously'))
 
 
-    def calculate_total_semester_credit(self):
-        subjects = self.get_semester_subject()
-        print(subjects)
-        total_credit = sum(subjects.mapped('p_credits'))
-        print(total_credit)
-        self.total_credit = total_credit
+
 
     def start_semester(self):
 

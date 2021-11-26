@@ -22,6 +22,7 @@
 import time
 
 from odoo import models, api
+from odoo.exceptions import ValidationError
 
 
 class StudentTranscriptReport(models.AbstractModel):
@@ -92,9 +93,25 @@ class StudentTranscriptReport(models.AbstractModel):
         for sc in student_courses:
             ex_subjects.append(sc.p_e_subject_ids)
 
-        semesters = self.env['pm.semester'].search([('batch_id', '=', data['batch_id'])])
+        semesters = self.env['pm.semester'].search([('batch_id', '=', data['batch_id'])], order="semester_order")
+
+        last_semester = semesters[-1]
+        print(last_semester)
         total_course_credit = sum(x.total_credit for x in semesters)
+        accumulative_credit = last_semester.accumulative_credit
+
+        accumulative_average = sum(student_results.mapped('result')) / len(student_results)
+        print("WOOOOOOOOOOO")
+        print(accumulative_average)
+
+
+
+
+
+
+
         if data['is_final']:
+            semester_average = accumulative_average
             wiegh_average_gpa = 0
             ex_count = 0
             gpa = 0
@@ -149,8 +166,7 @@ class StudentTranscriptReport(models.AbstractModel):
                 lst.append(dic)
 
             placement = self.env['op.placement.offer'].search(
-                [('student_id', '=', data['student_id']), ('batch_id', '=', data['batch_id']),
-                 ('p_completed', '=', True)], order='join_date')
+                [('student_id', '=', data['student_id']), ('batch_id', '=', data['batch_id'])], order='join_date')
             for pl in placement:
                 grade = 'F'
                 print('hit placement')
@@ -159,6 +175,10 @@ class StudentTranscriptReport(models.AbstractModel):
                 absence += pl.p_absences
                 if pl.p_status == 'passed':
                     grade = 'P'
+                elif pl.p_status == 'i':
+                    grade = 'I'
+                elif pl.p_status == 'failed':
+                    grade = 'F'
                 dic = {
                     'code': pl.subject_id.code,
                     'name': pl.subject_id.name,
@@ -172,6 +192,7 @@ class StudentTranscriptReport(models.AbstractModel):
         # Transcript for one semester
         else:
             semester = self.env['pm.semester'].browse(data['semester_id'])
+            accumulative_credit = semester.accumulative_credit
             total_course_credit = 0
 
             if student_discipline:
@@ -205,14 +226,18 @@ class StudentTranscriptReport(models.AbstractModel):
 
                     lst.append(dic)
             else:
+                print()
                 total_course_credit = semester.total_credit
                 ex_count = 0
                 sub_count = 0
 
                 for res in student_results:
                     if res.semester_id.id == data['semester_id']:
+                        print(res.semester_id.semester_order)
+                        if res.semester_id.semester_order == '1':
+                            accumulative_average = res.result
                         semester_average = res.result
-                        print('hit coni')
+
                         gpa = res.gpa
                         for srl in res.semester_res_line:
                             result = srl.total_score
@@ -235,8 +260,7 @@ class StudentTranscriptReport(models.AbstractModel):
                                     'score': result
                                 }
                                 lst.append(dic)
-                            else:
-                                continue
+
 
                 for in_sub in incomplete_subject:
                     subject = in_sub.op_subject_id
@@ -248,14 +272,16 @@ class StudentTranscriptReport(models.AbstractModel):
                         'score': 'I'
                     }
                     lst.append(dic)
-
+        # raise ValidationError("Please validate semester result before generating transcript")
         return [{'subjects': lst,
                  'absence': absence,
                 'gpa': gpa,
-                'semester_average': semester_average,
-                'total_course_credit': total_course_credit,
-                'discipline_points': discipline_points,
-                'total_credit': total_course_credit}]
+                'semester_average': int(semester_average),
+                'accumulative_credit': int(accumulative_credit),
+                'accumulative_average': int(accumulative_average),
+                'total_course_credit': int(total_course_credit),
+                'discipline_points': int(discipline_points),
+                'total_credit': int(total_course_credit)}]
        
 
     @api.model

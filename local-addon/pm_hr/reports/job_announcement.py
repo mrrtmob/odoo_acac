@@ -11,8 +11,8 @@ class ModelName(models.AbstractModel):
     @api.model
     def _get_report_values(self, docids, data=None):
         job = self.env['hr.job'].browse(docids)
-        if job.state != 'approved':
-            raise UserError("The Job Position is not yet approved")
+        # if job.state != 'approved':
+        #     raise UserError("The Job Position is not yet approved")
 
         print(job)
         docargs = {
