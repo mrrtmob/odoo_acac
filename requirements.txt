@@ -60,4 +60,5 @@ simplejson ==3.17.2
 user_agents
 python-dotenv
 pandas
+boto3
 

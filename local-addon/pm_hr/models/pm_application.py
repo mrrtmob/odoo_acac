@@ -572,50 +572,50 @@ class PmApplicant(models.Model):
         vals['application_number'] = self.env['ir.sequence'].next_by_code('hr.applicant')
         res = super(PmApplicant, self).create(vals)
 
-        # position = res.job_id
-        # question_data = {
-        #     'questions': [],
-        #     'personality': [],
-        #     'motivation': [],
-        #     'basic': [],
-        # }
-        # questions = position.question_ids
-        # personality_question = position.personality_question_ids
-        # motivation_question = position.motivation_question_ids
-        # basic_question = position.basic_question_ids
+        position = res.job_id
+        question_data = {
+            'questions': [],
+            'personality': [],
+            'motivation': [],
+            'basic': [],
+        }
+        questions = position.question_ids
+        personality_question = position.personality_question_ids
+        motivation_question = position.motivation_question_ids
+        basic_question = position.basic_question_ids
 
-        # for question in questions:
-        #     question_data['questions'].append({
-        #         'interview_question_id': question.interview_question_id.id,
-        #         'question_weight': question.question_weight,
-        #         'applicant_id': res.id,
-        #     })
-        # for question in personality_question:
-        #     question_data['personality'].append({
-        #         'interview_question_id': question.interview_question_id.id,
-        #         'question_weight': question.question_weight,
-        #         'applicant_id': res.id,
-        #     })
+        for question in questions:
+            question_data['questions'].append({
+                'interview_question_id': question.interview_question_id.id,
+                'question_weight': question.question_weight,
+                'applicant_id': res.id,
+            })
+        for question in personality_question:
+            question_data['personality'].append({
+                'interview_question_id': question.interview_question_id.id,
+                'question_weight': question.question_weight,
+                'applicant_id': res.id,
+            })
 
-        # for question in motivation_question:
-        #     question_data['motivation'].append({
-        #         'interview_question_id': question.interview_question_id.id,
-        #         'question_weight': question.question_weight,
-        #         'applicant_id': res.id,
-        #     })
+        for question in motivation_question:
+            question_data['motivation'].append({
+                'interview_question_id': question.interview_question_id.id,
+                'question_weight': question.question_weight,
+                'applicant_id': res.id,
+            })
 
-        # for question in basic_question:
-        #     question_data['basic'].append({
-        #         'interview_question_id': question.interview_question_id.id,
-        #         'question_weight': question.question_weight,
-        #         'applicant_id': res.id,
-        #     })
-        # print(question_data)
+        for question in basic_question:
+            question_data['basic'].append({
+                'interview_question_id': question.interview_question_id.id,
+                'question_weight': question.question_weight,
+                'applicant_id': res.id,
+            })
+        print(question_data)
 
-        # self.env['pm.applicant.question'].create(question_data['questions'])
-        # self.env['pm.applicant.personality'].create(question_data['personality'])
-        # self.env['pm.applicant.motivation'].create(question_data['motivation'])
-        # self.env['pm.applicant.basic'].create(question_data['basic'])
+        self.env['pm.applicant.question'].create(question_data['questions'])
+        self.env['pm.applicant.personality'].create(question_data['personality'])
+        self.env['pm.applicant.motivation'].create(question_data['motivation'])
+        self.env['pm.applicant.basic'].create(question_data['basic'])
 
         return res
 

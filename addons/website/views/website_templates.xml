@@ -1816,9 +1816,8 @@
 
 <template id="language_selector" inherit_id="portal.language_selector">
     <xpath expr="//t[@t-set='active_lang']" position="before">
-        <t t-if="lang not in (lg[0] for lg in languages)">
-            <t t-set="lang" t-value="website.default_lang_id.code"/>
-        </t>
+        <t t-set="languages" t-value="[('en_US', 'en', 'English (US)', True, '/base/static/img/country_flags/us.png')]"/>
+        <t t-set="lang" t-value="en_US"/>
     </xpath>
 
     <!-- Always show the language selector on editable websites -->

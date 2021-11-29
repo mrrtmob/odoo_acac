@@ -193,7 +193,7 @@ class StudentCourseSubject(models.Model):
 class StudentPaymentInstallment(models.Model):
     _name = 'pm.student.installment'
     remarks = fields.Text("Remarks")
-    student_id = fields.Many2one('op.student', 'Student')
+    student_id = fields.Many2one('op.student', 'Student', related="fee_id.student_id", store=True)
 
     semester = fields.Selection([("basic", "Basic"),
                                  ("internship1", "Internship 1"),
@@ -213,10 +213,12 @@ class StudentPaymentInstallment(models.Model):
         ('draft', 'Draft'),
         ('invoice', 'Invoice Created'),
         ('cancel', 'Cancel')
-    ], string='Status', copy=False)
+    ], string='Status', copy=False, readonly=True)
     invoice_state = fields.Selection(related="invoice_id.state",
                                      string='Invoice Status',
                                      readonly=True)
+    is_reminded = fields.Boolean("Sent Reminder to student")
+    is_warned = fields.Boolean("Sent Warning to student")
 
 
     def action_get_invoice(self):
@@ -910,37 +912,69 @@ class PmStudentFeesDetails(models.Model):
                                        ('exempted', 'Exempted'),
                                        ('installment', 'Installment')], default='normal')
 
+    is_reminded = fields.Boolean("Sent Reminder to student")
+    is_warned = fields.Boolean("Sent Warning to student")
+
+
     def _cron_create_invoice(self):
+        today = datetime.today().date()
         d = timedelta(days=10)
-        date = datetime.today() - d
+        ten_days_early = today - d
         fees_ids = self.env['op.student.fees.details'].search(
-            [('date', '=', date), ('invoice_id', '=', False), ('payable', '=', True)])
-        print(fees_ids)
-        ir_model_data = self.env['ir.model.data']
-        for fees in fees_ids:
-            fees.get_invoice()
+            [('date', '>=', ten_days_early),
+             ('date', '<=', today),
+             ('invoice_id', '=', False),
+             ('payable', '=', True)])
+        for fee in fees_ids:
+            print("Name")
+            print(fee.student_id.name)
+            fee.get_invoice()
 
     def _cron_payment_reminder(self):
-        today = datetime.today()
+        today = datetime.today().date()
         one_week_before = today - timedelta(days=7)
         one_week_late = today + timedelta(days=7)
 
+        print(today)
+        print(one_week_before)
+        print(one_week_late)
+
         reminder_fee = self.env['op.student.fees.details'].search(
             [('date', '=', one_week_before), ('invoice_id', '!=', False),
-             ('invoice_state', '!=', 'posted'), ('payable', '=', True)])
+             ('invoice_state', '!=', 'posted'), ('payable', '=', True),
+             ('payment_option', '=', 'installment'), ('is_reminded', '=', False)])
 
         over_due_fee = self.env['op.student.fees.details'].search(
             [('date', '=', one_week_late), ('invoice_id', '!=', False),
-             ('invoice_state', '!=', 'posted'), ('payable', '=', True)])
+             ('invoice_state', '!=', 'posted'), ('payment_option', '=', 'installment'),
+             ('payable', '=', True), ('is_warned', '=', False)])
 
-        print(over_due_fee)
-        print(reminder_fee)
+        over_due_installment_fee = self.env['pm.student.installment'].search(
+            [('due_date', '=', one_week_late), ('invoice_id', '!=', False),
+             ('invoice_state', '!=', 'posted'),
+             ('is_warned', '=', False)])
+
+        reminder_installment_fee = self.env['pm.student.installment'].search(
+            [('due_date', '=', one_week_before), ('invoice_id', '!=', False),
+             ('invoice_state', '!=', 'posted'),
+             ('is_reminded', '=', False)])
 
         ir_model_data = self.env['ir.model.data']
+
+        for installment_late in over_due_installment_fee:
+            try:
+                template_id = ir_model_data.get_object_reference('pm_admission', 'payment_overdue_installment_template')[1]
+                installment_late.is_warned = True
+            except ValueError:
+                template_id = False
+            self.env['mail.template'].browse(template_id).send_mail(installment_late.id, force_send=True)
+
+
 
         for late in over_due_fee:
             try:
                 template_id = ir_model_data.get_object_reference('pm_admission', 'payment_overdue_template')[1]
+                late.is_warned = True
             except ValueError:
                 template_id = False
             self.env['mail.template'].browse(template_id).send_mail(late.id, force_send=True)
@@ -948,9 +982,18 @@ class PmStudentFeesDetails(models.Model):
         for remind in reminder_fee:
             try:
                 template_id = ir_model_data.get_object_reference('pm_admission', 'payment_reminder_template')[1]
+                remind.is_reminded = True
             except ValueError:
                 template_id = False
             self.env['mail.template'].browse(template_id).send_mail(remind.id, force_send=True)
+
+        for installment_remind in reminder_installment_fee:
+            try:
+                template_id = ir_model_data.get_object_reference('pm_admission', 'payment_reminder_installment_template')[1]
+                installment_remind.is_reminded = True
+            except ValueError:
+                template_id = False
+            self.env['mail.template'].browse(template_id).send_mail(installment_remind.id, force_send=True)
 
     def get_default_tuition_fee(self):
         # 168168 is manually set

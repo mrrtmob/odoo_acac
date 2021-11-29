@@ -55,10 +55,6 @@ class PmInheritMailActivity(models.Model):
         ('off', 'Offboarding'),
     ])
 
-    def action_done(self):
-        self.unlink()
-
-
 class PmEmployees(models.Model):
     _inherit = 'hr.employee'
     #name = fields.Char(string="Employee Legal Name", related='resource_id.name', store=True, readonly=False, tracking=True)
