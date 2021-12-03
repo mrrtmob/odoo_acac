@@ -91,6 +91,7 @@ class PathmazingApi(RESTController):
             if payments:
                 for payment in payments:
                     val = {
+                        'payment_number': payment.order_transaction_id,
                         'amount': payment.amount,
                         'status': payment.invoice_id.state,
                         'due_date': payment.date,
@@ -883,7 +884,8 @@ class PathmazingApi(RESTController):
                                     'state': state,
                                     'invoice_state': installment.invoice_state,
                                     'reminding': reminding,
-                                    'type': payment_option
+                                    'type': payment_option,
+                                    'payment_number': installment.order_transaction_id,
                                 }
                                 payment_data.append(val)
                         elif payment_option == 'normal':
@@ -905,6 +907,7 @@ class PathmazingApi(RESTController):
                             val = {
                                 'id': payment_id,
                                 'payment_date': payment_date,
+                                'payment_number': payment.order_transaction_id,
                                 'amount': amount,
                                 'state': state,
                                 'invoice_state': invoice_state,
@@ -938,6 +941,7 @@ class PathmazingApi(RESTController):
                     invoice_state = payment.invoice_id.state
                     val = {
                         'id': payment_id,
+                        'payment_number': payment.order_transaction_id,
                         'payment_date': payment_date,
                         'amount': amount,
                         'state': state,

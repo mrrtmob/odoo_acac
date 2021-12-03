@@ -36,6 +36,11 @@
             <field name="inherit_id" ref="openeducat_timetable.view_op_session_form"/>
              <field name="arch" type="xml">
 
+                  <xpath expr="//field[@name='batch_id']" position="attributes">
+                      <attribute name="string">Term</attribute>
+                </xpath>
+
+
 
                  <xpath expr="//field[@name='classroom_id']" position="replace">
                       <field name="class_ids" string="Class (s)" widget="many2many_tags"/>

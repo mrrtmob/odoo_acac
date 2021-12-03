@@ -53,15 +53,12 @@ class PaymentPortal(CustomerPortal):
         current_timetuple = current_datetime.utctimetuple()
         req_time = calendar.timegm(current_timetuple)
         object = 'op.student.fees.details'
-        tran_id = ''
         if type == "installment":
-            tran_id = 'PP-' + str(payment_id)
             object = 'pm.student.installment'
-        elif type == "normal":
-            tran_id = 'FP-' + str(payment_id)
 
         merchant_id = PayWay.get_merchant_id()
         payment_obj = request.env[object].sudo().browse(payment_id)
+        tran_id = payment_obj.order_transaction_id
         getItems = PayWay.get_transaction_items(payment_obj)
         api_url = PayWay.get_api_url()
         payment_option = 'cards'
@@ -119,13 +116,11 @@ class PaymentPortal(CustomerPortal):
         payment_option = 'abapay_deeplink'
         merchant_id = PayWay.get_merchant_id()
         object = 'op.student.fees.details'
-        tran_id = ''
         if type == "installment":
-            tran_id = 'PP-' + str(payment_id)
             object = 'pm.student.installment'
-        elif type == "normal":
-            tran_id = 'FP-' + str(payment_id)
         payment_obj = request.env[object].sudo().browse(payment_id)
+        tran_id = payment_obj.order_transaction_id
+
         getItems = PayWay.get_transaction_items(payment_obj)
 
         api_url = PayWay.get_api_url()
