@@ -19,7 +19,7 @@
 #
 ###############################################################################
 
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class FeesDetailReportWizard(models.TransientModel):
@@ -32,6 +32,15 @@ class FeesDetailReportWizard(models.TransientModel):
         'Fees Filter', required=True)
     student_id = fields.Many2one('op.student', 'Student')
     course_id = fields.Many2one('op.course', 'Course')
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course',
+                                default=_get_default_course)
 
     def print_report(self):
         data = {}

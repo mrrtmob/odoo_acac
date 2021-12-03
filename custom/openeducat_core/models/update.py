@@ -114,3 +114,5 @@ class PublisherWarrantyContract(AbstractModel):
             else:
                 raise
         return res
+
+

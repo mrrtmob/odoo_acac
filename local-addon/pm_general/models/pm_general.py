@@ -238,6 +238,7 @@ class OpBatch(models.Model):
     _inherit = "op.batch"
     _description = 'OpenEduCat Terms'
 
+
     year_term = fields.Many2one('pm.term.order', string='Term Order')
     semester_ids = fields.One2many('pm.semester', 'batch_id', 'Semester(s)')
     record_url = fields.Char('Link', compute="_compute_record_url", store=True)

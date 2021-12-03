@@ -12,7 +12,13 @@ class StudentReturnWizard(models.TransientModel):
     _description = "Student Return"
 
     date = fields.Date('Date', required=True, default=lambda self: fields.Date.today())
-    course_id = fields.Many2one('op.course', 'Course', required=True)
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course', required=True, default=_get_default_course)
     batch_id = fields.Many2one(
         'op.batch', 'Term', required=True, track_visibility='onchange')
     class_id = fields.Many2one('op.classroom', 'Class')
@@ -40,7 +46,8 @@ class StudentReturnWizard(models.TransientModel):
                 'starting_semester_id':
                     semester_id and semester_id.id or False,
                 'p_active': True,
-                'class_ids' : class_ids
+                'class_ids' : class_ids,
+                'remarks': self.remarks,
             }]],
         })
 

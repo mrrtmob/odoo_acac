@@ -30,7 +30,6 @@ class OpAssignment(models.Model):
     _order = "submission_date DESC"
 
     name = fields.Char('Name', size=64, required=True)
-    course_id = fields.Many2one('op.course', 'Course', required=True)
     batch_id = fields.Many2one('op.batch', 'Batch', required=True)
     subject_id = fields.Many2one('op.subject', 'Subject', required=True)
     faculty_id = fields.Many2one(
@@ -54,6 +53,13 @@ class OpAssignment(models.Model):
                                           'assignment_id', 'Submissions')
     reviewer = fields.Many2one('op.faculty', 'Reviewer')
     active = fields.Boolean(default=True)
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+    course_id = fields.Many2one('op.course', 'Course', required=True, default=_get_default_course)
 
     @api.constrains('issued_date', 'submission_date')
     def check_dates(self):

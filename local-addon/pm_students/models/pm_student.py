@@ -12,7 +12,13 @@ import calendar
 class PMStudentProgression(models.Model):
     _name = 'pm.student.progress'
     class_id = fields.Many2one('op.classroom', 'Class')
-    course_id = fields.Many2one('op.course', 'Course')
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course', required=True, default=_get_default_course)
     batch_id = fields.Many2one(
         'op.batch', 'Term')
     student_id = fields.Many2one('op.student', 'Student Name', required=False)
@@ -58,7 +64,7 @@ class OpStudentCourse(models.Model):
                                          ('graduated', 'Graduated'),
                                          ('dismissed', 'Dismissed'),
                                          ('retake', 'Retake')
-                                         ], 'Status', default='active')
+                                         ], 'Status', default="active")
 
     p_e_subject_ids = fields.Many2many('op.subject', relation='student_e_subjects_rel', readonly=False, string='Exempted Subjects')
     is_saved = fields.Boolean(default=False)
@@ -149,13 +155,6 @@ class OpStudentCourse(models.Model):
     @api.model
     def create(self, val):
         # Store Student Progression detail in this case, the student status must have been changed
-        print(val)
-        progress_obj = self.env['pm.student.progress'].sudo()
-        progress_obj.store_progression(val['student_id'],
-                                       val['course_id'],
-                                       val['batch_id'],
-                                       val['education_status'],
-                                       val['remarks'])
         val['is_saved'] = True
         res = super(OpStudentCourse, self).create(val)
         return res
@@ -219,6 +218,13 @@ class StudentPaymentInstallment(models.Model):
                                      readonly=True)
     is_reminded = fields.Boolean("Sent Reminder to student")
     is_warned = fields.Boolean("Sent Warning to student")
+
+    order_transaction_id = fields.Char("Payment Number", compute="_compute_order_id", store=True)
+
+    @api.depends('fee_id')
+    def _compute_order_id(self):
+        for fee in self:
+            fee.order_transaction_id = 'PP-' + str(fee.id)
 
 
     def action_get_invoice(self):
@@ -305,6 +311,13 @@ class OpStudent(models.Model):
                                          ('graduated', 'Graduated'),
                                          ('dismissed', 'Dismissed')
                                          ], default='active', compute='_compute_student_status', store=True)
+
+    kanban_status = fields.Selection([('active', 'Active'),
+                                         ('postponed', 'Postponed'),
+                                         ('withdrawn', 'Withdrawn'),
+                                         ('graduated', 'Graduated'),
+                                         ('dismissed', 'Dismissed')
+                                         ], default='active', compute='_compute_kanban_status')
     p_street = fields.Char('Permanent Street')
     p_street2 = fields.Char('Permanent Street2')
     p_city = fields.Char('Permanent City', size=64)
@@ -578,7 +591,7 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
             start_month = 7
             end_month = 12
 
-        return {'start_month':start_month, 'end_month':end_month}
+        return {'start_month': start_month, 'end_month': end_month}
 
     def generate_student_payment(self):
         for student in self:
@@ -721,6 +734,31 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
     #             ('student_id', '=', student.id), ('p_active', '=', 'True')
     #         ], limit=1)
     #         student.active_class = student_course.class_id.id
+
+    @api.depends('course_detail_ids')
+    def _compute_kanban_status(self):
+        print("oof")
+        batch_id = self.env.context.get('active_id', False)
+
+
+
+        for student in self:
+            if batch_id:
+                active_course = self.env['op.student.course'].search([
+                    ('student_id', '=', student.id),
+                    ('batch_id', '=', batch_id)
+                ])
+                if active_course:
+                    print("*****************")
+                    print('active course', {active_course.id})
+                    print(student.name)
+                    print("YOOOOOOOOOOOOOOOOOOOOOOO")
+                    print(active_course.batch_id.name)
+                    print(active_course.education_status)
+
+                    student.kanban_status = active_course.education_status
+            else:
+                student.kanban_status = student.education_status
 
     @api.depends('course_detail_ids.education_status')
     def _compute_student_status(self):
@@ -914,6 +952,15 @@ class PmStudentFeesDetails(models.Model):
 
     is_reminded = fields.Boolean("Sent Reminder to student")
     is_warned = fields.Boolean("Sent Warning to student")
+    order_transaction_id = fields.Char("Payment Number", compute="_compute_order_id", store=True)
+
+    @api.depends('payment_option')
+    def _compute_order_id(self):
+        for fee in self:
+            if fee.payment_option == "installment":
+                fee.order_transaction_id = 'PP-' + str(fee.id)
+            else:
+                fee.order_transaction_id = 'FP-' + str(fee.id)
 
 
     def _cron_create_invoice(self):

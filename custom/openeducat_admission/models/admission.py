@@ -59,9 +59,18 @@ class OpAdmission(models.Model):
         default=lambda self: fields.Datetime.now())
     birth_date = fields.Date(
         'Birth Date', required=True, states={'done': [('readonly', True)]})
-    course_id = fields.Many2one(
-        'op.course', 'Course', required=True,
-        states={'done': [('readonly', True)]})
+    # course_id = fields.Many2one(
+    #     'op.course', 'Course', required=True,
+    #     states={'done': [('readonly', True)]})
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course', required=True, states={'done': [('readonly', True)]}, default=_get_default_course)
+
     batch_id = fields.Many2one(
         'op.batch', 'Batch', required=False,
         states={'done': [('readonly', True)],

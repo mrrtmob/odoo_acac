@@ -28,7 +28,7 @@ class OpClassroom(models.Model):
 
     name = fields.Char('Name', size=16, required=True)
     code = fields.Char('Code', size=16, required=True)
-    course_id = fields.Many2one('op.course', 'Course')
+    # course_id = fields.Many2one('op.course', 'Course')
     batch_id = fields.Many2one('op.batch', 'Batch')
     capacity = fields.Integer(string='No of Person')
     facilities = fields.One2many('op.facility.line', 'classroom_id',
@@ -36,6 +36,20 @@ class OpClassroom(models.Model):
     asset_line = fields.One2many('op.asset', 'asset_id',
                                  string='Asset')
     active = fields.Boolean(default=True)
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course',
+                                tracking=True,
+                                required=True,
+                                states={'done': [('readonly', True)]},
+                                default=_get_default_course)
+
+
 
     _sql_constraints = [
         ('unique_classroom_code',

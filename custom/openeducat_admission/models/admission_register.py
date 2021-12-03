@@ -40,9 +40,25 @@ class OpAdmissionRegister(models.Model):
         'End Date', required=True, readonly=True,
         default=(fields.Date.today() + relativedelta(days=30)),
         states={'draft': [('readonly', False)]})
-    course_id = fields.Many2one(
-        'op.course', 'Course', required=True, readonly=True,
-        states={'draft': [('readonly', False)]}, tracking=True)
+    # course_id = fields.Many2one(
+    #     'op.course', 'Course', required=True, readonly=True,
+    #     states={'draft': [('readonly', False)]}, tracking=True)
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course',
+                                tracking=True,
+                                required=True,
+                                states={'done': [('readonly', True)]},
+                                default=_get_default_course)
+
+
+
+
     min_count = fields.Integer(
         'Minimum No. of Admission', readonly=True,
         states={'draft': [('readonly', False)]})

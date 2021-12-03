@@ -186,9 +186,15 @@ class OpResultTemplateCustom(models.Model):
     exam_session_id = fields.Many2one(
         'op.exam.session', 'Exam Schedule',
         required=True, track_visibility='onchange')
-    course_id = fields.Many2one('op.course', 'Course')
     batch_id = fields.Many2one('op.batch', 'Term')
     semester_id = fields.Many2one('pm.semester', 'Semester')
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course', required=True, default=_get_default_course)
 
     @api.depends('exam_session_id', 'semester_id', 'batch_id')
     def _compute_name(self):

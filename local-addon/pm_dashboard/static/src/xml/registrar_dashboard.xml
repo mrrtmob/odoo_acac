@@ -2,7 +2,15 @@
 
 <template xml:space="preserve">
     <t t-name="RegistrarDashboard">
+
         <div class="container-fluid p-0 pt-5" id="registrar-dashboard">
+             <div class="btn-group d-none d-md-inline-block float-right" style="margin-right: 20px;">
+                 <select  class="form-select form-select-lg mb-3" t-model="state.selected_value">
+                    <option t-foreach="widget.active_terms['terms']" t-as="at" t-att-value="at.id" >
+                        <t t-esc="at.name"/>
+                    </option>
+                </select>
+            </div>
             <div class="row m-0">
                 <div class="col-lg-3 col-sm-12">
 

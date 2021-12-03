@@ -58,7 +58,7 @@
           <field name="inherit_id" ref="openeducat_core.kanban_view_student"/>
           <field name="arch" type="xml">
                 <xpath expr="//kanban/templates//div//div/ul" position="inside">
-                    <field name="education_status" string="Status" widget="label_selection"
+                    <field name="kanban_status" string="Status" widget="label_selection"
                            options="{'classes': {'graduated': 'primary', 'active': 'success', 'dismissed': 'danger', 'postponed': 'warning','withdrawn': 'danger'}}"/>
                 </xpath>
                 <xpath expr="//kanban/templates//div//div/ul" position="before">
@@ -145,6 +145,7 @@
                    <field name="fees_detail_ids">
                         <tree string="Fees Collection Details">
                             <field name="fees_line_id" invisible="1"/>
+                            <field name="order_transaction_id"/>
                             <field name="semester"/>
                             <field name="date"/>
                             <field name="payment_option"/>
@@ -179,6 +180,7 @@
                                 <group attrs="{'invisible': [('payment_option', '!=', 'installment')]}" >
                                         <field name="installments">
                                             <tree string="Fees Collection Details" editable="bottom">
+                                                 <field name="order_transaction_id" readonly="1"/>
                                                 <field name="fee_id" invisible="1"/>
                                                 <field name="date" invisible="1"/>
                                                 <field name="currency_id" invisible="1"/>
@@ -438,7 +440,7 @@
                                              <field name="course_id" force_save="1" attrs="{'readonly': [('is_saved', '!=', False)]}"/>
                                              <field name="batch_id" force_save="1" context="{'course_id': course_id,'get_parent_batch':1}" attrs="{'readonly': [('is_saved', '!=', False)]}"/>
                                              <field name="class_ids" widget="many2many_tags"  force_save="1"/>
-                                             <field name="p_e_subject_ids" readonly="1" widget="many2many_tags"/>
+                                             <field name="p_e_subject_ids" widget="many2many_tags"/>
                                             </group>
                                             <group>
                                                  <field name="education_status"/>
@@ -751,7 +753,7 @@
                             <field name="p_active"/>
                         </group>
                         <group col="4" string="Exempted Subjects">
-                             <field name="p_e_subject_ids" readonly="1" widget="many2many_tags"/>
+                             <field name="p_e_subject_ids" widget="many2many_tags"/>
                         </group>
                         <group col="4" string="Subjects">
                             <field name="custom_subject_ids" nolabel="1">

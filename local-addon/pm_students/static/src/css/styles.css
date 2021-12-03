@@ -18,3 +18,8 @@
     width: 125px;
     height: fit-content;
 }
+.custom_kanban_student img {
+    height: 140px;
+    min-width: 140px;
+    object-fit: cover;
+}

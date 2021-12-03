@@ -28,7 +28,6 @@ class OpPlacementOffer(models.Model):
         ('failed', 'Failed')],
         'Status', store=True , track_visibility='onchange')
     p_grade = fields.Float("Grade (%)")
-    course_id = fields.Many2one('op.course', 'Course', required=True)
     batch_id = fields.Many2one(
         'op.batch', 'Term', required=True, track_visibility='onchange')
     semester_id = fields.Many2one('pm.semester', 'Semester', required=True, domain=[('is_internship', '=', True)])
@@ -40,6 +39,13 @@ class OpPlacementOffer(models.Model):
     contact_one_mobile = fields.Char(related="p_contact1.mobile")
     contact_two_email = fields.Char(related="p_contact2.email")
     contact_two_mobile = fields.Char(related="p_contact2.mobile")
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+    course_id = fields.Many2one('op.course', 'Course', required=True,  default=_get_default_course)
+
 
     @api.depends('p_status')
     def _compute_result_color(self):

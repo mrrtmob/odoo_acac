@@ -14,8 +14,6 @@ class PmSemester(models.Model):
     company_id = fields.Many2one(
         'res.company', string='Company',
         default=lambda self: self.env.user.company_id)
-    course_id = fields.Many2one(
-        'op.course', store=True, required=True)
     batch_id = fields.Many2one(
         'op.batch', "Term", store=True)
     is_internship = fields.Boolean('Internship Semester')
@@ -35,6 +33,15 @@ class PmSemester(models.Model):
     total_credit = fields.Float("Total Credit", compute="_compute_total_credit", store=True)
     end_date = fields.Date("End Date" , required=True)
     student_semester_detail = fields.One2many('pm.student.semester.detail', 'semester_id', 'Detail(s)')
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course', required=True, default=_get_default_course)
+
     _sql_constraints = [
         ('unique_semester_code',
          'unique(semester_code)', 'Code should be unique per Semester!')]
@@ -267,7 +274,6 @@ class PmSemesterDetail(models.Model):
     semester_id = fields.Many2one(
         'pm.semester', 'Semester',
         required=True, track_visibility='onchange')
-    course_id = fields.Many2one('op.course', 'Course')
     batch_id = fields.Many2one(
         'op.batch', "Term", store=True)
     student_id = fields.Many2one('op.student', 'Student', required=True)
@@ -280,6 +286,14 @@ class PmSemesterDetail(models.Model):
     remark = fields.Text('Remarks')
 
     color = fields.Integer(string='Color Index', default=0, compute="_compute_result_color", store=True)
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course', required=True, default=_get_default_course)
 
     def reset_student_color(self):
         result = self.env['pm.student.semester.detail'].search([])
@@ -329,7 +343,6 @@ class OpSemesterMarksheetRegister(models.Model):
     semester_id = fields.Many2one(
         'pm.semester', 'Semester',
         required=True, track_visibility='onchange')
-    course_id = fields.Many2one('op.course', 'Course')
     batch_id = fields.Many2one(
         'op.batch', "Term", store=True)
     semester_result_ids = fields.One2many(
@@ -361,6 +374,14 @@ class OpSemesterMarksheetRegister(models.Model):
     rank_low = fields.Float('Rank Below 60 (%):', compute='_compute_low')
     rank_middle = fields.Float('Rank 60-80 (%):', compute='_compute_middle')
     rank_top = fields.Float('Rank Above 80 (%):', compute='_compute_top')
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course', required=True, default=_get_default_course)
 
     def compute_score_batch(self):
         sheets = self.env['pm.semester.marksheet.register'].search([])
@@ -796,8 +817,15 @@ class PmSemesterResultTemplate(models.Model):
         ('result_generated', 'Result Generated')
     ], string='State', default='draft', track_visibility='onchange')
     active = fields.Boolean(default=True)
-    course_id = fields.Many2one('op.course', 'Course')
     batch_id = fields.Many2one('op.batch', 'Term')
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course', required=True, default=_get_default_course)
 
     def button_draft(self):
         self.write({'state': 'draft'})
@@ -895,8 +923,15 @@ class PmFinalResultTemplate(models.Model):
         ('result_generated', 'Result Generated')
     ], string='State', default='draft', track_visibility='onchange')
     active = fields.Boolean(default=True)
-    course_id = fields.Many2one('op.course', 'Course')
-    batch_id = fields.Many2one('op.batch', 'Term', required=True,)
+    batch_id = fields.Many2one('op.batch', 'Term', required=True)
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course', required=True, default=_get_default_course)
 
     def button_draft(self):
         self.write({'state': 'draft'})

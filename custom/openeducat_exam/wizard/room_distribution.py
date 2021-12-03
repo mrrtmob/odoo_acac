@@ -54,7 +54,7 @@ class OpRoomDistribution(models.TransientModel):
     end_time = fields.Datetime("End Time")
     exam_session = fields.Many2one("op.exam.session", 'Exam Session')
     course_id = fields.Many2one("op.course", 'Course')
-    batch_id = fields.Many2one("op.batch", 'Batch')
+    batch_id = fields.Many2one("op.batch", 'Term')
     total_student = fields.Integer(
         "Total Student", compute="_compute_get_total_student")
     room_capacity = fields.Integer(

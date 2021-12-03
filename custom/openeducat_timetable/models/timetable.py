@@ -45,12 +45,19 @@ class OpSession(models.Model):
         default=lambda self: fields.Datetime.now())
     end_datetime = fields.Datetime(
         'End Time', required=True)
-    course_id = fields.Many2one(
-        'op.course', 'Course', required=True)
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course',
+                                required=True,
+                                default=_get_default_course)
     faculty_id = fields.Many2one(
         'op.faculty', 'Faculty', required=True)
     batch_id = fields.Many2one(
-        'op.batch', 'Batch', required=True)
+        'op.batch', 'Term', required=True)
     subject_id = fields.Many2one(
         'op.subject', 'Subject', required=True)
     classroom_id = fields.Many2one(

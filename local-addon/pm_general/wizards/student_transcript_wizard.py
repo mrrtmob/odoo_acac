@@ -19,6 +19,7 @@ class StudentTranscript(models.TransientModel):
     final = fields.Boolean('Final Transcript')
 
 
+
     def _get_default_batch(self):
         student_id = self.env.context.get('active_id', False)
         student_course = self.env['op.student.course'].search([('student_id', '=', student_id),

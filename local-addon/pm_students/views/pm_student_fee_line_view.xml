@@ -26,12 +26,16 @@
                 <search>
                      <field name="product_id"/>
                      <field name="month"/>
+                     <field name="status"/>
                     <newline/>
                    <group expand="1" string="Group By">
                     <filter name="group_by_months" string="Months"
                             domain="[]" context="{'group_by':'month'}"/>
                     <filter name="group_by_product" string="Nature of School"
                             domain="[]" context="{'group_by':'product_id'}"/>
+
+                    <filter name="group_by_status" string="Status"
+                            domain="[]" context="{'group_by':'status'}"/>
 
                 </group>
                 </search>
@@ -50,12 +54,29 @@
             <field name="domain">[]</field>
         </record>
 
+        <record model="ir.actions.act_window" id="act_open_product_payment_report_graph">
+            <field name="name">Monthly Fee Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.student.fee.line</field>
+            <field name="search_view_id" ref="view_pm_student_fee_line_search"/>
+            <field name="view_mode">graph</field>
+            <field name="context">{"search_default_group_by_months":1, "search_default_group_by_status":1}</field>
+            <field name="domain">[]</field>
+        </record>
+
         <menuitem id="pm_student_fee_line_menu"
             name="Monthly Fee Reports"
-            parent="openeducat_core.menu_op_student_root"
+            parent="openeducat_core_enterprise.menu_op_course_analysis_reporting"
             groups="pm_leads.group_acac_admin"
             action="act_open_product_payment_report"
-            sequence="40"/>
+            sequence="15"/>
+
+        <menuitem id="pm_student_fee_line_menu_graph"
+            name="Fee Reports Graph"
+            parent="openeducat_core_enterprise.menu_op_course_analysis_reporting"
+            groups="pm_leads.group_acac_admin"
+            action="act_open_product_payment_report_graph"
+            sequence="15"/>
 
         <menuitem id="pm_account_fee_line_menu"
             name="Monthly Fee Reports"
@@ -63,5 +84,12 @@
             groups="pm_leads.group_acac_admin"
             action="act_open_product_payment_report"
             sequence="40"/>
+
+        <menuitem id="pm_account_fee_line_menu_graph"
+            name="Monthly Fee Reports Graph"
+            parent="account.account_reports_management_menu"
+            groups="pm_leads.group_acac_admin"
+            action="act_open_product_payment_report_graph"
+            sequence="45"/>
     </data>
 </odoo>
