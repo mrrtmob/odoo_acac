@@ -253,6 +253,7 @@ class OpStudent(models.Model):
 
 
     fill_application = fields.Boolean('Fill Application')
+    acac_email = fields.Char("ACAC Email", compute='compute_acac_email', store=True)
     marital_status = fields.Selection([('single', 'Single'),
                                        ('married', 'Married')])
     constrains = fields.Text('Special Wishes')
@@ -580,6 +581,41 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
                         fee_line_obj.create(val)
 
 
+    @api.depends('first_name', 'middle_name', 'last_name', 'student_app_id')
+    def compute_acac_email(self):
+        for student in self:
+            mail_domain = '@acac.edu.kh'
+            acac_mail = ''
+            acac_mail += student.first_name.lower()
+            if student.middle_name:
+                acac_mail += '_' + student.middle_name.lower()
+            acac_mail += '.' + student.last_name.upper()
+            same_email_count = self.env['op.student'].search_count([('acac_email', 'ilike', acac_mail),
+                                                              ('student_app_id', '!=', student.student_app_id)])
+            if same_email_count:
+                print("Same EMAIL !!!")
+                print(same_email_count)
+                acac_mail += str(same_email_count)
+            acac_mail += mail_domain
+            student.acac_email = acac_mail
+
+
+    def create_student_user(self):
+        user_group = self.env.ref("base.group_portal") or False
+        users_res = self.env['res.users']
+        for record in self:
+            if not record.user_id:
+                user_id = users_res.create({
+                    'name': record.name,
+                    'partner_id': record.partner_id.id,
+                    'login': record.acac_email,
+                    'groups_id': user_group,
+                    'is_student': True,
+                    'tz': self._context.get('tz'),
+                })
+                record.user_id = user_id
+
+
 
     def get_months(self, month):
         start_month = int
@@ -860,9 +896,6 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
         print(semester_detail_data)
         student.env['pm.student.discipline'].create(discipline_data)
         student.env['pm.student.semester.detail'].create(semester_detail_data)
-
-
-
 
     @api.model
     def create(self, val):
@@ -1191,6 +1224,7 @@ class PmStudentFeesDetails(models.Model):
             self.state = 'invoice'
             self.invoice_id = invoice.id
             return True
+
 
 
 

@@ -33,6 +33,10 @@ class ResumeLineCustom(models.Model):
     employee_id = fields.Many2one('hr.employee', required=False, ondelete='cascade')
     # employee_id = fields.Many2one('hr.employee', required=True, ondelete='cascade')
 
+class EmployeeSkillCustom(models.Model):
+    _inherit = 'hr.employee.skill'
+    skill_level_id = fields.Many2one('hr.skill.level', required=False)
+
 
 
 class PmApplicant(models.Model):

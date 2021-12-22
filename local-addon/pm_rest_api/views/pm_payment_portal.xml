@@ -424,7 +424,7 @@
 
                   <div id="aba_main_modal" class="aba-modal">
                     <div class="aba-modal-content">
-                            <form method="POST" target="aba_webservice" t-att-action="url" id="aba_merchant_request">
+                            <form method="POST" t-att-action="url" id="aba_merchant_request">
                                 <input type="hidden" name="req_time" t-att-value="req_time" id="req_time"/>
                                 <input type="hidden" name="hash" t-att-value="hash" id="hash"/>
                                 <input type="hidden" name="tran_id" t-att-value="tran_id" id="tran_id"/>

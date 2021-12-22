@@ -279,6 +279,7 @@
 <!--                                   decoration-warning="education_status=='withdrawn'"-->
 <!--                                   decoration-danger="education_status=='dismissed'"-->
                             <field name="email"  required="1" placeholder="Email"/>
+                            <field name="acac_email"  required="1" placeholder="School Email"/>
                             <field name="mobile" required="1" placeholder="Mobile Phone" widget="phone" />
                             <field name="phone" placeholder="Mobile Phone 1" widget="phone" string="Mobile 1" />
                             <field name="facebook"/>
@@ -707,6 +708,13 @@
         parent="crm.crm_menu_root"
         action="openeducat_placement_enterprise.act_open_op_placement_offer_view"
         sequence="6"/>
+
+    <menuitem id="student_menu_internships"
+        name="Internships"
+        parent="openeducat_core.menu_op_student_root"
+        groups="pm_leads.group_acac_registrar,openeducat_core.group_op_back_office,pm_leads.group_see_student_app"
+        action="openeducat_placement_enterprise.act_open_op_placement_offer_view"
+        sequence="12"/>
 
     <!-- use to remove student progression from UI -->
     <record id="make_invisible" model="res.groups">

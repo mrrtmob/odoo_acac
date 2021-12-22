@@ -204,6 +204,7 @@ class PmRecruitingRequest(models.Model):
         approval.state = state
         self.message_subscribe(partner_ids=[approval.approve.partner_id.id])
         return approval.approve
+    
 
     def button_submit(self):
 

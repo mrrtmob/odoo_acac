@@ -155,8 +155,8 @@ class PmJobPosition(models.Model):
                     <p>Interested individuals can apply by submitting an Expression of Interest and a detailed CV to:</p>
                     <br/>
                     <div style="text-align:center;font-weight:bold">
-                        <p>Attn: Mrs. Srun Chanlay </p>  
-                        <p>Email: operations.manager@acac.edu.kh </p> 
+                        <p>Attn: Mrs. Samol Seylark </p>
+                        <p>Email: ops.manager@acac.edu.kh </p> 
                         <p>CC: acac@shift360.ch </p> 
                         <p>Visit our website: www.acac.edu.kh</p> 
                     </div>

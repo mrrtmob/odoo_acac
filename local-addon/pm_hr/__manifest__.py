@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "pm_hr",
+    'name': "Pathmazing HR",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+    This module is created on top of most of the HR modules to refactor the structure according to client requirements """,
 
     'description': """
         Long description of module's purpose
     """,
 
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
+    'author': "Pathmazing Inc",
+    'website': "https://pathmazing.com/",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'Uncategorized',
+    'category': 'Human Resources',
     'version': '0.1',
 
     # any module necessary for this one to work correctly

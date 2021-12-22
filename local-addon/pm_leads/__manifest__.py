@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "pm_lead",
+    'name': "Pathmazing Marketing",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Customize Marketing module according to client needs""",
 
     'description': """
         Long description of module's purpose
     """,
 
     'author': "Pathmazing Inc",
+    'website': "https://pathmazing.com/",
 
 
 
