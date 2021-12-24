@@ -24,14 +24,32 @@ class ABAPayWay(http.Controller):
         id = os.environ.get("MERCHANT_ID")
         return id
 
-    def get_api_url(self):
+    # def get_api_url(self):
+    #     env = os.environ.get("ENVIRONMENT")
+    #     if env == "TEST":
+    #         test_url = os.environ.get("API_URL_DEV")
+    #         return test_url
+    #     if env == "PRO":
+    #         pro_url = os.environ.get("API_URL_PRO")
+    #         return pro_url
+
+    def get_api_url(self, api_type):
         env = os.environ.get("ENVIRONMENT")
-        if env == "TEST":
-            test_url = os.environ.get("API_URL_DEV")
-            return test_url
-        if env == "PRO":
-            pro_url = os.environ.get("API_URL_PRO")
-            return pro_url
+        if env == 'TEST':
+            if api_type == "purchase":
+                return os.environ.get("PURCHASE_URL_DEV")
+
+            if api_type == "check-transaction":
+                return os.environ.get("CHECK_TRANSACTION_URL_DEV")
+
+        if env == 'PRO':
+            if api_type == "purchase":
+                return os.environ.get("PURCHASE_URL_PRO")
+
+            if api_type == "check-transaction":
+                return os.environ.get("CHECK_TRANSACTION_URL_PRO")
+
+
 
     def get_push_back_url(self):
         url = os.environ.get("PUSHBACK_URL")

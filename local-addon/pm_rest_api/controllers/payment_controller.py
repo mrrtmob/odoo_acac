@@ -60,7 +60,7 @@ class PaymentPortal(CustomerPortal):
         payment_obj = request.env[object].sudo().browse(payment_id)
         tran_id = payment_obj.order_transaction_id
         getItems = PayWay.get_transaction_items(payment_obj)
-        api_url = PayWay.get_api_url()
+        api_url = PayWay.get_api_url('purchase')
         payment_option = 'cards'
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id or payment_obj.fee_id.student_id
@@ -96,7 +96,7 @@ class PaymentPortal(CustomerPortal):
             'email': student.email,
             'phone': student.mobile,
             'tran_id': tran_id,
-            'url': 'https://checkout-uat.payway.com.kh/api/payment-gateway/v1/payments/purchase',
+            'url': api_url,
             'payment_option': payment_option,
             'push_back_url': push_back_url,
             'items': getItems['items'],
@@ -122,8 +122,7 @@ class PaymentPortal(CustomerPortal):
         tran_id = payment_obj.order_transaction_id
 
         getItems = PayWay.get_transaction_items(payment_obj)
-
-        api_url = PayWay.get_api_url()
+        api_url = PayWay.get_api_url('purchase')
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id or payment_obj.fee_id.student_id
         base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
@@ -185,9 +184,10 @@ class PaymentPortal(CustomerPortal):
     def check_transaction_status(self, tran_id):
         PayWay = ABAPayWay()
         merchant_id = PayWay.get_merchant_id()
-        api_url = PayWay.get_api_url()+'check/transaction/'
+        api_url = PayWay.get_api_url('check-transaction')
         hash = PayWay.get_hash_check(str(merchant_id), str(tran_id))
         params = {
+            'merchant_id': merchant_id,
             'tran_id': tran_id,
             'hash': hash
         }
