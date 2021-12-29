@@ -866,31 +866,32 @@ class PathmazingApi(RESTController):
                     if payment.state in ['invoice', 'installment'] and invoice_state != 'posted':
                         if payment_option == 'installment':
                             for installment in payment.installments:
-                                payment_id = payment.id
-                                payment_date = installment.due_date
-                                amount = installment.amount
-                                state = installment.state
-                                expired = (payment_date - today).days
-                                reminding = ''
-                                if expired > 0:
-                                    reminding = 'due in ' + str(expired) + ' days'
-                                elif expired == 0:
-                                    reminding = 'today'
-                                else:
-                                    reminding = 'late ' + str(abs(expired)) + ' days'
-                                val = {
-                                    'id': installment.id,
-                                    'payment_date': payment_date,
-                                    'amount': amount,
-                                    'state': state,
-                                    'invoice_state': installment.invoice_state,
-                                    'reminding': reminding,
-                                    'type': payment_option,
-                                    'day': expired,
-                                    'payment_number': installment.order_transaction_id,
-                                }
-                                payment_data.append(val)
-                        elif payment_option == 'normal':
+                                if installment.invoice_state == 'draft':
+                                    payment_id = payment.id
+                                    payment_date = installment.due_date
+                                    amount = installment.amount
+                                    state = installment.state
+                                    expired = (payment_date - today).days
+                                    reminding = ''
+                                    if expired > 0:
+                                        reminding = 'due in ' + str(expired) + ' days'
+                                    elif expired == 0:
+                                        reminding = 'today'
+                                    else:
+                                        reminding = 'late ' + str(abs(expired)) + ' days'
+                                    val = {
+                                        'id': installment.id,
+                                        'payment_date': payment_date,
+                                        'amount': amount,
+                                        'state': state,
+                                        'invoice_state': installment.invoice_state,
+                                        'reminding': reminding,
+                                        'type': payment_option,
+                                        'day': expired,
+                                        'payment_number': installment.order_transaction_id,
+                                    }
+                                    payment_data.append(val)
+                        elif payment_option == 'normal' and payment.invoice_state == 'draft':
                             payment_id = payment.id
                             payment_date = payment.date
                             expired = (payment_date - today).days
