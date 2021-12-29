@@ -59,6 +59,7 @@
 
         <menuitem
             name="Generate Final Result"
+            active="0"
             id="menu_pm_final_result_template"
             sequence="20"
             groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"
@@ -74,6 +75,7 @@
           <menuitem id="menu_pm_term_result"
               name="Final Results"
               parent="menu_pm_semester_result_root"
+              active="0"
               sequence="5"
               action="act_open_pm_term_result_view"
               groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
@@ -92,8 +94,18 @@
               action="pm_general.act_open_pm_student_semester_result_view"
               groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
 
+          <menuitem id="menu_pm_student_subject_result_shortcut"
+              name="Input Subject Results"
+              parent="openeducat_exam.menu_op_exam_general"
+              sequence="5"
+              action="pm_general.act_open_pm_student_subject_result_input"
+              groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+
+          <menuitem id="openeducat_exam.menu_student_hall_ticket" active="0"/>
+
           <menuitem id="menu_pm_student_final_result"
               name="Final Result List"
+              active="0"
               parent="openeducat_exam.menu_op_exam_general"
               sequence="60"
               action="pm_general.act_open_student_pm_term_result_view"

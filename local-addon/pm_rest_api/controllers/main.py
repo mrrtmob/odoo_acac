@@ -15,6 +15,7 @@ import pytz
 from odoo.tools import html2plaintext, plaintext2html
 from odoo.addons.pm_rest_api.controllers.aba_payway import ABAPayWay
 import json
+from odoo.tools import date_utils
 
 
 
@@ -852,7 +853,7 @@ class PathmazingApi(RESTController):
         student = Student.get_student(self)
         response = {}
         if student:
-            domain = [('student_id', '=', student.id), ('state', '!=', 'cancel')]
+            domain = [('student_id', '=', student.id), ('state', '!=', 'cancel'), ('payable', '=', True)]
             self.clear_notification('payment_schedule', student.id)
             today = datetime.today().date()
             payment_data = []
@@ -885,6 +886,7 @@ class PathmazingApi(RESTController):
                                     'invoice_state': installment.invoice_state,
                                     'reminding': reminding,
                                     'type': payment_option,
+                                    'day': expired,
                                     'payment_number': installment.order_transaction_id,
                                 }
                                 payment_data.append(val)
@@ -929,28 +931,78 @@ class PathmazingApi(RESTController):
         student = Student.get_student(self)
         response = {}
         if student:
-            domain = [('student_id', '=', student.id), ('invoice_id.state', '=', 'posted')]
+            domain = [('student_id', '=', student.id)]
             payment_data = []
             payments = request.env['op.student.fees.details'].sudo().search(domain, order='date')
+            print(domain)
+            print(payments)
             if payments:
                 for payment in payments:
-                    payment_id = payment.id
-                    payment_date = payment.invoice_id.date
-                    amount = payment.amount
-                    state = payment.state
-                    invoice_state = payment.invoice_id.state
-                    val = {
-                        'id': payment_id,
-                        'payment_number': payment.order_transaction_id,
-                        'payment_date': payment_date,
-                        'amount': amount,
-                        'state': state,
-                        'invoice_state': invoice_state
-                    }
-                    payment_data.append(val)
-                response = {
-                    'data': payment_data,
-                }
+                    if payment.state == 'invoice' and payment.invoice_state == 'posted' and payment.payment_option == 'normal':
+                        payment_id = payment.id
+                        payment_date = payment.invoice_id.payment_id.create_date
+                        amount = payment.invoice_id.amount_total
+                        val = {
+                            'id': payment_id,
+                            'payment_number': payment.order_transaction_id,
+                            'type': 'normal',
+                            'payment_date': payment_date,
+                            'amount': amount,
+                        }
+                        payment_data.append(val)
+
+                    elif payment.state == 'installment':
+                        for installment in payment.installments:
+                            payment_status = installment.invoice_id.payment_state
+                            if payment_status == 'paid':
+                                val = {'id': installment.id,
+                                       'payment_number': installment.order_transaction_id,
+                                       'type': 'installment'}
+                                invoice_data = installment.invoice_id._get_reconciled_info_JSON_values()
+
+                                print(invoice_data)
+                                for rec in invoice_data:
+                                    val['payment_date'] = rec['date']
+                                    val['payment_method'] = rec['payment_method_name']
+                                    val['amount'] = rec['amount']
+                                    val['currency'] = rec['currency']
+                                payment_data.append(val)
+                                print('I have instalments')
+            response = {
+                'data': payment_data,
+            }
+        return Response(json.dumps(response, indent=4, cls=ObjectEncoder),
+                        content_type='application/json;charset=utf-8', status=200)
+
+    @http.route('/api/v1/student/invoice/history',
+                auth="user", type='http', token=None, methods=['GET'], csrf=False)
+    def get_invoice_history(self, token=None, **kw):
+        check_params({'token': token})
+        check_token()
+        student = Student.get_student(self)
+        response = {}
+        if student:
+            student_partner_id = student.partner_id.id
+            domain = [('partner_id', '=', student_partner_id), ('payment_state', 'in', ['paid', 'partial'])]
+
+            payment_data = []
+            invoices = request.env['account.move'].sudo().search(domain, order='date')
+            for inv in invoices:
+                invoice_data = inv._get_reconciled_info_JSON_values()
+                val = {}
+                print(invoice_data)
+                for rec in invoice_data:
+                    val['name'] = rec['name']
+                    val['currency'] = rec['currency']
+                    val['payment_date'] = rec['date']
+                    val['payment_method'] = rec['payment_method_name']
+                    val['payment_reference'] = rec['ref']
+                    val['amount'] = rec['amount']
+                payment_data.append(val)
+
+            response = {
+                'data': payment_data,
+            }
         return Response(json.dumps(response, indent=4, cls=ObjectEncoder),
                         content_type='application/json;charset=utf-8', status=200)
 

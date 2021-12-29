@@ -39,6 +39,33 @@
             </field>
         </record>
 
+         <record id="view_pm_subject_result_search" model="ir.ui.view">
+            <field name="name">pm.semester</field>
+            <field name="model">pm.semester.result.line</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Subjects">
+                       <searchpanel>
+                         <field name="subject_id" string="Subject" icon="fa fa-book"/>
+                     </searchpanel>
+                </search>
+            </field>
+        </record>
+
+         <record id="view_pm_subject_result_tree" model="ir.ui.view">
+            <field name="name">pm.semester.result.line.tree</field>
+            <field name="model">pm.semester.result.line</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Student Subject Result"  editable="top" decoration-danger="status=='fail'">
+                   <field name="student_id" />
+                   <field name="subject_id"/>
+                   <field name="total_score"/>
+                   <field name="status"/>
+                </tree>
+            </field>
+        </record>
+
         <record id="view_pm_semester_form" model="ir.ui.view">
             <field name="name">pm.semester.form</field>
             <field name="model">pm.semester</field>
@@ -191,6 +218,17 @@
             <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
              <field name="domain">[('semester_mark_sheet_id.state', '=', 'validated')]</field>
+            <field name="context">{}</field>
+        </record>
+
+
+          <record model="ir.actions.act_window" id="act_open_pm_student_subject_result_input">
+            <field name="name">Student Subject Results</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pm.semester.result.line</field>
+            <field name="search_view_id" ref="view_pm_subject_result_search"/>
+            <field name="view_mode">tree</field>
+            <field name="domain">[]</field>
             <field name="context">{}</field>
         </record>
 

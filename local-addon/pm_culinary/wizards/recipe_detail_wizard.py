@@ -54,3 +54,36 @@ class WizardRecipeDetail(models.TransientModel):
         }
 
         return self.env.ref('pm_culinary.report_recipe_detail').report_action(self, data=res)
+
+class WizardMenuPrinting(models.TransientModel):
+    _name = "wizard.menu.line"
+    _description = "Menus Line"
+    menu_wizard_id = fields.Many2one('wizard.menu.detail')
+    recipe_id = fields.Many2one('pm.recipe', 'Recipe')
+    number_of_portion = fields.Integer('Yield')
+    print_with_sub = fields.Boolean('Print with Sub Recipes', default=True)
+
+class WizardMenuPrinting(models.TransientModel):
+    _name = "wizard.menu.detail"
+    _description = "Menus Printing Wizard"
+    menu_line_ids = fields.One2many('wizard.menu.line', 'menu_wizard_id')
+
+
+
+    @api.model
+    def default_get(self, fields):
+        res = super(WizardMenuPrinting, self).default_get(fields)
+        active_id = self.env.context.get('active_id', False)
+        line_data = []
+        menu_lines = self.env['pm.menu.line'].search([('menu_id', '=', active_id)])
+        for line in menu_lines:
+            line_data.append((0, 0, {'recipe_id': line.recipe_id.id, 'number_of_portion': line.number_of_portion}))
+        res.update({'menu_line_ids': line_data})
+        return res
+
+    def print_report(self):
+        res = {
+            'menu_line_ids': self.menu_line_ids.ids,
+        }
+        return self.env.ref('pm_culinary.report_menu_detail').report_action(self, data=res)
+

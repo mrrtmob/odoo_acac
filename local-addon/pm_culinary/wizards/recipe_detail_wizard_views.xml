@@ -23,7 +23,34 @@
             </field>
         </record>
 
+        <record id="wizard_menu_detail_form" model="ir.ui.view">
+            <field name="name">wizard.menu.detail.form</field>
+            <field name="model">wizard.menu.detail</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+
+                     <field name="menu_line_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="recipe_id"/>
+                                <field name="number_of_portion" string="Yield" />
+                                <field name="print_with_sub"/>
+                            </tree>
+                      </field>
+
+                    </group>
+                    <footer>
+                        <button string="Print" type="object" name="print_report" class="oe_highlight"/>
+                        <button special="cancel" string="Close" type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
         <act_window id="wizard_recipe_detail_action" name="Recipe Details" res_model="wizard.recipe.detail"
                     binding_model="pm.recipe" binding_views="form" binding_type="report" view_mode="form" target="new" />
+
+        <act_window id="wizard_menu_detail_action" name="Menu Details" res_model="wizard.menu.detail"
+                    binding_model="pm.menu" binding_views="form" binding_type="report" view_mode="form" target="new" />
     </data>
 </odoo>

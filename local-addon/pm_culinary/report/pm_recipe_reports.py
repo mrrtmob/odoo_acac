@@ -23,6 +23,25 @@ class ReportRecipeDetail(models.AbstractModel):
             'custom_data': custom_data
         }
 
+class ReportMenuDetail(models.AbstractModel):
+    _name = 'report.pm_culinary.report_menu_detail_template'
+
+    @api.model
+    def _get_report_values(self, docids, data=None):
+        print(data)
+        lines = self.env['wizard.menu.line'].search([('id', 'in', data['menu_line_ids'])])
+        print(lines)
+        print(type(lines))
+        for d in lines:
+            print("****")
+            print(d.recipe_id.name)
+
+        return {
+            'doc_ids': docids,
+            'doc_model': self.env['wizard.menu.detail'],
+            'docs': lines,
+        }
+
 
 class ReportRecipeSchedule(models.AbstractModel):
     _name = 'report.pm_culinary.report_recipe_schedule_template'

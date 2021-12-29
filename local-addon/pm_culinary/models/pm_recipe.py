@@ -87,6 +87,49 @@ class PmRecipe(models.Model):
     color = fields.Integer(string='Color Index')
     is_expired = fields.Boolean(string='Expired', default=False, compute="_compute_expire", store=True)
 
+
+
+    def copy(self, default=None):
+        print("Yikes")
+        self.ensure_one()
+        default = dict(default or {})
+        sub_recipe_data = []
+        ingredient_data = []
+        ingredients = self.ingredients
+        sub_recipes = self.sub_recipes
+
+        res = super(PmRecipe, self).copy(default)
+
+        for ingredient in ingredients:
+            if ingredient.name or ingredient.display_type or ingredient.line_type and not ingredient.quantity:
+                ingredient_data.append((0, 0, { 'name': ingredient.name,
+                                                'display_type': ingredient.display_type,
+                                                'quantity': 1,
+                                                'line_type': ingredient.line_type,
+                                                'sequence': ingredient.sequence}))
+
+
+            else:
+                ingredient_data.append((0, 0, {'product_id': ingredient.product_id.id,
+                                               'initial_quantity': ingredient.initial_quantity,
+                                               'sequence': ingredient.sequence,
+                                               'quantity': ingredient.quantity}))
+        for sub_recipe in sub_recipes:
+            sub_recipe_data.append((0, 0, {'sub_recipe_id': sub_recipe.sub_recipe_id.id,
+                                           'initial_quantity': sub_recipe.initial_quantity,
+                                           'quantity': sub_recipe.quantity}))
+
+
+        print(sub_recipe_data)
+        print(ingredient_data)
+
+        # raise ValidationError(
+        #     _("Test Sen"))
+
+        res.update({'ingredients': sub_recipe_data})
+        res.update({'sub_recipes': ingredient_data})
+        return res
+
     def write(self, vals):
         vals['is_expired'] = False
         return super().write(vals)

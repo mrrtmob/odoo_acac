@@ -164,7 +164,6 @@ class PmRecipeLine(models.Model):
 
     @api.model
     def create(self, values):
-        print(values['quantity'])
         if values.get('display_type', self.default_get(['display_type'])['display_type']):
             values.update(product_id=False, sub_recipe_id=False)
 
