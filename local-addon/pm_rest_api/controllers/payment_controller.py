@@ -174,7 +174,7 @@ class PaymentPortal(CustomerPortal):
         user_agent = parse(agent_string)
         if user_agent.is_mobile:
             print("I am from Mobile")
-            return request.redirect('acac://payment')
+            return request.redirect('acac://success')
         else:
             print("I am from PC!!")
             return request.render("pm_rest_api.pm_payment_success_form")
