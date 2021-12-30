@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="contrib_register_employees" model="hr.contribution.register">
             <field name="name">Employees</field>
             <field name="partner_id" eval="False"/>
@@ -67,11 +67,11 @@
         </record>
 
 
-<!--        <record id="DEDUCTION" model="hr.salary.rule.category">-->
-<!--            <field name="name">Deduction</field>-->
-<!--            <field name="code">DED</field>-->
-<!--            <field name="parent_id" eval="False"/>-->
-<!--        </record>-->
+        <record id="DEDUCTION" model="hr.salary.rule.category">
+            <field name="name">Deduction</field>
+            <field name="code">DED</field>
+            <field name="parent_id" eval="False"/>
+        </record>
 
         <record id="hr_rule_basic" model="hr.salary.rule">
             <field name="name">Basic Salary</field>
