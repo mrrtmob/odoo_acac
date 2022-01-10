@@ -960,23 +960,24 @@ class PathmazingApi(RESTController):
                     elif payment.state == 'installment':
                         for installment in payment.installments:
                             payment_status = installment.invoice_id.payment_state
-                            val = {'id': installment.id,
-                                   'payment_number': installment.order_transaction_id,
-                                   'type': 'installment'}
-                            invoice_data = installment.invoice_id._get_reconciled_info_JSON_values()
+                            if installment.invoice_state == 'posted':
+                                val = {'id': installment.id,
+                                       'payment_number': installment.order_transaction_id,
+                                       'type': 'installment'}
+                                invoice_data = installment.invoice_id._get_reconciled_info_JSON_values()
 
-                            print(invoice_data)
-                            for rec in invoice_data:
-                                val['payment_date'] = rec['date']
-                                val['payment_method'] = rec['payment_method_name']
-                                val['amount'] = rec['amount']
-                                val['currency'] = rec['currency']
-                                if payment_status == 'paid':
-                                    val['status'] = 'verified'
-                                else:
-                                    val['status'] = 'pending'
-                            payment_data.append(val)
-                            print('I have instalments')
+                                print(invoice_data)
+                                for rec in invoice_data:
+                                    val['payment_date'] = rec['date']
+                                    val['payment_method'] = rec['payment_method_name']
+                                    val['amount'] = rec['amount']
+                                    val['currency'] = rec['currency']
+                                    if payment_status == 'paid':
+                                        val['status'] = 'verified'
+                                    else:
+                                        val['status'] = 'pending'
+                                payment_data.append(val)
+                                print('I have instalments')
             response = {
                 'data': payment_data,
             }
