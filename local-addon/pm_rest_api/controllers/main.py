@@ -962,6 +962,7 @@ class PathmazingApi(RESTController):
                             payment_status = installment.invoice_id.payment_state
                             if installment.invoice_state == 'posted':
                                 val = {'id': installment.id,
+                                       'amount': installment.amount,
                                        'payment_number': installment.order_transaction_id,
                                        'type': 'installment'}
                                 invoice_data = installment.invoice_id._get_reconciled_info_JSON_values()
