@@ -107,7 +107,8 @@ class HrPayslip(models.Model):
                     credit_sum += credit_line[2]['credit'] - credit_line[2]['debit']
 
             if currency.compare_amounts(credit_sum, debit_sum) == -1:
-                acc_id = slip.journal_id.default_credit_account_id.id
+                # acc_id = slip.journal_id.default_credit_account_id.id
+                acc_id = slip.journal_id.default_account_id.id
                 if not acc_id:
                     raise UserError(_('The Expense Journal "%s" has not properly configured the Credit Account!') % (
                         slip.journal_id.name))

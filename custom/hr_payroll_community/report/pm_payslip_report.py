@@ -101,11 +101,7 @@ class PMPayslipReport(models.AbstractModel):
                         'total': +line.total
                     })
 
-
-
-
-
-        addition.append({'name': 'Benefits','total': sum(benefit)})
+        addition.append({'name': 'Benefits', 'total': sum(benefit)})
         addition.append({'name': 'Termination Payment', 'total': sum(termination)})
         data = {
             'addition': addition,
