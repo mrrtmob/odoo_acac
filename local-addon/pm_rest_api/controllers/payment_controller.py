@@ -84,40 +84,25 @@ class PaymentPortal(CustomerPortal):
                        ]
         hash_data = PayWay.get_hash(hash_params)
 
-        # val = {
-        #     'hash': hash_data,
-        #     'req_time': req_time,
-        #     'merchant_id': merchant_id,
-        #     'amount': str(payment_obj.amount),
-        #     'amount_display': str(payment_obj.amount) + '$',
-        #     'firstname': student.first_name,
-        #     'lastname': student.last_name,
-        #     'continue_success_url': success_url,
-        #     'email': student.email,
-        #     'phone': student.mobile,
-        #     'tran_id': tran_id,
-        #     'url': api_url,
-        #     'payment_option': payment_option,
-        #     'push_back_url': push_back_url,
-        #     'items': getItems['items'],
-        #     'shipping': shipping,
-        #     'display_items': getItems['raw_items'],
-        # }
         val = {
-                "req_time": "2022011491227",
-                "merchant_id": "ec002020",
-                "tran_id": "0001873",
-                "items": "W3sibmFtZSI6IkRvbmF0aW9uIiwicXVhbnRpdHkiOjEsInByaWNlIjoiMTUuMzMifV0=",
-                "firstname": "Pich",
-                "lastname": "Eren",
-                "email": "anonymous@pathmazing.com",
-                "phone": "+8556929461",
-                "amount": 15.33,
-                "payment_option": "cards",
-                "return_url": "aHR0cHM6Ly9hcGktZGV2LmtobWVyY2FyZS5jb20vL3YxL3BheW1lbnQvdHJhbnNhY3Rpb25zL2FiYS9jYWxsYmFjaw==",
-                "hash": "USa7ynSQdW7QPtfApLCOxAgtH0GKIhI7eScG23PUD3deqtW0Nbk0jFhFSFCYY8SMLoAadycDIwPaPO/daULyZA==",
-                 'url': 'https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase',
-            }
+            'hash': hash_data,
+            'req_time': req_time,
+            'merchant_id': merchant_id,
+            'amount': str(payment_obj.amount),
+            'amount_display': str(payment_obj.amount) + '$',
+            'firstname': student.first_name,
+            'lastname': student.last_name,
+            'continue_success_url': success_url,
+            'email': student.email,
+            'phone': student.mobile,
+            'tran_id': tran_id,
+            'url': api_url,
+            'payment_option': payment_option,
+            'push_back_url': push_back_url,
+            'items': getItems['items'],
+            'shipping': shipping,
+            'display_items': getItems['raw_items'],
+        }
         print(val)
         return request.render("pm_rest_api.pm_payment_form_custom", val)
 
@@ -189,7 +174,7 @@ class PaymentPortal(CustomerPortal):
         user_agent = parse(agent_string)
         if user_agent.is_mobile:
             print("I am from Mobile")
-            return request.redirect('acac://success')
+            return request.redirect('acac://payment')
         else:
             print("I am from PC!!")
             return request.render("pm_rest_api.pm_payment_success_form")
@@ -206,6 +191,7 @@ class PaymentPortal(CustomerPortal):
             'tran_id': tran_id,
             'hash': hash
         }
+        print(params)
         req = requests.post(api_url, data=params)
         data = req.json()
         return Response(req, content_type='application/json;charset=utf-8', status=200)
