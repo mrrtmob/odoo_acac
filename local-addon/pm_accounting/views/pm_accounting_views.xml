@@ -31,5 +31,18 @@
         action="act_open_exchange_rate_widget"
         />
 
+    <record id="action_account_group_form" model="ir.actions.act_window">
+        <field name="name">Account Groups</field>
+        <field name="res_model">account.group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="account_group_menu"
+              name="Account Groups"
+              action="action_account_group_form"
+              sequence="25"
+              parent="account.account_account_menu"
+    />
+
   </data>
 </odoo>
