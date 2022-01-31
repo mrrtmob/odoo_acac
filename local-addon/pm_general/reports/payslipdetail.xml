@@ -25,7 +25,7 @@
                     </style>
                     <div class="container-fluid">
                         <t t-call="pm_general.payslip_header"/>
-                        <h4 class="text-center">Payslip for the month of <t t-esc="month"/></h4>
+                        <h4 style="margin-bottom: 30px" class="text-center">Payslip for the month of <t t-esc="month"/></h4>
                         <div class="emp-info">
                             <div class="row">
                                 <div class="col-7">

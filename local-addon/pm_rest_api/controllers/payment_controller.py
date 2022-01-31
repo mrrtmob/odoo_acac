@@ -174,7 +174,7 @@ class PaymentPortal(CustomerPortal):
         user_agent = parse(agent_string)
         if user_agent.is_mobile:
             print("I am from Mobile")
-            return request.redirect('acac://success')
+            return request.redirect('acac://payment')
         else:
             print("I am from PC!!")
             return request.render("pm_rest_api.pm_payment_success_form")
@@ -191,6 +191,7 @@ class PaymentPortal(CustomerPortal):
             'tran_id': tran_id,
             'hash': hash
         }
+        print(params)
         req = requests.post(api_url, data=params)
         data = req.json()
         return Response(req, content_type='application/json;charset=utf-8', status=200)
