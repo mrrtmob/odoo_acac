@@ -17,6 +17,28 @@
       </field>
     </record>
 
+    <record id="view_account_type_tree_inherited" model="ir.ui.view">
+      <field name="name">view.account.type.tree.inherited.pm_accounting</field>
+      <field name="model">account.account.type</field>
+      <field name="inherit_id" ref="account.view_account_type_tree"/>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='type']" position="after">
+              <field name="internal_group" />
+          </xpath>
+      </field>
+    </record>
+
+    <record id="view_account_type_form_inherited" model="ir.ui.view">
+      <field name="name">view.account.type.form.inherited.pm_accounting</field>
+      <field name="model">account.account.type</field>
+      <field name="inherit_id" ref="account.view_account_type_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='type']" position="after">
+              <field name="internal_group" />
+          </xpath>
+      </field>
+    </record>
+
      <record model="ir.actions.act_window" id="act_open_exchange_rate_widget">
           <field name="name">Exchange Rates</field>
           <field name="res_model">res.currency.rate</field>
