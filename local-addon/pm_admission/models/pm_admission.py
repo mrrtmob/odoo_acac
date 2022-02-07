@@ -211,6 +211,9 @@ class OpAdmission(models.Model):
         self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
         self.state = 'submit'
 
+        action = self.env.ref("crm.crm_lead_all_leads").read()[0]
+        return action
+
     def confirm_in_progress(self):
         ir_model_data = self.env['ir.model.data']
         try:
@@ -219,6 +222,9 @@ class OpAdmission(models.Model):
             template_id = False
         self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
         self.state = 'confirm'
+
+        action = self.env.ref("crm.crm_lead_all_leads").read()[0]
+        return action
 
     def admission_confirm(self):
         ir_model_data = self.env['ir.model.data']
@@ -229,10 +235,16 @@ class OpAdmission(models.Model):
         self.env['mail.template'].browse(template_id).send_mail(self.id, force_send=True)
         self.state = 'admission'
 
+        action = self.env.ref("crm.crm_lead_all_leads").read()[0]
+        return action
+
     def confirm_cancel(self):
         lead = self.env['crm.lead'].browse(self.lead_id)
         lead.type = 'lead'
         self.unlink()
+
+        action = self.env.ref("crm.crm_lead_all_leads").read()[0]
+        return action
 
 
     @api.onchange('student_id')
