@@ -50,7 +50,7 @@ class PmRecipe(models.Model):
     cost_per_portion = fields.Float('Cost Per Portion', compute='_compute_cost', store=True, track_visibility='onchange')
     preparation = fields.Html('Preparation')
     instruction = fields.Html('Instruction')
-    type = fields.Selection(_TYPE)
+    type = fields.Selection(_TYPE, copy=False)
     recipe_line_ids = fields.One2many('pm.recipe.line', 'recipe_id')
     cuisine = fields.Char(track_visibility='onchange')
     recipe_approver_email = fields.Char('Approver Email')
