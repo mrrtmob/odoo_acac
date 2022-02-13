@@ -132,6 +132,11 @@ class PmRecipe(models.Model):
 
     def write(self, vals):
         vals['is_expired'] = False
+
+        # Temporarily fixing image issue when update a record
+        if vals['recipe_image']:
+            self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_field = '%s' AND res_id = %d""" % (self._name, 'recipe_image', self.id))
+
         return super().write(vals)
     
     def set_recipe_expiration(self):
