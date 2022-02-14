@@ -611,3 +611,10 @@ class Lead(models.Model):
             return notification
         else:
             return admission_form
+
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if vals['image']:
+          self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_field = '%s' AND res_id = %d""" % (self._name, 'image', self.id))
+
+      return super(Lead, self).write(vals)

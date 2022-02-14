@@ -26,3 +26,14 @@ class ResPartner(models.Model):
          ('account_holder', 'Account Holder')],
         default='other'
     )
+
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if vals['image_1920']:
+          # print(self._name)
+          # print(self.id)
+          # self.env.cr.execute("""SELECT COUNT(*) FROM ir_attachment WHERE res_model = '%s' AND res_id = %d""" % (self._name, self.id))
+          # print(self.env.cr.fetchall())
+          self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_id = %d""" % (self._name, self.id))
+
+      return super(ResPartner, self).write(vals)

@@ -673,8 +673,9 @@ class OpAdmission(models.Model):
             print(details)
             return details
 
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if vals['image']:
+          self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_field = '%s' AND res_id = %d""" % (self._name, 'image', self.id))
 
-
-
-
-
+      return super(OpAdmission, self).write(vals)

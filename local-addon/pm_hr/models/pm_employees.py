@@ -259,5 +259,13 @@ class PmEmployees(models.Model):
     #     res = super(PmEmployees, self).write(vals)
     #     return res
 
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if vals['image_1920']:
+          # print(self._name)
+          # print(self.id)
+          # self.env.cr.execute("""SELECT COUNT(*) FROM ir_attachment WHERE res_model = '%s' AND res_id = %d""" % (self._name, self.id))
+          # print(self.env.cr.fetchall())
+          self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_id = %d""" % (self._name, self.id))
 
-
+      return super(PmEmployees, self).write(vals)

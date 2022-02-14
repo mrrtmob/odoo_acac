@@ -63,3 +63,13 @@ class AccountJournal(models.Model):
         help="Bank statements transactions will be posted on the suspense account until the final reconciliation "
              "allowing finding the right account.", string='Suspense Account',
         domain=lambda self: "[('deprecated', '=', False), ('company_id', '=', company_id)]")
+
+class PaymentIcon(models.Model):
+    _inherit = 'payment.icon'
+
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if vals['image']:
+          self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_field = '%s' AND res_id = %d""" % (self._name, 'image', self.id))
+
+      return super(PaymentIcon, self).write(vals)
