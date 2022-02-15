@@ -85,6 +85,14 @@ class ProductTemplate(models.Model):
             if record.supplier_qty_in_uor > 0:
                 record.qty_on_hand_uom = record.qty_on_hand / record.supplier_qty_in_uor
 
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if vals['image_1920']:
+          # print(self._name)
+          # print(self.id)
+          self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_id = %d""" % (self._name, self.id))
+
+      return super(ProductTemplate, self).write(vals)
 
 
 class ProductProduct(models.Model):
@@ -125,3 +133,10 @@ class ProductProduct(models.Model):
             'type': 'ir.actions.act_window',
             'target': 'current',
         }
+
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if 'image_1920' in vals and vals['image_1920']:
+        self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = 'product.template' AND res_id = %d""" % (self.product_tmpl_id.id))
+
+      return super(ProductProduct, self).write(vals)

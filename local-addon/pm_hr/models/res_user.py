@@ -25,3 +25,13 @@ class ResUsers(models.Model):
         for user in self:
             user.can_edit = can_edit
 
+
+class Lang(models.Model):
+    _inherit = "res.lang"
+
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if vals['flag_image']:
+          self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_field = '%s' AND res_id = %d""" % (self._name, 'flag_image', self.id))
+
+      return super(Lang, self).write(vals)

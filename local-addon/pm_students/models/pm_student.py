@@ -965,6 +965,15 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
     #
     #     return res
 
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if vals['image_1920']:
+          # self.env.cr.execute("""SELECT COUNT(*) FROM ir_attachment WHERE res_model = 'res.partner' AND res_id = %d""" % (self.partner_id.id))
+          # print(self.env.cr.fetchall())
+          self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = 'res.partner' AND res_id = %d""" % (self.partner_id.id))
+
+      return super(OpStudent, self).write(vals)
+
 class PmStudentFeesDetails(models.Model):
     _inherit = "op.student.fees.details"
     date = fields.Date('Payment Date')
@@ -1224,37 +1233,3 @@ class PmStudentFeesDetails(models.Model):
             self.state = 'invoice'
             self.invoice_id = invoice.id
             return True
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

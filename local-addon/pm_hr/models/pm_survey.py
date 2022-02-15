@@ -97,6 +97,13 @@ class PmSurvey(models.Model):
                 survey.get_base_url(),
                 survey.get_start_url())
 
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if vals['background_image']:
+          self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_field = '%s' AND res_id = %d""" % (self._name, 'background_image', self.id))
+
+      return super(PmSurvey, self).write(vals)
+
 
 
 class PmSurveyUserInputInherit(models.Model):
@@ -192,3 +199,28 @@ class PmSurveyUserInputInherit(models.Model):
 
 
 
+class Channel(models.Model):
+    _inherit = 'slide.channel'
+
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if vals['image_1920']:
+          # print(self._name)
+          # print(self.id)
+          self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_id = %d""" % (self._name, self.id))
+
+      return super(Channel, self).write(vals)
+
+
+
+class Slide(models.Model):
+    _inherit = 'slide.slide'
+
+    def write(self, vals):
+      # Temporarily fixing image issue when update a record
+      if vals['image_1920']:
+          # print(self._name)
+          # print(self.id)
+          self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_id = %d""" % (self._name, self.id))
+
+      return super(Slide, self).write(vals)
