@@ -99,7 +99,7 @@ class PmSurvey(models.Model):
 
     def write(self, vals):
       # Temporarily fixing image issue when update a record
-      if vals['background_image']:
+      if 'background_image' in vals and vals['background_image']:
           self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_field = '%s' AND res_id = %d""" % (self._name, 'background_image', self.id))
 
       return super(PmSurvey, self).write(vals)
@@ -204,7 +204,7 @@ class Channel(models.Model):
 
     def write(self, vals):
       # Temporarily fixing image issue when update a record
-      if vals['image_1920']:
+      if 'image_1920' in vals and vals['image_1920']:
           # print(self._name)
           # print(self.id)
           self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_id = %d""" % (self._name, self.id))
@@ -218,7 +218,7 @@ class Slide(models.Model):
 
     def write(self, vals):
       # Temporarily fixing image issue when update a record
-      if vals['image_1920']:
+      if 'image_1920' in vals and vals['image_1920']:
           # print(self._name)
           # print(self.id)
           self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_id = %d""" % (self._name, self.id))

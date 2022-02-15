@@ -29,7 +29,7 @@ class ResPartner(models.Model):
 
     def write(self, vals):
       # Temporarily fixing image issue when update a record
-      if vals['image_1920']:
+      if 'image_1920' in vals and vals['image_1920']:
           # print(self._name)
           # print(self.id)
           # self.env.cr.execute("""SELECT COUNT(*) FROM ir_attachment WHERE res_model = '%s' AND res_id = %d""" % (self._name, self.id))
