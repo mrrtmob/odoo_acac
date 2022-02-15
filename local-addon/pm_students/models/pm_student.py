@@ -967,7 +967,7 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
 
     def write(self, vals):
       # Temporarily fixing image issue when update a record
-      if vals['image_1920']:
+      if 'image_1920' in vals and vals['image_1920']:
           # self.env.cr.execute("""SELECT COUNT(*) FROM ir_attachment WHERE res_model = 'res.partner' AND res_id = %d""" % (self.partner_id.id))
           # print(self.env.cr.fetchall())
           self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = 'res.partner' AND res_id = %d""" % (self.partner_id.id))

@@ -31,7 +31,7 @@ class Lang(models.Model):
 
     def write(self, vals):
       # Temporarily fixing image issue when update a record
-      if vals['flag_image']:
+      if 'flag_image' in vals and vals['flag_image']:
           self.env.cr.execute("""DELETE FROM ir_attachment WHERE res_model = '%s' AND res_field = '%s' AND res_id = %d""" % (self._name, 'flag_image', self.id))
 
       return super(Lang, self).write(vals)
