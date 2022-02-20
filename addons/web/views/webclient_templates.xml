@@ -83,12 +83,6 @@
 
         <link rel="stylesheet" type="text/less" href="/web/static/src/scss/fontawesome_overridden.scss"/>
 
-        <!-- Force import stylesheet of base_accounting_kit module. -->
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"/>
-        <link rel="stylesheet" type="text/scss" href="/base_accounting_kit/static/src/scss/style.scss"/>
-        <link rel="stylesheet" type="text/scss" href="/base_accounting_kit/static/lib/bootstrap-toggle-master/css/bootstrap-toggle.min.css"/>
-        <link rel="stylesheet" href="/base_accounting_kit/static/src/scss/account_asset.scss"/>
-
         <t t-call="web._assets_common_minimal_js"/>
 
         <script type="text/javascript" src="/web/static/lib/underscore/underscore.js"></script>
