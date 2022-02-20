@@ -18,7 +18,7 @@
     </t>
     <t t-name="PLTable">
         <div>
-            <div class="table_main_view">
+            <div class="table_main_view" style="overflow:auto!important">
                 <table cellspacing="0" width="100%">
                     <thead>
                         <tr>
