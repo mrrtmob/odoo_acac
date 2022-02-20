@@ -13,7 +13,7 @@ html {
 			direction: ltr; //Define direction attribute here so when rtlcss preprocessor run, it converts it to rtl
 			flex: 1 1 auto;
 			height: 100%;
-			overflow: hidden;
+			// overflow: hidden;
 
 			> .o_action {
 				height: 100%;

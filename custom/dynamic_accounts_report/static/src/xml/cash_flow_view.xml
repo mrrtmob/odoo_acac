@@ -20,7 +20,7 @@
 	</t>
 	<t t-name="CashTable">
 		<div>
-            <div class="table_main_view" style="overflow:auto!important">
+            <div class="table_main_view">
                 <table cellspacing="0" width="100%">
 				<thead>
 					<tr>
