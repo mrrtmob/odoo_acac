@@ -83,17 +83,17 @@
 								<t t-set="fr_head" t-value="'border-bottom: double;'"/>
 								<t t-set="fr_padding" t-value="'padding-top: 5px; text-align: right;padding-right: 50px; vertical-align: bottom;'"/>
 								<t t-if="a['level'] == 1">
-									<t t-set="style" t-value="'padding: 5px;padding-left: 15px; padding-top: 15px;'"/>
+									<t t-set="style" t-value="'padding: 5px;padding-left: 15px; padding-top: 15px; color: #875A7B; font-size: 14px;'"/>
 								</t>
 								<t t-if="a['level'] == 2">
-									<t t-set="style" t-value="'padding: 5px;padding-left: 25px; padding-top: 25px;'"/>
+									<t t-set="style" t-value="'padding: 5px;padding-left: 25px; padding-top: 25px; color: #875A7B; font-size: 14px;'"/>
 								</t>
 								<t t-if="a['level'] == 3">
-									<t t-set="style" t-value="'padding: 5px;padding-left: 50px;'"/>
+									<t t-set="style" t-value="'padding: 5px;padding-left: 50px; color: #666666; font-size: 12px;'"/>
 									<t t-set="fr_head" t-value="'border: 1px solid black;'"/>
 								</t>
 								<t t-if="a['level'] &gt; 3">
-									<t t-set="style" t-value="'padding: 5px;padding-left: 50px;'"/>
+									<t t-set="style" t-value="'padding: 5px;padding-left: 50px; color: #00A09D; font-size: 12px;'"/>
 									<t t-set="fr_head" t-value="'border: 1px solid black;'"/>
 								</t>
 								<tr t-att-style="fr_head">
