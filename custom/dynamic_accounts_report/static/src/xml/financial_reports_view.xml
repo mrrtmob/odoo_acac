@@ -34,7 +34,7 @@
 
 									<t t-set="common_id" t-value="0"/>
 									<t t-if="account['id'] == a['account']">
-										<tr style="border: 1.5px solid black;" class="gl-line"
+										<tr style="border-bottom: 1px solid gray;" class="gl-line"
 											data-toggle="collapse"
 											t-att-data-account-id="account['id']"
 											t-attf-data-target=".a{{account['id']}}">
@@ -85,11 +85,11 @@
 								</t>
 								<t t-if="a['level'] == 3">
 									<t t-set="style" t-value="'padding: 5px;padding-left: 50px;'"/>
-									<t t-set="fr_head" t-value="'border-bottom: 1px solid black;'"/>
+									<t t-set="fr_head" t-value="'border: 1px solid black;'"/>
 								</t>
 								<t t-if="a['level'] &gt; 3">
 									<t t-set="style" t-value="'padding: 5px;padding-left: 50px;'"/>
-									<t t-set="fr_head" t-value="'border-bottom: 1px solid black;'"/>
+									<t t-set="fr_head" t-value="'border: 1px solid black;'"/>
 								</t>
 								<tr t-att-style="fr_head">
 									<th colspan="6" t-att-style="style">
