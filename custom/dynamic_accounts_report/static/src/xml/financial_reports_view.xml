@@ -43,7 +43,7 @@
 											data-toggle="collapse"
 											t-att-data-account-id="account['id']"
 											t-attf-data-target=".a{{account['id']}}">
-											<td colspan="6" style="border: 0px solid black; padding-left: 50px;">
+											<td colspan="6" style="border: 0px solid black; padding-left: 70px; color: #00A09D; font-size: 12px;">
 												<span>
 													<t t-esc="account['code']"/>
 													-
@@ -93,7 +93,7 @@
 									<t t-set="fr_head" t-value="'border: 1px solid black;'"/>
 								</t>
 								<t t-if="a['level'] &gt; 3">
-									<t t-set="style" t-value="'padding: 5px;padding-left: 50px; color: #00A09D; font-size: 12px;'"/>
+									<t t-set="style" t-value="'padding: 5px;padding-left: 50px; color: #666666; font-size: 12px;'"/>
 									<t t-set="fr_head" t-value="'border: 1px solid black;'"/>
 								</t>
 								<tr t-att-style="fr_head">
