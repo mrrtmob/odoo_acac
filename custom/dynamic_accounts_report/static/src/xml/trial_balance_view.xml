@@ -20,10 +20,15 @@
     <t t-name="TrialTable">
         <div>
             <div class="table_main_view">
+                <style>
+                    .table_main_view tr:hover {
+                      background-color: #ededed;
+                    }
+                </style>
                 <table cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th colspan="6" style="font-size: 14px;">Account</th>
+                            <th colspan="6" style="padding: 5px; padding-left: 25px; color: #666666; font-size: 12px;">Account</th>
                             <t t-if="filter['date_from']">
                                 <th class="mon_fld">Initial Debit</th>
                                 <th class="mon_fld">Initial Credit</th>
@@ -43,7 +48,7 @@
                                 data-toggle="collapse"
                                 t-att-data-account-id="account['id']"
                                 t-attf-data-target=".a{{account['id']}}">
-                                <td colspan="6" style="border: 0px solid black; color: #00A09D; font-size: 12px;">
+                                <td colspan="6" style="border: 0px solid black; padding-left: 45px; color: #00A09D; font-size: 12px;">
                                     <span>
                                         <t t-esc="account['code']"/>
                                         -
@@ -143,7 +148,7 @@
                                 <t t-set="common_id" t-value="'a'+account['id']"/>
                             </tr>
                         </t>
-                        <td colspan="6" style="font-size: 14px;" class="">
+                        <td colspan="6" style="padding: 5px; padding-left: 25px; color: #666666; font-size: 12px;" class="">
                             <strong>Total</strong>
                         </td>
                         <t t-if="filter['date_from']">
