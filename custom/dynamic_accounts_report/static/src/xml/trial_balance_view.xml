@@ -23,7 +23,7 @@
                 <table cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th colspan="6">Account</th>
+                            <th colspan="6" style="font-size: 14px;">Account</th>
                             <t t-if="filter['date_from']">
                                 <th class="mon_fld">Initial Debit</th>
                                 <th class="mon_fld">Initial Credit</th>
@@ -39,11 +39,11 @@
                         <t t-set="none_value" t-value="_"/>
                         <t t-foreach="report_lines" t-as="account">
                             <t t-set="common_id" t-value="0"/>
-                            <tr style="border: 1.5px solid black;" class="gl-line"
+                            <tr style="border: 1px solid gray;" class="gl-line"
                                 data-toggle="collapse"
                                 t-att-data-account-id="account['id']"
                                 t-attf-data-target=".a{{account['id']}}">
-                                <td colspan="6" style="border: 0px solid black;">
+                                <td colspan="6" style="border: 0px solid black; color: #00A09D; font-size: 12px;">
                                     <span>
                                         <t t-esc="account['code']"/>
                                         -
@@ -143,7 +143,7 @@
                                 <t t-set="common_id" t-value="'a'+account['id']"/>
                             </tr>
                         </t>
-                        <td colspan="6" style="" class="">
+                        <td colspan="6" style="font-size: 14px;" class="">
                             <strong>Total</strong>
                         </td>
                         <t t-if="filter['date_from']">
