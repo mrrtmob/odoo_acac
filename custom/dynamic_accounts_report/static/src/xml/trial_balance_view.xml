@@ -28,14 +28,23 @@
                 <table cellspacing="0" width="100%">
                     <thead>
                         <tr>
+                            <th colspan="6"></th>
+                            <th colspan="2" style="border: 1px solid gray; text-align: center;">Initial Balance</th>
+                            <th colspan="2" style="border: 1px solid gray; text-align: center;">Current Balance</th>
+                            <th colspan="2" style="border: 1px solid gray; text-align: center;">Total Balance</th>
+                        </tr>
+                        <tr>
                             <th colspan="6" style="padding: 5px; padding-left: 25px; color: #666666; font-size: 12px;">Account</th>
-                            <t t-if="filter['date_from']">
+                            <!-- <t t-if="filter['date_from']">
                                 <th class="mon_fld">Initial Debit</th>
                                 <th class="mon_fld">Initial Credit</th>
-
-                            </t>
-                            <th class="mon_fld">Debit</th>
-                            <th class="mon_fld">Credit</th>
+                            </t> -->
+                            <th class="mon_fld" style="border: 1px solid gray;">Debit</th>
+                            <th class="mon_fld" style="border: 1px solid gray;">Credit</th>
+                            <th class="mon_fld" style="border: 1px solid gray;">Debit</th>
+                            <th class="mon_fld" style="border: 1px solid gray;">Credit</th>
+                            <th class="mon_fld" style="border: 1px solid gray;">Debit</th>
+                            <th class="mon_fld" style="border: 1px solid gray;">Credit</th>
                         </tr>
                     </thead>
 
@@ -75,7 +84,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <t t-if="filter['date_from']">
+                                <!-- <t t-if="filter['date_from']"> -->
                                     <t t-if="account['Init_balance']">
                                         <t t-if="currency[1] == 'before'">
 
@@ -104,10 +113,12 @@
                                     <t t-else="">
                                         <t t-if="currency[1] == 'before'">
                                             <td class="mon_fld">
-                                                <t t-esc="currency[0]"/>0
+                                                <t t-esc="currency[0]"/>
+                                                0
                                             </td>
                                             <td class="mon_fld">
-                                                <t t-esc="currency[0]"/>0
+                                                <t t-esc="currency[0]"/>
+                                                0
                                             </td>
                                         </t>
                                         <t t-else="">
@@ -121,7 +132,7 @@
                                             </td>
                                         </t>
                                     </t>
-                                </t>
+                                <!-- </t> -->
                                 <t t-if="currency[1] == 'before'">
                                     <td class="mon_fld">
                                         <t t-esc="currency[0]"/>
@@ -151,7 +162,7 @@
                         <td colspan="6" style="padding: 5px; padding-left: 25px; color: #666666; font-size: 12px;" class="">
                             <strong>Total</strong>
                         </td>
-                        <t t-if="filter['date_from']">
+                        <!-- <t t-if="filter['date_from']"> -->
 
                             <td class="mon_fld" style="">
                                 <strong></strong>
@@ -159,7 +170,7 @@
                             <td class="mon_fld" style="">
                                 <strong></strong>
                             </td>
-                        </t>
+                        <!-- </t> -->
                         <t t-if="currency[1] == 'before'">
                             <td class="mon_fld" style="">
                                 <strong>
