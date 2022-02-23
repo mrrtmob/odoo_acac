@@ -1,9 +1,9 @@
 
 <odoo>
 
-    <record id="base_accounting_kit.menu_Balance_report" model="ir.ui.menu">
+    <!-- <record id="base_accounting_kit.menu_Balance_report" model="ir.ui.menu">
         <field name="active" eval="False"/>
-    </record>
+    </record> -->
     <record id="base_accounting_kit.menu_general_ledger" model="ir.ui.menu">
         <field name="active" eval="False"/>
     </record>
