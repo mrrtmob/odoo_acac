@@ -2,6 +2,8 @@ from odoo import models, fields , api
 from odoo.exceptions import ValidationError
 class OpPlacementOffer(models.Model):
     _inherit = "op.placement.offer"
+
+    student_app_id = fields.Char('Student ID', compute='_compute_get_student_app_id')
     p_end_date = fields.Date('End Date')
     p_address = fields.Text('Address')
     p_city = fields.Char('City', size=64)
@@ -89,3 +91,6 @@ class OpPlacementOffer(models.Model):
             else:
                 record.p_status = "in_progress"
 
+    def _compute_get_student_app_id(self):
+        for record in self:
+            record.student_app_id = record.student_id.student_app_id
