@@ -22,10 +22,14 @@
             <field name="model">op.placement.offer</field>
             <field name="inherit_id" ref="openeducat_placement_enterprise.view_op_placement_offer_tree"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='student_id']" position="before">
+                    <field name="student_app_id"/>
+                </xpath>
+
                 <xpath expr="//field[@name='join_date']" position="after">
                     <field name="p_end_date"/>
-
                 </xpath>
+
                 <xpath expr="//field[@name='training_period']" position="after">
                     <field name="p_country_id"/>
                 </xpath>
