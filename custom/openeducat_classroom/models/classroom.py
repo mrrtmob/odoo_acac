@@ -46,7 +46,7 @@ class OpClassroom(models.Model):
     course_id = fields.Many2one('op.course', 'Course',
                                 tracking=True,
                                 required=True,
-                                states={'done': [('readonly', True)]},
+                                # states={'done': [('readonly', True)]},
                                 default=_get_default_course)
 
 
