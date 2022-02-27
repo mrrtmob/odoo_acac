@@ -271,13 +271,39 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
 //                filter_data_selected.date_to = dateString;
 //            }
 
-if (this.$el.find('.datetimepicker-input[name="date_from"]').val()) {
-                filter_data_selected.date_from = moment(this.$el.find('.datetimepicker-input[name="date_from"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            if (this.$el.find('.datetimepicker-input[name="date_from"]').val() || this.$el.find('.datetimepicker-input[name="date_to"]').val()) {
+                if (this.$el.find('.datetimepicker-input[name="date_from"]').val()) {
+                    filter_data_selected.date_from = moment(this.$el.find('.datetimepicker-input[name="date_from"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                }
+
+                if (this.$el.find('.datetimepicker-input[name="date_to"]').val()) {
+                    filter_data_selected.date_to = moment(this.$el.find('.datetimepicker-input[name="date_to"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                }
+            }
+            else if ($("#date_range").val() == 'this_month') {
+                filter_data_selected.date_from = moment(moment().startOf('month'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                filter_data_selected.date_to = moment(moment().endOf('month'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            }
+            else if ($("#date_range").val() == 'this_year') {
+                filter_data_selected.date_from = moment(moment().startOf('year'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                filter_data_selected.date_to = moment(moment().endOf('year'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            }
+            else if ($("#date_range").val() == 'last_month') {
+                filter_data_selected.date_from = moment(moment().subtract(1, 'months').startOf('month'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                filter_data_selected.date_to = moment(moment().subtract(1, 'months').endOf('month'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            }
+            else if ($("#date_range").val() == 'last_year') {
+                filter_data_selected.date_from = moment(moment().subtract(1, 'years').startOf('year'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                filter_data_selected.date_to = moment(moment().subtract(1, 'years').endOf('year'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
             }
 
-            if (this.$el.find('.datetimepicker-input[name="date_to"]').val()) {
-                filter_data_selected.date_to = moment(this.$el.find('.datetimepicker-input[name="date_to"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
-            }
+            // if (this.$el.find('.datetimepicker-input[name="date_from"]').val()) {
+            //     filter_data_selected.date_from = moment(this.$el.find('.datetimepicker-input[name="date_from"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            // }
+
+            // if (this.$el.find('.datetimepicker-input[name="date_to"]').val()) {
+            //     filter_data_selected.date_to = moment(this.$el.find('.datetimepicker-input[name="date_to"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            // }
 
             if ($(".target_move").length) {
             var post_res = document.getElementById("post_res")

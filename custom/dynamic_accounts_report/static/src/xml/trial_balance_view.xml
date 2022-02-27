@@ -155,6 +155,28 @@
                                     </td>
 
                                 </t>
+                                <t t-if="currency[1] == 'before'">
+                                    <td class="mon_fld">
+                                        <t t-esc="currency[0]"/>
+                                        <t t-raw="account['total_debit']"/>
+                                    </td>
+                                    <td class="mon_fld">
+                                        <t t-esc="currency[0]"/>
+                                        <t t-raw="account['total_credit']"/>
+                                    </td>
+
+                                </t>
+                                <t t-else="">
+                                    <td class="mon_fld">
+                                        <t t-raw="account['total_debit']"/>
+                                        <t t-esc="currency[0]"/>
+                                    </td>
+                                    <td class="mon_fld">
+                                        <t t-raw="account['total_credit']"/>
+                                        <t t-esc="currency[0]"/>
+                                    </td>
+
+                                </t>
 
                                 <t t-set="common_id" t-value="'a'+account['id']"/>
                             </tr>
@@ -163,13 +185,37 @@
                             <strong>Total</strong>
                         </td>
                         <!-- <t t-if="filter['date_from']"> -->
+                            <t t-if="currency[1] == 'before'">
+                                <td class="mon_fld" style="">
+                                    <strong>
+                                        <t t-esc="currency[0]"/>
+    <!--                                    <t t-raw="Math.round(init_debit_total * Math.pow(10, 2)) / Math.pow(10, 2)"/>-->
+                                        <t t-esc="init_debit_total"/>
+                                    </strong>
+                                </td>
+                                <td class="mon_fld" style="">
+                                    <strong>
+                                        <t t-esc="currency[0]"/>
+    <!--                                    <t t-raw="Math.round(init_credit_total * Math.pow(10, 2)) / Math.pow(10, 2)"/>-->
+                                        <t t-esc="init_credit_total"/>
+                                    </strong>
+                                </td>
+                            </t>
+                            <t t-else="">
 
-                            <td class="mon_fld" style="">
-                                <strong></strong>
-                            </td>
-                            <td class="mon_fld" style="">
-                                <strong></strong>
-                            </td>
+                                <td class="mon_fld" style="">
+                                    <strong>
+                                        <t t-raw="Math.round(init_debit_total * Math.pow(10, 2)) / Math.pow(10, 2)"/>
+                                        <t t-esc="currency[0]"/>
+                                    </strong>
+                                </td>
+                                <td class="mon_fld" style="">
+                                    <strong>
+                                        <t t-raw="Math.round(init_credit_total * Math.pow(10, 2)) / Math.pow(10, 2)"/>
+                                        <t t-esc="currency[0]"/>
+                                    </strong>
+                                </td>
+                            </t>
                         <!-- </t> -->
                         <t t-if="currency[1] == 'before'">
                             <td class="mon_fld" style="">
@@ -202,6 +248,37 @@
                                 </strong>
                             </td>
                         </t>
+                        <t t-if="currency[1] == 'before'">
+                            <td class="mon_fld" style="">
+                                <strong>
+                                    <t t-esc="currency[0]"/>
+<!--                                    <t t-raw="Math.round(final_debit_total * Math.pow(10, 2)) / Math.pow(10, 2)"/>-->
+                                    <t t-esc="final_debit_total"/>
+                                </strong>
+                            </td>
+                            <td class="mon_fld" style="">
+                                <strong>
+                                    <t t-esc="currency[0]"/>
+<!--                                    <t t-raw="Math.round(final_credit_total * Math.pow(10, 2)) / Math.pow(10, 2)"/>-->
+                                    <t t-esc="final_credit_total"/>
+                                </strong>
+                            </td>
+                        </t>
+                        <t t-else="">
+
+                            <td class="mon_fld" style="">
+                                <strong>
+                                    <t t-raw="Math.round(final_debit_total * Math.pow(10, 2)) / Math.pow(10, 2)"/>
+                                    <t t-esc="currency[0]"/>
+                                </strong>
+                            </td>
+                            <td class="mon_fld" style="">
+                                <strong>
+                                    <t t-raw="Math.round(final_credit_total * Math.pow(10, 2)) / Math.pow(10, 2)"/>
+                                    <t t-esc="currency[0]"/>
+                                </strong>
+                            </td>
+                        </t>
 
                     </tbody>
 
@@ -228,6 +305,15 @@
             <br></br>
             <div class="sub_container_right row" style="width:30%;height:3%;top:0px;position: relative;">
 
+                        <div class="time_range" style="">
+                            <select id="date_range" style="border: none; background-color: transparent;">
+                                <option value="this_month">This Month</option>
+                                <option value="this_year">This Year</option>
+                                <div role="separator" class="dropdown-divider"></div>
+                                <option value="last_month">Last Month</option>
+                                <option value="last_year">Last Year</option>
+                            </select>
+                        </div>
                         <div class="time_range" style="">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown" >
                                 <span class="fa fa-calendar" title="Dates" role="img" aria-label="Dates"></span>

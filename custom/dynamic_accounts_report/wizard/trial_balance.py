@@ -136,10 +136,20 @@ class TrialView(models.TransientModel):
         debit_total = 0
         debit_total = sum(x['debit'] for x in account_res)
         credit_total = sum(x['credit'] for x in account_res)
+        init_debit_total = 0
+        init_debit_total = sum(x['Init_balance']['debit'] for x in account_res if 'Init_balance' in x and x['Init_balance'])
+        init_credit_total = sum(x['Init_balance']['credit'] for x in account_res if 'Init_balance' in x and x['Init_balance'])
+        final_debit_total = 0
+        final_debit_total = sum(x['total_debit'] for x in account_res)
+        final_credit_total = sum(x['total_credit'] for x in account_res)
         return {
             'doc_ids': self.ids,
             'debit_total': debit_total,
             'credit_total': credit_total,
+            'init_debit_total': init_debit_total,
+            'init_credit_total': init_credit_total,
+            'final_debit_total': final_debit_total,
+            'final_credit_total': final_credit_total,
             'docs': docs,
             'time': time,
             'Accounts': account_res,
@@ -209,6 +219,13 @@ class TrialView(models.TransientModel):
                 res['debit'] = account_result[account.id].get('debit')
                 res['credit'] = account_result[account.id].get('credit')
                 res['balance'] = account_result[account.id].get('balance')
+
+                res['total_debit'] = 0
+                res['total_credit'] = 0
+                if res['balance'] > 0:
+                    res['total_debit'] = res['balance']
+                if res['balance'] < 0:
+                    res['total_credit'] = res['balance']
             if display_account == 'all':
                 account_res.append(res)
             if display_account == 'not_zero' and not currency.is_zero(
