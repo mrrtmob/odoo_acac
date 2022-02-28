@@ -95,6 +95,13 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
                             rep_lines.debit = self.format_currency(datas['currency'],rep_lines.debit);
                             rep_lines.credit = self.format_currency(datas['currency'],rep_lines.credit);
                             rep_lines.balance = self.format_currency(datas['currency'],rep_lines.balance);
+                            if (rep_lines.hasOwnProperty('Init_balance') && rep_lines.Init_balance) {
+                                rep_lines.Init_balance.debit = self.format_currency(datas['currency'],rep_lines.Init_balance.debit);
+                                rep_lines.Init_balance.credit = self.format_currency(datas['currency'],rep_lines.Init_balance.credit);
+                                rep_lines.Init_balance.balance = self.format_currency(datas['currency'],rep_lines.Init_balance.balance);
+                            }
+                            rep_lines.total_debit_balance = self.format_currency(datas['currency'],rep_lines.total_debit_balance);
+                            rep_lines.total_credit_balance = self.format_currency(datas['currency'],rep_lines.total_credit_balance);
 
 
 
@@ -117,8 +124,12 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
                                             report_lines : datas['report_lines'],
                                             filter : datas['filters'],
                                             currency : datas['currency'],
-                                            credit_total : self.format_currency(datas['currency'],datas['debit_total']),
+                                            credit_total : self.format_currency(datas['currency'],datas['credit_total']),
                                             debit_total : self.format_currency(datas['currency'],datas['debit_total']),
+                                            init_debit_total : self.format_currency(datas['currency'],datas['init_debit_total']),
+                                            init_credit_total : self.format_currency(datas['currency'],datas['init_credit_total']),
+                                            final_debit_total : self.format_currency(datas['currency'],datas['final_debit_total']),
+                                            final_credit_total : self.format_currency(datas['currency'],datas['final_credit_total']),
                                         }));
                 });
 

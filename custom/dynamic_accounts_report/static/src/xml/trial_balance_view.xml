@@ -22,7 +22,7 @@
             <div class="table_main_view">
                 <style>
                     .table_main_view tr:hover {
-                      background-color: #ededed;
+                        background-color: #ededed;
                     }
                 </style>
                 <table cellspacing="0" width="100%">
@@ -158,21 +158,21 @@
                                 <t t-if="currency[1] == 'before'">
                                     <td class="mon_fld">
                                         <t t-esc="currency[0]"/>
-                                        <t t-raw="account['total_debit']"/>
+                                        <t t-raw="account['total_debit_balance']"/>
                                     </td>
                                     <td class="mon_fld">
                                         <t t-esc="currency[0]"/>
-                                        <t t-raw="account['total_credit']"/>
+                                        <t t-raw="account['total_credit_balance']"/>
                                     </td>
 
                                 </t>
                                 <t t-else="">
                                     <td class="mon_fld">
-                                        <t t-raw="account['total_debit']"/>
+                                        <t t-raw="account['total_debit_balance']"/>
                                         <t t-esc="currency[0]"/>
                                     </td>
                                     <td class="mon_fld">
-                                        <t t-raw="account['total_credit']"/>
+                                        <t t-raw="account['total_credit_balance']"/>
                                         <t t-esc="currency[0]"/>
                                     </td>
 
@@ -303,9 +303,14 @@
                 </div>
             </div>
             <br></br>
-            <div class="sub_container_right row" style="width:30%;height:3%;top:0px;position: relative;">
-
-                        <div class="time_range" style="">
+            <div class="sub_container_right row" style="width: 30%; height: 3%; top: 0px; position: relative;">
+                        <style>
+                            .filter_item {
+                                margin-left: 7px;
+                                margin-right: 7px;
+                            }
+                        </style>
+                        <div class="time_range filter_item" style="">
                             <select id="date_range" style="border: none; background-color: transparent;">
                                 <option value="this_month">This Month</option>
                                 <option value="this_year">This Year</option>
@@ -314,7 +319,7 @@
                                 <option value="last_year">Last Year</option>
                             </select>
                         </div>
-                        <div class="time_range" style="">
+                        <div class="time_range filter_item" style="">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown" >
                                 <span class="fa fa-calendar" title="Dates" role="img" aria-label="Dates"></span>
                                 Date Range
@@ -348,7 +353,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="journals_filter" style="">
+                        <div class="journals_filter filter_item" style="">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa fa-book"></span>
                                 Journals:
@@ -378,7 +383,7 @@
                             <span id="journal_res"></span>
                         </div>
 
-                        <div class="search-Target-move" style="">
+                        <div class="search-Target-move filter_item" style="">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa fa-filter"></span>
                                 Target Move:
@@ -390,7 +395,7 @@
                             </select>
                             <span id="post_res"></span>
                         </div>
-                        <div style="">
+                        <div class="filter_item" style="">
                             <button type="button" id="apply_filter" class="btn btn-primary"
                                     style="top:0px;height:30px;color:white;background-color: #00A0AD;border-color: #00A0AD;">
                                 Apply

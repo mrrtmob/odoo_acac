@@ -57,6 +57,10 @@ class TrialView(models.TransientModel):
             'report_lines': records['Accounts'],
             'debit_total': records['debit_total'],
             'credit_total': records['credit_total'],
+            'init_debit_total': records['init_debit_total'],
+            'init_credit_total': records['init_credit_total'],
+            'final_debit_total': records['final_debit_total'],
+            'final_credit_total': records['final_credit_total'],
             'currency': currency,
         }
 
@@ -140,8 +144,8 @@ class TrialView(models.TransientModel):
         init_debit_total = sum(x['Init_balance']['debit'] for x in account_res if 'Init_balance' in x and x['Init_balance'])
         init_credit_total = sum(x['Init_balance']['credit'] for x in account_res if 'Init_balance' in x and x['Init_balance'])
         final_debit_total = 0
-        final_debit_total = sum(x['total_debit'] for x in account_res)
-        final_credit_total = sum(x['total_credit'] for x in account_res)
+        final_debit_total = sum(x['total_debit_balance'] for x in account_res)
+        final_credit_total = sum(x['total_credit_balance'] for x in account_res)
         return {
             'doc_ids': self.ids,
             'debit_total': debit_total,
@@ -220,12 +224,15 @@ class TrialView(models.TransientModel):
                 res['credit'] = account_result[account.id].get('credit')
                 res['balance'] = account_result[account.id].get('balance')
 
-                res['total_debit'] = 0
-                res['total_credit'] = 0
+                if 'Init_balance' in res and res['Init_balance']:
+                    res['balance'] += res['Init_balance']['balance']
+
+                res['total_debit_balance'] = 0
+                res['total_credit_balance'] = 0
                 if res['balance'] > 0:
-                    res['total_debit'] = res['balance']
+                    res['total_debit_balance'] = res['balance']
                 if res['balance'] < 0:
-                    res['total_credit'] = res['balance']
+                    res['total_credit_balance'] = res['balance'] * -1
             if display_account == 'all':
                 account_res.append(res)
             if display_account == 'not_zero' and not currency.is_zero(
