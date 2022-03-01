@@ -210,7 +210,7 @@ class TrialView(models.TransientModel):
 
         account_res = []
         for account in accounts:
-            res = dict((fn, 0.0) for fn in ['credit', 'debit', 'balance'])
+            res = dict((fn, 0.0) for fn in ['credit', 'debit', 'balance', 'total_debit_balance', 'total_credit_balance'])
             currency = account.currency_id and account.currency_id or account.company_id.currency_id
             res['code'] = account.code
             res['name'] = account.name
@@ -227,8 +227,6 @@ class TrialView(models.TransientModel):
                 if 'Init_balance' in res and res['Init_balance']:
                     res['balance'] += res['Init_balance']['balance']
 
-                res['total_debit_balance'] = 0
-                res['total_credit_balance'] = 0
                 if res['balance'] > 0:
                     res['total_debit_balance'] = res['balance']
                 if res['balance'] < 0:
