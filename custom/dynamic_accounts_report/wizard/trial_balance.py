@@ -208,6 +208,12 @@ class TrialView(models.TransientModel):
         for row in self.env.cr.dictfetchall():
             account_result[row.pop('id')] = row
 
+        # get accounts to display
+        self.env.cr.execute("""SELECT DISTINCT(account_id) FROM account_move_line""")
+        display_account_ids = self.env.cr.fetchall()
+        # convert list of tuples to list
+        display_account_ids = [id for t in display_account_ids for id in t]
+
         account_res = []
         for account in accounts:
             res = dict((fn, 0.0) for fn in ['credit', 'debit', 'balance', 'total_debit_balance', 'total_credit_balance'])
@@ -240,7 +246,9 @@ class TrialView(models.TransientModel):
             #         not currency.is_zero(res['debit']) or not currency.is_zero(
             #         res['credit'])):
             #     account_res.append(res)
-            account_res.append(res)
+            if res['id'] in display_account_ids:
+                account_res.append(res)
+                
         return account_res
 
     def get_init_bal(self, account, display_account, data):

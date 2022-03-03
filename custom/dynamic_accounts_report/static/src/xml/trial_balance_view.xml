@@ -1,6 +1,6 @@
 <templates>
     <t t-name="TrialTemp">
-        <div class="">
+        <div class="" style="background-color: white;">
             <div class="">
                 <h1 style="padding:10px">
                     Trial Balance
@@ -18,37 +18,37 @@
         </div>
     </t>
     <t t-name="TrialTable">
-        <div>
+        <div style="background-color: white;">
             <div class="table_main_view">
                 <style>
                     .table_main_view tr:hover {
                         background-color: #ededed;
                     }
                 </style>
-                <table cellspacing="0" width="100%">
+                <table cellspacing="0" width="99%">
                     <thead>
-                        <tr>
+                        <tr style="text-align: center; font-size: 14px; color: #666666;">
                             <th colspan="6"></th>
-                            <th colspan="2" style="border: 1px solid gray; text-align: center;">Initial Balance</th>
-                            <th colspan="2" style="border: 1px solid gray; text-align: center;">Current Balance</th>
-                            <th colspan="2" style="border: 1px solid gray; text-align: center;">Total Balance</th>
+                            <th colspan="2" style="border: 1px solid gray;">Initial Balance</th>
+                            <th colspan="2" style="border: 1px solid gray;">Current Balance</th>
+                            <th colspan="2" style="border: 1px solid gray;">Total Balance</th>
                         </tr>
-                        <tr>
-                            <th colspan="6" style="padding: 5px; padding-left: 25px; color: #666666; font-size: 12px;">Account</th>
+                        <tr style="color: #666666;">
+                            <th colspan="6" style="padding: 5px; padding-left: 25px; font-size: 12px;">Account</th>
                             <!-- <t t-if="filter['date_from']">
                                 <th class="mon_fld">Initial Debit</th>
                                 <th class="mon_fld">Initial Credit</th>
                             </t> -->
-                            <th class="mon_fld" style="border: 1px solid gray;">Debit</th>
-                            <th class="mon_fld" style="border: 1px solid gray;">Credit</th>
-                            <th class="mon_fld" style="border: 1px solid gray;">Debit</th>
-                            <th class="mon_fld" style="border: 1px solid gray;">Credit</th>
-                            <th class="mon_fld" style="border: 1px solid gray;">Debit</th>
-                            <th class="mon_fld" style="border: 1px solid gray;">Credit</th>
+                            <th class="mon_fld" style="border: 1px solid gray; font-size: 14px; text-align: right;">Debit</th>
+                            <th class="mon_fld" style="border: 1px solid gray; font-size: 14px; text-align: right;">Credit</th>
+                            <th class="mon_fld" style="border: 1px solid gray; font-size: 14px; text-align: right;">Debit</th>
+                            <th class="mon_fld" style="border: 1px solid gray; font-size: 14px; text-align: right;">Credit</th>
+                            <th class="mon_fld" style="border: 1px solid gray; font-size: 14px; text-align: right;">Debit</th>
+                            <th class="mon_fld" style="border: 1px solid gray; font-size: 14px; text-align: right;">Credit</th>
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody style="text-align: right;">
 
                         <t t-set="none_value" t-value="_"/>
                         <t t-foreach="report_lines" t-as="account">
@@ -57,7 +57,7 @@
                                 data-toggle="collapse"
                                 t-att-data-account-id="account['id']"
                                 t-attf-data-target=".a{{account['id']}}">
-                                <td colspan="6" style="border: 0px solid black; padding-left: 45px; color: #00A09D; font-size: 12px;">
+                                <td colspan="6" style="border: 0px solid black; padding-left: 45px; color: #00A09D; font-size: 12px; text-align: left;">
                                     <span>
                                         <t t-esc="account['code']"/>
                                         -
@@ -181,7 +181,7 @@
                                 <t t-set="common_id" t-value="'a'+account['id']"/>
                             </tr>
                         </t>
-                        <td colspan="6" style="padding: 5px; padding-left: 25px; color: #666666; font-size: 12px;" class="">
+                        <td colspan="6" style="padding: 5px; padding-left: 25px; color: #666666; font-size: 12px; text-align: left;" class="">
                             <strong>Total</strong>
                         </td>
                         <!-- <t t-if="filter['date_from']"> -->
