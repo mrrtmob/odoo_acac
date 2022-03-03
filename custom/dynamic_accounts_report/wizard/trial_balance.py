@@ -231,15 +231,16 @@ class TrialView(models.TransientModel):
                     res['total_debit_balance'] = res['balance']
                 if res['balance'] < 0:
                     res['total_credit_balance'] = res['balance'] * -1
-            if display_account == 'all':
-                account_res.append(res)
-            if display_account == 'not_zero' and not currency.is_zero(
-                    res['balance']):
-                account_res.append(res)
-            if display_account == 'movement' and (
-                    not currency.is_zero(res['debit']) or not currency.is_zero(
-                    res['credit'])):
-                account_res.append(res)
+            # if display_account == 'all':
+            #     account_res.append(res)
+            # if display_account == 'not_zero' and not currency.is_zero(
+            #         res['balance']):
+            #     account_res.append(res)
+            # if display_account == 'movement' and (
+            #         not currency.is_zero(res['debit']) or not currency.is_zero(
+            #         res['credit'])):
+            #     account_res.append(res)
+            account_res.append(res)
         return account_res
 
     def get_init_bal(self, account, display_account, data):

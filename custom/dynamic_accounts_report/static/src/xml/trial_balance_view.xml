@@ -114,20 +114,20 @@
                                         <t t-if="currency[1] == 'before'">
                                             <td class="mon_fld">
                                                 <t t-esc="currency[0]"/>
-                                                0
+                                                0.00
                                             </td>
                                             <td class="mon_fld">
                                                 <t t-esc="currency[0]"/>
-                                                0
+                                                0.00
                                             </td>
                                         </t>
                                         <t t-else="">
                                             <td class="mon_fld">
-                                                0
+                                                0.00
                                                 <t t-esc="currency[0]"/>
                                             </td>
                                             <td class="mon_fld">
-                                                0
+                                                0.00
                                                 <t t-esc="currency[0]"/>
                                             </td>
                                         </t>
