@@ -24,8 +24,11 @@
                     .table_main_view tr:hover {
                         background-color: #ededed;
                     }
+                    .mon_fld {
+                        padding-right: 7px;
+                    }
                 </style>
-                <table cellspacing="0" width="99%">
+                <table cellspacing="0" width="100%">
                     <thead>
                         <tr style="text-align: center; font-size: 14px; color: #666666;">
                             <th colspan="6"></th>
@@ -89,22 +92,30 @@
                                         <t t-if="currency[1] == 'before'">
 
                                             <td class="mon_fld" style="background-color: #f8f8f8;">
-                                                <t t-esc="currency[0]"/>
-                                                <t t-raw="account['Init_balance']['debit']"/>
+                                                <t t-if="account['Init_balance']['debit'] != '0.00'">
+                                                    <t t-esc="currency[0]"/>
+                                                    <t t-raw="account['Init_balance']['debit']"/>
+                                                </t>
                                             </td>
                                             <td class="mon_fld" style="background-color: #f8f8f8;">
-                                                <t t-esc="currency[0]"/>
-                                                <t t-raw="account['Init_balance']['credit']"/>
+                                                <t t-if="account['Init_balance']['credit'] != '0.00'">
+                                                    <t t-esc="currency[0]"/>
+                                                    <t t-raw="account['Init_balance']['credit']"/>
+                                                </t>
                                             </td>
                                         </t>
                                         <t t-else="">
                                             <td class="mon_fld" style="background-color: #f8f8f8;">
-                                                <t t-raw="account['Init_balance']['debit']"/>
-                                                <t t-esc="currency[0]"/>
+                                                <t t-if="account['Init_balance']['debit'] != '0.00'">
+                                                    <t t-raw="account['Init_balance']['debit']"/>
+                                                    <t t-esc="currency[0]"/>
+                                                </t>
                                             </td>
                                             <td class="mon_fld" style="background-color: #f8f8f8;">
-                                                <t t-raw="account['Init_balance']['credit']"/>
-                                                <t t-esc="currency[0]"/>
+                                                <t t-if="account['Init_balance']['credit'] != '0.00'">
+                                                    <t t-raw="account['Init_balance']['credit']"/>
+                                                    <t t-esc="currency[0]"/>
+                                                </t>
                                             </td>
 
 
@@ -113,67 +124,83 @@
                                     <t t-else="">
                                         <t t-if="currency[1] == 'before'">
                                             <td class="mon_fld" style="background-color: #f8f8f8;">
-                                                <t t-esc="currency[0]"/>
-                                                0.00
+                                                <!-- <t t-esc="currency[0]"/>
+                                                0.00 -->
                                             </td>
                                             <td class="mon_fld" style="background-color: #f8f8f8;">
-                                                <t t-esc="currency[0]"/>
-                                                0.00
+                                                <!-- <t t-esc="currency[0]"/>
+                                                0.00 -->
                                             </td>
                                         </t>
                                         <t t-else="">
                                             <td class="mon_fld" style="background-color: #f8f8f8;">
-                                                0.00
-                                                <t t-esc="currency[0]"/>
+                                                <!-- 0.00
+                                                <t t-esc="currency[0]"/> -->
                                             </td>
                                             <td class="mon_fld" style="background-color: #f8f8f8;">
-                                                0.00
-                                                <t t-esc="currency[0]"/>
+                                                <!-- 0.00
+                                                <t t-esc="currency[0]"/> -->
                                             </td>
                                         </t>
                                     </t>
                                 <!-- </t> -->
                                 <t t-if="currency[1] == 'before'">
                                     <td class="mon_fld">
-                                        <t t-esc="currency[0]"/>
-                                        <t t-raw="account['debit']"/>
+                                        <t t-if="account['debit'] != '0.00'">
+                                            <t t-esc="currency[0]"/>
+                                            <t t-raw="account['debit']"/>
+                                        </t>
                                     </td>
                                     <td class="mon_fld">
-                                        <t t-esc="currency[0]"/>
-                                        <t t-raw="account['credit']"/>
+                                        <t t-if="account['credit'] != '0.00'">
+                                            <t t-esc="currency[0]"/>
+                                            <t t-raw="account['credit']"/>
+                                        </t>
                                     </td>
 
                                 </t>
                                 <t t-else="">
                                     <td class="mon_fld">
-                                        <t t-raw="account['debit']"/>
-                                        <t t-esc="currency[0]"/>
+                                        <t t-if="account['debit'] != '0.00'">
+                                            <t t-raw="account['debit']"/>
+                                            <t t-esc="currency[0]"/>
+                                        </t>
                                     </td>
                                     <td class="mon_fld">
-                                        <t t-raw="account['credit']"/>
-                                        <t t-esc="currency[0]"/>
+                                        <t t-if="account['credit'] != '0.00'">
+                                            <t t-raw="account['credit']"/>
+                                            <t t-esc="currency[0]"/>
+                                        </t>
                                     </td>
 
                                 </t>
                                 <t t-if="currency[1] == 'before'">
                                     <td class="mon_fld" style="background-color: #f8f8f8;">
-                                        <t t-esc="currency[0]"/>
-                                        <t t-raw="account['total_debit_balance']"/>
+                                        <t t-if="account['total_debit_balance'] != '0.00'">
+                                            <t t-esc="currency[0]"/>
+                                            <t t-raw="account['total_debit_balance']"/>
+                                        </t>
                                     </td>
                                     <td class="mon_fld" style="background-color: #f8f8f8;">
-                                        <t t-esc="currency[0]"/>
-                                        <t t-raw="account['total_credit_balance']"/>
+                                        <t t-if="account['total_credit_balance'] != '0.00'">
+                                            <t t-esc="currency[0]"/>
+                                            <t t-raw="account['total_credit_balance']"/>
+                                        </t>
                                     </td>
 
                                 </t>
                                 <t t-else="">
                                     <td class="mon_fld" style="background-color: #f8f8f8;">
-                                        <t t-raw="account['total_debit_balance']"/>
-                                        <t t-esc="currency[0]"/>
+                                        <t t-if="account['total_debit_balance'] != '0.00'">
+                                            <t t-raw="account['total_debit_balance']"/>
+                                            <t t-esc="currency[0]"/>
+                                        </t>
                                     </td>
                                     <td class="mon_fld" style="background-color: #f8f8f8;">
-                                        <t t-raw="account['total_credit_balance']"/>
-                                        <t t-esc="currency[0]"/>
+                                        <t t-if="account['total_credit_balance'] != '0.00'">
+                                            <t t-raw="account['total_credit_balance']"/>
+                                            <t t-esc="currency[0]"/>
+                                        </t>
                                     </td>
 
                                 </t>
