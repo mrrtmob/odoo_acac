@@ -22,8 +22,8 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
             'click #pdf': 'print_pdf',
             'click #xlsx': 'print_xlsx',
             'click .show-gl': 'show_gl',
-                        'mousedown div.input-group.date[data-target-input="nearest"]': '_onCalendarIconClick',
-
+            'mousedown div.input-group.date[data-target-input="nearest"]': '_onCalendarIconClick',
+            'change #date_range': '_toggleCustomDateRange',
         },
 
         init: function(parent, action) {
@@ -47,6 +47,17 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
                 self.wizard_id = t_res;
                 self.load_data(self.initial_render);
             })
+        },
+
+        _toggleCustomDateRange: function() {
+            this.$el.find('.datetimepicker-input[name="date_from"]').val('');
+            this.$el.find('.datetimepicker-input[name="date_to"]').val('');
+            
+            if ($("#date_range").val() == 'custom') {
+                $('#custom_date_range').show();
+            } else {
+                $('#custom_date_range').hide();
+            }
         },
 
         _onCalendarIconClick: function (ev) {

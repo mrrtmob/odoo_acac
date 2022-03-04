@@ -11,6 +11,8 @@ try:
 except ImportError:
     import xlsxwriter
 
+import calendar
+from datetime import date
 
 class TrialView(models.TransientModel):
     _inherit = "account.common.report"
@@ -162,6 +164,14 @@ class TrialView(models.TransientModel):
     @api.model
     def create(self, vals):
         vals['target_move'] = 'posted'
+
+        # get this month as default date filter
+        today = date.today()
+        this_month_first_date = today.replace(day=1)
+        this_month_last_date = today.replace(day = calendar.monthrange(today.year, today.month)[1])
+        vals['date_from'] = this_month_first_date
+        vals['date_to'] = this_month_last_date
+
         res = super(TrialView, self).create(vals)
         return res
 
@@ -172,6 +182,14 @@ class TrialView(models.TransientModel):
             vals.update({'journal_ids': [(6, 0, vals.get('journal_ids'))]})
         if vals.get('journal_ids') == []:
             vals.update({'journal_ids': [(5,)]})
+
+        if vals.get('date_from') and not vals.get('date_to'):
+            vals.update({'date_to': ''})
+        if vals.get('date_to') and not vals.get('date_from'):
+            vals.update({'date_from': ''})
+        if not vals.get('date_from') and not vals.get('date_to'):
+            vals.update({'date_from': '', 'date_to': ''})
+
         res = super(TrialView, self).write(vals)
         return res
 
