@@ -333,7 +333,7 @@
             <div class="sub_container_right row" style="width: 30%; height: 3%; top: 0px; position: relative;">
                         <style>
                             .filter_item {
-                                margin: 7px;
+                                margin: 5px 7px;
                             }
                         </style>
                         <div class="time_range filter_item" style="">
