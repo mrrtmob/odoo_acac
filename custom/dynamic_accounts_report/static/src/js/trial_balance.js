@@ -205,7 +205,10 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
             if (typeof(amount) != 'number') {
                 amount = parseFloat(amount);
             }
-            var formatted_value = (parseInt(amount)).toLocaleString(currency[2],{
+            // var formatted_value = (parseInt(amount)).toLocaleString(currency[2],{
+            //     minimumFractionDigits: 2
+            // })
+            var formatted_value = amount.toLocaleString(currency[2],{
                 minimumFractionDigits: 2
             })
             return formatted_value
