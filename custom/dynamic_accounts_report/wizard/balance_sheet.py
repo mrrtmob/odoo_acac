@@ -541,46 +541,54 @@ class BalanceSheetView(models.TransientModel):
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet()
-        head = workbook.add_format({'align': 'center', 'bold': True,
-                                    'font_size': '20px'})
+        head = workbook.add_format({'bold': True,
+                                    'font_size': 15})
         sub_heading = workbook.add_format(
-            {'align': 'center', 'bold': True, 'font_size': '10px',
+            {'align': 'center', 'bold': True, 'font_size': 11,
              'border': 1,
              'border_color': 'black'})
-        side_heading_main = workbook.add_format(
-            {'align': 'left', 'bold': True, 'font_size': '10px',
-             'border': 1,
-             'border_color': 'black'})
-
-        side_heading_sub = workbook.add_format(
-            {'align': 'left', 'bold': True, 'font_size': '10px',
+        side_heading_level1 = workbook.add_format(
+            {'align': 'left', 'bold': True, 'font_size': 11,
              'border': 1,
              'border_color': 'black'})
 
-        side_heading_sub.set_indent(1)
-        txt = workbook.add_format({'font_size': '10px', 'border': 1})
-        txt_name = workbook.add_format({'font_size': '10px', 'border': 1})
-        txt_name_bold = workbook.add_format({'font_size': '10px', 'border': 1,
+        side_heading_level2 = workbook.add_format(
+            {'align': 'left', 'bold': True, 'font_size': 11,
+             'border': 1,
+             'border_color': 'black'})
+
+        side_heading_level3 = workbook.add_format(
+            {'align': 'left', 'bold': True, 'font_size': 11,
+             'border': 1,
+             'border_color': 'black'})
+
+        head.set_align('center')
+        head.set_align('vcenter')
+        side_heading_level2.set_indent(1)
+        side_heading_level3.set_indent(2)
+        txt = workbook.add_format({'font_size': 11, 'border': 1})
+        txt_name = workbook.add_format({'font_size': 11, 'border': 1})
+        txt_name_bold = workbook.add_format({'font_size': 11, 'border': 1,
                                              'bold': True})
-        txt_name.set_indent(2)
-        txt_name_bold.set_indent(2)
+        txt_name.set_indent(3)
+        txt_name_bold.set_indent(3)
 
-        txt = workbook.add_format({'font_size': '10px', 'border': 1})
+        txt = workbook.add_format({'font_size': 11, 'border': 1})
 
         sheet.merge_range('A2:D3',
                           filters.get('company_name') + ' : ' + i_data,
                           head)
         date_head = workbook.add_format({'align': 'center', 'bold': True,
-                                         'font_size': '10px'})
+                                         'font_size': 11})
 
         date_head.set_align('vcenter')
         date_head.set_text_wrap()
         date_head.set_shrink()
         date_head_left = workbook.add_format({'align': 'left', 'bold': True,
-                                              'font_size': '10px'})
+                                              'font_size': 11})
 
         date_head_right = workbook.add_format({'align': 'right', 'bold': True,
-                                               'font_size': '10px'})
+                                               'font_size': 11})
 
         date_head_left.set_indent(1)
         date_head_right.set_indent(1)
@@ -605,8 +613,8 @@ class BalanceSheetView(models.TransientModel):
              filters['analytics']]) + ';  Target Moves: ' + filters.get(
             'target_move').capitalize(), date_head)
 
-        sheet.set_column(0, 0, 30)
-        sheet.set_column(1, 1, 20)
+        sheet.set_column(0, 0, 60)
+        sheet.set_column(1, 1, 15)
         sheet.set_column(2, 2, 15)
         sheet.set_column(3, 3, 15)
 
@@ -624,9 +632,11 @@ class BalanceSheetView(models.TransientModel):
 
                 row += 1
                 if fr['level'] == 1:
-                    sheet.write(row, col, fr['name'], side_heading_main)
+                    sheet.write(row, col, fr['name'], side_heading_level1)
                 elif fr['level'] == 2:
-                    sheet.write(row, col, fr['name'], side_heading_sub)
+                    sheet.write(row, col, fr['name'], side_heading_level2)
+                elif fr['level'] == 3:
+                    sheet.write(row, col, fr['name'], side_heading_level3)
                 else:
                     sheet.write(row, col, fr['name'], txt_name)
                 sheet.write(row, col + 1, fr['debit'], txt)

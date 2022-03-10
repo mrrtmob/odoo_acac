@@ -323,45 +323,53 @@ class TrialView(models.TransientModel):
         filters = json.loads(data)
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet()
-        head = workbook.add_format({'align': 'center', 'bold': True,
-                                    'font_size': '20px'})
+        head = workbook.add_format({'bold': True,
+                                    'font_size': 15})
+        head.set_align('center')
+        head.set_align('vcenter')
         sub_heading = workbook.add_format(
-            {'align': 'center', 'bold': True, 'font_size': '10px',
+            {'align': 'center', 'bold': True, 'font_size': 11,
              'border': 1,
              'border_color': 'black'})
-        txt = workbook.add_format({'font_size': '10px', 'border': 1})
-        txt_l = workbook.add_format({'font_size': '10px', 'border': 1, 'bold': True})
-        sheet.merge_range('A2:D3', filters.get('company_name') + ':' + ' Trial Balance', head)
+        txt = workbook.add_format({'font_size': 11, 'border': 1})
+        txt_l = workbook.add_format({'font_size': 11, 'border': 1, 'bold': True})
+        sheet.merge_range('A2:H3', filters.get('company_name') + ':' + ' Trial Balance', head)
         date_head = workbook.add_format({'align': 'center', 'bold': True,
-                                         'font_size': '10px'})
+                                         'font_size': 11})
+        date_head.set_align('center')
+        date_head.set_align('vcenter')
         date_style = workbook.add_format({'align': 'center',
-                                          'font_size': '10px'})
+                                          'font_size': 11})
         if filters.get('date_from'):
-            sheet.merge_range('A4:B4', 'From: '+filters.get('date_from') , date_head)
+            sheet.merge_range('C4:D4', 'From: '+filters.get('date_from') , date_head)
         if filters.get('date_to'):
-            sheet.merge_range('C4:D4', 'To: '+ filters.get('date_to'), date_head)
-        sheet.merge_range('A5:D6', 'Journals: ' + ', '.join([ lt or '' for lt in filters['journals'] ]) + '  Target Moves: '+ filters.get('target_move'), date_head)
+            sheet.merge_range('E4:F4', 'To: '+ filters.get('date_to'), date_head)
+        sheet.merge_range('A5:H6', 'Journals: ' + ', '.join([ lt or '' for lt in filters['journals'] ]) + '  Target Moves: '+ filters.get('target_move'), date_head)
         sheet.write('A7', 'Code', sub_heading)
         sheet.write('B7', 'Amount', sub_heading)
         if filters.get('date_from'):
             sheet.write('C7', 'Initial Debit', sub_heading)
             sheet.write('D7', 'Initial Credit', sub_heading)
-            sheet.write('E7', 'Debit', sub_heading)
-            sheet.write('F7', 'Credit', sub_heading)
+            sheet.write('E7', 'Current Debit', sub_heading)
+            sheet.write('F7', 'Current Credit', sub_heading)
+            sheet.write('G7', 'Total Debit', sub_heading)
+            sheet.write('H7', 'Total Credit', sub_heading)
         else:
             sheet.write('C7', 'Debit', sub_heading)
             sheet.write('D7', 'Credit', sub_heading)
 
         row = 6
         col = 0
-        sheet.set_column(5, 0, 15)
-        sheet.set_column(6, 1, 15)
-        sheet.set_column(7, 2, 26)
+        sheet.set_column(5, 0, 10)
+        sheet.set_column(6, 1, 50)
+        sheet.set_column(7, 2, 15)
         if filters.get('date_from'):
             sheet.set_column(8, 3, 15)
             sheet.set_column(9, 4, 15)
             sheet.set_column(10, 5, 15)
             sheet.set_column(11, 6, 15)
+            sheet.set_column(12, 7, 15)
+            sheet.set_column(13, 8, 15)
         else:
 
             sheet.set_column(8, 3, 15)
@@ -381,14 +389,20 @@ class TrialView(models.TransientModel):
 
                 sheet.write(row, col + 4, rec_data['debit'], txt)
                 sheet.write(row, col + 5, rec_data['credit'], txt)
+                sheet.write(row, col + 6, rec_data['total_debit_balance'], txt)
+                sheet.write(row, col + 7, rec_data['total_credit_balance'], txt)
 
             else:
                 sheet.write(row, col + 2, rec_data['debit'], txt)
                 sheet.write(row, col + 3, rec_data['credit'], txt)
         sheet.write(row+1, col, 'Total', sub_heading)
         if filters.get('date_from'):
+            sheet.write(row + 1, col + 2, total.get('init_debit_total'), txt_l)
+            sheet.write(row + 1, col + 3, total.get('init_credit_total'), txt_l)
             sheet.write(row + 1, col + 4, total.get('debit_total'), txt_l)
             sheet.write(row + 1, col + 5, total.get('credit_total'), txt_l)
+            sheet.write(row + 1, col + 6, total.get('final_debit_total'), txt_l)
+            sheet.write(row + 1, col + 7, total.get('final_credit_total'), txt_l)
         else:
             sheet.write(row + 1, col + 2, total.get('debit_total'), txt_l)
             sheet.write(row + 1, col + 3, total.get('credit_total'), txt_l)
