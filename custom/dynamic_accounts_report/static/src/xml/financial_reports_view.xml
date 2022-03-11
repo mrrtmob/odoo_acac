@@ -22,11 +22,11 @@
                 </style>
                 <table cellspacing="0" width="100%">
                     <thead>
-                        <tr style="color: #666666;">
+                        <tr style="color: #666666; text-align: right;">
                             <th colspan="6"></th>
-                            <th style="text-align: right; padding-right: 50px; font-size: 14px;">Debit</th>
-                            <th style="text-align: right; padding-right: 50px; font-size: 14px;">Credit</th>
-                            <th style="text-align: right; padding-right: 50px; font-size: 14px;">Balance</th>
+                            <th style="padding-right: 50px; font-size: 14px;">Debit</th>
+                            <th style="padding-right: 50px; font-size: 14px;">Credit</th>
+                            <th style="padding-right: 50px; font-size: 14px;">Balance</th>
                         </tr>
                     </thead>
 					<tbody>

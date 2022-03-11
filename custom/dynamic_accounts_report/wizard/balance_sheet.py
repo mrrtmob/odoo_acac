@@ -544,36 +544,36 @@ class BalanceSheetView(models.TransientModel):
         head = workbook.add_format({'bold': True,
                                     'font_size': 15})
         sub_heading = workbook.add_format(
-            {'align': 'center', 'bold': True, 'font_size': 11,
+            {'align': 'center', 'bold': True, 'font_size': 14,
              'border': 1,
              'border_color': 'black'})
         side_heading_level1 = workbook.add_format(
-            {'align': 'left', 'bold': True, 'font_size': 11,
-             'border': 1,
+            {'align': 'left', 'bold': True, 'font_size': 14,
+             'border': 1, 'font_color': '#875A7B',
              'border_color': 'black'})
 
         side_heading_level2 = workbook.add_format(
-            {'align': 'left', 'bold': True, 'font_size': 11,
-             'border': 1,
+            {'align': 'left', 'bold': True, 'font_size': 14,
+             'border': 1, 'font_color': '#875A7B',
              'border_color': 'black'})
 
         side_heading_level3 = workbook.add_format(
-            {'align': 'left', 'bold': True, 'font_size': 11,
-             'border': 1,
+            {'align': 'left', 'bold': True, 'font_size': 14,
+             'border': 1, 'font_color': '#666666',
              'border_color': 'black'})
 
         head.set_align('center')
         head.set_align('vcenter')
         side_heading_level2.set_indent(1)
         side_heading_level3.set_indent(2)
-        txt = workbook.add_format({'font_size': 11, 'border': 1})
-        txt_name = workbook.add_format({'font_size': 11, 'border': 1})
-        txt_name_bold = workbook.add_format({'font_size': 11, 'border': 1,
+        txt = workbook.add_format({'font_size': 14, 'border': 1})
+        txt_name = workbook.add_format({'font_size': 14, 'border': 1, 'font_color': '#00A09D'})
+        txt_name_bold = workbook.add_format({'font_size': 14, 'border': 1,
                                              'bold': True})
         txt_name.set_indent(3)
         txt_name_bold.set_indent(3)
 
-        txt = workbook.add_format({'font_size': 11, 'border': 1})
+        txt = workbook.add_format({'font_size': 14, 'border': 1})
 
         sheet.merge_range('A2:D3',
                           filters.get('company_name') + ' : ' + i_data,
@@ -585,10 +585,10 @@ class BalanceSheetView(models.TransientModel):
         date_head.set_text_wrap()
         date_head.set_shrink()
         date_head_left = workbook.add_format({'align': 'left', 'bold': True,
-                                              'font_size': 11})
+                                              'font_size': 14})
 
         date_head_right = workbook.add_format({'align': 'right', 'bold': True,
-                                               'font_size': 11})
+                                               'font_size': 14})
 
         date_head_left.set_indent(1)
         date_head_right.set_indent(1)

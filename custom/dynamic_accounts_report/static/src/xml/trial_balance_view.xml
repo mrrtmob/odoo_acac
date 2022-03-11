@@ -26,6 +26,7 @@
                     }
                     .mon_fld {
                         padding-right: 7px;
+                        text-align: right;
                     }
                 </style>
                 <table cellspacing="0" width="100%">
@@ -36,22 +37,22 @@
                             <th colspan="2" style="border: 1px solid #ededed;">Current Balance</th>
                             <th colspan="2" style="border: 1px solid #ededed; background-color: #f8f8f8;">Total Balance</th>
                         </tr>
-                        <tr style="color: #666666;">
-                            <th colspan="6" style="padding: 5px; padding-left: 25px; font-size: 12px;">Account</th>
+                        <tr style="color: #666666; text-align: right;">
+                            <th colspan="6" style="padding: 5px; padding-left: 25px; font-size: 12px; text-align: left;">Account</th>
                             <!-- <t t-if="filter['date_from']">
                                 <th class="mon_fld">Initial Debit</th>
                                 <th class="mon_fld">Initial Credit</th>
                             </t> -->
-                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px; text-align: right; background-color: #f8f8f8;">Debit</th>
-                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px; text-align: right; background-color: #f8f8f8;">Credit</th>
-                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px; text-align: right;">Debit</th>
-                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px; text-align: right;">Credit</th>
-                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px; text-align: right; background-color: #f8f8f8;">Debit</th>
-                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px; text-align: right; background-color: #f8f8f8;">Credit</th>
+                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px; background-color: #f8f8f8;">Debit</th>
+                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px; background-color: #f8f8f8;">Credit</th>
+                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px;">Debit</th>
+                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px;">Credit</th>
+                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px; background-color: #f8f8f8;">Debit</th>
+                            <th class="mon_fld" style="border: 1px solid #ededed; font-size: 14px; background-color: #f8f8f8;">Credit</th>
                         </tr>
                     </thead>
 
-                    <tbody style="text-align: right;">
+                    <tbody>
 
                         <t t-set="none_value" t-value="_"/>
                         <t t-foreach="report_lines" t-as="account">
@@ -60,7 +61,7 @@
                                 data-toggle="collapse"
                                 t-att-data-account-id="account['id']"
                                 t-attf-data-target=".a{{account['id']}}">
-                                <td colspan="6" style="border: 0px solid black; padding-left: 45px; color: #00A09D; font-size: 12px; text-align: left;">
+                                <td colspan="6" style="border: 0px solid black; padding-left: 45px; color: #00A09D; font-size: 12px;">
                                     <span>
                                         <t t-esc="account['code']"/>
                                         -
@@ -208,7 +209,7 @@
                                 <t t-set="common_id" t-value="'a'+account['id']"/>
                             </tr>
                         </t>
-                        <td colspan="6" style="padding: 5px; padding-left: 25px; color: #666666; font-size: 12px; text-align: left;" class="">
+                        <td colspan="6" style="padding: 5px; padding-left: 25px; color: #666666; font-size: 12px;" class="">
                             <strong>Total</strong>
                         </td>
                         <!-- <t t-if="filter['date_from']"> -->
@@ -337,7 +338,7 @@
                             }
                         </style>
                         <div class="time_range filter_item" style="">
-                            <select id="date_range" style="border: none; background-color: transparent;">
+                            <select id="date_range" style="border: none; background-color: transparent; color: #4c4c4c;">
                                 <option value="this_month">This Month</option>
                                 <option value="this_year">This Year</option>
                                 <div role="separator" class="dropdown-divider"></div>

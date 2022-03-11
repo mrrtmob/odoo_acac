@@ -328,25 +328,26 @@ class TrialView(models.TransientModel):
         head.set_align('center')
         head.set_align('vcenter')
         sub_heading = workbook.add_format(
-            {'align': 'center', 'bold': True, 'font_size': 11,
+            {'align': 'center', 'bold': True, 'font_size': 14,
              'border': 1,
              'border_color': 'black'})
-        txt = workbook.add_format({'font_size': 11, 'border': 1})
-        txt_l = workbook.add_format({'font_size': 11, 'border': 1, 'bold': True})
+        txt = workbook.add_format({'font_size': 14, 'border': 1})
+        txt_account = workbook.add_format({'font_size': 14, 'border': 1, 'font_color': '#00A09D'})
+        txt_l = workbook.add_format({'font_size': 14, 'border': 1, 'bold': True})
         sheet.merge_range('A2:H3', filters.get('company_name') + ':' + ' Trial Balance', head)
         date_head = workbook.add_format({'align': 'center', 'bold': True,
                                          'font_size': 11})
         date_head.set_align('center')
         date_head.set_align('vcenter')
         date_style = workbook.add_format({'align': 'center',
-                                          'font_size': 11})
+                                          'font_size': 14})
         if filters.get('date_from'):
             sheet.merge_range('C4:D4', 'From: '+filters.get('date_from') , date_head)
         if filters.get('date_to'):
             sheet.merge_range('E4:F4', 'To: '+ filters.get('date_to'), date_head)
         sheet.merge_range('A5:H6', 'Journals: ' + ', '.join([ lt or '' for lt in filters['journals'] ]) + '  Target Moves: '+ filters.get('target_move'), date_head)
         sheet.write('A7', 'Code', sub_heading)
-        sheet.write('B7', 'Amount', sub_heading)
+        sheet.write('B7', 'Account', sub_heading)
         if filters.get('date_from'):
             sheet.write('C7', 'Initial Debit', sub_heading)
             sheet.write('D7', 'Initial Credit', sub_heading)
@@ -377,8 +378,8 @@ class TrialView(models.TransientModel):
         for rec_data in report_data_main:
 
             row += 1
-            sheet.write(row, col, rec_data['code'], txt)
-            sheet.write(row, col + 1, rec_data['name'], txt)
+            sheet.write(row, col, rec_data['code'], txt_account)
+            sheet.write(row, col + 1, rec_data['name'], txt_account)
             if filters.get('date_from'):
                 if rec_data.get('Init_balance'):
                     sheet.write(row, col + 2, rec_data['Init_balance']['debit'], txt)
