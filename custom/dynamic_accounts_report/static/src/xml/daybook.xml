@@ -48,68 +48,48 @@
                                 data-toggle="collapse"
                                 t-att-data-account-id="account['id']"
                                 t-attf-data-target=".a{{account['id']}}">
+                                <td colspan="6" style="border: 0px solid black; padding-left: 45px; color: #00A09D; font-size: 12px;">
+                                    <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"></i>
+                                    <span>
+                                        <t t-esc="account['date']"/>
+                                    </span>
+                                </td>
                                 <t t-if="currency[1] == 'before'">
-
-                                    <td colspan="6" style="border: 0px solid black; padding-left: 45px; color: #00A09D; font-size: 12px;">
-                                        <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
-                                           title="Unfolded"></i>
-                                        <span>
-                                            <t t-esc="account['date']"/>
-                                        </span>
-                                        <td class="mon_fld">
-                                            <t t-esc="currency[0]"/>
-
-                                            <t t-raw="account['debit']"/>
-                                        </td>
-                                        <td class="mon_fld">
-                                            <t t-esc="currency[0]"/>
-
-                                            <t t-raw="account['credit']"/>
-                                        </td>
-                                        <td class="mon_fld">
-                                            <t t-esc="currency[0]"/>
-
-                                            <t t-raw="account['balance']"/>
-                                        </td>
-                                        <t t-set="common_id" t-value="'a'+account['id']"/>
+                                    <td class="mon_fld">
+                                        <t t-esc="currency[0]"/>
+                                        <t t-raw="account['debit']"/>
                                     </td>
+                                    <td class="mon_fld">
+                                        <t t-esc="currency[0]"/>
+                                        <t t-raw="account['credit']"/>
+                                    </td>
+                                    <td class="mon_fld">
+                                        <t t-esc="currency[0]"/>
+                                        <t t-raw="account['balance']"/>
+                                    </td>
+                                    <t t-set="common_id" t-value="'a'+account['id']"/>
                                 </t>
                                 <t t-else="">
-                                    <td colspan="6" style="border: 0px solid black; padding-left: 45px; color: #00A09D; font-size: 12px;">
-                                        <i class="fa fa-caret-down" role="img" aria-label="Unfolded"
-                                           title="Unfolded"></i>
-                                        <span>
-                                            <t t-esc="account['date']"/>
-                                        </span>
-                                        <td class="mon_fld">
-
-                                            <t t-raw="account['debit']"/>
-                                            <t t-esc="currency[0]"/>
-
-                                        </td>
-                                        <td class="mon_fld">
-
-                                            <t t-raw="account['credit']"/>
-                                            <t t-esc="currency[0]"/>
-
-                                        </td>
-                                        <td class="mon_fld">
-
-                                            <t t-raw="account['balance']"/>
-                                            <t t-esc="currency[0]"/>
-
-                                        </td>
-                                        <t t-set="common_id" t-value="'a'+account['id']"/>
+                                    <td class="mon_fld">
+                                        <t t-raw="account['debit']"/>
+                                        <t t-esc="currency[0]"/>
                                     </td>
-
+                                    <td class="mon_fld">
+                                        <t t-raw="account['credit']"/>
+                                        <t t-esc="currency[0]"/>
+                                    </td>
+                                    <td class="mon_fld">
+                                        <t t-raw="account['balance']"/>
+                                        <t t-esc="currency[0]"/>
+                                    </td>
+                                    <t t-set="common_id" t-value="'a'+account['id']"/>
                                 </t>
-
-                                <tr t-attf-class="collapse a{{account['id']}}">
-                                    <td colspan="10">
-                                        <ul>
-                                        </ul>
-                                    </td>
-                                </tr>
+                            </tr>
+                            <tr t-attf-class="collapse a{{account['id']}}">
+                                <td colspan="10">
+                                    <ul>
+                                    </ul>
+                                </td>
                             </tr>
                         </t>
                     </tbody>
@@ -267,9 +247,9 @@
                         <th>Partner</th>
                         <th>Move</th>
                         <th>Entry Label</th>
-                        <th>Debit</th>
-                        <th>Credit</th>
-                        <th>Balance</th>
+                        <th style="text-align: right;">Debit</th>
+                        <th style="text-align: right;">Credit</th>
+                        <th style="text-align: right;">Balance</th>
 
                     </tr>
                 </thead>

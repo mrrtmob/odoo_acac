@@ -332,9 +332,9 @@
                         <th>Partner</th>
                         <th>Move</th>
                         <th>Entry Label</th>
-                        <th>Debit</th>
-                        <th>Credit</th>
-                        <th>Balance</th>
+                        <th style="text-align: right;">Debit</th>
+                        <th style="text-align: right;">Credit</th>
+                        <th style="text-align: right;">Balance</th>
                     </tr>
                 </thead>
                 <tbody>

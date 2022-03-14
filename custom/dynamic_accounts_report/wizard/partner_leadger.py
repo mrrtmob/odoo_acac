@@ -376,19 +376,23 @@ class PartnerView(models.TransientModel):
              'border': 0
              })
         sheet = workbook.add_worksheet()
-        head = workbook.add_format({'align': 'center', 'bold': True,
-                                    'font_size': '20px'})
-
-        txt = workbook.add_format({'font_size': '10px', 'border': 1})
+        head = workbook.add_format({'bold': True, 'font_size': 15})
+        head.set_align('center')
+        head.set_align('vcenter')
+        txt = workbook.add_format({'font_size': 14, 'border': 1})
         sub_heading_sub = workbook.add_format(
-            {'align': 'center', 'bold': True, 'font_size': '10px',
+            {'align': 'center', 'bold': True, 'font_size': 14,
              'border': 1,
              'border_color': 'black'})
+        sub_heading_partner = workbook.add_format(
+            {'align': 'center', 'bold': True, 'font_size': 14,
+             'border': 1,
+             'border_color': 'black', 'font_color': '#00A09D'})
         sheet.merge_range('A1:H2',
                           filters.get('company_name') + ':' + 'Partner Ledger',
                           head)
         date_head = workbook.add_format({'align': 'center', 'bold': True,
-                                         'font_size': '10px'})
+                                         'font_size': 11})
 
         sheet.merge_range('A4:B4',
                           'Target Moves: ' + filters.get('target_move'),
@@ -448,7 +452,7 @@ class PartnerView(models.TransientModel):
 
             row += 1
             sheet.merge_range(row, col + 0, row, col + 4, report['name'],
-                              sub_heading_sub)
+                              sub_heading_partner)
             sheet.write(row, col + 5, report['debit'], sub_heading_sub)
             sheet.write(row, col + 6, report['credit'], sub_heading_sub)
             sheet.write(row, col + 7, report['balance'], sub_heading_sub)

@@ -346,12 +346,12 @@
                         <th>DueDate</th>
                         <th>JRNL</th>
                         <th>Account</th>
-                        <th>Not Due</th>
-                        <th>0-30</th>
-                        <th>30-60</th>
-                        <th>60-90</th>
-                        <th>90-120</th>
-                        <th>120+</th>
+                        <th style="text-align: right;">Not Due</th>
+                        <th style="text-align: right;">0-30</th>
+                        <th style="text-align: right;">30-60</th>
+                        <th style="text-align: right;">60-90</th>
+                        <th style="text-align: right;">90-120</th>
+                        <th style="text-align: right;">120+</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -394,7 +394,7 @@
                                 </span>
                             </td>
                             <t t-if="account_line.currency== 'before'">
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period6">
                                         <t t-if="account_line.amount== 0">
                                             <!-- <span>-</span> -->
@@ -410,7 +410,7 @@
                                         <!-- <span>-</span> -->
                                     </t>
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period5">
                                         <t t-if="account_line.amount== 0">
                                             <!-- <span>-</span> -->
@@ -426,7 +426,7 @@
                                         <!-- <span>-</span> -->
                                     </t>
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period4">
                                         <t t-if="account_line.amount== 0">
                                             <!-- <span>-</span> -->
@@ -443,7 +443,7 @@
                                         <!-- <span>-</span> -->
                                     </t>
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period3">
                                         <t t-if="account_line.amount== 0">
                                             <!-- <span>-</span> -->
@@ -460,7 +460,7 @@
                                         <!-- <span>-</span> -->
                                     </t>
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period2">
                                         <t t-if="account_line.amount== 0">
                                             <!-- <span>-</span> -->
@@ -476,7 +476,7 @@
                                         <!-- <span>-</span> -->
                                     </t>
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period1">
                                         <t t-if="account_line.amount== 0">
                                             <!-- <span>-</span> -->
@@ -493,7 +493,7 @@
                                 </td>
                             </t>
                             <t t-else="">
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period6">
                                         <t t-if="account_line.amount == 0">
                                             <!-- <span>-</span> -->
@@ -506,7 +506,7 @@
                                     </t>
 
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period5">
                                         <t t-if="account_line.amount == 0">
                                             <!-- <span>-</span> -->
@@ -519,7 +519,7 @@
                                     </t>
 
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period4">
                                         <t t-if="account_line.amount == 0">
                                             <!-- <span>-</span> -->
@@ -532,7 +532,7 @@
                                     </t>
 
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period3">
                                         <t t-if="account_line.amount == 0">
                                             <!-- <span>-</span> -->
@@ -545,7 +545,7 @@
                                     </t>
 
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period2">
                                         <t t-if="account_line.amount == 0">
                                             <!-- <span>-</span> -->
@@ -558,7 +558,7 @@
                                     </t>
 
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <t t-if="account_line.period1">
                                         <t t-if="account_line.amount == 0">
                                             <!-- <span>-</span> -->
