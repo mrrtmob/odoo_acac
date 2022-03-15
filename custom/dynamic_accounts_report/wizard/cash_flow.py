@@ -522,9 +522,7 @@ class AccountCasgFlow(models.TransientModel):
         sheet.set_column('C:C', 30, cell_format)
         sheet.set_column('D:E', 20, cell_format)
         sheet.set_column('F:F', 20, cell_format)
-        sheet.merge_range('C3:F5', '')
-        sheet.merge_range('C3:F4', 'CASH FLOW STATEMENTS', head)
-        sheet.merge_range('C4:F4', '')
+        sheet.merge_range('C3:F5', 'CASH FLOW STATEMENTS', head)
 
         sheet.write('C6', "Date From", cell_format)
         sheet.write('D6', str(data['date_from']), date)
