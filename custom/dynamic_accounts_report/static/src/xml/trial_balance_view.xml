@@ -341,10 +341,10 @@
                             <select id="date_range" style="border: none; background-color: transparent; color: #4c4c4c;">
                                 <option value="this_month">This Month</option>
                                 <option value="this_year">This Year</option>
-                                <div role="separator" class="dropdown-divider"></div>
+                                <optgroup style="font-size: 0.1px; background: rgba(0, 0, 0, 0.3);"></optgroup>
                                 <option value="last_month">Last Month</option>
                                 <option value="last_year">Last Year</option>
-                                <div role="separator" class="dropdown-divider"></div>
+                                <optgroup style="font-size: 0.1px; background: rgba(0, 0, 0, 0.3);"></optgroup>
                                 <option value="custom">Custom</option>
                             </select>
                         </div>
