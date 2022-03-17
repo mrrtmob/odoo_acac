@@ -22,8 +22,8 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
             'click #pdf': 'print_pdf',
             'click #xlsx': 'print_xlsx',
             'click .show-gl': 'show_gl',
-                        'mousedown div.input-group.date[data-target-input="nearest"]': '_onCalendarIconClick',
-
+            'mousedown div.input-group.date[data-target-input="nearest"]': '_onCalendarIconClick',
+            'change #date_range': '_toggleCustomDateRange',
         },
 
         init: function(parent, action) {
@@ -47,6 +47,17 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
                 self.wizard_id = t_res;
                 self.load_data(self.initial_render);
             })
+        },
+
+        _toggleCustomDateRange: function() {
+            this.$el.find('.datetimepicker-input[name="date_from"]').val('');
+            this.$el.find('.datetimepicker-input[name="date_to"]').val('');
+            
+            if ($("#date_range").val() == 'custom') {
+                $('#custom_date_range').show();
+            } else {
+                $('#custom_date_range').hide();
+            }
         },
 
         _onCalendarIconClick: function (ev) {
@@ -95,6 +106,13 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
                             rep_lines.debit = self.format_currency(datas['currency'],rep_lines.debit);
                             rep_lines.credit = self.format_currency(datas['currency'],rep_lines.credit);
                             rep_lines.balance = self.format_currency(datas['currency'],rep_lines.balance);
+                            if (rep_lines.hasOwnProperty('Init_balance') && rep_lines.Init_balance) {
+                                rep_lines.Init_balance.debit = self.format_currency(datas['currency'],rep_lines.Init_balance.debit);
+                                rep_lines.Init_balance.credit = self.format_currency(datas['currency'],rep_lines.Init_balance.credit);
+                                rep_lines.Init_balance.balance = self.format_currency(datas['currency'],rep_lines.Init_balance.balance);
+                            }
+                            rep_lines.total_debit_balance = self.format_currency(datas['currency'],rep_lines.total_debit_balance);
+                            rep_lines.total_credit_balance = self.format_currency(datas['currency'],rep_lines.total_credit_balance);
 
 
 
@@ -117,8 +135,12 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
                                             report_lines : datas['report_lines'],
                                             filter : datas['filters'],
                                             currency : datas['currency'],
-                                            credit_total : self.format_currency(datas['currency'],datas['debit_total']),
+                                            credit_total : self.format_currency(datas['currency'],datas['credit_total']),
                                             debit_total : self.format_currency(datas['currency'],datas['debit_total']),
+                                            init_debit_total : self.format_currency(datas['currency'],datas['init_debit_total']),
+                                            init_credit_total : self.format_currency(datas['currency'],datas['init_credit_total']),
+                                            final_debit_total : self.format_currency(datas['currency'],datas['final_debit_total']),
+                                            final_credit_total : self.format_currency(datas['currency'],datas['final_credit_total']),
                                         }));
                 });
 
@@ -183,7 +205,10 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
             if (typeof(amount) != 'number') {
                 amount = parseFloat(amount);
             }
-            var formatted_value = (parseInt(amount)).toLocaleString(currency[2],{
+            // var formatted_value = (parseInt(amount)).toLocaleString(currency[2],{
+            //     minimumFractionDigits: 2
+            // })
+            var formatted_value = amount.toLocaleString(currency[2],{
                 minimumFractionDigits: 2
             })
             return formatted_value
@@ -271,13 +296,39 @@ odoo.define('dynamic_cash_flow_statements.trial', function (require) {
 //                filter_data_selected.date_to = dateString;
 //            }
 
-if (this.$el.find('.datetimepicker-input[name="date_from"]').val()) {
-                filter_data_selected.date_from = moment(this.$el.find('.datetimepicker-input[name="date_from"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            if (this.$el.find('.datetimepicker-input[name="date_from"]').val() || this.$el.find('.datetimepicker-input[name="date_to"]').val()) {
+                if (this.$el.find('.datetimepicker-input[name="date_from"]').val()) {
+                    filter_data_selected.date_from = moment(this.$el.find('.datetimepicker-input[name="date_from"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                }
+
+                if (this.$el.find('.datetimepicker-input[name="date_to"]').val()) {
+                    filter_data_selected.date_to = moment(this.$el.find('.datetimepicker-input[name="date_to"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                }
+            }
+            else if ($("#date_range").val() == 'this_month') {
+                filter_data_selected.date_from = moment(moment().startOf('month'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                filter_data_selected.date_to = moment(moment().endOf('month'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            }
+            else if ($("#date_range").val() == 'this_year') {
+                filter_data_selected.date_from = moment(moment().startOf('year'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                filter_data_selected.date_to = moment(moment().endOf('year'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            }
+            else if ($("#date_range").val() == 'last_month') {
+                filter_data_selected.date_from = moment(moment().subtract(1, 'months').startOf('month'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                filter_data_selected.date_to = moment(moment().subtract(1, 'months').endOf('month'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            }
+            else if ($("#date_range").val() == 'last_year') {
+                filter_data_selected.date_from = moment(moment().subtract(1, 'years').startOf('year'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+                filter_data_selected.date_to = moment(moment().subtract(1, 'years').endOf('year'), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
             }
 
-            if (this.$el.find('.datetimepicker-input[name="date_to"]').val()) {
-                filter_data_selected.date_to = moment(this.$el.find('.datetimepicker-input[name="date_to"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
-            }
+            // if (this.$el.find('.datetimepicker-input[name="date_from"]').val()) {
+            //     filter_data_selected.date_from = moment(this.$el.find('.datetimepicker-input[name="date_from"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            // }
+
+            // if (this.$el.find('.datetimepicker-input[name="date_to"]').val()) {
+            //     filter_data_selected.date_to = moment(this.$el.find('.datetimepicker-input[name="date_to"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+            // }
 
             if ($(".target_move").length) {
             var post_res = document.getElementById("post_res")

@@ -1,7 +1,7 @@
 
 <templates>
     <t t-name="dfr_template_new">
-        <div class="">
+        <div class="" style="background-color: white;">
             <div>
                 <div class="filter_view_dfr"></div>
             </div>
@@ -13,20 +13,20 @@
 	</t>
 
 	<t t-name="dfr_table">
-		<div>
+		<div style="background-color: white;">
             <div class="table_main_view">
                 <style>
                     .table_main_view tr:hover {
-                      background-color: #ededed;
+                        background-color: #ededed;
                     }
                 </style>
                 <table cellspacing="0" width="100%">
                     <thead>
-                        <tr>
+                        <tr style="color: #666666; text-align: right;">
                             <th colspan="6"></th>
-                            <th style="text-align: right; padding-right: 50px;">Debit</th>
-                            <th style="text-align: right; padding-right: 50px;">Credit</th>
-                            <th style="text-align: right; padding-right: 50px;">Balance</th>
+                            <th style="padding-right: 50px; font-size: 14px;">Debit</th>
+                            <th style="padding-right: 50px; font-size: 14px;">Credit</th>
+                            <th style="padding-right: 50px; font-size: 14px;">Balance</th>
                         </tr>
                     </thead>
 					<tbody>
@@ -137,8 +137,12 @@
             </div>
             <br></br>
             <div class="sub_container_right row" style="width:30%;height:3%;top:0px;position: relative;">
-
-                        <div class="time_range" style="">
+                        <style>
+                            .filter_item {
+                                margin: 5px 7px;
+                            }
+                        </style>
+                        <div class="time_range filter_item" style="">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown" >
                                 <span class="fa fa-calendar" title="Dates" role="img" aria-label="Dates"></span>
                                 Date Range
@@ -169,7 +173,7 @@
                                 </div>
                             </div>
                         </div>
-					<div class="journals_filter" style="">
+					<div class="journals_filter filter_item" style="">
 						<a type="button" class="dropdown-toggle" data-toggle="dropdown">
 							<span class="fa fa-book"></span>
 Journals:
@@ -197,7 +201,7 @@ Journals:
 						<span id="journal_res"></span>
 					</div>
 
-                        <div class="accounts_filter">
+                        <div class="accounts_filter filter_item">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa fa-book"></span>
                                 Accounts:
@@ -225,7 +229,7 @@ Journals:
                             <span id="acc_res"></span>
                         </div>
 
-						<div class="account_tags_filter">
+						<div class="account_tags_filter filter_item">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa fa-book"></span>
                                 Account Tags:
@@ -240,7 +244,7 @@ Journals:
                             <span id="acc_tag_res"></span>
                         </div>
 
-                        <div class="analytics_filter">
+                        <div class="analytics_filter filter_item">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa fa-book"></span>
                                 Analytic Accounts:
@@ -255,7 +259,7 @@ Journals:
                             <span id="analytic_res"></span>
                         </div>
 
-						<div class="analytic_tags_filter">
+						<div class="analytic_tags_filter filter_item">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa fa-book"></span>
                                 Analytic Tags:
@@ -271,7 +275,7 @@ Journals:
                         </div>
 
 
-					<div class="search-Target-move" style="">
+					<div class="search-Target-move filter_item" style="">
 						<a type="button" class="dropdown-toggle" data-toggle="dropdown">
 							<span class="fa fa-filter"></span>
 Target Move:
@@ -284,9 +288,9 @@ Target Move:
 						</select>
 						<span id="post_res"></span>
 					</div>
-				<div style="">
+				<div class="filter_item" style="">
                     <button type="button" id="apply_filter" class="btn btn-primary"
-                            style="top:0px;height:30px;color:white;background-color: #00A0AD;border-color: #00A0AD;">
+                            style="margin-top: -5px; height: 30px; color: white; background-color: #00A0AD; border-color: #00A0AD;">
                         Apply
                     </button>
 

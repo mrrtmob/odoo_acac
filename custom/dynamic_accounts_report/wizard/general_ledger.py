@@ -422,19 +422,21 @@ class GeneralView(models.TransientModel):
         filters = json.loads(data)
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet()
-        head = workbook.add_format({'align': 'center', 'bold': True,
-                                    'font_size': '20px'})
+        head = workbook.add_format({'bold': True, 'font_size': 15})
+        head.set_align('center')
+        head.set_align('vcenter')
         sub_heading = workbook.add_format(
-            {'align': 'center', 'bold': True, 'font_size': '10px',
+            {'align': 'center', 'bold': True, 'font_size': 14,
              'border': 1,
              'border_color': 'black'})
-        txt = workbook.add_format({'font_size': '10px', 'border': 1})
-        txt_l = workbook.add_format({'font_size': '10px', 'border': 1, 'bold': True})
+        txt = workbook.add_format({'font_size': 14, 'border': 1})
+        txt_account = workbook.add_format({'font_size': 14, 'border': 1, 'font_color': '#00A09D'})
+        txt_l = workbook.add_format({'font_size': 14, 'border': 1, 'bold': True})
         sheet.merge_range('A2:J3', filters.get('company_name') + ':' + name_data.get('name'), head)
         date_head = workbook.add_format({'align': 'center', 'bold': True,
-                                         'font_size': '10px'})
+                                         'font_size': 11})
         date_style = workbook.add_format({'align': 'center',
-                                          'font_size': '10px'})
+                                          'font_size': 14})
         if filters.get('date_from'):
             sheet.merge_range('B4:C4', 'From: ' + filters.get('date_from'), date_head)
         if filters.get('date_to'):
@@ -481,8 +483,8 @@ class GeneralView(models.TransientModel):
         for rec_data in report_data_main:
 
             row += 1
-            sheet.write(row + 1, col, rec_data['code'], txt)
-            sheet.write(row + 1, col + 1, rec_data['name'], txt)
+            sheet.write(row + 1, col, rec_data['code'], txt_account)
+            sheet.write(row + 1, col + 1, rec_data['name'], txt_account)
             sheet.write(row + 1, col + 2, '', txt)
             sheet.write(row + 1, col + 3, '', txt)
             sheet.write(row + 1, col + 4, '', txt)

@@ -1,6 +1,6 @@
 <templates>
     <t t-name="GeneralTemp">
-        <div>
+        <div style="background-color: white;">
             <div>
                 <div class="filter_view_tb"></div>
             </div>
@@ -11,26 +11,35 @@
         </div>
     </t>
     <t t-name="GLTable">
-        <div>
+        <div style="background-color: white;">
             <div class="table_main_view">
+                <style>
+                    .table_main_view tr:hover {
+                      background-color: #ededed;
+                    }
+                    .mon_fld {
+                        padding-right: 7px;
+                        text-align: right;
+                    }
+                </style>
                 <table cellspacing="0" width="100%">
                     <thead>
-                        <tr>
-                            <th colspan="6">Account</th>
-                            <th class="mon_fld">Debit</th>
-                            <th class="mon_fld">Credit</th>
-                            <th class="mon_fld">Balance</th>
+                        <tr style="color: #666666; text-align: right;">
+                            <th colspan="6" style="padding: 5px; padding-left: 25px; font-size: 12px; text-align: left;">Account</th>
+                            <th class="mon_fld" style="font-size: 14px;">Debit</th>
+                            <th class="mon_fld" style="font-size: 14px;">Credit</th>
+                            <th class="mon_fld" style="font-size: 14px;">Balance</th>
                         </tr>
                     </thead>
                     <tbody>
                         <t t-set="none_value" t-value="_"/>
                         <t t-foreach="report_lines" t-as="account">
                             <t t-set="common_id" t-value="0"/>
-                            <tr style="border: 1.5px solid black;" class="gl-line"
+                            <tr style="border: 1px solid gray;" class="gl-line"
                                 data-toggle="collapse"
                                 t-att-data-account-id="account['id']"
                                 t-attf-data-target=".a{{account['id']}}">
-                                <td colspan="6" style="border: 0px solid black;">
+                                <td colspan="6" style="border: 0px solid black; padding-left: 45px; color: #00A09D; font-size: 12px;">
                                     <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"></i>
                                     <span>
                                         <t t-esc="account['code']"/>
@@ -42,7 +51,7 @@
                                 <t t-if="currency[1] == 'before'">
                                     <td class="mon_fld">
                                         <t t-if="account['debit'] == 0">
-                                            <span>-</span>
+                                            <!-- <span>-</span> -->
                                         </t>
                                         <t t-else="">
                                             <t t-esc="currency[0]"/>
@@ -52,7 +61,7 @@
                                     </td>
                                     <td class="mon_fld">
                                         <t t-if="account['credit'] == 0">
-                                            <span>-</span>
+                                            <!-- <span>-</span> -->
                                         </t>
                                         <t t-else="">
                                             <t t-esc="currency[0]"/>
@@ -62,7 +71,7 @@
                                     </td>
                                     <td class="mon_fld">
                                         <t t-if="account['balance'] == 0">
-                                            <span>-</span>
+                                            <!-- <span>-</span> -->
                                         </t>
                                         <t t-else="">
                                             <t t-esc="currency[0]"/>
@@ -75,7 +84,7 @@
                                 <t t-else="">
                                     <td class="mon_fld">
                                         <t t-if="account['debit'] == 0">
-                                            <span>-</span>
+                                            <!-- <span>-</span> -->
                                         </t>
                                         <t t-else="">
                                             <t t-esc="account['debit']"/>
@@ -85,7 +94,7 @@
                                     </td>
                                     <td class="mon_fld">
                                         <t t-if="account['credit'] == 0">
-                                            <span>-</span>
+                                            <!-- <span>-</span> -->
                                         </t>
                                         <t t-else="">
                                             <t t-esc="account['credit']"/>
@@ -95,7 +104,7 @@
                                     </td>
                                     <td class="mon_fld">
                                         <t t-if="account['balance'] == 0">
-                                            <span>-</span>
+                                            <!-- <span>-</span> -->
                                         </t>
                                         <t t-else="">
                                             <t t-esc="account['balance']"/>
@@ -149,8 +158,12 @@
             </div>
             <br></br>
             <div class="sub_container_right row" style="width:30%;height:3%;top:0px;position: relative;">
-
-                        <div class="time_range" style="">
+                        <style>
+                            .filter_item {
+                                margin: 5px 7px;
+                            }
+                        </style>
+                        <div class="time_range filter_item" style="">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown" >
                                 <span class="fa fa-calendar" title="Dates" role="img" aria-label="Dates"></span>
                                 Date Range
@@ -182,7 +195,7 @@
                             </div>
                         </div>
                         <t t-if="title == 'General Ledger'">
-                        <div class="journals_filter" style="">
+                        <div class="journals_filter filter_item" style="">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa fa-book"></span>
                                 Journals:
@@ -214,7 +227,7 @@
                         </div>
                         </t>
 
-                        <div class="accounts_filter">
+                        <div class="accounts_filter filter_item">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa fa-book"></span>
                                 Accounts:
@@ -244,7 +257,7 @@
                             <span id="acc_res"></span>
                         </div>
 
-                        <div class="analytics_filter">
+                        <div class="analytics_filter filter_item">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa fa-book"></span>
                                 Analytic Accounts:
@@ -259,7 +272,7 @@
                             <span id="analytic_res"></span>
                         </div>
 
-                        <div class="analytic_tags_filter">
+                        <div class="analytic_tags_filter filter_item">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa fa-book"></span>
                                 Analytic Tags:
@@ -275,7 +288,7 @@
                         </div>
 
 
-                        <div class="search-Target-move" style="">
+                        <div class="search-Target-move filter_item" style="">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa fa-filter"></span>
                                 Target Move:
@@ -287,9 +300,9 @@
                             </select>
                             <span id="post_res"></span>
                         </div>
-                        <div style="">
+                        <div class="filter_item" style="">
                             <button type="button" id="apply_filter" class="btn btn-primary"
-                                    style="top:0px;height:30px;color:white;background-color: #00A0AD;border-color: #00A0AD;">
+                                    style="margin-top: -5px;height:30px;color:white;background-color: #00A0AD;border-color: #00A0AD;">
                                 Apply
                             </button>
 
@@ -310,9 +323,8 @@
 
 
     <t t-name="SubSection">
-        <div class="gl-table-div">
-            <table class="table table-sm o_main_table"
-                   style="border: 0px solid black;display compact;">
+        <div class="gl-table-div" style="margin-left: 45px;">
+            <table class="table table-sm o_main_table" style="border: 0px solid black;display compact;">
                 <thead>
                     <tr style="">
                         <th>Date</th>
@@ -320,9 +332,9 @@
                         <th>Partner</th>
                         <th>Move</th>
                         <th>Entry Label</th>
-                        <th class="mon_fld">Debit</th>
-                        <th class="mon_fld">Credit</th>
-                        <th class="mon_fld">Balance</th>
+                        <th style="text-align: right;">Debit</th>
+                        <th style="text-align: right;">Credit</th>
+                        <th style="text-align: right;">Balance</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -366,7 +378,7 @@
                             <t t-if="currency_position == 'before'">
                                 <td t-att-style="style_right" class="amt">
                                     <t t-if="account_line.debit == 0">
-                                        <span>-</span>
+                                        <!-- <span>-</span> -->
                                     </t>
                                     <t t-else="">
                                         <t t-esc="account_line.currency_code"/>
@@ -376,7 +388,7 @@
                                 </td>
                                 <td t-att-style="style_right" class="amt">
                                     <t t-if="account_line.credit == 0">
-                                        <span>-</span>
+                                        <!-- <span>-</span> -->
                                     </t>
                                     <t t-else="">
                                         <t t-esc="account_line.currency_code"/>
@@ -386,7 +398,7 @@
                                 </td>
                                 <td t-att-style="style_right" class="amt">
                                     <t t-if="account_line.balance == 0">
-                                        <span>-</span>
+                                        <!-- <span>-</span> -->
                                     </t>
                                     <t t-else="">
                                         <t t-esc="account_line.currency_code"/>
@@ -398,7 +410,7 @@
                             <t t-else="">
                                 <td t-att-style="style_right" class="amt">
                                     <t t-if="account_line.debit == 0">
-                                        <span>-</span>
+                                        <!-- <span>-</span> -->
                                     </t>
                                     <t t-else="">
                                         <t t-esc="account_line.debit"/>
@@ -408,7 +420,7 @@
                                 </td>
                                 <td t-att-style="style_right" class="amt">
                                     <t t-if="account_line.credit == 0">
-                                        <span>-</span>
+                                        <!-- <span>-</span> -->
                                     </t>
                                     <t t-else="">
                                         <t t-esc="account_line.credit"/>
@@ -418,7 +430,7 @@
                                 </td>
                                 <td t-att-style="style_right" class="amt">
                                     <t t-if="account_line.balance == 0">
-                                        <span>-</span>
+                                        <!-- <span>-</span> -->
                                     </t>
                                     <t t-else="">
                                         <t t-esc="account_line.balance"/>

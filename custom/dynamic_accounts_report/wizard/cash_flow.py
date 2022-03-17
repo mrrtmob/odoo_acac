@@ -489,41 +489,40 @@ class AccountCasgFlow(models.TransientModel):
         sheet = workbook.add_worksheet()
         bold = workbook.add_format({'align': 'center',
                                     'bold': True,
-                                    'font_size': '10px',
+                                    'font_size': 14,
                                     'border': 1})
-        date = workbook.add_format({'font_size': '10px'})
+        date = workbook.add_format({'font_size': 14})
         cell_format = workbook.add_format({'bold': True,
-                                           'font_size': '10px'})
-        head = workbook.add_format({'align': 'center',
-                                    'bold': True,
+                                           'font_size': 11})
+        head = workbook.add_format({'bold': True,
                                     'bg_color': '#D3D3D3',
-                                    'font_size': '15px'})
+                                    'font_size': 15})
+        head.set_align('center')
+        head.set_align('vcenter')
         txt = workbook.add_format({'align': 'left',
-                                   'font_size': '10px'})
+                                   'font_size': 14})
         txt_left = workbook.add_format({'align': 'left',
-                                        'font_size': '10px',
+                                        'font_size': 14,
                                         'border': 1})
         txt_center = workbook.add_format({'align': 'center',
-                                          'font_size': '10px',
+                                          'font_size': 14,
                                           'border': 1})
         amount = workbook.add_format({'align': 'right',
-                                      'font_size': '10px',
+                                      'font_size': 14,
                                       'border': 1})
         amount_bold = workbook.add_format({'align': 'right',
                                            'bold': True,
-                                           'font_size': '10px',
+                                           'font_size': 14,
                                            'border': 1})
         txt_bold = workbook.add_format({'align': 'left',
                                         'bold': True,
-                                        'font_size': '10px',
+                                        'font_size': 14,
                                         'border': 1})
 
         sheet.set_column('C:C', 30, cell_format)
         sheet.set_column('D:E', 20, cell_format)
         sheet.set_column('F:F', 20, cell_format)
-        sheet.merge_range('C3:F5', '')
-        sheet.merge_range('C3:F4', 'CASH FLOW STATEMENTS', head)
-        sheet.merge_range('C4:F4', '')
+        sheet.merge_range('C3:F5', 'CASH FLOW STATEMENTS', head)
 
         sheet.write('C6', "Date From", cell_format)
         sheet.write('D6', str(data['date_from']), date)

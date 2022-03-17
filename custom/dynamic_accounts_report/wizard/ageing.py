@@ -564,28 +564,31 @@ class AgeingView(models.TransientModel):
 
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet()
-        head = workbook.add_format({'align': 'center', 'bold': True,
-                                    'font_size': '20px'})
+        head = workbook.add_format({'bold': True, 'font_size': 15})
+        head.set_align('center')
+        head.set_align('vcenter')
         sub_heading = workbook.add_format(
-            {'align': 'center', 'bold': True, 'font_size': '10px',
+            {'align': 'center', 'bold': True, 'font_size': 14,
              'border': 1,
              'border_color': 'black'})
         heading = workbook.add_format(
-            {'align': 'center', 'bold': True, 'font_size': '10px',
+            {'align': 'center', 'bold': True, 'font_size': 14,
              'border': 2,
              'border_color': 'black'})
-        txt = workbook.add_format({'font_size': '10px', 'border': 1})
+        txt = workbook.add_format({'font_size': 14, 'border': 1})
         txt_l = workbook.add_format(
-            {'font_size': '10px', 'border': 1, 'bold': True})
+            {'font_size': 14, 'border': 1, 'bold': True})
+        txt_name_l = workbook.add_format(
+            {'font_size': 14, 'border': 1, 'bold': True, 'font_color': '#00A09D'})
         txt_v = workbook.add_format(
-            {'align': 'right', 'font_size': '10px', 'border': 1})
+            {'align': 'right', 'font_size': 14, 'border': 1})
         sheet.merge_range('A2:H3',
                           filters.get('company_name') + ':' + ' Partner Ageing',
                           head)
         date_head = workbook.add_format({'align': 'center', 'bold': True,
-                                         'font_size': '10px'})
+                                         'font_size': 11})
         date_style = workbook.add_format({'align': 'center',
-                                          'font_size': '10px'})
+                                          'font_size': 14})
         if filters.get('date_from'):
             sheet.merge_range('A4:B4',
                               'As On Date: ' + filters.get('date_from'),
@@ -631,7 +634,7 @@ class AgeingView(models.TransientModel):
             two_lst = []
 
             row += 1
-            sheet.merge_range(row, col, row, col + 2, rec_data['name'], txt_l)
+            sheet.merge_range(row, col, row, col + 2, rec_data['name'], txt_name_l)
             sheet.write(row, col + 3, rec_data['total'], txt_l)
             sheet.write(row, col + 4, rec_data['direction'], txt_l)
             sheet.write(row, col + 5, rec_data['4'], txt_l)
