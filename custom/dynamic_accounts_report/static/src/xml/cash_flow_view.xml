@@ -22,11 +22,14 @@
             <div class="table_main_view">
                 <style>
                     .table_main_view tr:hover {
-                    background-color: #ededed;
+                        background-color: #ededed;
                     }
                     .mon_fld {
-                    padding-right: 7px;
-                    text-align: right;
+                        padding-right: 7px;
+                        text-align: right;
+                    }
+                    .no_click:active {
+                        pointer-events: none;
                     }
                 </style>
                 <table cellspacing="0" width="100%">
@@ -95,7 +98,7 @@
                             </t>
                             <t t-else="">
 
-                                <tr style="border: 1.5px solid gray;" class=""
+                                <tr style="border: 1.5px solid gray;" class="no_click"
                                     data-toggle="collapse"
                                     t-att-data-account-id="account['id']"
                                     t-attf-data-target=".a{{account['id']}}">
