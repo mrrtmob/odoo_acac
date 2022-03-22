@@ -33,6 +33,7 @@ class OpPlacementOffer(models.Model):
     batch_id = fields.Many2one(
         'op.batch', 'Term', required=True, track_visibility='onchange')
     semester_id = fields.Many2one('pm.semester', 'Semester', required=True, domain=[('is_internship', '=', True)])
+    semester_name = fields.Char('Semester Name', compute='_compute_get_semester_name', store=True)
     subject_id = fields.Many2one('op.subject', 'Subject', required=True)
     gpa = fields.Float('GPA', readonly=True, digits=(12, 1), compute='_compute_gpa', store=True)
     color = fields.Integer(string='Color Index', default=0, compute="_compute_result_color")
@@ -94,3 +95,7 @@ class OpPlacementOffer(models.Model):
     def _compute_get_student_app_id(self):
         for record in self:
             record.student_app_id = record.student_id.student_app_id
+
+    def _compute_get_semester_name(self):
+        for record in self:
+            record.semester_name = record.semester_id.name
