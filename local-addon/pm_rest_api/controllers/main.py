@@ -863,7 +863,7 @@ class PathmazingApi(RESTController):
                 for payment in payments:
                     invoice_state = payment.invoice_id.state
                     payment_option = payment.payment_option
-                    if payment.state in ['invoice', 'installment'] and invoice_state != 'posted':
+                    if payment.state in ['invoice', 'installment']:
                         if payment_option == 'installment':
                             for installment in payment.installments:
                                 if installment.invoice_state == 'draft':
@@ -891,7 +891,7 @@ class PathmazingApi(RESTController):
                                         'payment_number': installment.order_transaction_id,
                                     }
                                     payment_data.append(val)
-                        elif payment_option == 'normal' and payment.invoice_state == 'draft':
+                        elif payment_option == 'normal':
                             payment_id = payment.id
                             payment_date = payment.date
                             expired = (payment_date - today).days
@@ -939,7 +939,7 @@ class PathmazingApi(RESTController):
             print(payments)
             if payments:
                 for payment in payments:
-                    if payment.state == 'invoice' and payment.invoice_state == 'posted' and payment.payment_option == 'normal':
+                    if payment.state == 'invoice' and payment.payment_option == 'normal':
                         payment_id = payment.id
                         payment_status = payment.invoice_id.payment_state
                         payment_date = payment.invoice_id.payment_id.create_date
