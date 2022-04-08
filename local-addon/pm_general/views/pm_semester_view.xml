@@ -88,7 +88,7 @@
                     <sheet>
                         <group col="4" name="main">
                             <field name="name"/>
-                            <field name="semester_code"/>
+                            <field name="semester_code" readonly="1" force_save="1"/>
                             <field name="course_id"/>
                              <field name="batch_id"
                                            context="{'course_id': course_id,'get_parent_batch':1}"/>
