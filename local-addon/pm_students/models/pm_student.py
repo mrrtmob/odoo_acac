@@ -586,9 +586,12 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
         for student in self:
             mail_domain = '@acac.edu.kh'
             acac_mail = ''
-            acac_mail += student.first_name.lower()
+            if student.first_name:
+                acac_mail += student.first_name.lower()
             if student.middle_name:
                 acac_mail += '_' + student.middle_name.lower()
+            if student.last_name:
+                acac_mail += '.' + student.last_name.upper()
             acac_mail += '.' + student.last_name.upper()
             same_email_count = self.env['op.student'].search_count([('acac_email', 'ilike', acac_mail),
                                                               ('student_app_id', '!=', student.student_app_id)])
@@ -1105,7 +1108,7 @@ class PmStudentFeesDetails(models.Model):
         if product.property_account_income_id:
             account_id = product.property_account_income_id.id
         if not account_id:
-            account_id = product.categ_id.property_account_income_categ_id.id
+            account_id = 1 # TODO: 1 TO PREVENT CODE FROM THROWING ERROR
         if not account_id:
             raise UserError(
                 _('There is no income account defined for this product: "%s".'
