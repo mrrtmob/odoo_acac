@@ -388,6 +388,20 @@ class OpBatch(models.Model):
     #         if active_count > 1:
     #             raise ValidationError('Multiple terms can not be active simultaneously')
 
+    @api.onchange('course_id', 'start_date', 'year_term')
+    def _onchange_code(self):
+        self.code = ""
+        if self.start_date:
+            year = self.start_date.year
+            short_year = str(year)[-2:]
+            self.code += str(short_year or "")
+        if self.year_term:
+            year_term = self.year_term
+            self.code += str(year_term or "")
+        if self.course_id:
+            course_code = self.course_id.code
+            self.code += str(course_code or "")
+
 class OpFeesTermsLine(models.Model):
     _inherit = "op.fees.terms.line"
     product_id = fields.Many2one('product.product',

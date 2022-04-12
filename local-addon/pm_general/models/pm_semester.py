@@ -274,13 +274,13 @@ class PmSemester(models.Model):
             year = self.batch_id.start_date.year
             short_year = str(year)[-2:]
             year_term = self.batch_id.year_term
-            self.semester_code += str(short_year) + str(year_term)
+            self.semester_code += str(short_year or "") + str(year_term or "")
         if self.course_id:
             course_code = self.course_id.code
-            self.semester_code += str(course_code)
+            self.semester_code += str(course_code or "")
         if self.semester_order:
             semester_order = "S" + self.semester_order
-            self.semester_code += str(semester_order)
+            self.semester_code += str(semester_order or "")
         # self.semester_code = str(short_year) + str(year_term) + str(course_code) + str(semester_order)
 
 class PmSemesterDetail(models.Model):
