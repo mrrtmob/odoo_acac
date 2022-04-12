@@ -8,7 +8,7 @@
                 <t t-else="">Quotations</t>
             </li>
             <li t-if="page_name == 'order' or sale_order and sale_order.state not in ('sent', 'cancel')" t-attf-class="breadcrumb-item #{'active ' if not sale_order else ''}">
-
+                <a t-if="sale_order" t-attf-href="/my/quotes?{{ keep_query() }}">Quotations</a>
                 <t t-else="">Sales Orders</t>
             </li>
             <li t-if="sale_order" class="breadcrumb-item active">
