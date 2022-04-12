@@ -75,7 +75,7 @@
                                     </td>
                                     <td>
                                         <t t-if="payment.state == 'invoice'">
-                                              <a t-attf-href="/student/payment/create/#{payment.id}">
+                                              <a t-attf-href="/student/payment/create/#{payment.payment_option}/#{payment.id}">
                                               <span  class="badge badge-pill badge-success">
                                                     <i class="fa fa-fw fa-usd" role="img"></i>
                                                     <span class="d-none d-md-inline">Pay Now</span>
