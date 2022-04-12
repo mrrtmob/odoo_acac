@@ -65,7 +65,7 @@ class PaymentPortal(CustomerPortal):
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id or payment_obj.fee_id.student_id
         base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
-        success_url = base_url + '/student/aba/success'
+        success_url = base_url + '/student/aba/success/{}/{}'.format(type, payment_id)
         shipping = 0
 
         hash_params = [str(req_time),
@@ -126,7 +126,7 @@ class PaymentPortal(CustomerPortal):
         push_back_url = PayWay.get_push_back_url()
         student = payment_obj.student_id or payment_obj.fee_id.student_id
         base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
-        success_url = base_url + '/student/aba/success'
+        success_url = base_url + '/student/aba/success/{}/{}'.format(type, payment_id)
 
         hash_params = [str(req_time),
                        str(merchant_id),
@@ -166,9 +166,9 @@ class PaymentPortal(CustomerPortal):
 
     
 
-    @http.route(['/student/aba/success'],
+    @http.route(['/student/aba/success/<string:type>/<int:payment_id>'],
                 type='http', auth='public', website=True)
-    def student_payment_success(self):
+    def student_payment_success(self, payment_id, type):
         environ = request.httprequest.headers.environ
         agent_string = environ.get("HTTP_USER_AGENT")
         user_agent = parse(agent_string)
