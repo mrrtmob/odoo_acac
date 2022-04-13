@@ -234,7 +234,7 @@ class PaymentPortal(CustomerPortal):
         invoice = student_fee.invoice_id
         print(invoice)
         payment_method = 3
-        journal_id = 7
+        journal_id = 13
         invoice.action_post()
         payment_data = {
             'payment_type': 'inbound',
