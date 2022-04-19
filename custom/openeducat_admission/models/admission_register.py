@@ -63,8 +63,8 @@ class OpAdmissionRegister(models.Model):
         'Minimum No. of Admission', readonly=True,
         states={'draft': [('readonly', False)]})
     max_count = fields.Integer(
-        'Maximum No. of Admission', readonly=True,
-        states={'draft': [('readonly', False)]}, default=30)
+        'Maximum No. of Admission',
+        states={'draft': [('readonly', False)]}, default=100)
     product_id = fields.Many2one(
         'product.product', 'Course Fees', required=True,
         domain=[('type', '=', 'service')], readonly=True,
