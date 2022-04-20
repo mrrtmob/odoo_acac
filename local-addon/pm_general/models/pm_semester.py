@@ -281,7 +281,6 @@ class PmSemester(models.Model):
         if self.semester_order:
             semester_order = "S" + self.semester_order
             self.semester_code += str(semester_order or "")
-        # self.semester_code = str(short_year) + str(year_term) + str(course_code) + str(semester_order)
 
 class PmSemesterDetail(models.Model):
     _name = "pm.student.semester.detail"

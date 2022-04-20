@@ -401,6 +401,9 @@ class OpBatch(models.Model):
         if self.course_id:
             course_code = self.course_id.code
             self.code += str(course_code or "")
+            self.semester_ids.course_id = self.course_id
+        for semester in self.semester_ids:
+            semester.semester_code = self.code + semester.semester_code[-2:]
 
 class OpFeesTermsLine(models.Model):
     _inherit = "op.fees.terms.line"
