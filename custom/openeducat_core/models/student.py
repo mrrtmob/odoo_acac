@@ -21,7 +21,8 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-
+from odoo.modules.module import get_module_resource
+import base64
 
 class OpStudentCourse(models.Model):
     _name = "op.student.course"
@@ -63,6 +64,11 @@ class OpStudent(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _inherits = {"res.partner": "partner_id"}
 
+    @api.model
+    def _default_image(self):
+        image_path = get_module_resource('hr', 'static/src/img', 'default_image.png')
+        return base64.b64encode(open(image_path, 'rb').read())
+
     first_name = fields.Char('First Name', size=128, translate=True)
     middle_name = fields.Char('Middle Name', size=128, translate=True)
     last_name = fields.Char('Last Name', size=128, translate=True)
@@ -95,6 +101,7 @@ class OpStudent(models.Model):
                                         'Course Details',
                                         tracking=True)
     active = fields.Boolean(default=True)
+    image_1920 = fields.Image(default=_default_image)
 
     _sql_constraints = [(
         'unique_gr_no',
