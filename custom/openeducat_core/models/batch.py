@@ -33,7 +33,14 @@ class OpBatch(models.Model):
     start_date = fields.Date(
         'Start Date', required=True, default=fields.Date.today())
     end_date = fields.Date('End Date', required=True)
-    course_id = fields.Many2one('op.course', 'Course', required=True)
+
+    @api.model
+    def _get_default_course(self):
+        course = self.env['op.course'].search(
+            ['|', ('code', '=', 'CUL'), ('name', '=', '2-Year Diploma in Culinary Art')], limit=1)
+        return course.id
+
+    course_id = fields.Many2one('op.course', 'Course', required=True, default=_get_default_course)
     active = fields.Boolean(default=True)
 
     _sql_constraints = [

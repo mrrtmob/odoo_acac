@@ -846,7 +846,7 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
         course_code = course.code
         year = batch.start_date.year
         short_year = str(year)[-2:]
-        year_term = batch.year_term.name
+        year_term = batch.year_term
         batch_code = str(short_year) + str(year_term) + str(course_code)
         count = self.env['op.student'].search_count([('student_app_id', 'like', batch_code),
                                                          '|', ('active', '=', True), ('active', '=', False)])

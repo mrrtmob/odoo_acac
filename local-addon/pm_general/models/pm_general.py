@@ -225,13 +225,13 @@ class OpSubjectRegistrationCustom(models.Model):
 
 
 
-class PmTermOrder(models.Model):
-    _description = 'Terms Order'
-    _name = 'pm.term.order'
-    name = fields.Char('Term Order')
-    _sql_constraints = [
-        ('unique_name',
-         'unique(name)', 'Term Order must be unique')]
+# class PmTermOrder(models.Model):
+#     _description = 'Terms Order'
+#     _name = 'pm.term.order'
+#     name = fields.Char('Term Order')
+#     _sql_constraints = [
+#         ('unique_name',
+#          'unique(name)', 'Term Order must be unique')]
 
 class OpBatch(models.Model):
 
@@ -239,7 +239,11 @@ class OpBatch(models.Model):
     _description = 'OpenEduCat Terms'
 
 
-    year_term = fields.Many2one('pm.term.order', string='Term Order')
+    # year_term = fields.Many2one('pm.term.order', string='Term Order')
+    year_term = fields.Selection([("WI", "WI"),
+                                 ("SP", "SP"),
+                                 ("FA", "FA"),
+                                 ("SU", "SU")], string='Term Order', required=True)
     semester_ids = fields.One2many('pm.semester', 'batch_id', 'Semester(s)')
     record_url = fields.Char('Link', compute="_compute_record_url", store=True)
 
@@ -272,15 +276,15 @@ class OpBatch(models.Model):
                 self.env['mail.template'].browse(template_id).send_mail(term.id, force_send=True)
 
 
-    @api.constrains('year_term', 'state_date')
+    @api.constrains('course_id', 'year_term', 'start_date')
     def _check_term_order(self):
-        all_batches = self.env['op.batch'].search([])
+        all_batches = self.env['op.batch'].search([('course_id', '=', self.course_id.id)])
         print(all_batches)
         for batch in all_batches:
             if batch.id != self.id:
                 year = batch.start_date.year
-                order = batch.year_term.name
-                if year == self.start_date.year and order == self.year_term.name:
+                order = batch.year_term
+                if year == self.start_date.year and order == self.year_term:
                     msg = 'Term Order %s for %s has exist' % (
                         order,
                         year
@@ -383,6 +387,23 @@ class OpBatch(models.Model):
     #
     #         if active_count > 1:
     #             raise ValidationError('Multiple terms can not be active simultaneously')
+
+    @api.onchange('course_id', 'start_date', 'year_term')
+    def _onchange_code(self):
+        self.code = ""
+        if self.start_date:
+            year = self.start_date.year
+            short_year = str(year)[-2:]
+            self.code += str(short_year or "")
+        if self.year_term:
+            year_term = self.year_term
+            self.code += str(year_term or "")
+        if self.course_id:
+            course_code = self.course_id.code
+            self.code += str(course_code or "")
+            self.semester_ids.course_id = self.course_id
+        for semester in self.semester_ids:
+            semester.semester_code = self.code + semester.semester_code[-2:]
 
 class OpFeesTermsLine(models.Model):
     _inherit = "op.fees.terms.line"

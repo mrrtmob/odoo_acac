@@ -267,6 +267,21 @@ class PmSemester(models.Model):
                                                      ('semester', '=', record.semester_order)])
             return subjects
 
+    @api.onchange('course_id', 'batch_id', 'semester_order')
+    def _onchange_semester_code(self):
+        self.semester_code = ""
+        if self.batch_id:
+            year = self.batch_id.start_date.year
+            short_year = str(year)[-2:]
+            year_term = self.batch_id.year_term
+            self.semester_code += str(short_year or "") + str(year_term or "")
+        if self.course_id:
+            course_code = self.course_id.code
+            self.semester_code += str(course_code or "")
+        if self.semester_order:
+            semester_order = "S" + self.semester_order
+            self.semester_code += str(semester_order or "")
+
 class PmSemesterDetail(models.Model):
     _name = "pm.student.semester.detail"
     _order = "id asc"

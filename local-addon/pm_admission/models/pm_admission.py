@@ -582,7 +582,7 @@ class OpAdmission(models.Model):
                 'country_id':
                     student.country_id and student.country_id.id or False,
                 'state_id': student.state_id and student.state_id.id or False,
-                'image_1920': student.image,
+                # 'image_1920': student.image,
                 'zip': student.zip
             }
             student_user.partner_id.write(details)
@@ -596,7 +596,7 @@ class OpAdmission(models.Model):
                 'last_name': student.last_name,
                 'birth_date': student.birth_date,
                 'gender': student.gender,
-                'image_1920': student.image or False,
+                # 'image_1920': student.image or False,
                 'course_detail_ids': [[0, False, {
                     'course_id':
                         student.course_id and student.course_id.id or False,

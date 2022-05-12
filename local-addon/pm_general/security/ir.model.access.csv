@@ -11,7 +11,6 @@ access_pm_subject_attendance,access_pm_subject_attendance,model_pm_subject_atten
 access_pm_subject_total_absence,access_pm_subject_total_absence,model_pm_subject_total_absence,base.group_user,1,1,1,1
 access_pm_student_semester_detail,access_pm_student_semester_detail,model_pm_student_semester_detail,base.group_user,1,1,1,1
 access_pm_semester_fail_reason,access_pm_semester_fail_reason,model_pm_semester_fail_reason,base.group_user,1,1,1,1
-access_pm_term_order,access_pm_term_order,model_pm_term_order,base.group_user,1,1,1,1
 access_op_student_public,access_op_student,openeducat_core.model_op_student,,1,0,0,0
 
 access_pm_menu_notification,access_pm_menu_notification,model_pm_menu_notification,base.group_user,1,1,1,1
