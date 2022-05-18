@@ -594,11 +594,9 @@ END:VCARD""" % (first_name, last_name, phone, email, company_name, title, work_a
             same_email_count = self.env['op.student'].search_count([('acac_email', 'ilike', acac_mail),
                                                               ('student_app_id', '!=', student.student_app_id)])
             if same_email_count:
-                print("Same EMAIL !!!")
-                print(same_email_count)
                 acac_mail += str(same_email_count)
             acac_mail += mail_domain
-            student.acac_email = acac_mail
+            student.acac_email = acac_mail.replace(' ','')
 
 
     def create_student_user(self):
