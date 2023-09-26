@@ -7,7 +7,7 @@ class MarketingDashboard(models.AbstractModel):
 
     @api.model
     def get_lead_conversion_top_campaigns(self):
-        top_campaigns = self.env['utm.campaign'].search([], order='desc', limit=4)
+        top_campaigns = self.env['utm.campaign'].search([], limit=4)
 
         result = []
 
