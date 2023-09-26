@@ -21,7 +21,7 @@ class MarketingDashboard(models.AbstractModel):
             result_campaign = {
                 'name': top_campaign.name,
                 'cost': top_campaign.cost,
-                'leads_count': top_campaign.leads_count,
+                # 'leads_count': top_campaign.leads_count,
                 'cost_per_lead': top_campaign.cost_per_lead,
                 'conversions_count': conversions_count,
                 'cost_per_conversion': cost_per_conversion
