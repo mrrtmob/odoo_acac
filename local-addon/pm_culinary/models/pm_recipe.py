@@ -175,7 +175,10 @@ class PmRecipe(models.Model):
             lines = record.ingredients
             sub_recipe_lines = record.sub_recipes
             for line in lines:
-                line.quantity = line.initial_quantity * (record.number_of_portion / 10)
+                    receipe_line = self.env['pm.recipe.line'].search([('id', '=', str(line.id).replace('NewId_',''))])
+                    receipe = self.env['pm.recipe'].search([('id', '=', str(record.id).replace('NewId_',''))])
+                    qty_per_portion = receipe_line.quantity / receipe.number_of_portion
+                    line.quantity = qty_per_portion * record.number_of_portion
 
             for sub_recipe in sub_recipe_lines:
                 print("***********")
