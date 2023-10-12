@@ -15,8 +15,8 @@ class PmRecipeLine(models.Model):
         'Ingredient',
         domain="[('product_tmpl_id.is_food','=',True), ('product_tmpl_id.rank', '=', 'a')]"
     )
-    quantity = fields.Float('Qty', digits=(12, 3))
-    initial_quantity = fields.Float('Initial Quantity', digits=(12, 3), default=10)
+    quantity = fields.Float('Qty', digits=(12, 6))
+    initial_quantity = fields.Float('Initial Quantity', digits=(12, 6), default=10)
     # NOTE: unused
     uom_id = fields.Many2one('uom.uom', 'Unit',
                              domain="[('measure_type', '!=', 'working_time'),('measure_type', '!=', 'length')]")
@@ -67,7 +67,7 @@ class PmRecipeLine(models.Model):
         related='sub_recipe_id.uor'
     )
     waste_percentage = fields.Float('Waste (%)', related='product_id.product_tmpl_id.waste_percentage')
-    as_purchased = fields.Float('AP', digits=(12, 3), compute='_compute_as_purchased', store=True)
+    as_purchased = fields.Float('AP', digits=(12, 6), compute='_compute_as_purchased', store=True)
 
     @api.constrains('uor')
     def _check_uor(self):
