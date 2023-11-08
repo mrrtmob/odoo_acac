@@ -8,7 +8,7 @@
                  <div class="text-center">
                     <h2>Recipe List</h2>
                 </div>
-                <table>
+                <!-- <table>
                     <tr>
                         <td>Recipe</td>
                         <td>:</td>
@@ -16,7 +16,7 @@
                             <t t-esc="form['recipe_id'][1]" />
                         </td>
                     </tr>
-                </table>
+                </table> -->
                 <br/>
             </div>
         </t>

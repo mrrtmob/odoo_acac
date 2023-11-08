@@ -8,19 +8,33 @@ class ReportRecipeDetail(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
+        print("========== docids ========== " + str(docids))
+        print("========== data ========== " + str(data))
         custom_data = {
             'custom_field': data['custom_field'],
             'custom_number_of_portion': data['number_of_portion'],
             'custom_makes': data['makes'],
             'print_with_sub': data['print_with_sub']
         }
-        print(custom_data)
+        print("========== custom_data ========== " + str(custom_data))
 
         return {
             'doc_ids': docids,
             'doc_model': self.env['pm.recipe'],
             'docs': self.env['pm.recipe'].browse(self.env.context.get('active_id')),
             'custom_data': custom_data
+        }
+
+class ReportRecipeList(models.AbstractModel):
+    _name = 'report.pm_culinary.report_recipe_list_template'
+
+    @api.model
+    def _get_report_values(self, docids, data=None):
+        print("========== docids ========== " + str(docids))
+        print("========== data ========== " + str(data))
+
+        return {
+            'doc_ids': docids,
         }
 
 class ReportMenuDetail(models.AbstractModel):

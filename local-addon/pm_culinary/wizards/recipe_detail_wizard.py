@@ -45,6 +45,12 @@ class WizardRecipeDetail(models.TransientModel):
         self.print_with_sub = self.print_with_sub
 
     def print_report(self):
+        print("========is_sub_recipe ======== " + str(self.is_sub_recipe))
+        print("========custom_field ======== " + str(self.custom_field))
+        print("========print_with_sub ======== " + str(self.print_with_sub))
+        print("========number_of_portion ======== " + str(self.number_of_portion))
+        print("========makes ======== " + str(self.makes))
+        print("========uor ======== " + str(self.uor))
         res = {
             'recipe_id': self.recipe_id.id,
             'custom_field': self.custom_field,

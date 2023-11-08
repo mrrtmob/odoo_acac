@@ -7,13 +7,9 @@
         <field name="arch" type="xml">
             <form string="Print Recipe List">
                 <group>
-                    <group>
-                        <field name="recipe_id" />
-                    </group>
-                    <group>
-                        <field name="date_from" />
-                        <field name="date_to" />
-                    </group>
+                    <field name="custom_field" widget="radio" invisible="1" />
+                    <field name="number_of_portion"/>
+                    <field name="print_with_sub"/>
                 </group>
                 <footer>
                     <button string="Print" type="object" name="action_print_report" class="oe_highlight"/>

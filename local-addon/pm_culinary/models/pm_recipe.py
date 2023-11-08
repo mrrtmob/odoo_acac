@@ -286,9 +286,10 @@ class PmRecipe(models.Model):
         self.state = 'draft'
 
     def print_all_recipes(self):
-        active_ids = self.env.context.get('active_ids')
-        print("list of selected recipes: " + str(active_ids))
-        pass
+        # active_ids = self.env.context.get('active_ids')
+        # print("list of selected recipes: " + str(active_ids))
+        action = self.env.ref('pm_culinary.wizard_report_recipe_list_action').read()[0]
+        return action
 
     # This function is disable as an adjustment for Culinary to create recipe
 
