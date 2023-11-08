@@ -60,6 +60,13 @@
                   sequence="1"
                   action="wizard_recipe_schedule_action"/>
 
+        <menuitem id="menu_recipe_list"
+                name="Recipe List"
+                parent="menu_report"
+                groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
+                sequence="1"
+                action="wizard_report_recipe_list_action" />
+
       <menuitem id="menu_config"
                 name="Configuration"
                 groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
@@ -119,5 +126,6 @@
                 parent="menu_supplier_config_group"
                 groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
                 sequence="1" />
+
   </data>
 </odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<odoo>
+    
+    <record id="wizard_report_recipes_form" model="ir.ui.view">
+        <field name="name">wizard.report.recipes.form</field>
+        <field name="model">wizard.recipe.list</field>
+        <field name="arch" type="xml">
+            <form string="Print Recipe List">
+                <group>
+                    <group>
+                        <field name="recipe_id" />
+                    </group>
+                    <group>
+                        <field name="date_from" />
+                        <field name="date_to" />
+                    </group>
+                </group>
+                <footer>
+                    <button string="Print" type="object" name="action_print_report" class="oe_highlight"/>
+                    <button string="cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="wizard_report_recipe_list_action" model="ir.actions.act_window">
+        <field name="name">Recipe List</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.recipe.list</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_report_recipes_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

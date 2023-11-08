@@ -12,6 +12,17 @@
       menu="False"
     />
 
+     <report
+        string="Recipe List"
+        id="report_recipe_list"
+        model="wizard.recipe.list"
+        report_type="qweb-pdf"
+        name="pm_culinary.report_recipe_list_template"
+        file="pm_culinary.report_recipe_list_template"
+        print_report_name="'Recipe List - %s' % (object.name)"
+        menu="False"
+    />
+
     <report
       string="Menu Details"
       id="report_menu_detail"

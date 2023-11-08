@@ -27,9 +27,11 @@
     'data': [
         'wizards/recipe_detail_wizard_views.xml',
         'wizards/recipe_schedule_wizard_views.xml',
+        'wizards/recipe_list_wizard_views.xml',
         'report/pm_recipe_reports.xml',
         'report/pm_recipe_detail_templates.xml',
         'report/pm_recipe_schedule_templates.xml',
+        'report/pm_recipe_list_template.xml',
         'security/culinary_security.xml',
         'security/ir.model.access.csv',
         'views/pm_brand_views.xml',

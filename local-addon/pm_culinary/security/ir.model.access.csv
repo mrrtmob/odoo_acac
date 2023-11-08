@@ -23,5 +23,6 @@ access_wizard_recipe_detail,access_wizard_recipe_detail,model_wizard_recipe_deta
 access_wizard_recipe_schedule,access_wizard_recipe_schedule,model_wizard_recipe_schedule,group_acac_culinary,1,1,1,1
 access_wizard_menu_detail,access_wizard_menu_detail,model_wizard_menu_detail,group_acac_culinary,1,1,1,1
 access_wizard_menu_line_detail,access_wizard_menu_line_detail,model_wizard_menu_line,group_acac_culinary,1,1,1,1
+access_wizard_recipe_list,access_wizard_recipe_list,model_wizard_recipe_list,group_acac_culinary,1,1,1,1
 
 

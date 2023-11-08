@@ -285,6 +285,10 @@ class PmRecipe(models.Model):
     def act_reset(self):
         self.state = 'draft'
 
+    def print_all_recipes(self):
+        active_ids = self.env.context.get('active_ids')
+        print("list of selected recipes: " + str(active_ids))
+        pass
 
     # This function is disable as an adjustment for Culinary to create recipe
 
