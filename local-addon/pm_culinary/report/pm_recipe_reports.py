@@ -8,15 +8,12 @@ class ReportRecipeDetail(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        print("========== docids ========== " + str(docids))
-        print("========== data ========== " + str(data))
         custom_data = {
             'custom_field': data['custom_field'],
             'custom_number_of_portion': data['number_of_portion'],
             'custom_makes': data['makes'],
             'print_with_sub': data['print_with_sub']
         }
-        print("========== custom_data ========== " + str(custom_data))
 
         return {
             'doc_ids': docids,
@@ -30,11 +27,34 @@ class ReportRecipeList(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        print("========== docids ========== " + str(docids))
-        print("========== data ========== " + str(data))
+        
+        custom_field = data['form']['custom_field']
+        custom_number_of_portion = data['form']['number_of_portion']
+        print_with_sub = data['form']['print_with_sub']
+
+        recipe_list_print = []
+
+        for rec in data['recipes']:
+            print("====rec===="+ str(rec))
+            print("=====rec_id====="+ str(self.env['pm.recipe'].browse(rec['recipe_id'])))
+            custom_data = {
+                'custom_field': custom_field,
+                'custom_number_of_portion': custom_number_of_portion,
+                'custom_makes': rec['makes'],
+                'print_with_sub': print_with_sub
+            }
+            
+            recipe_list_print.append({
+                'doc_ids': docids,
+                'doc_model': self.env['pm.recipe'],
+                'docs': self.env['pm.recipe'].browse(rec['recipe_id']),
+                'custom_data': custom_data
+            })
+
+        print("====recipe_list_print===="+ str(recipe_list_print))
 
         return {
-            'doc_ids': docids,
+            'data_list':recipe_list_print
         }
 
 class ReportMenuDetail(models.AbstractModel):
