@@ -60,12 +60,12 @@
                   sequence="1"
                   action="wizard_recipe_schedule_action"/>
 
-        <menuitem id="menu_recipe_list"
+        <!-- <menuitem id="menu_recipe_list"
                 name="Recipe List"
                 parent="menu_report"
                 groups="pm_culinary.group_acac_culinary,pm_culinary.group_acac_culinary_head"
                 sequence="1"
-                action="wizard_report_recipe_list_action" />
+                action="wizard_report_recipe_list_action" /> -->
 
       <menuitem id="menu_config"
                 name="Configuration"

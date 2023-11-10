@@ -51,8 +51,6 @@ class ReportRecipeList(models.AbstractModel):
                 'custom_data': custom_data
             })
 
-        print("====recipe_list_print===="+ str(recipe_list_print))
-
         return {
             'data_list':recipe_list_print
         }
